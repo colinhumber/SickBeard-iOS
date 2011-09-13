@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="864" systemVersion="11B26" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="MaaSEntity" representedClassName="MaaSEntity">
+        <attribute name="created_at" optional="YES" attributeType="Date"/>
+        <attribute name="MaaSID" optional="YES" attributeType="String"/>
+        <attribute name="synced_at" optional="YES" attributeType="Date"/>
+        <attribute name="updated_at" optional="YES" attributeType="Date"/>
+    </entity>
+    <entity name="SBServer" representedClassName="SBServer" parentEntity="MaaSEntity">
+        <attribute name="apiKey" optional="YES" attributeType="String"/>
+        <attribute name="host" optional="YES" attributeType="String"/>
+        <attribute name="isCurrent" optional="YES" attributeType="Boolean"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="password" optional="YES" attributeType="String"/>
+        <attribute name="port" optional="YES" attributeType="Integer 32" defaultValueString="0"/>
+        <attribute name="username" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="SBServer" positionX="261" positionY="189" width="128" height="150"/>
+        <element name="MaaSEntity" positionX="43" positionY="189" width="128" height="105"/>
+    </elements>
+</model>
