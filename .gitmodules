@@ -4,3 +4,6 @@
 [submodule "SickBeard/AFNetworking"]
 	path = SickBeard/AFNetworking
 	url = git://github.com/gowalla/AFNetworking.git
+[submodule "SickBeard/JSONKit"]
+	path = SickBeard/JSONKit
+	url = git://github.com/johnezang/JSONKit.git
