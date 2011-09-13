@@ -1,0 +1,3 @@
+[submodule "SickBeard/ATMHud"]
+	path = SickBeard/ATMHud
+	url = git://github.com/atomton/ATMHud.git
