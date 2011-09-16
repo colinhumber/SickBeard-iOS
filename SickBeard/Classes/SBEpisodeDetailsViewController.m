@@ -67,18 +67,18 @@
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
 									   parameters:params 
 										  success:^(id JSON) {
-											  NSString *result = [[JSON objectForKey:@"result"] lowercaseString];
+											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  [hud setActivity:NO];
 											  
-											  if ([result isEqualToString:@"failure"]) {
-												  [hud setCaption:[JSON objectForKey:@"error"]];
+											  if ([result isEqualToString:RESULT_SUCCESS]) {
+												  [hud setCaption:@"Episode found and is downloading."];
+												  [hud setImage:[UIImage imageNamed:@"19-check"]];
 												  [hud update];
 												  [hud hideAfter:2];
 											  }
 											  else {
-												  [hud setCaption:@"Episode found and is downloading."];
-												  [hud setImage:[UIImage imageNamed:@"19-check"]];
+												  [hud setCaption:[JSON objectForKey:@"message"]];
 												  [hud update];
 												  [hud hideAfter:2];
 											  }
@@ -117,16 +117,15 @@
 									   parameters:params 
 										  success:^(id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
-											  NSString *error = [JSON objectForKey:@"error"];
 																 
 											  [hud setActivity:NO];
 											  
-											  if (result && !error) {
-												  [hud setCaption:result];
+											  if ([result isEqualToString:RESULT_SUCCESS]) {
+												  [hud setCaption:@"Status successfully set!"];
 												  [hud setImage:[UIImage imageNamed:@"19-check"]];
 											  }
 											  else {
-												  [hud setCaption:error];
+												  [hud setCaption:[JSON objectForKey:@"message"]];
 												  [hud setImage:[UIImage imageNamed:@"11-x"]];
 											  }
 												   
@@ -183,12 +182,21 @@
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisode 
 									   parameters:params
 										  success:^(id JSON) {
-											  episode.episodeDescription = [JSON objectForKey:@"description"];
+											  NSString *result = [JSON objectForKey:@"result"];
 											  
-											  self.titleLabel.text = episode.name;
-											  self.airDateLabel.text = [NSString stringWithFormat:@"Aired on %@", episode.airDate];
-											  self.seasonLabel.text = [NSString stringWithFormat:@"Season %d, episode %d", episode.season, episode.number];
-											  self.descriptionLabel.text = episode.episodeDescription;
+											  if ([result isEqualToString:RESULT_SUCCESS]) {
+												  episode.episodeDescription = [[JSON objectForKey:@"data"] objectForKey:@"description"];												  
+											  }
+											  else {
+												  episode.episodeDescription = @"Unable to retrieve episode description";
+											  }
+											  
+											  dispatch_async(dispatch_get_main_queue(), ^{
+												  self.titleLabel.text = episode.name;
+												  self.airDateLabel.text = [NSString stringWithFormat:@"Aired on %@", episode.airDate];
+												  self.seasonLabel.text = [NSString stringWithFormat:@"Season %d, episode %d", episode.season, episode.number];
+												  self.descriptionLabel.text = episode.episodeDescription;
+											  });
 										  }
 										  failure:^(NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
@@ -219,6 +227,7 @@
 }
 
 - (void)dealloc {
+	[episode release];
     [titleLabel release];
     [airDateLabel release];
     [seasonLabel release];

@@ -7,8 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SBGlobal.h"
 
 @class SBServer;
+
+extern NSString *const RESULT_SUCCESS;
+extern NSString *const RESULT_FAILURE;
+extern NSString *const RESULT_TIMEOUT;
+extern NSString *const RESULT_ERROR;
+extern NSString *const RESULT_DENIED;
 
 typedef enum {
 	HTTPMethodGET,

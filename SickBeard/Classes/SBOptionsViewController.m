@@ -70,6 +70,10 @@
 }
 
 - (void)dealloc {
+	[initialQualities release];
+	[archiveQualities release];
+	[status release];
+	[show release];
 	self.locationTextField = nil;
 	self.initialQualityLabel = nil;
 	self.archiveQualityLabel = nil;
@@ -150,8 +154,11 @@
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShowAddNew 
 									   parameters:params 
 										  success:^(id JSON) {
+											  NSString *result = [JSON objectForKey:@"result"];
+											  
+											  
 											  dispatch_async(dispatch_get_main_queue(), ^{
-												  if (![JSON objectForKey:@"error"]) {
+												  if ([result isEqualToString:RESULT_SUCCESS]) {
 													  [self.hud setCaption:@"Show has been added"];
 													  [self.hud setActivity:NO];
 													  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
@@ -164,7 +171,7 @@
 													  });
 												  }
 												  else {
-													  [self.hud setCaption:[JSON objectForKey:@"error"]];
+													  [self.hud setCaption:[JSON objectForKey:@"message"]];
 													  [self.hud setActivity:NO];
 													  [self.hud setImage:[UIImage imageNamed:@"11-x"]];
 													  [self.hud update];

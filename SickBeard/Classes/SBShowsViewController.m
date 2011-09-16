@@ -50,15 +50,13 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-#pragma mark - View lifecycle
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
+- (void)dealloc {
+	[shows release];
+	[tableView release];
+	[super dealloc];
 }
-*/
 
+#pragma mark - View lifecycle
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
@@ -76,10 +74,21 @@
 		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShows 
 										   parameters:nil 
 											  success:^(id JSON) {
-												  for (NSString *key in [JSON allKeys]) {
-													  SBShow *show = [SBShow itemWithDictionary:[JSON objectForKey:key]];
-													  show.tvdbID = key;
-													  [shows addObject:show];
+												  NSString *result = [JSON objectForKey:@"result"];
+												  
+												  if ([result isEqualToString:RESULT_SUCCESS]) {
+													  NSDictionary *dataDict = [JSON objectForKey:@"data"];
+													  
+													  for (NSString *key in [dataDict allKeys]) {
+														  SBShow *show = [SBShow itemWithDictionary:[dataDict objectForKey:key]];
+														  show.tvdbID = key;
+														  [shows addObject:show];
+													  }
+												  }
+												  else {
+													  [PRPAlertView showWithTitle:@"Error retrieving shows" 
+																		  message:[JSON objectForKey:@"message"] 
+																	  buttonTitle:@"OK"];
 												  }
 												  
 												  [self.tableView reloadData];

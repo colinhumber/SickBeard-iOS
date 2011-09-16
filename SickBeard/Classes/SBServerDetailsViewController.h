@@ -24,6 +24,5 @@
 @property (retain, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (retain, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (retain, nonatomic) IBOutlet UITextField *apiKeyTextField;
-@property (retain, nonatomic) IBOutlet UISwitch *currentSwitch;
 
 @end

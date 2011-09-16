@@ -11,7 +11,7 @@
 @class SBShow;
 @class OrderedDictionary;
 
-@interface SBShowDetailsViewController : UIViewController {
+@interface SBShowDetailsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
 	OrderedDictionary *seasons;
 }
 

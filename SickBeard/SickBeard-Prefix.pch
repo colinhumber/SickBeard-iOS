@@ -15,7 +15,7 @@
 //	#import <MaaSiveCoreData/MaaSEntity.h>
 //	#import <MaaSiveCoreData/NSEntityDescription+MaaSive.h>
 //	#import <MaaSiveCoreData/NSManagedObjectContext+MaaSive.h>
-	#import <CoreData/CoreData.h>
+	//#import <CoreData/CoreData.h>
 	#import "SBGlobal.h"
 	#import "NSArray+Blocks.h"
 	#import "NSTimer+BlockAdditions.h"

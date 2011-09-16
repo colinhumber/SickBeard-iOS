@@ -10,6 +10,7 @@
 		7ECA24EAC72A5D2539779137 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B01D6AEDD900882ACFF64 /* libsqlite3.0.dylib */; };
 		870443F41EA367FFD855F402 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B1405EBBB093810F5A8D2F5 /* CFNetwork.framework */; };
 		8C0C4F0DE18FD69306EF9C4E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3B522F28656BDBBA22E3155 /* SystemConfiguration.framework */; };
+		9503D280142249120064ED06 /* GTMNSDictionary+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F7F6221408493B00E17F3E /* GTMNSDictionary+URLArguments.m */; };
 		95068BCA14102AED00847FC4 /* SBEpisodeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95068BC914102AED00847FC4 /* SBEpisodeDetailsViewController.m */; };
 		95068BCC1411348F00847FC4 /* 11-x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95068BCB1411348F00847FC4 /* 11-x.png */; };
 		95068BD41411644D00847FC4 /* ShowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95068BD31411644D00847FC4 /* ShowCell.m */; };
@@ -763,6 +764,7 @@
 				95BC132D140D7525009F9FBC /* SBShowDetailsViewController.m in Sources */,
 				95BC1331140D779F009F9FBC /* SBEpisode.m in Sources */,
 				95BC1334140D847D009F9FBC /* OrderedDictionary.m in Sources */,
+				9503D280142249120064ED06 /* GTMNSDictionary+URLArguments.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -853,6 +855,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SickBeard/SickBeard-Prefix.pch";
 				INFOPLIST_FILE = "SickBeard/SickBeard-Info.plist";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
@@ -867,6 +870,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SickBeard/SickBeard-Prefix.pch";
 				INFOPLIST_FILE = "SickBeard/SickBeard-Info.plist";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;

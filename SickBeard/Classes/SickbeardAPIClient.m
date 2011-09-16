@@ -13,6 +13,12 @@
 #import "AFJSONRequestOperation.h"
 #import "AFNetworkActivityIndicatorManager.h"
 
+NSString *const RESULT_SUCCESS = @"success";
+NSString *const RESULT_FAILURE = @"failure";
+NSString *const RESULT_TIMEOUT = @"timeout";
+NSString *const RESULT_ERROR = @"error";
+NSString *const RESULT_DENIED = @"denied";
+
 static SickbeardAPIClient *sharedClient = nil;
 
 @interface SickbeardAPIClient ()
@@ -57,7 +63,10 @@ static SickbeardAPIClient *sharedClient = nil;
 	NSAssert(server != nil, @"Server cannot be nil");
 	
 	NSString *serverUrl = [NSString stringWithFormat:@"%@/api/%@/?cmd=sb.ping", server.serviceEndpointPath, server.apiKey];
-	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:serverUrl]];
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:serverUrl]];
+	request.timeoutInterval = 10;
+
+	NSLog(@"Request created: %@", serverUrl);
 
 	AFJSONRequestOperation *operation = [AFJSONRequestOperation operationWithRequest:request success:success failure:failure];
 	[self.operationQueue addOperation:operation];

@@ -103,6 +103,8 @@
 }
 
 - (void)dealloc {
+	[results release];
+	[currentLanguage release];
 	[hud release];
 	[tableView release];
 	[languagePickerView release];
@@ -157,13 +159,16 @@
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShowSearchTVDB 
 									   parameters:params 
 										  success:^(id JSON) {
-											  dispatch_async(dispatch_get_main_queue(), ^{
-												  [self.hud hide]; 
-											  });
+											  NSString *result = [JSON objectForKey:@"result"];
 											  
-											  results = [[JSON objectForKey:@"results"] retain];
-											  [self.tableView reloadData];
-											  
+											  if ([result isEqualToString:RESULT_SUCCESS]) {
+												  dispatch_async(dispatch_get_main_queue(), ^{
+													  [self.hud hide]; 
+												  });
+												  
+												  results = [[[JSON objectForKey:@"data"] objectForKey:@"results"] retain];
+												  [self.tableView reloadData];
+											  }
 										  }
 										  failure:^(NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error searching for show" 

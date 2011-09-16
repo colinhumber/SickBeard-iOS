@@ -15,6 +15,8 @@
 #import "NSUserDefaults+SickBeard.h"
 
 @interface SBServerDetailsViewController()
+- (void)updateServerValues;
+
 @property (nonatomic, retain) ATMHud *hud;
 @end
 
@@ -26,7 +28,6 @@
 @synthesize usernameTextField;
 @synthesize passwordTextField;
 @synthesize apiKeyTextField;
-@synthesize currentSwitch;
 @synthesize hud;
 @synthesize server;
 //@synthesize managedObjectContext;
@@ -41,13 +42,14 @@
 }
 
 - (void)dealloc {
+	[currentResponder release];
+	[server release];
     [nameTextField release];
     [hostTextField release];
     [portTextField release];
     [usernameTextField release];
     [passwordTextField release];
     [apiKeyTextField release];
-	[currentSwitch release];
 //	[managedObjectContext release];
 	[hud release];
     [super dealloc];
@@ -69,7 +71,6 @@
 
 	if (![NSUserDefaults standardUserDefaults].serverHasBeenSetup) {
 		self.title = @"Setup Server";
-		self.currentSwitch.enabled = NO;
 		self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Done" 
 																				   style:UIBarButtonItemStyleDone 
 																				  target:self 
@@ -78,6 +79,14 @@
 	
 	self.server = [NSUserDefaults standardUserDefaults].server;
 	
+	if (server) {
+		nameTextField.text = server.name;
+		hostTextField.text = server.host;
+		portTextField.text = [NSString stringWithFormat:@"%d", server.port];
+		usernameTextField.text = server.username;
+		passwordTextField.text = server.password;
+		apiKeyTextField.text = server.apiKey;
+	}
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -93,7 +102,6 @@
     [self setUsernameTextField:nil];
     [self setPasswordTextField:nil];
     [self setApiKeyTextField:nil];
-	[self setCurrentSwitch:nil];
 	[self setHud:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -134,7 +142,6 @@
 	server.username = usernameTextField.text;
 	server.password = passwordTextField.text;
 	server.apiKey = apiKeyTextField.text;
-	server.isCurrent = currentSwitch.on;
 }
 
 - (void)close {
@@ -230,6 +237,14 @@
 	currentResponder = textField;
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+	if (textField == apiKeyTextField) {
+		[textField resignFirstResponder];
+	}
+	
+	return YES;
+}
+
 #pragma mark - UITableViewDelegate -
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -284,45 +299,6 @@
 		}
 	}
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 @end

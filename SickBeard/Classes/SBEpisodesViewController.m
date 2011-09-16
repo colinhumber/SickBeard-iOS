@@ -38,6 +38,12 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void)dealloc {
+	[comingEpisodes release];
+	[tableView release];
+	[super dealloc];
+}
+
 #pragma mark - View lifecycle
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -54,46 +60,51 @@
 		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandComingEpisodes 
 										   parameters:nil 
 											  success:^(id JSON) {
-												  NSMutableArray *episodes = [NSMutableArray array];
+												  NSString *result = [JSON objectForKey:@"result"];
 												  
-												  for (NSString *key in [JSON allKeys]) {
-													  for (NSDictionary *epDict in [JSON objectForKey:key]) {
-														  SBComingEpisode *ep = [SBComingEpisode itemWithDictionary:epDict];
-														  [episodes addObject:ep];
+												  if ([result isEqualToString:RESULT_SUCCESS]) {
+													  NSMutableArray *episodes = [NSMutableArray array];
+													  NSDictionary *dataDict = [JSON objectForKey:@"data"];
+													  
+													  for (NSString *key in [dataDict allKeys]) {
+														  for (NSDictionary *epDict in [dataDict objectForKey:key]) {
+															  SBComingEpisode *ep = [SBComingEpisode itemWithDictionary:epDict];
+															  [episodes addObject:ep];
+														  }
 													  }
+													  
+													  NSMutableArray *past = [NSMutableArray array];
+													  NSMutableArray *today = [NSMutableArray array];
+													  NSMutableArray *thisWeek = [NSMutableArray array];
+													  NSMutableArray *nextWeek = [NSMutableArray array];
+													  NSMutableArray *future = [NSMutableArray array];
+													  
+													  for (SBComingEpisode *episode in episodes) {
+														  if ([episode.airDate isEarlierThanDate:[NSDate date]]) {
+															  [past addObject:episode];
+														  }
+														  else if ([episode.airDate isToday]) {
+															  [today addObject:episode];
+														  }
+														  else if ([episode.airDate isThisWeek]) {
+															  [thisWeek addObject:episode];
+														  }
+														  else if ([episode.airDate isNextWeek]) {
+															  [nextWeek addObject:episode];
+														  }
+														  else {
+															  [future addObject:episode];
+														  }
+													  }
+													  
+													  if (past.count) [comingEpisodes setObject:past forKey:@"Past"];
+													  if (today.count) [comingEpisodes setObject:today forKey:@"Today"];
+													  if (thisWeek.count) [comingEpisodes setObject:thisWeek forKey:@"This Week"];
+													  if (nextWeek.count) [comingEpisodes setObject:nextWeek forKey:@"Next Week"];
+													  if (future.count) [comingEpisodes setObject:future forKey:@"Future"];												  
+													  
+													  [self.tableView reloadData];
 												  }
-												  
-												  NSMutableArray *past = [NSMutableArray array];
-												  NSMutableArray *today = [NSMutableArray array];
-												  NSMutableArray *thisWeek = [NSMutableArray array];
-												  NSMutableArray *nextWeek = [NSMutableArray array];
-												  NSMutableArray *future = [NSMutableArray array];
-												  
-												  for (SBComingEpisode *episode in episodes) {
-													  if ([episode.airDate isEarlierThanDate:[NSDate date]]) {
-														  [past addObject:episode];
-													  }
-													  else if ([episode.airDate isToday]) {
-														  [today addObject:episode];
-													  }
-													  else if ([episode.airDate isThisWeek]) {
-														  [thisWeek addObject:episode];
-													  }
-													  else if ([episode.airDate isNextWeek]) {
-														  [nextWeek addObject:episode];
-													  }
-													  else {
-														  [future addObject:episode];
-													  }
-												  }
-												  
-												  if (past.count) [comingEpisodes setObject:past forKey:@"Past"];
-												  if (today.count) [comingEpisodes setObject:today forKey:@"Today"];
-												  if (thisWeek.count) [comingEpisodes setObject:thisWeek forKey:@"This Week"];
-												  if (nextWeek.count) [comingEpisodes setObject:nextWeek forKey:@"Next Week"];
-												  if (future.count) [comingEpisodes setObject:future forKey:@"Future"];												  
-												  
-												  [self.tableView reloadData];
 											  }
 											  failure:^(NSError *error) {
 												  [PRPAlertView showWithTitle:@"Error retrieving shows" 

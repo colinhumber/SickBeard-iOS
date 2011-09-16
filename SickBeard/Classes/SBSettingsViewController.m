@@ -70,9 +70,9 @@
 {
     [super viewDidLoad];
 
-	NSArray *initialQualities = [[NSUserDefaults standardUserDefaults].initialQualities retain];
-	NSArray *archiveQualities = [[NSUserDefaults standardUserDefaults].archiveQualities retain];
-	NSString *status = [[NSUserDefaults standardUserDefaults].status copy];
+	NSArray *initialQualities = [NSUserDefaults standardUserDefaults].initialQualities;
+	NSArray *archiveQualities = [NSUserDefaults standardUserDefaults].archiveQualities;
+	NSString *status = [NSUserDefaults standardUserDefaults].status;
 	
 	self.initialQualityLabel.text = [NSString stringWithFormat:@"%d", initialQualities.count];
 	self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", archiveQualities.count];

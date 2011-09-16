@@ -15,6 +15,7 @@
 #import "OrderedDictionary.h"
 #import "SBEpisodeDetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "SBGlobal.h"
 
 @implementation SBShowDetailsViewController
 
@@ -73,48 +74,61 @@
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandSeasons
 									   parameters:[NSDictionary dictionaryWithObject:show.tvdbID forKey:@"tvdbid"]
 										  success:^(id JSON) {
-											  NSArray *seasonNumbers = [[JSON allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString *s1, NSString *s2) {
-												  if ([s1 intValue] < [s2 intValue]) {
-													  return NSOrderedDescending;
-												  }
-												  else if ([s1 intValue] > [s2 intValue]) {
-													  return NSOrderedAscending;
-												  }
-												  else {
-													  return NSOrderedSame;
-												  }
-											  }];
+											  NSString *result = [JSON objectForKey:@"result"];
 											  
-											  for (NSString *seasonNumber in seasonNumbers) {
-												  NSMutableArray *episodes = [NSMutableArray array];
-
-												  NSDictionary *seasonDict = [JSON objectForKey:seasonNumber];
+											  if ([result isEqualToString:RESULT_SUCCESS]) {
+												  NSDictionary *dataDict = [JSON objectForKey:@"data"];
 												  
-												  for (NSString *episodeNumber in [seasonDict allKeys]) {
-													  SBEpisode *episode = [SBEpisode itemWithDictionary:[seasonDict objectForKey:episodeNumber]];
-																		
-													  episode.show = show;
-													  episode.season = [seasonNumber intValue];
-													  episode.number = [episodeNumber intValue];
-													  [episodes addObject:episode];
-												  }
-												  
-												  [episodes sortUsingComparator:^NSComparisonResult(SBEpisode *ep1, SBEpisode *ep2) {
-													  if (ep1.number > ep2.number) {
-														  return NSOrderedAscending;
-													  }
-													  else if (ep1.number < ep2.number) {
+												  NSArray *seasonNumbers = [[dataDict allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString *s1, NSString *s2) {
+													  if ([s1 intValue] < [s2 intValue]) {
 														  return NSOrderedDescending;
+													  }
+													  else if ([s1 intValue] > [s2 intValue]) {
+														  return NSOrderedAscending;
 													  }
 													  else {
 														  return NSOrderedSame;
 													  }
 												  }];
 												  
-												  [seasons setObject:episodes forKey:seasonNumber];
+												  for (NSString *seasonNumber in seasonNumbers) {
+													  NSMutableArray *episodes = [NSMutableArray array];
+
+													  NSDictionary *seasonDict = [dataDict objectForKey:seasonNumber];
+													  
+													  for (NSString *episodeNumber in [seasonDict allKeys]) {
+														  SBEpisode *episode = [SBEpisode itemWithDictionary:[seasonDict objectForKey:episodeNumber]];
+																			
+														  episode.show = show;
+														  episode.season = [seasonNumber intValue];
+														  episode.number = [episodeNumber intValue];
+														  [episodes addObject:episode];
+													  }
+													  
+													  [episodes sortUsingComparator:^NSComparisonResult(SBEpisode *ep1, SBEpisode *ep2) {
+														  if (ep1.number > ep2.number) {
+															  return NSOrderedAscending;
+														  }
+														  else if (ep1.number < ep2.number) {
+															  return NSOrderedDescending;
+														  }
+														  else {
+															  return NSOrderedSame;
+														  }
+													  }];
+													  
+													  [seasons setObject:episodes forKey:seasonNumber];
+												  }
+												  
+												  dispatch_async(dispatch_get_main_queue(), ^{
+													  [self.tableView reloadData];
+												  });
 											  }
-											  
-											  [self.tableView reloadData];
+											  else {
+												  [PRPAlertView showWithTitle:@"Error retrieving shows" 
+																	  message:[JSON objectForKey:@"message"] 
+																  buttonTitle:@"OK"];
+											  }
 										  }
 										  failure:^(NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving show information" 
@@ -138,6 +152,7 @@
 }
 
 - (void)dealloc {
+	[seasons release];
     [tableView release];
     [super dealloc];
 }

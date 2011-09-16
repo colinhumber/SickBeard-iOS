@@ -50,7 +50,7 @@ typedef enum {
 	SickBeardCommandShowStatus,
 	SickBeardCommandShowUpdate,
 	SickBeardCommandShows,
-	SickBeardCommandShowsStats
+	SickBeardCommandShowsStats,
 } SickBeardCommand;
 
 @interface SBGlobal : NSObject
