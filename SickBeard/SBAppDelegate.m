@@ -10,7 +10,7 @@
 #import "SBServer.h"
 #import "SBServerDetailsViewController.h"
 #import "SickbeardAPIClient.h"
-//#import "TestFlight.h"
+#import "TestFlight.h"
 
 @implementation SBAppDelegate
 
