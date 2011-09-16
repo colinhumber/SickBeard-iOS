@@ -63,6 +63,7 @@
 		9577B0D2140C09A1007F48FE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9577B0D1140C09A1007F48FE /* AudioToolbox.framework */; };
 		9577B0D3140C09AD007F48FE /* ATMSoundFX.m in Sources */ = {isa = PBXBuildFile; fileRef = 9577B0CF140C0999007F48FE /* ATMSoundFX.m */; };
 		9577B0D5140C09D2007F48FE /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9577B0D4140C09D2007F48FE /* libz.1.2.5.dylib */; };
+		959439461423032F0069E008 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 959439441423032F0069E008 /* libTestFlight.a */; };
 		95BC1327140D5D74009F9FBC /* SBShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BC1326140D5D74009F9FBC /* SBShow.m */; };
 		95BC1328140D5D74009F9FBC /* SBShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BC1326140D5D74009F9FBC /* SBShow.m */; };
 		95BC132C140D7525009F9FBC /* SBShowDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BC132B140D7525009F9FBC /* SBShowDetailsViewController.m */; };
@@ -180,6 +181,8 @@
 		9577B0CF140C0999007F48FE /* ATMSoundFX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATMSoundFX.m; path = ATMHud/ATMSoundFX.m; sourceTree = "<group>"; };
 		9577B0D1140C09A1007F48FE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9577B0D4140C09D2007F48FE /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
+		959439441423032F0069E008 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		959439451423032F0069E008 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		95BC1325140D5D74009F9FBC /* SBShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBShow.h; path = Classes/SBShow.h; sourceTree = "<group>"; };
 		95BC1326140D5D74009F9FBC /* SBShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBShow.m; path = Classes/SBShow.m; sourceTree = "<group>"; };
 		95BC1329140D5F2E009F9FBC /* DictionaryCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DictionaryCreation.h; path = Classes/DictionaryCreation.h; sourceTree = "<group>"; };
@@ -250,6 +253,7 @@
 				9577B0CD140C0943007F48FE /* QuartzCore.framework in Frameworks */,
 				9577B0CB140C08F4007F48FE /* CoreGraphics.framework in Frameworks */,
 				95DD4201140837B8001FE32F /* Foundation.framework in Frameworks */,
+				959439461423032F0069E008 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,6 +383,15 @@
 				956D64D8140BED4A00937E39 /* ATMTextLayer.m */,
 			);
 			name = ATMHud;
+			sourceTree = "<group>";
+		};
+		959439431423032F0069E008 /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				959439441423032F0069E008 /* libTestFlight.a */,
+				959439451423032F0069E008 /* TestFlight.h */,
+			);
+			path = TestFlight;
 			sourceTree = "<group>";
 		};
 		95DD41EF140837B8001FE32F = {
@@ -543,6 +556,7 @@
 		95F7F61E1408492700E17F3E /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				959439431423032F0069E008 /* TestFlight */,
 				95F627681419AAEC00F2DABC /* JSONKit */,
 				9509F1D9140C32BD00AFBF2C /* PRP */,
 				956D64CB140BED3A00937E39 /* ATMHud */,
@@ -855,7 +869,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SickBeard/SickBeard-Prefix.pch";
 				INFOPLIST_FILE = "SickBeard/SickBeard-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/SickBeard/TestFlight\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
@@ -870,7 +887,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SickBeard/SickBeard-Prefix.pch";
 				INFOPLIST_FILE = "SickBeard/SickBeard-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/SickBeard/TestFlight\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;

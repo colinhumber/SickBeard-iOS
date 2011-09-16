@@ -35,7 +35,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	//[TestFlight takeOff:@"1UXYHxdTJuVnGyhcnnzVJskFbBD6NeEKllTqI8JUjJQ"];
+	[TestFlight takeOff:@"1UXYHxdTJuVnGyhcnnzVJskFbBD6NeEKllTqI8JUjJQ"];
 	[self registerDefaults];
     // Override point for customization after application launch.
 
