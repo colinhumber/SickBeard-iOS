@@ -41,8 +41,9 @@
 	
 	[params setValue:commandString forKey:@"cmd"];
 	
-	serverUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/api/%@/?%@", [serverUrl absoluteString], server.apiKey, [params gtm_httpArgumentsString]]];
+	serverUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@api/%@/?%@", [serverUrl absoluteString], server.apiKey, [params gtm_httpArgumentsString]]];
 	
+	NSLog(@"URL created: %@", serverUrl);
 	return [serverUrl absoluteString];
 }
 
@@ -80,6 +81,10 @@
 						
 		case SickBeardCommandShutdown:
 			commandString = @"sb.shutdown";
+			break;
+			
+		case SickBeardCommandGetRootDirectories:
+			commandString = @"sb.getrootdirs";
 			break;
 			
 		case SickBeardCommandComingEpisodes:

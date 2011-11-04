@@ -59,8 +59,6 @@
 		default:
 			break;
 	}
-
-	//self.view = self.currentController.view;
 }
 
 @end

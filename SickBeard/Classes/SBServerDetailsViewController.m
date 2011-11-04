@@ -156,6 +156,8 @@
 			[self.hud show];
 		}
 		
+		[[SickbeardAPIClient sharedClient] loadDefaults:server];
+		
 		RunAfterDelay(2, ^{
 			[NSUserDefaults standardUserDefaults].serverHasBeenSetup = YES;
 			[NSUserDefaults standardUserDefaults].server = server;
@@ -255,28 +257,31 @@
 				[self.hud setActivity:YES];
 //				[self.view addSubview:hud.view];
 				
-				
-				
 				[self.hud show];
 				[[SickbeardAPIClient sharedClient] pingServer:server
 													  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-														  if ([JSON valueForKeyPath:@"result"]) {
+														  NSString *result = [JSON objectForKey:@"result"];
+														  
+														  if ([result isEqualToString:RESULT_SUCCESS]) {
 															  [self.hud setCaption:@"Server is up!"];
-															  [self.hud setActivity:NO];
 															  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
-															  [self.hud update];
-															  [self.hud hideAfter:2.0];
 															  
-															  [self performSelector:@selector(setHud:) withObject:nil afterDelay:4.0];
+															  [[SickbeardAPIClient sharedClient] loadDefaults:server];
 														  }
+														  else if ([result isEqualToString:RESULT_DENIED]) {
+															  [self.hud setCaption:[JSON objectForKey:@"message"]];
+															  [self.hud setImage:[UIImage imageNamed:@"11-x"]];
+														  }
+														  
+														  [self.hud setActivity:NO];
+														  [self.hud update];
+														  [self.hud hideAfter:2.0];
 													  }
 													  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 														  [self.hud setCaption:[NSString stringWithFormat:@"Unable to connect to Sick Beard at %@", server.serviceEndpointPath]];
 														  [self.hud setActivity:NO];
 														  [self.hud update];
 														  [self.hud hideAfter:2.0];
-														  
-														  [self performSelector:@selector(setHud:) withObject:nil afterDelay:4.0];														  
 													  }];
 			}
 		}

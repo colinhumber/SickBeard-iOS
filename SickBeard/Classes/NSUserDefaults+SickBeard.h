@@ -10,28 +10,32 @@
 
 @class SBServer;
 
-extern NSString *const DefaultsRegisteredKey;
+extern NSString *const SBDefaultsRegisteredKey;
 
-extern NSString *const ServerHasBeenSetupKey;
-extern NSString *const ServerKey;
+extern NSString *const SBServerHasBeenSetupKey;
+extern NSString *const SBServerKey;
+extern NSString *const SBDefaultDirectoriesKey;
+extern NSString *const SBDefaultDirectoryIndexKey;
 
-extern NSString *const InitialQualitiesKey;
-extern NSString *const ArchiveQualitiesKey;
-extern NSString *const UseSeasonFoldersKey;
-extern NSString *const StatusKey;
+extern NSString *const SBInitialQualitiesKey;
+extern NSString *const SBArchiveQualitiesKey;
+extern NSString *const SBUseSeasonFoldersKey;
+extern NSString *const SBStatusKey;
 
 
 @interface NSUserDefaults (SickBeard)
 
-@property (assign, getter=getDefaultsRegistered, setter=setDefaultsRegistered:) BOOL defaultsRegistered;
+@property (getter=getDefaultsRegistered, setter=setDefaultsRegistered:) BOOL defaultsRegistered;
 
-@property (assign, getter=getServerHasBeenSetup, setter=setServerHasBeenSetup:) BOOL serverHasBeenSetup;
-@property (assign, getter=getServer, setter=setServer:) SBServer *server;
+@property (getter=getServerHasBeenSetup, setter=setServerHasBeenSetup:) BOOL serverHasBeenSetup;
+@property (weak, getter=getServer, setter=setServer:) SBServer *server;
+@property (weak, getter=getDefaultDirectories, setter=setDefaultDirectories:) NSArray *defaultDirectories;
+@property (getter=getDefaultDirectoryIndex, setter=setDefaultDirectoryIndex:) int defaultDirectoryIndex;
 
-@property (assign, getter=getInitialQualities, setter=setInitialQualities:) NSMutableArray *initialQualities;
-@property (assign, getter=getArchiveQualities, setter=setArchiveQualities:) NSMutableArray *archiveQualities;
-@property (assign, getter=getStatus, setter=setStatus:) NSString *status;
-@property (assign, getter=getUseSeasonFolders, setter=setUseSeasonFolders:) BOOL useSeasonFolders;
+@property (weak, getter=getInitialQualities, setter=setInitialQualities:) NSMutableArray *initialQualities;
+@property (weak, getter=getArchiveQualities, setter=setArchiveQualities:) NSMutableArray *archiveQualities;
+@property (weak, getter=getStatus, setter=setStatus:) NSString *status;
+@property (getter=getUseSeasonFolders, setter=setUseSeasonFolders:) BOOL useSeasonFolders;
 
 
 @end

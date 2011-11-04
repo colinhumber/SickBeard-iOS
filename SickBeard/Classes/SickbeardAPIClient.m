@@ -12,6 +12,7 @@
 #import "SBServer+SickBeardAdditions.h"
 #import "AFJSONRequestOperation.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "NSUserDefaults+SickBeard.h"
 
 NSString *const RESULT_SUCCESS = @"success";
 NSString *const RESULT_FAILURE = @"failure";
@@ -54,15 +55,66 @@ static SickbeardAPIClient *sharedClient = nil;
 	return self;
 }
 
+- (void)loadDefaults:(SBServer*)server {
+	NSString *defaultsUrl = [SBCommandBuilder URLForCommand:SickBeardCommandGetDefaults server:server params:nil];
+	NSString *dirsUrl = [SBCommandBuilder URLForCommand:SickBeardCommandGetRootDirectories server:server params:nil];
+	
+	AFJSONRequestOperation *defaultsOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:defaultsUrl]] 
+																								success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+																									NSString *result = [JSON objectForKey:@"result"];
+																									
+																									if ([result isEqualToString:RESULT_SUCCESS]) {
+																										NSDictionary *data = [JSON objectForKey:@"data"];
+																										
+																										NSArray *archives = [SBGlobal qualitiesFromCodes:[data objectForKey:@"archive"]];
+																										NSArray *initial = [SBGlobal qualitiesFromCodes:[data objectForKey:@"initial"] ];
+																										BOOL useSeasonFolders = [[data objectForKey:@"season_folders"] boolValue];
+																										NSString *status = [data objectForKey:@"status"];
+																										
+																										NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+																										defaults.archiveQualities = [NSMutableArray arrayWithArray:archives];
+																										defaults.initialQualities = [NSMutableArray arrayWithArray:initial];
+																										defaults.useSeasonFolders = useSeasonFolders;
+																										defaults.status = status;
+																									
+																										[defaults synchronize];
+																									}
+																								}
+																								failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+																									NSLog(@"Error getting defaults: %@", error);
+																								}];
+
+	AFJSONRequestOperation *dirsOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:dirsUrl]] 
+																							success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+																								NSString *result = [JSON objectForKey:@"result"];
+																								
+																								if ([result isEqualToString:RESULT_SUCCESS]) {
+																									NSDictionary *data = [JSON objectForKey:@"data"];
+																									
+																									int defaultIndex = [[data objectForKey:@"default_index"] intValue];
+																									NSArray *rootDirs = [data objectForKey:@"root_dirs"];
+																									
+																									NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+																									defaults.defaultDirectories = rootDirs;
+																									defaults.defaultDirectoryIndex = defaultIndex;
+																									
+																									[defaults synchronize];
+																								}
+																							}
+																							failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+																								NSLog(@"Error getting root dirs: %@", error);
+																							}];
+	
+	[self.operationQueue addOperation:defaultsOperation];
+	[self.operationQueue addOperation:dirsOperation];
+}
 
 - (void)pingServer:(SBServer*)server success:(APISuccessBlock)success failure:(APIErrorBlock)failure {
 	NSAssert(server != nil, @"Server cannot be nil");
 	
-	NSString *serverUrl = [NSString stringWithFormat:@"%@/api/%@/?cmd=sb.ping", server.serviceEndpointPath, server.apiKey];
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:serverUrl]];
+	NSString *url = [SBCommandBuilder URLForCommand:SickBeardCommandPing server:server params:nil];
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
 	request.timeoutInterval = 10;
-
-	NSLog(@"Request created: %@", serverUrl);
 
 	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:success failure:failure];
 	[self.operationQueue addOperation:operation];
@@ -79,10 +131,10 @@ static SickbeardAPIClient *sharedClient = nil;
 	
 	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
 	
-	NSLog(@"Request created: %@", url);
-	
 	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:success failure:failure];
-	[self.operationQueue addOperation:operation];
+	
+	[self.operationQueue performSelector:@selector(addOperation:) withObject:operation afterDelay:0.2];
+//	[self.operationQueue addOperation:operation];
 }
 
 - (NSURL*)createUrlWithEndpoint:(NSString*)endpoint {

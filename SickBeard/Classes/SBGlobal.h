@@ -20,6 +20,7 @@ typedef enum {
 	SickBeardCommandRestart,
 	SickBeardCommandSetDefaults,
 	SickBeardCommandShutdown,
+	SickBeardCommandGetRootDirectories,
 	
 	// episode commands
 	SickBeardCommandComingEpisodes,
@@ -61,5 +62,6 @@ typedef enum {
 + (OrderedDictionary*)statuses;
 
 + (NSArray*)qualitiesAsCodes:(NSArray*)qualities;
++ (NSArray*)qualitiesFromCodes:(NSArray*)codes;
 
 @end

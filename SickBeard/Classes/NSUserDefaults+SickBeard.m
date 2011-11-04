@@ -9,36 +9,40 @@
 #import "NSUserDefaults+SickBeard.h"
 #import "SBServer.h"
 
-NSString *const DefaultsRegisteredKey = @"DefaultsRegisteredKey";
+NSString *const SBDefaultsRegisteredKey = @"SBDefaultsRegisteredKey";
 
-NSString *const ServerHasBeenSetupKey = @"server_has_been_setup_key";
-NSString *const ServerKey = @"server_key";
+NSString *const SBServerHasBeenSetupKey = @"SBServerHasBeenSetupKey";
+NSString *const SBServerKey = @"SBServerKey";
+NSString *const SBDefaultDirectoriesKey = @"SBDefaultDirectoriesKey";
+NSString *const SBDefaultDirectoryIndexKey = @"SBDefaultDirectoryIndexKey";
 
-NSString *const InitialQualitiesKey = @"initial_qualities_key";
-NSString *const ArchiveQualitiesKey = @"archive_qualities_key";
-NSString *const UseSeasonFoldersKey = @"use_season_folders_key";
-NSString *const StatusKey = @"status_key";
+NSString *const SBInitialQualitiesKey = @"SBInitialQualitiesKey";
+NSString *const SBArchiveQualitiesKey = @"SBArchiveQualitiesKey";
+NSString *const SBUseSeasonFoldersKey = @"SBUseSeasonFoldersKey";
+NSString *const SBStatusKey = @"SBStatusKey";
 
 @implementation NSUserDefaults (SickBeard)
 
+#pragma mark - Defaults
 - (BOOL)getDefaultsRegistered {
-	return [self boolForKey:DefaultsRegisteredKey];
+	return [self boolForKey:SBDefaultsRegisteredKey];
 }
 
 - (void)setDefaultsRegistered:(BOOL)val {
-	[self setBool:val forKey:DefaultsRegisteredKey];
+	[self setBool:val forKey:SBDefaultsRegisteredKey];
 }
 
+#pragma mark - Server
 - (BOOL)getServerHasBeenSetup {
-	return [self boolForKey:ServerHasBeenSetupKey];
+	return [self boolForKey:SBServerHasBeenSetupKey];
 }
 
 - (void)setServerHasBeenSetup:(BOOL)val {
-	[self setBool:val forKey:ServerHasBeenSetupKey];
+	[self setBool:val forKey:SBServerHasBeenSetupKey];
 }
 
 - (SBServer*)getServer {
-	NSData *data = [self objectForKey:ServerKey];
+	NSData *data = [self objectForKey:SBServerKey];
 	if (data) {
 		return [NSKeyedUnarchiver unarchiveObjectWithData:data];
 	}
@@ -47,13 +51,35 @@ NSString *const StatusKey = @"status_key";
 }
 
 - (void)setServer:(SBServer*)val {
-	[self setObject:[NSKeyedArchiver archivedDataWithRootObject:val] forKey:ServerKey];
+	[self setObject:[NSKeyedArchiver archivedDataWithRootObject:val] forKey:SBServerKey];
 	[self synchronize];
 }
 
-// initial qualities
+- (NSArray*)getDefaultDirectories {
+	NSArray *dirs = [self objectForKey:SBDefaultDirectoriesKey];
+	
+	if (!dirs) {
+		dirs = [NSArray array];
+	}
+	
+	return dirs;
+}
+
+- (void)setDefaultDirectories:(NSArray *)defaultDirectories {
+	[self setObject:defaultDirectories forKey:SBDefaultDirectoriesKey];
+}
+
+- (int)getDefaultDirectoryIndex {
+	return [[self objectForKey:SBDefaultDirectoryIndexKey] integerValue];
+}
+
+- (void)setDefaultDirectoryIndex:(int)defaultDirectoryIndex {
+	[self setObject:[NSNumber numberWithInt:defaultDirectoryIndex] forKey:SBDefaultDirectoryIndexKey];
+}
+
+#pragma mark - Settings
 - (NSMutableArray*)getInitialQualities {
-	NSArray *iq = [self objectForKey:InitialQualitiesKey];
+	NSArray *iq = [self objectForKey:SBInitialQualitiesKey];
 	
 	if (!iq) {
 		iq = [NSArray array];
@@ -63,12 +89,12 @@ NSString *const StatusKey = @"status_key";
 }
 
 - (void)setInitialQualities:(NSMutableArray *)initialQualities {
-	[self setObject:initialQualities forKey:InitialQualitiesKey];
+	[self setObject:initialQualities forKey:SBInitialQualitiesKey];
 }
 
 // archive qualities
 - (NSMutableArray*)getArchiveQualities {
-	NSArray *aq = [self objectForKey:ArchiveQualitiesKey];
+	NSArray *aq = [self objectForKey:SBArchiveQualitiesKey];
 	
 	if (!aq) {
 		aq = [NSArray array];
@@ -78,25 +104,25 @@ NSString *const StatusKey = @"status_key";
 }
 
 - (void)setArchiveQualities:(NSMutableArray *)archiveQualities {
-	[self setObject:archiveQualities forKey:ArchiveQualitiesKey];
+	[self setObject:archiveQualities forKey:SBArchiveQualitiesKey];
 }
 
 // status
 - (NSString*)getStatus {
-	return [self stringForKey:StatusKey];
+	return [self stringForKey:SBStatusKey];
 }
 
 - (void)setStatus:(NSString *)status {
-	[self setObject:status forKey:StatusKey];
+	[self setObject:status forKey:SBStatusKey];
 }
 
 // season folders
 - (BOOL)getUseSeasonFolders {
-	return [self boolForKey:UseSeasonFoldersKey];
+	return [self boolForKey:SBUseSeasonFoldersKey];
 }
 
 - (void)setUseSeasonFolders:(BOOL)val {
-	[self setBool:val forKey:UseSeasonFoldersKey];
+	[self setBool:val forKey:SBUseSeasonFoldersKey];
 }
 
 

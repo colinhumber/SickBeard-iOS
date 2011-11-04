@@ -38,16 +38,24 @@
 	[refreshHeader refreshLastUpdatedDate];
 }
 
-
-- (void)viewDidAppear:(BOOL)animated {
-	if ([NSUserDefaults standardUserDefaults].serverHasBeenSetup) {
-		[shows removeAllObjects];
-		
-		if (!shows) {
-			[self loadData];
-		}
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	if ([self tableView:self.tableView numberOfRowsInSection:0] > 0) {
+		[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
+	}
+	else {
+		if ([NSUserDefaults standardUserDefaults].serverHasBeenSetup) {
+			if (!shows) {
+				[shows removeAllObjects];
+				[self loadData];
+			}
+		}		
 	}
 }
+
+//- (void)viewDidAppear:(BOOL)animated {
+//}
 
 - (void)viewDidUnload
 {

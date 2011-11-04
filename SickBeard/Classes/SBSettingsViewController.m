@@ -50,23 +50,15 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-
-	NSArray *initialQualities = [NSUserDefaults standardUserDefaults].initialQualities;
-	NSArray *archiveQualities = [NSUserDefaults standardUserDefaults].archiveQualities;
-	NSString *status = [NSUserDefaults standardUserDefaults].status;
 	
-	self.initialQualityLabel.text = [NSString stringWithFormat:@"%d", initialQualities.count];
-	self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", archiveQualities.count];
-	self.statusLabel.text = status;
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		
+	self.initialQualityLabel.text = [NSString stringWithFormat:@"%d", defaults.initialQualities.count];
+	self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", defaults.archiveQualities.count];
+	self.statusLabel.text = defaults.status;
+	self.seasonFolderSwitch.on = defaults.useSeasonFolders;
 }
 
 - (void)viewDidUnload
@@ -112,6 +104,10 @@
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)seasonFolderSwitched:(id)sender {
+	[NSUserDefaults standardUserDefaults].useSeasonFolders = self.seasonFolderSwitch.on; 
+}
+
 #pragma mark - Quality and Status
 - (void)statusViewController:(SBStatusViewController *)controller didSelectStatus:(NSString *)stat {
 	[NSUserDefaults standardUserDefaults].status = stat;
@@ -120,7 +116,6 @@
 
 - (void)qualityViewController:(SBQualityViewController *)controller didSelectQualities:(NSMutableArray *)qualities {
 	if (controller.qualityType == QualityTypeInitial) {
-		//initialQualities = [qualities retain];
 		[NSUserDefaults standardUserDefaults].initialQualities = qualities;
 		self.initialQualityLabel.text = [NSString stringWithFormat:@"%d", qualities.count];
 	}

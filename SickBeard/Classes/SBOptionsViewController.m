@@ -34,12 +34,14 @@
 	
 	if ([segue.identifier isEqualToString:@"InitialQualitySegue"]) {
 		SBQualityViewController *vc = segue.destinationViewController;
+		vc.title = @"Initial Quality";
 		vc.qualityType = QualityTypeInitial;
 		vc.delegate = self;
 		vc.currentQuality = initialQualities;
 	}
 	else if ([segue.identifier isEqualToString:@"ArchiveQualitySegue"]) {
 		SBQualityViewController *vc = segue.destinationViewController;
+		vc.title = @"Archive Quality";
 		vc.qualityType = QualityTypeArchive;
 		vc.delegate = self;
 		vc.currentQuality = archiveQualities;
@@ -51,52 +53,30 @@
 	}
 }
 
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
-
 #pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
 	self.hud = [[ATMHud alloc] init];
 	[self.view addSubview:self.hud.view];
 
-	initialQualities = [NSUserDefaults standardUserDefaults].initialQualities;
-	archiveQualities = [NSUserDefaults standardUserDefaults].archiveQualities;
-	status = [[NSUserDefaults standardUserDefaults].status copy];
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
+	int defaultDirectoryIndex = defaults.defaultDirectoryIndex;
+	NSArray *defaultDirs = defaults.defaultDirectories;
+	
+	if (defaultDirectoryIndex >= 0 && defaultDirectoryIndex < defaultDirs.count) {
+		locationTextField.text = [defaultDirs objectAtIndex:defaultDirectoryIndex];
+	}
+	
+	initialQualities = defaults.initialQualities;
+	archiveQualities = defaults.archiveQualities;
+	status = defaults.status;
 	
 	self.initialQualityLabel.text = [NSString stringWithFormat:@"%d", initialQualities.count];
 	self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", archiveQualities.count];
 	self.statusLabel.text = status;
+	self.seasonFolderSwitch.on = defaults.useSeasonFolders;
 	
-	self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" 
-																			  style:UIBarButtonItemStyleBordered 
-																			 target:nil 
-																			 action:nil];
-
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidUnload
@@ -105,12 +85,10 @@
 	self.archiveQualityLabel = nil;
 	self.statusLabel = nil;
 	self.locationTextField = nil;
+	self.seasonFolderSwitch = nil;
 	
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -144,29 +122,26 @@
 										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
-											  
-											  dispatch_async(dispatch_get_main_queue(), ^{
-												  if ([result isEqualToString:RESULT_SUCCESS]) {
-													  [self.hud setCaption:@"Show has been added"];
-													  [self.hud setActivity:NO];
-													  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
-													  [self.hud update];
-													  
-													  [self.hud hideAfter:2];
-													  
-													  RunAfterDelay(3, ^{
-														  [self dismissViewControllerAnimated:YES completion:nil];
-													  });
-												  }
-												  else {
-													  [self.hud setCaption:[JSON objectForKey:@"message"]];
-													  [self.hud setActivity:NO];
-													  [self.hud setImage:[UIImage imageNamed:@"11-x"]];
-													  [self.hud update];
-													  
-													  [self.hud hideAfter:2];
-												  }
-											  });
+											  if ([result isEqualToString:RESULT_SUCCESS]) {
+												  [self.hud setCaption:@"Show has been added"];
+												  [self.hud setActivity:NO];
+												  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
+												  [self.hud update];
+												  
+												  [self.hud hideAfter:2];
+												  
+												  RunAfterDelay(3, ^{
+													  [self dismissViewControllerAnimated:YES completion:nil];
+												  });
+											  }
+											  else {
+												  [self.hud setCaption:[JSON objectForKey:@"message"]];
+												  [self.hud setActivity:NO];
+												  [self.hud setImage:[UIImage imageNamed:@"11-x"]];
+												  [self.hud update];
+												  
+												  [self.hud hideAfter:2];
+											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error searching for show" 
@@ -174,7 +149,6 @@
 															  buttonTitle:@"OK"];											  
 											  
 										  }];
-
 }
 
 #pragma mark - Quality and Status
@@ -191,6 +165,56 @@
 	else if (controller.qualityType == QualityTypeArchive) {
 		archiveQualities = qualities;
 		self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", archiveQualities.count];
+	}
+}
+
+#pragma mark - UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
+	if (indexPath.section == 2 && indexPath.row == 0) {
+		[self.hud setCaption:@"Saving defaults..."];
+		[self.hud setActivity:YES];
+		[self.hud show];
+		
+		NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+								[NSString stringWithFormat:@"%d", seasonFolderSwitch.on], @"season_folder",
+								[[SBGlobal qualitiesAsCodes:initialQualities] componentsJoinedByString:@"|"], @"initial",
+								[[SBGlobal qualitiesAsCodes:archiveQualities] componentsJoinedByString:@"|"], @"archive",
+								[status lowercaseString], @"status",
+								nil];
+		
+		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandSetDefaults 
+										   parameters:params 
+											  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+												  NSString *result = [JSON objectForKey:@"result"];
+												  
+												  if ([result isEqualToString:RESULT_SUCCESS]) {
+													  [self.hud hide];
+
+													  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+													  defaults.useSeasonFolders = seasonFolderSwitch.on;
+													  defaults.initialQualities = initialQualities;
+													  defaults.archiveQualities = archiveQualities;
+													  defaults.status = status;
+													  
+													  [defaults synchronize];
+												  }
+												  else {
+													  [self.hud setCaption:[JSON objectForKey:@"message"]];
+													  [self.hud setActivity:NO];
+													  [self.hud setImage:[UIImage imageNamed:@"11-x"]];
+													  [self.hud update];
+													  
+													  [self.hud hideAfter:2];
+												  }
+											  }
+											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+												  [PRPAlertView showWithTitle:@"Error saving defaults" 
+																	  message:[NSString stringWithFormat:@"Could not save defaults. \n%@", error.localizedDescription] 
+																  buttonTitle:@"OK"];											  
+												  
+											  }];	
 	}
 }
 

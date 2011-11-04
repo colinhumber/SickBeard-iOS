@@ -18,5 +18,6 @@
 @property (nonatomic, strong) IBOutlet UISwitch *seasonFolderSwitch;
 
 - (IBAction)done:(id)sender;
+- (IBAction)seasonFolderSwitched:(id)sender;
 
 @end

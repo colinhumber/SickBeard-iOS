@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SBGlobal.h"
 
 @class SBServer;
 

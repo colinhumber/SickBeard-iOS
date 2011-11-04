@@ -103,4 +103,18 @@
 	return list;
 }
 
++ (NSArray*)qualitiesFromCodes:(NSArray*)codes {
+	NSDictionary *dict = [self initialQualities];
+	NSMutableArray *list = [NSMutableArray array];
+	
+	for (NSString *code in codes) {
+		NSArray *keys = [dict allKeysForObject:code];
+		if (keys.count > 0) {
+			[list addObject:[keys objectAtIndex:0]];
+		}
+	}
+	
+	return list;
+}
+
 @end

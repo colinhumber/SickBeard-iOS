@@ -59,14 +59,6 @@
 
 #pragma mark - View lifecycle
 
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-}
-*/
-
-
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	currentLanguage = @"English";
@@ -74,11 +66,6 @@
 	self.hud = [[ATMHud alloc] init];
 	[self.view addSubview:self.hud.view];
 	
-	self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" 
-																			 style:UIBarButtonItemStyleBordered 
-																			target:nil 
-																			action:nil];
-
     [super viewDidLoad];
 }
 
@@ -214,7 +201,6 @@
 	UITableViewCell *cell = nil;
 	
 	if (indexPath.section == 0) {
-		
 		if (indexPath.row == 0) {
 			cell = [tv dequeueReusableCellWithIdentifier:@"ShowNameCell"];
 //			cell.textLabel.text = @"Show Name";
@@ -237,11 +223,15 @@
 		if (results.count == 0) {
 			cell.textLabel.text = @"No results found";
 			cell.detailTextLabel.text = nil;
+			cell.selectionStyle = UITableViewCellSelectionStyleNone;
+			cell.accessoryType = UITableViewCellAccessoryNone;
 		}
 		else {
 			NSArray *result = [results objectAtIndex:indexPath.row];
 			
 			cell.textLabel.text = [result objectAtIndex:1];
+			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			
 			id airDate = [result objectAtIndex:2];
 			if (airDate == [NSNull null]) {
@@ -264,6 +254,11 @@
 	
 	if (indexPath.section == 0 && indexPath.row == 1) {
 		[self showPicker];
+	}
+	else if (indexPath.section == 1) {
+		if (results.count > 0) {
+			[self performSegueWithIdentifier:@"AddNewShowSegue" sender:nil];
+		}
 	}
 }
 

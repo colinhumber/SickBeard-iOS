@@ -73,11 +73,11 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ResultCell" textLabel="96d-I6-cBU" detailTextLabel="RWq-1r-ZEm" style="IBUITableViewCellStyleSubtitle" id="94X-A5-dM7">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ResultCell" textLabel="96d-I6-cBU" detailTextLabel="RWq-1r-ZEm" style="IBUITableViewCellStyleSubtitle" id="94X-A5-dM7">
                                         <rect key="frame" x="0.0" y="135" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="280" height="43"/>
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="96d-I6-cBU">
@@ -99,9 +99,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="8CS-fZ-XoI" kind="push" identifier="AddNewShowSegue" id="DFU-RA-ZqM"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -135,6 +132,7 @@
                     <connections>
                         <outlet property="languagePickerView" destination="JRe-J2-V5a" id="IK1-c0-JqY"/>
                         <outlet property="tableView" destination="bpW-BE-CNi" id="iPp-rg-06X"/>
+                        <segue destination="8CS-fZ-XoI" kind="push" identifier="AddNewShowSegue" id="ZYZ-dy-FkD"/>
                     </connections>
                 </viewController>
             </objects>
@@ -291,6 +289,29 @@
                                         <connections>
                                             <segue destination="Ldx-8w-YRi" kind="push" identifier="StatusSegue" id="EkL-F6-03e"/>
                                         </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="iTI-sF-xht">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="bgZ-Ag-Cp9">
+                                        <rect key="frame" x="0.0" y="336" width="320" height="46"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Save Defaults" lineBreakMode="tailTruncation" minimumFontSize="10" id="8qk-pE-KOG">
+                                                    <rect key="frame" x="97" y="11" width="106" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.039096853220244365" green="0.31267503209297742" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -723,8 +744,8 @@
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Achive Quality" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gHM-4W-Of9">
-                                                    <rect key="frame" x="10" y="11" width="119" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Archive Quality" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gHM-4W-Of9">
+                                                    <rect key="frame" x="10" y="11" width="125" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -764,6 +785,9 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="bap-VF-eZb">
                                                     <rect key="frame" x="214" y="8" width="79" height="27"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <action selector="seasonFolderSwitched:" destination="5RA-bj-G0o" eventType="valueChanged" id="0as-n9-aJ1"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -910,7 +934,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="1234" textAlignment="right" minimumFontSize="17" id="Wbd-jZ-YuY">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="8081" textAlignment="right" minimumFontSize="17" id="Wbd-jZ-YuY">
                                                     <rect key="frame" x="113" y="6" width="173" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" red="0.0" green="0.20850745130000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -997,7 +1021,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="1234" textAlignment="right" minimumFontSize="17" id="YpL-QH-EMT">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="abc123" textAlignment="right" minimumFontSize="17" id="YpL-QH-EMT">
                                                     <rect key="frame" x="113" y="6" width="173" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" red="0.0" green="0.20850745130000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1214,6 +1238,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBSettingsViewController.h"/>
             <relationships>
                 <relationship kind="action" name="done:"/>
+                <relationship kind="action" name="seasonFolderSwitched:"/>
                 <relationship kind="outlet" name="archiveQualityLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="initialQualityLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="seasonFolderSwitch" candidateClass="UISwitch"/>
@@ -1249,7 +1274,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="dJu-WC-i9c"/>
-        <segue reference="WEB-uB-B40"/>
+        <segue reference="DC6-hr-mgE"/>
+        <segue reference="EkL-F6-03e"/>
     </inferredMetricsTieBreakers>
 </document>
