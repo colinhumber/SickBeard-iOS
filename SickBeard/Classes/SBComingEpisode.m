@@ -44,7 +44,7 @@
 }
 
 + (id)itemWithDictionary:(NSDictionary*)dict {
-	return [[[self alloc] initWithDictionary:dict] autorelease];
+	return [[self alloc] initWithDictionary:dict];
 }
 
 - (NSString*)bannerUrlPath {
@@ -56,17 +56,5 @@
 }
 
 
-- (void)dealloc {
-	[airDate release];
-	[airs release];
-	[name release];
-	[network release];
-	[quality release];
-	[showName release];
-	[showStatus release];
-	[tvdbID release];
-	[weekday release];
-	[super dealloc];
-}
 
 @end

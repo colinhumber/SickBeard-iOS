@@ -36,7 +36,7 @@
 		params = [NSMutableDictionary dictionaryWithCapacity:1];
 	}
 	else {
-		params = [[params mutableCopy] autorelease];
+		params = [params mutableCopy];
 	}
 	
 	[params setValue:commandString forKey:@"cmd"];

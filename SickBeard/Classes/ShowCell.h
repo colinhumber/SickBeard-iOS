@@ -10,7 +10,7 @@
 
 @interface ShowCell : UITableViewCell
 
-@property (nonatomic, retain) IBOutlet UIImageView *posterImageView;
-@property (nonatomic, retain) IBOutlet UILabel *showNameLabel;
+@property (nonatomic, strong) IBOutlet UIImageView *posterImageView;
+@property (nonatomic, strong) IBOutlet UILabel *showNameLabel;
 
 @end

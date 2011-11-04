@@ -14,8 +14,8 @@
 	BOOL isSearching;
 }
 
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) IBOutlet UIPickerView *languagePickerView;
-@property (nonatomic, retain) IBOutlet UITextField *showNameTextField;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UIPickerView *languagePickerView;
+@property (nonatomic, strong) IBOutlet UITextField *showNameTextField;
 
 @end

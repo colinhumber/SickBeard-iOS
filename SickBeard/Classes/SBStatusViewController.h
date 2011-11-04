@@ -12,7 +12,7 @@
 
 @interface SBStatusViewController : UITableViewController
 
-@property (nonatomic, assign) id<SBStatusViewControllerDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id<SBStatusViewControllerDelegate> delegate;
 @property (nonatomic, copy) NSString *currentStatus;
 
 @end

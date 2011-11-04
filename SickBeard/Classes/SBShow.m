@@ -49,7 +49,7 @@
 }
 
 + (id)itemWithDictionary:(NSDictionary*)dict {
-	return [[[self alloc] initWithDictionary:dict] autorelease];
+	return [[self alloc] initWithDictionary:dict];
 }
 
 - (NSString*)bannerUrlPath {
@@ -60,11 +60,5 @@
 	return [NSString stringWithFormat:@"showPoster/?show=%@&which=poster", self.tvdbID];
 }
 
-- (void)dealloc {
-	[tvdbID release];
-	[languageCode release];
-	[showName release];
-	[super dealloc];
-}
 
 @end

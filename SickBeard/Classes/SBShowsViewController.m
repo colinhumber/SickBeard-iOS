@@ -8,7 +8,6 @@
 
 #import "SBShowsViewController.h"
 #import "SickbeardAPIClient.h"
-#import "ATMHud.h"
 #import "SBShow.h"
 #import "PRPAlertView.h"
 #import "SBShowDetailsViewController.h"
@@ -16,15 +15,9 @@
 #import "UIImageView+AFNetworking.h"
 #import "ShowCell.h"
 
-@interface SBShowsViewController()
-@property (nonatomic, retain) ATMHud *hud;
-@end
-
-
 @implementation SBShowsViewController
 
 @synthesize tableView;
-@synthesize hud;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([segue.identifier isEqualToString:@"ShowDetailsSegue"]) {
@@ -33,71 +26,26 @@
 	}
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-	}
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
-- (void)dealloc {
-	[shows release];
-	[tableView release];
-	[super dealloc];
-}
-
 #pragma mark - View lifecycle
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
-	shows = [[NSMutableArray alloc] init];
-
+- (void)viewDidLoad {
     [super viewDidLoad];
+
+	refreshHeader = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
+	refreshHeader.delegate = self;
+	[self.tableView addSubview:refreshHeader];
+	[refreshHeader refreshLastUpdatedDate];
 }
 
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
 	if ([NSUserDefaults standardUserDefaults].serverHasBeenSetup) {
 		[shows removeAllObjects];
 		
-		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShows 
-										   parameters:nil 
-											  success:^(id JSON) {
-												  NSString *result = [JSON objectForKey:@"result"];
-												  
-												  if ([result isEqualToString:RESULT_SUCCESS]) {
-													  NSDictionary *dataDict = [JSON objectForKey:@"data"];
-													  
-													  for (NSString *key in [dataDict allKeys]) {
-														  SBShow *show = [SBShow itemWithDictionary:[dataDict objectForKey:key]];
-														  show.tvdbID = key;
-														  [shows addObject:show];
-													  }
-												  }
-												  else {
-													  [PRPAlertView showWithTitle:@"Error retrieving shows" 
-																		  message:[JSON objectForKey:@"message"] 
-																	  buttonTitle:@"OK"];
-												  }
-												  
-												  [self.tableView reloadData];
-											  }
-											  failure:^(NSError *error) {
-												  [PRPAlertView showWithTitle:@"Error retrieving shows" 
-																	  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
-																  buttonTitle:@"OK"];											  
-											  }];
+		if (!shows) {
+			[self loadData];
+		}
 	}
 }
 
@@ -115,9 +63,84 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Actions
-- (IBAction)addShow {
+#pragma mark - Loading
+- (void)loadData {
+	[super loadData];
 	
+	[self.hud setActivity:YES];
+	[self.hud setCaption:@"Loading shows..."];
+	[self.hud show];
+	
+	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShows 
+									   parameters:nil 
+										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+											  NSString *result = [JSON objectForKey:@"result"];
+											  
+											  if ([result isEqualToString:RESULT_SUCCESS]) {
+												  shows = [[NSMutableArray alloc] init];
+												  
+												  NSDictionary *dataDict = [JSON objectForKey:@"data"];
+												  
+												  if (dataDict.allKeys.count > 0) {
+													  for (NSString *key in [dataDict allKeys]) {
+														  SBShow *show = [SBShow itemWithDictionary:[dataDict objectForKey:key]];
+														  show.tvdbID = key;
+														  [shows addObject:show];
+													  }
+												  }
+												  else {
+													  NSLog(@"No shows");
+												  }
+											  }
+											  else {
+												  [PRPAlertView showWithTitle:@"Error retrieving shows" 
+																	  message:[JSON objectForKey:@"message"] 
+																  buttonTitle:@"OK"];
+											  }
+										
+											  [self finishDataLoad:nil];
+											  [self.tableView reloadData];
+											  [refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+										  }
+										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
+																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
+															  buttonTitle:@"OK"];			
+											  
+											  [self finishDataLoad:error];
+											  [refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+										  }];
+}
+
+#pragma mark - UIScrollViewDelegate Methods
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {	
+	[refreshHeader egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+	[refreshHeader egoRefreshScrollViewDidEndDragging:scrollView];	
+}
+
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view {	
+	[self loadData];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view {	
+	return self.isDataLoading; // should return if data source model is reloading
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view {
+	return self.loadDate; // should return date data source was last changed
+}
+
+
+#pragma mark - Actions
+- (void)addShow {
+	[self performSegueWithIdentifier:@"AddShowSegue" sender:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -135,10 +158,7 @@
 	cell.showNameLabel.text = show.showName;
 	
 	[cell.posterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] createUrlWithEndpoint:show.posterUrlPath] 
-				   placeholderImage:nil
-						  imageSize:CGSizeMake(55, 55)
-							options:AFImageRequestRoundCorners
-							  block:nil];	
+				   placeholderImage:nil];	
 	
 	return cell;
 }

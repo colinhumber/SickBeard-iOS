@@ -30,7 +30,7 @@ typedef enum {
 @property (nonatomic, assign) EpisodeStatus status;
 @property (nonatomic, assign) int season;
 @property (nonatomic, assign) int number;
-@property (nonatomic, retain) SBShow *show;
+@property (nonatomic, strong) SBShow *show;
 
 + (NSString*)episodeStatusAsString:(EpisodeStatus)status;
 

@@ -18,12 +18,12 @@
 	NSString *status;
 }
 
-@property (nonatomic, retain) SBShow *show;
-@property (nonatomic, retain) IBOutlet UITextField *locationTextField;
-@property (nonatomic, retain) IBOutlet UILabel *initialQualityLabel;
-@property (nonatomic, retain) IBOutlet UILabel *archiveQualityLabel;
-@property (nonatomic, retain) IBOutlet UILabel *statusLabel;
-@property (nonatomic, retain) IBOutlet UISwitch *seasonFolderSwitch;
+@property (nonatomic, strong) SBShow *show;
+@property (nonatomic, strong) IBOutlet UITextField *locationTextField;
+@property (nonatomic, strong) IBOutlet UILabel *initialQualityLabel;
+@property (nonatomic, strong) IBOutlet UILabel *archiveQualityLabel;
+@property (nonatomic, strong) IBOutlet UILabel *statusLabel;
+@property (nonatomic, strong) IBOutlet UISwitch *seasonFolderSwitch;
 
 
 @end

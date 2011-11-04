@@ -50,10 +50,9 @@
           cancelBlock:(PRPAlertBlock)cancelBlk
            otherTitle:(NSString *)otherTitle
            otherBlock:(PRPAlertBlock)otherBlk {
-    [[[[self alloc] initWithTitle:title message:message
+    [[[self alloc] initWithTitle:title message:message
                       cancelTitle:cancelTitle cancelBlock:cancelBlk
-                       otherTitle:otherTitle otherBlock:otherBlk]
-      autorelease] show];                           
+                       otherTitle:otherTitle otherBlock:otherBlk] show];                           
 }
 // END:ShowWithTitle
 
@@ -96,11 +95,10 @@ willDismissWithButtonIndex:(NSInteger)buttonIndex {
 // END:DelegateImpl
 
 - (void)dealloc {
-    [cancelButtonTitle release], cancelButtonTitle = nil;
-    [otherButtonTitle release], otherButtonTitle = nil;
-    [cancelBlock release], cancelBlock = nil;
-    [otherBlock release], otherBlock = nil;
-    [super dealloc];
+    cancelButtonTitle = nil;
+    otherButtonTitle = nil;
+    cancelBlock = nil;
+    otherBlock = nil;
 }
 
 @end

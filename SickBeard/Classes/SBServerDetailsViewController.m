@@ -17,7 +17,7 @@
 @interface SBServerDetailsViewController()
 - (void)updateServerValues;
 
-@property (nonatomic, retain) ATMHud *hud;
+@property (nonatomic, strong) ATMHud *hud;
 @end
 
 @implementation SBServerDetailsViewController
@@ -41,19 +41,6 @@
     return self;
 }
 
-- (void)dealloc {
-	[currentResponder release];
-	[server release];
-    [nameTextField release];
-    [hostTextField release];
-    [portTextField release];
-    [usernameTextField release];
-    [passwordTextField release];
-    [apiKeyTextField release];
-//	[managedObjectContext release];
-	[hud release];
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -69,12 +56,13 @@
 {
     [super viewDidLoad];
 
+	self.title = @"Server";
+
 	if (![NSUserDefaults standardUserDefaults].serverHasBeenSetup) {
-		self.title = @"Setup Server";
-		self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Done" 
+		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" 
 																				   style:UIBarButtonItemStyleDone 
 																				  target:self 
-																				  action:@selector(saveServer)] autorelease];
+																				  action:@selector(saveServer)];
 	}
 	
 	self.server = [NSUserDefaults standardUserDefaults].server;
@@ -87,11 +75,6 @@
 		passwordTextField.text = server.password;
 		apiKeyTextField.text = server.apiKey;
 	}
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidUnload
@@ -150,7 +133,7 @@
 
 - (void)saveServer {
 	if (!server) {
-		self.server = [[[SBServer alloc] init] autorelease];
+		self.server = [[SBServer alloc] init];
 	}
 	
 	[self updateServerValues];
@@ -255,7 +238,7 @@
 	else {
 		if (indexPath.row == 0) {
 			if (!server) {
-				self.server = [[[SBServer alloc] init] autorelease];
+				self.server = [[SBServer alloc] init];
 			}
 			
 			[self updateServerValues];
@@ -276,7 +259,7 @@
 				
 				[self.hud show];
 				[[SickbeardAPIClient sharedClient] pingServer:server
-													  success:^(id JSON) {
+													  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 														  if ([JSON valueForKeyPath:@"result"]) {
 															  [self.hud setCaption:@"Server is up!"];
 															  [self.hud setActivity:NO];
@@ -287,7 +270,7 @@
 															  [self performSelector:@selector(setHud:) withObject:nil afterDelay:4.0];
 														  }
 													  }
-													  failure:^(NSError *error) {
+													  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 														  [self.hud setCaption:[NSString stringWithFormat:@"Unable to connect to Sick Beard at %@", server.serviceEndpointPath]];
 														  [self.hud setActivity:NO];
 														  [self.hud update];

@@ -10,12 +10,12 @@
 
 @interface SBServer : NSObject <NSCoding>
 
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *host;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *host;
 @property (nonatomic, assign) int port;
-@property (nonatomic, retain) NSString *username;
-@property (nonatomic, retain) NSString *apiKey;
-@property (nonatomic, retain) NSString *password;
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *apiKey;
+@property (nonatomic, strong) NSString *password;
 @property (nonatomic, assign) BOOL isCurrent;
 
 - (BOOL)isValid;

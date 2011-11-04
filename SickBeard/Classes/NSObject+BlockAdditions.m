@@ -26,29 +26,29 @@
 
 void RunInBackground(BasicBlock block)
 {
-    [NSThread detachNewThreadSelector: @selector(my_callBlock) toTarget: [[block copy] autorelease] withObject: nil];
+    [NSThread detachNewThreadSelector: @selector(my_callBlock) toTarget: [block copy] withObject: nil];
 }
 
 void RunOnMainThread(BOOL wait, BasicBlock block)
 {
-    [[[block copy] autorelease] performSelectorOnMainThread: @selector(my_callBlock) withObject: nil waitUntilDone: wait];
+    [[block copy] performSelectorOnMainThread: @selector(my_callBlock) withObject: nil waitUntilDone: wait];
 }
 
 void RunOnThread(NSThread *thread, BOOL wait, BasicBlock block)
 {
-    [[[block copy] autorelease] performSelector: @selector(my_callBlock) onThread: thread withObject: nil waitUntilDone: wait];
+    [[block copy] performSelector: @selector(my_callBlock) onThread: thread withObject: nil waitUntilDone: wait];
 }
 
 void RunAfterDelay(NSTimeInterval delay, BasicBlock block)
 {
-    [[[block copy] autorelease] performSelector: @selector(my_callBlock) withObject: nil afterDelay: delay];
+    [[block copy] performSelector: @selector(my_callBlock) withObject: nil afterDelay: delay];
 }
 
 void WithAutoreleasePool(BasicBlock block)
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    block();
-    [pool release];
+    @autoreleasepool {
+        block();
+    }
 }
 
 void Parallelized(int count, void (^block)(int i))

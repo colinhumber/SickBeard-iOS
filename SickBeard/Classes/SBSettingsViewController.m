@@ -36,17 +36,8 @@
 	else if ([identifier isEqualToString:@"ServerSegue"]) {
 		
 	}
-
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -56,13 +47,6 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)dealloc {
-	self.initialQualityLabel = nil;
-	self.archiveQualityLabel = nil;
-	self.statusLabel = nil;
-	self.seasonFolderSwitch = nil;
-	[super dealloc];
-}
 
 #pragma mark - View lifecycle
 
@@ -123,6 +107,10 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - Actions
+- (IBAction)done:(id)sender {
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark - Quality and Status
 - (void)statusViewController:(SBStatusViewController *)controller didSelectStatus:(NSString *)stat {

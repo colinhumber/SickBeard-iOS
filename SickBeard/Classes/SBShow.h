@@ -25,8 +25,8 @@ typedef enum {
 @property (nonatomic, assign) BOOL isPaused;
 @property (nonatomic, assign) ShowQuality quality;
 @property (nonatomic, copy) NSString *showName;
-@property (nonatomic, readonly) NSString *bannerUrlPath;
-@property (nonatomic, readonly) NSString *posterUrlPath;
+@property (weak, nonatomic, readonly) NSString *bannerUrlPath;
+@property (weak, nonatomic, readonly) NSString *posterUrlPath;
 
 
 @end

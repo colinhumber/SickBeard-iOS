@@ -57,7 +57,7 @@
 }
 
 + (id)itemWithDictionary:(NSDictionary*)dict {
-	return [[[self alloc] initWithDictionary:dict] autorelease];
+	return [[self alloc] initWithDictionary:dict];
 }
 
 - (NSString*)description {
@@ -89,13 +89,5 @@
 	}
 }
 
-- (void)dealloc {
-	[airDate release];
-	[episodeDescription release];
-	[location release];
-	[name release];
-	[show release];
-	[super dealloc];
-}
 
 @end

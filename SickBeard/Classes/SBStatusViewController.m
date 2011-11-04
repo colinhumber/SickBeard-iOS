@@ -32,9 +32,7 @@
 }
 
 - (void)dealloc {
-	self.currentStatus = nil;
 	self.delegate = nil;
-	[super dealloc];
 }
 
 #pragma mark - View lifecycle

@@ -15,7 +15,7 @@
 	OrderedDictionary *seasons;
 }
 
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) SBShow *show;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) SBShow *show;
 
 @end

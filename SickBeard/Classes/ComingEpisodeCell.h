@@ -10,9 +10,9 @@
 
 @interface ComingEpisodeCell : UITableViewCell
 
-@property (nonatomic, retain) IBOutlet UIImageView *bannerImageView;
-@property (nonatomic, retain) IBOutlet UILabel *episodeNameLabel;
-@property (nonatomic, retain) IBOutlet UILabel *seasonEpisodeLabel;
-@property (nonatomic, retain) IBOutlet UILabel *airDateLabel;
+@property (nonatomic, strong) IBOutlet UIImageView *bannerImageView;
+@property (nonatomic, strong) IBOutlet UILabel *episodeNameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *seasonEpisodeLabel;
+@property (nonatomic, strong) IBOutlet UILabel *airDateLabel;
 
 @end

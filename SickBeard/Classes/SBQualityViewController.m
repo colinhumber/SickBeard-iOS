@@ -33,10 +33,7 @@
 }
 
 - (void)dealloc {
-	[qualities release];
-	self.currentQuality = nil;
 	self.delegate = nil;
-	[super dealloc];
 }
 
 #pragma mark - View lifecycle
@@ -46,10 +43,10 @@
     [super viewDidLoad];
 	
 	if (qualityType == QualityTypeInitial) {
-		qualities = [[[SBGlobal initialQualities] allKeys] retain];
+		qualities = [[SBGlobal initialQualities] allKeys];
 	}
 	else if (qualityType == QualityTypeArchive) {
-		qualities = [[[SBGlobal archiveQualities] allKeys] retain];	
+		qualities = [[SBGlobal archiveQualities] allKeys];	
 	}
 }
 

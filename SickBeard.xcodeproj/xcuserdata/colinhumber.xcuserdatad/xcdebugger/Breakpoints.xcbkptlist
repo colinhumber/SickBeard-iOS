@@ -17,21 +17,15 @@
          landmarkName = "-qualityViewController:didSelectQualities:"
          landmarkType = "5">
       </FileBreakpoint>
-      <FileBreakpoint
+   </FileBreakpoints>
+   <SymbolicBreakpoints>
+      <AddressBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "SickBeard/Classes/SBQualityViewController.m"
-         timestampString = "337837648.406489"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "123"
-         endingLineNumber = "123"
-         landmarkName = "-tableView:didSelectRowAtIndexPath:"
-         landmarkType = "5">
-      </FileBreakpoint>
-   </FileBreakpoints>
+         symbolName = "*0x8fe48e21">
+      </AddressBreakpoint>
+   </SymbolicBreakpoints>
    <ExceptionBreakpoints>
       <ExceptionBreakpoint
          shouldBeEnabled = "Yes"

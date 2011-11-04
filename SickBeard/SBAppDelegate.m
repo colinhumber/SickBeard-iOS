@@ -11,6 +11,7 @@
 #import "SBServerDetailsViewController.h"
 #import "SickbeardAPIClient.h"
 #import "TestFlight.h"
+#import "SDURLCache.h"
 
 @implementation SBAppDelegate
 
@@ -33,9 +34,8 @@
 	}
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-	[TestFlight takeOff:@"1UXYHxdTJuVnGyhcnnzVJskFbBD6NeEKllTqI8JUjJQ"];
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	[TestFlight takeOff:@"9677d08cdc79deabbe7610f9edb5b4f9_MzY5MTgyMDExLTEwLTI1IDIyOjUwOjMxLjg0Mjg3OA"];
 	[self registerDefaults];
     // Override point for customization after application launch.
 
@@ -43,6 +43,11 @@
 //	manager.appId = @"4c96130105e369267a20b54e";
 //	manager.secretKey = @"c82fb6f8cc24d58b27f1fd0d4758363ea61fa63d89d195f61a75c39f32ee3ceb4cc4336191";
 
+	SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024   // 1MB mem cache
+														 diskCapacity:1024*1024*5 // 5MB disk cache
+															 diskPath:[SDURLCache defaultCachePath]];
+	[NSURLCache setSharedURLCache:urlCache];
+	
 	SBServer *server = [NSUserDefaults standardUserDefaults].server;
 	
 	if (!server) {
@@ -52,7 +57,7 @@
 		SBServerDetailsViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"SBServerDetailsViewController"];
 //		vc.managedObjectContext = self.managedObjectContext;
 		
-		UINavigationController *nav = [[[UINavigationController alloc] initWithRootViewController:vc] autorelease];
+		UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
 		
 		[self.window.rootViewController presentViewController:nav animated:NO completion:nil];
 	}
@@ -82,14 +87,6 @@
 //	}
 
     return YES;
-}
-
-- (void)dealloc {
-	[_window release];
-//	[__managedObjectContext release];
-//	[__managedObjectModel release];
-//	[__persistentStoreCoordinator release];
-	[super dealloc];
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

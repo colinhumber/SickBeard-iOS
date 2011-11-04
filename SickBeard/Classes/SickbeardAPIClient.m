@@ -17,12 +17,13 @@ NSString *const RESULT_SUCCESS = @"success";
 NSString *const RESULT_FAILURE = @"failure";
 NSString *const RESULT_TIMEOUT = @"timeout";
 NSString *const RESULT_ERROR = @"error";
+NSString *const RESULT_FATAL = @"fatal";
 NSString *const RESULT_DENIED = @"denied";
 
 static SickbeardAPIClient *sharedClient = nil;
 
 @interface SickbeardAPIClient ()
-@property (readwrite, nonatomic, retain) NSOperationQueue *operationQueue;
+@property (readwrite, nonatomic, strong) NSOperationQueue *operationQueue;
 @end
 
 
@@ -46,18 +47,13 @@ static SickbeardAPIClient *sharedClient = nil;
 	self = [super init];
 	
 	if (self) {
-		self.operationQueue = [[[NSOperationQueue alloc] init] autorelease];
+		self.operationQueue = [[NSOperationQueue alloc] init];
 		self.operationQueue.maxConcurrentOperationCount = 2;
 	}
 	
 	return self;
 }
 
-- (void)dealloc {
-	self.operationQueue = nil;
-	self.currentServer = nil;
-	[super dealloc];
-}
 
 - (void)pingServer:(SBServer*)server success:(APISuccessBlock)success failure:(APIErrorBlock)failure {
 	NSAssert(server != nil, @"Server cannot be nil");
@@ -68,7 +64,7 @@ static SickbeardAPIClient *sharedClient = nil;
 
 	NSLog(@"Request created: %@", serverUrl);
 
-	AFJSONRequestOperation *operation = [AFJSONRequestOperation operationWithRequest:request success:success failure:failure];
+	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:success failure:failure];
 	[self.operationQueue addOperation:operation];
 }
 
@@ -85,7 +81,7 @@ static SickbeardAPIClient *sharedClient = nil;
 	
 	NSLog(@"Request created: %@", url);
 	
-	AFJSONRequestOperation *operation = [AFJSONRequestOperation operationWithRequest:request success:success failure:failure];
+	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:success failure:failure];
 	[self.operationQueue addOperation:operation];
 }
 

@@ -7,3 +7,9 @@
 [submodule "SickBeard/JSONKit"]
 	path = SickBeard/JSONKit
 	url = git://github.com/johnezang/JSONKit.git
+[submodule "SickBeard/SDURLCache"]
+	path = SickBeard/SDURLCache
+	url = https://github.com/steipete/SDURLCache.git
+[submodule "SickBeard/EGOTableViewPullRefresh"]
+	path = SickBeard/EGOTableViewPullRefresh
+	url = https://github.com/enormego/EGOTableViewPullRefresh.git

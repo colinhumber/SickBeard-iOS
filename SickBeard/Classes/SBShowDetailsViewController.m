@@ -15,7 +15,6 @@
 #import "OrderedDictionary.h"
 #import "SBEpisodeDetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
-#import "SBGlobal.h"
 
 @implementation SBShowDetailsViewController
 
@@ -61,19 +60,16 @@
 	seasons = [[OrderedDictionary alloc] init];
 	self.title = show.showName;
 	
-	UIImageView *tableHeaderView = [[[UIImageView alloc] init] autorelease];
+	UIImageView *tableHeaderView = [[UIImageView alloc] init];
 	tableHeaderView.frame = CGRectMake(0, 0, 320, 60);
 	[tableHeaderView setImageWithURL:[[SickbeardAPIClient sharedClient] createUrlWithEndpoint:show.bannerUrlPath] 
-					placeholderImage:nil
-						   imageSize:CGSizeMake(640, 120)
-							 options:AFImageRequestDefaultOptions
-							   block:nil];	
+					placeholderImage:nil];	
 	
 	self.tableView.tableHeaderView = tableHeaderView;
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandSeasons
 									   parameters:[NSDictionary dictionaryWithObject:show.tvdbID forKey:@"tvdbid"]
-										  success:^(id JSON) {
+										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -130,7 +126,7 @@
 																  buttonTitle:@"OK"];
 											  }
 										  }
-										  failure:^(NSError *error) {
+										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving show information" 
 																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
 															  buttonTitle:@"OK"];											  
@@ -151,11 +147,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-	[seasons release];
-    [tableView release];
-    [super dealloc];
-}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView {

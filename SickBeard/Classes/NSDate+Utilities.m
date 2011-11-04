@@ -26,7 +26,6 @@
 	[formatter setDateFormat:@"yyyy-MM-dd"];
 	
 	NSDate *d = [formatter dateFromString:string];
-	[formatter release];
 	
 	return d;
 }

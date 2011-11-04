@@ -19,9 +19,9 @@ typedef enum {
 	NSArray *qualities;
 }
 
-@property (nonatomic, assign) id<SBQualityViewControllerDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id<SBQualityViewControllerDelegate> delegate;
 @property (nonatomic, assign) QualityType qualityType;
-@property (nonatomic, retain) NSMutableArray *currentQuality;
+@property (nonatomic, strong) NSMutableArray *currentQuality;
 
 @end
 

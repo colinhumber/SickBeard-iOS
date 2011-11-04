@@ -31,12 +31,5 @@
     // Configure the view for the selected state
 }
 
-- (void)dealloc {
-	[bannerImageView release];
-	[episodeNameLabel release];
-	[seasonEpisodeLabel release];
-	[airDateLabel release];
-	[super dealloc];
-}
 
 @end

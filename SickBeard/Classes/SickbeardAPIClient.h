@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SBGlobal.h"
+
 
 @class SBServer;
 
@@ -15,6 +15,7 @@ extern NSString *const RESULT_SUCCESS;
 extern NSString *const RESULT_FAILURE;
 extern NSString *const RESULT_TIMEOUT;
 extern NSString *const RESULT_ERROR;
+extern NSString *const RESULT_FATAL;
 extern NSString *const RESULT_DENIED;
 
 typedef enum {
@@ -22,8 +23,8 @@ typedef enum {
 	HTTPMethodPOST
 } SBHTTPMethod;
 
-typedef void (^APISuccessBlock)(id JSON);
-typedef void (^APIErrorBlock)(NSError *error);
+typedef void (^APISuccessBlock)(NSURLRequest *request, NSHTTPURLResponse *response, id JSON);
+typedef void (^APIErrorBlock)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error);
 
 @interface SickbeardAPIClient : NSObject
 
@@ -39,6 +40,6 @@ typedef void (^APIErrorBlock)(NSError *error);
 // create URL endpoint directly against the server
 - (NSURL*)createUrlWithEndpoint:(NSString*)endpoint;
 
-@property (nonatomic, retain) SBServer *currentServer;
+@property (nonatomic, strong) SBServer *currentServer;
 
 @end

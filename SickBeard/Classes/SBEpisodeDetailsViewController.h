@@ -12,10 +12,10 @@
 
 @interface SBEpisodeDetailsViewController : UIViewController <UIActionSheetDelegate>
 
-@property (retain, nonatomic) IBOutlet UILabel *titleLabel;
-@property (retain, nonatomic) IBOutlet UILabel *airDateLabel;
-@property (retain, nonatomic) IBOutlet UILabel *seasonLabel;
-@property (retain, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (nonatomic, retain) SBEpisode *episode;
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *airDateLabel;
+@property (strong, nonatomic) IBOutlet UILabel *seasonLabel;
+@property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (nonatomic, strong) SBEpisode *episode;
 
 @end

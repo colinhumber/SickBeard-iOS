@@ -29,10 +29,5 @@
     // Configure the view for the selected state
 }
 
-- (void)dealloc {
-	[posterImageView release];
-	[showNameLabel release];
-	[super dealloc];
-}
 
 @end

@@ -15,7 +15,7 @@
 #import "SBOptionsViewController.h"
 
 @interface SBAddShowViewController()
-@property (nonatomic, retain) ATMHud *hud;
+@property (nonatomic, strong) ATMHud *hud;
 @end
 
 @implementation SBAddShowViewController
@@ -37,7 +37,6 @@
 		show.languageCode = [[SBGlobal validLanguages] objectForKey:currentLanguage];
 		
 		vc.show = show;
-		[show release];
 	}
 }
 
@@ -72,13 +71,13 @@
 - (void)viewDidLoad {
 	currentLanguage = @"English";
 
-	self.hud = [[[ATMHud alloc] init] autorelease];
+	self.hud = [[ATMHud alloc] init];
 	[self.view addSubview:self.hud.view];
 	
-	self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" 
-																			  style:UIBarButtonItemStyleBordered 
-																			 target:nil 
-																			 action:nil] autorelease];
+	self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" 
+																			 style:UIBarButtonItemStyleBordered 
+																			target:nil 
+																			action:nil];
 
     [super viewDidLoad];
 }
@@ -101,17 +100,6 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
-
-- (void)dealloc {
-	[results release];
-	[currentLanguage release];
-	[hud release];
-	[tableView release];
-	[languagePickerView release];
-	[showNameTextField release];
-	[super dealloc];
-}
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -158,7 +146,7 @@
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShowSearchTVDB 
 									   parameters:params 
-										  success:^(id JSON) {
+										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -166,11 +154,11 @@
 													  [self.hud hide]; 
 												  });
 												  
-												  results = [[[JSON objectForKey:@"data"] objectForKey:@"results"] retain];
+												  results = [[JSON objectForKey:@"data"] objectForKey:@"results"];
 												  [self.tableView reloadData];
 											  }
 										  }
-										  failure:^(NSError *error) {
+										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error searching for show" 
 																  message:[NSString stringWithFormat:@"Could not perform search \n%@", error.localizedDescription] 
 															  buttonTitle:@"OK"];											  

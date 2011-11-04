@@ -14,7 +14,7 @@
 #import "ATMHud.h"
 
 @interface SBEpisodeDetailsViewController ()
-@property (nonatomic, retain) ATMHud *hud;
+@property (nonatomic, strong) ATMHud *hud;
 @end
 
 @implementation SBEpisodeDetailsViewController
@@ -45,11 +45,11 @@
 
 #pragma mark - Actions
 - (IBAction)episodeAction:(id)sender {
-	UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:@"" 
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" 
 															 delegate:self 
 													cancelButtonTitle:@"Cancel" 
 											   destructiveButtonTitle:nil 
-													 otherButtonTitles:@"Search", @"Set Status", nil] autorelease];
+													 otherButtonTitles:@"Search", @"Set Status", nil];
 	actionSheet.tag = 998;
 	[actionSheet showFromTabBar:self.tabBarController.tabBar];
 }
@@ -66,7 +66,7 @@
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
 									   parameters:params 
-										  success:^(id JSON) {
+										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  [hud setActivity:NO];
@@ -83,7 +83,7 @@
 												  [hud hideAfter:2];
 											  }
 										  }
-										  failure:^(NSError *error) {
+										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
 																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
 															  buttonTitle:@"OK"];	
@@ -91,11 +91,11 @@
 }
 
 - (void)showEpisodeStatusActionSheet {
-	UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:@"" 
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" 
 															  delegate:self 
 													 cancelButtonTitle:@"Cancel" 
 												destructiveButtonTitle:nil 
-													 otherButtonTitles:@"Wanted", @"Skipped", @"Archived", @"Ignored", nil] autorelease];
+													 otherButtonTitles:@"Wanted", @"Skipped", @"Archived", @"Ignored", nil];
 	actionSheet.tag = 999;
 	[actionSheet showFromTabBar:self.tabBarController.tabBar];
 }
@@ -115,7 +115,7 @@
 
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
 									   parameters:params 
-										  success:^(id JSON) {
+										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 																 
 											  [hud setActivity:NO];
@@ -132,7 +132,7 @@
 											  [hud update];
 											  [hud hideAfter:2];
 										  }
-										  failure:^(NSError *error) {
+										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
 																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
 															  buttonTitle:@"OK"];	
@@ -171,7 +171,7 @@
 {
 	self.title = @"Details";
 
-	self.hud = [[[ATMHud alloc] init] autorelease];
+	self.hud = [[ATMHud alloc] init];
 	[self.view addSubview:self.hud.view];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -181,7 +181,7 @@
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisode 
 									   parameters:params
-										  success:^(id JSON) {
+										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -198,7 +198,7 @@
 												  self.descriptionLabel.text = episode.episodeDescription;
 											  });
 										  }
-										  failure:^(NSError *error) {
+										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
 																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
 															  buttonTitle:@"OK"];											  
@@ -226,12 +226,4 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-	[episode release];
-    [titleLabel release];
-    [airDateLabel release];
-    [seasonLabel release];
-    [descriptionLabel release];
-    [super dealloc];
-}
 @end

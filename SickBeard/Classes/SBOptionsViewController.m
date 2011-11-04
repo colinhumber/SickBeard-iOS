@@ -13,7 +13,7 @@
 #import "PRPAlertView.h"
 
 @interface SBOptionsViewController()
-@property (nonatomic, retain) ATMHud *hud;
+@property (nonatomic, strong) ATMHud *hud;
 @end
 
 
@@ -69,38 +69,26 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)dealloc {
-	[initialQualities release];
-	[archiveQualities release];
-	[status release];
-	[show release];
-	self.locationTextField = nil;
-	self.initialQualityLabel = nil;
-	self.archiveQualityLabel = nil;
-	self.statusLabel = nil;
-	self.hud = nil;
-	[super dealloc];
-}
 
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
-	self.hud = [[[ATMHud alloc] init] autorelease];
+	self.hud = [[ATMHud alloc] init];
 	[self.view addSubview:self.hud.view];
 
-	initialQualities = [[NSUserDefaults standardUserDefaults].initialQualities retain];
-	archiveQualities = [[NSUserDefaults standardUserDefaults].archiveQualities retain];
+	initialQualities = [NSUserDefaults standardUserDefaults].initialQualities;
+	archiveQualities = [NSUserDefaults standardUserDefaults].archiveQualities;
 	status = [[NSUserDefaults standardUserDefaults].status copy];
 	
 	self.initialQualityLabel.text = [NSString stringWithFormat:@"%d", initialQualities.count];
 	self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", archiveQualities.count];
 	self.statusLabel.text = status;
 	
-	self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" 
+	self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" 
 																			  style:UIBarButtonItemStyleBordered 
 																			 target:nil 
-																			 action:nil] autorelease];
+																			 action:nil];
 
     [super viewDidLoad];
 
@@ -153,7 +141,7 @@
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShowAddNew 
 									   parameters:params 
-										  success:^(id JSON) {
+										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  
@@ -180,7 +168,7 @@
 												  }
 											  });
 										  }
-										  failure:^(NSError *error) {
+										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error searching for show" 
 																  message:[NSString stringWithFormat:@"Could not perform search \n%@", error.localizedDescription] 
 															  buttonTitle:@"OK"];											  
@@ -197,11 +185,11 @@
 
 - (void)qualityViewController:(SBQualityViewController *)controller didSelectQualities:(NSMutableArray *)qualities {
 	if (controller.qualityType == QualityTypeInitial) {
-		initialQualities = [qualities retain];
+		initialQualities = qualities;
 		self.initialQualityLabel.text = [NSString stringWithFormat:@"%d", initialQualities.count];
 	}
 	else if (controller.qualityType == QualityTypeArchive) {
-		archiveQualities = [qualities retain];
+		archiveQualities = qualities;
 		self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", archiveQualities.count];
 	}
 }

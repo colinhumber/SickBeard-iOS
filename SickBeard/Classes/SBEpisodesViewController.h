@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SBBaseViewController.h"
+#import "EGORefreshTableHeaderView.h"
 
 @class OrderedDictionary;
 
-@interface SBEpisodesViewController : UIViewController {
+@interface SBEpisodesViewController : SBBaseViewController <EGORefreshTableHeaderDelegate> {
 	OrderedDictionary *comingEpisodes;
+	EGORefreshTableHeaderView *refreshHeader;
 }
 
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

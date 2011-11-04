@@ -12,9 +12,11 @@
 
 @interface SBSettingsViewController : UITableViewController <SBQualityViewControllerDelegate, SBStatusViewControllerDelegate>
 
-@property (nonatomic, retain) IBOutlet UILabel *initialQualityLabel;
-@property (nonatomic, retain) IBOutlet UILabel *archiveQualityLabel;
-@property (nonatomic, retain) IBOutlet UILabel *statusLabel;
-@property (nonatomic, retain) IBOutlet UISwitch *seasonFolderSwitch;
+@property (nonatomic, strong) IBOutlet UILabel *initialQualityLabel;
+@property (nonatomic, strong) IBOutlet UILabel *archiveQualityLabel;
+@property (nonatomic, strong) IBOutlet UILabel *statusLabel;
+@property (nonatomic, strong) IBOutlet UISwitch *seasonFolderSwitch;
+
+- (IBAction)done:(id)sender;
 
 @end

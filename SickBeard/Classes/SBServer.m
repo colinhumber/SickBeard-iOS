@@ -69,12 +69,5 @@
 	return [NSString stringWithFormat:@"http://%@:%d/", self.host, self.port];
 }
 
-- (void)dealloc {
-	self.name = nil;
-	self.username = nil;
-	self.password = nil;
-	self.password = nil;
-	[super dealloc];
-}
 
 @end

@@ -59,7 +59,7 @@ NSString *const StatusKey = @"status_key";
 		iq = [NSArray array];
 	}
 	
-	return [[iq mutableCopy] autorelease];
+	return [iq mutableCopy];
 }
 
 - (void)setInitialQualities:(NSMutableArray *)initialQualities {
@@ -74,7 +74,7 @@ NSString *const StatusKey = @"status_key";
 		aq = [NSArray array];
 	}
 	
-	return [[aq mutableCopy] autorelease];
+	return [aq mutableCopy];
 }
 
 - (void)setArchiveQualities:(NSMutableArray *)archiveQualities {

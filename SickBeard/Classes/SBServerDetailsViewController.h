@@ -16,13 +16,13 @@
 	BOOL isHudShowing;
 }
 
-@property (nonatomic, retain) SBServer *server;
+@property (nonatomic, strong) SBServer *server;
 
-@property (retain, nonatomic) IBOutlet UITextField *nameTextField;
-@property (retain, nonatomic) IBOutlet UITextField *hostTextField;
-@property (retain, nonatomic) IBOutlet UITextField *portTextField;
-@property (retain, nonatomic) IBOutlet UITextField *usernameTextField;
-@property (retain, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (retain, nonatomic) IBOutlet UITextField *apiKeyTextField;
+@property (strong, nonatomic) IBOutlet UITextField *nameTextField;
+@property (strong, nonatomic) IBOutlet UITextField *hostTextField;
+@property (strong, nonatomic) IBOutlet UITextField *portTextField;
+@property (strong, nonatomic) IBOutlet UITextField *usernameTextField;
+@property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (strong, nonatomic) IBOutlet UITextField *apiKeyTextField;
 
 @end

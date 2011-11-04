@@ -9,7 +9,6 @@
 #import "SBEpisodesViewController.h"
 #import "SickbeardAPIClient.h"
 #import "NSUserDefaults+SickBeard.h"
-#import "ATMHud.h"
 #import "OrderedDictionary.h"
 #import "SBComingEpisode.h"
 #import "PRPAlertView.h"
@@ -21,14 +20,6 @@
 
 @synthesize tableView;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -38,83 +29,28 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)dealloc {
-	[comingEpisodes release];
-	[tableView release];
-	[super dealloc];
-}
 
 #pragma mark - View lifecycle
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
-	comingEpisodes = [[OrderedDictionary alloc] init];
+- (void)viewDidLoad {
     [super viewDidLoad];
+	
+	refreshHeader = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
+	refreshHeader.delegate = self;
+	[self.tableView addSubview:refreshHeader];
+	[refreshHeader refreshLastUpdatedDate];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
 	if ([NSUserDefaults standardUserDefaults].serverHasBeenSetup) {
 		[comingEpisodes removeAllObjects];
 		
-		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandComingEpisodes 
-										   parameters:nil 
-											  success:^(id JSON) {
-												  NSString *result = [JSON objectForKey:@"result"];
-												  
-												  if ([result isEqualToString:RESULT_SUCCESS]) {
-													  NSMutableArray *episodes = [NSMutableArray array];
-													  NSDictionary *dataDict = [JSON objectForKey:@"data"];
-													  
-													  for (NSString *key in [dataDict allKeys]) {
-														  for (NSDictionary *epDict in [dataDict objectForKey:key]) {
-															  SBComingEpisode *ep = [SBComingEpisode itemWithDictionary:epDict];
-															  [episodes addObject:ep];
-														  }
-													  }
-													  
-													  NSMutableArray *past = [NSMutableArray array];
-													  NSMutableArray *today = [NSMutableArray array];
-													  NSMutableArray *thisWeek = [NSMutableArray array];
-													  NSMutableArray *nextWeek = [NSMutableArray array];
-													  NSMutableArray *future = [NSMutableArray array];
-													  
-													  for (SBComingEpisode *episode in episodes) {
-														  if ([episode.airDate isEarlierThanDate:[NSDate date]]) {
-															  [past addObject:episode];
-														  }
-														  else if ([episode.airDate isToday]) {
-															  [today addObject:episode];
-														  }
-														  else if ([episode.airDate isThisWeek]) {
-															  [thisWeek addObject:episode];
-														  }
-														  else if ([episode.airDate isNextWeek]) {
-															  [nextWeek addObject:episode];
-														  }
-														  else {
-															  [future addObject:episode];
-														  }
-													  }
-													  
-													  if (past.count) [comingEpisodes setObject:past forKey:@"Past"];
-													  if (today.count) [comingEpisodes setObject:today forKey:@"Today"];
-													  if (thisWeek.count) [comingEpisodes setObject:thisWeek forKey:@"This Week"];
-													  if (nextWeek.count) [comingEpisodes setObject:nextWeek forKey:@"Next Week"];
-													  if (future.count) [comingEpisodes setObject:future forKey:@"Future"];												  
-													  
-													  [self.tableView reloadData];
-												  }
-											  }
-											  failure:^(NSError *error) {
-												  [PRPAlertView showWithTitle:@"Error retrieving shows" 
-																	  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
-																  buttonTitle:@"OK"];											  
-											  }];
+		if (!comingEpisodes) {
+			[self loadData];
+		}
 	}
 }
-
-
 
 - (void)viewDidUnload
 {
@@ -128,6 +64,103 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark - Loading
+- (void)loadData {
+	[super loadData];
+	
+	[self.hud setActivity:YES];
+	[self.hud setCaption:@"Loading shows..."];
+	[self.hud show];
+	
+	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandComingEpisodes 
+									   parameters:nil 
+										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+											  NSString *result = [JSON objectForKey:@"result"];
+											  
+											  if ([result isEqualToString:RESULT_SUCCESS]) {
+												  comingEpisodes = [[OrderedDictionary alloc] init];
+												  
+												  NSMutableArray *episodes = [NSMutableArray array];
+												  NSDictionary *dataDict = [JSON objectForKey:@"data"];
+												  
+												  for (NSString *key in [dataDict allKeys]) {
+													  for (NSDictionary *epDict in [dataDict objectForKey:key]) {
+														  SBComingEpisode *ep = [SBComingEpisode itemWithDictionary:epDict];
+														  [episodes addObject:ep];
+													  }
+												  }
+												  
+												  NSMutableArray *past = [NSMutableArray array];
+												  NSMutableArray *today = [NSMutableArray array];
+												  NSMutableArray *thisWeek = [NSMutableArray array];
+												  NSMutableArray *nextWeek = [NSMutableArray array];
+												  NSMutableArray *future = [NSMutableArray array];
+												  
+												  for (SBComingEpisode *episode in episodes) {
+													  if ([episode.airDate isEarlierThanDate:[NSDate date]]) {
+														  [past addObject:episode];
+													  }
+													  else if ([episode.airDate isToday]) {
+														  [today addObject:episode];
+													  }
+													  else if ([episode.airDate isThisWeek]) {
+														  [thisWeek addObject:episode];
+													  }
+													  else if ([episode.airDate isNextWeek]) {
+														  [nextWeek addObject:episode];
+													  }
+													  else {
+														  [future addObject:episode];
+													  }
+												  }
+												  
+												  if (past.count) [comingEpisodes setObject:past forKey:@"Past"];
+												  if (today.count) [comingEpisodes setObject:today forKey:@"Today"];
+												  if (thisWeek.count) [comingEpisodes setObject:thisWeek forKey:@"This Week"];
+												  if (nextWeek.count) [comingEpisodes setObject:nextWeek forKey:@"Next Week"];
+												  if (future.count) [comingEpisodes setObject:future forKey:@"Future"];												  
+												  
+												  [self.tableView reloadData];
+												  
+												  [self finishDataLoad:nil];
+												  [refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+
+											  }
+										  }
+										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
+																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
+															  buttonTitle:@"OK"];			
+											  [self finishDataLoad:error];
+											  [refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+										  }];
+}
+
+#pragma mark - UIScrollViewDelegate Methods
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {	
+	[refreshHeader egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+	[refreshHeader egoRefreshScrollViewDidEndDragging:scrollView];	
+}
+
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view {	
+	[self loadData];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view {	
+	return self.isDataLoading; // should return if data source model is reloading
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view {
+	return self.loadDate; // should return date data source was last changed
 }
 
 #pragma mark - UITableViewDataSource
@@ -157,10 +190,7 @@
 	SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:indexPath.row];
 	
 	[cell.bannerImageView setImageWithURL:[[SickbeardAPIClient sharedClient] createUrlWithEndpoint:episode.bannerUrlPath] 
-						 placeholderImage:nil
-								imageSize:CGSizeMake(640, 120)
-								  options:AFImageRequestDefaultOptions
-									block:nil];	
+						 placeholderImage:nil];	
 
 	cell.episodeNameLabel.text = episode.name;
 	cell.seasonEpisodeLabel.text = [NSString stringWithFormat:@"Season %d, Episode %d", episode.season, episode.number];

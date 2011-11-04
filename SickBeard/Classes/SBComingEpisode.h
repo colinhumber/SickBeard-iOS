@@ -10,7 +10,7 @@
 
 @interface SBComingEpisode : NSObject <DictionaryCreation>
 
-@property (nonatomic, retain) NSDate *airDate;
+@property (nonatomic, strong) NSDate *airDate;
 @property (nonatomic, copy) NSString *airs;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *network;
@@ -21,7 +21,7 @@
 @property (nonatomic, copy) NSString *showStatus;
 @property (nonatomic, copy) NSString *tvdbID;
 @property (nonatomic, copy) NSString *weekday;
-@property (nonatomic, readonly) NSString *bannerUrlPath;
-@property (nonatomic, readonly) NSString *posterUrlPath;
+@property (weak, nonatomic, readonly) NSString *bannerUrlPath;
+@property (weak, nonatomic, readonly) NSString *posterUrlPath;
 
 @end

@@ -39,12 +39,12 @@ typedef void (^PSYTimerBlock)(NSTimer *);
 @implementation NSTimer (PSYBlockTimer)
 + (NSTimer *)scheduledTimerWithTimeInterval:(NSTimeInterval)seconds repeats:(BOOL)repeats usingBlock:(void (^)(NSTimer *timer))fireBlock
 {
-    return [self scheduledTimerWithTimeInterval:seconds target:self selector:@selector(PSYBlockTimer_executeBlockWithTimer:) userInfo:[[fireBlock copy] autorelease] repeats:repeats];
+    return [self scheduledTimerWithTimeInterval:seconds target:self selector:@selector(PSYBlockTimer_executeBlockWithTimer:) userInfo:[fireBlock copy] repeats:repeats];
 }
 
 + (NSTimer *)timerWithTimeInterval:(NSTimeInterval)seconds repeats:(BOOL)repeats usingBlock:(void (^)(NSTimer *timer))fireBlock
 {
-    return [self timerWithTimeInterval:seconds target:self selector:@selector(PSYBlockTimer_executeBlockWithTimer:) userInfo:[[fireBlock copy] autorelease] repeats:repeats];
+    return [self timerWithTimeInterval:seconds target:self selector:@selector(PSYBlockTimer_executeBlockWithTimer:) userInfo:[fireBlock copy] repeats:repeats];
 }
 @end
 
