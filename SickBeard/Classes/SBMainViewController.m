@@ -29,6 +29,7 @@
 
 	[self.view addSubview:self.currentController.view];
 	self.navigationItem.rightBarButtonItem = addItem;
+	self.navigationItem.leftBarButtonItem = self.currentController.editButtonItem;
 }
 
 - (IBAction)viewModeChanged:(id)sender {
@@ -49,10 +50,12 @@
 	
 	switch (segment.selectedSegmentIndex) {
 		case 0:
+			[self.navigationItem setLeftBarButtonItem:self.currentController.editButtonItem animated:YES];
 			[self.navigationItem setRightBarButtonItem:addItem animated:YES];
 			break;
 			
 		case 1:
+			[self.navigationItem setLeftBarButtonItem:nil animated:YES];
 			[self.navigationItem setRightBarButtonItem:nil animated:YES];
 			break;
 			

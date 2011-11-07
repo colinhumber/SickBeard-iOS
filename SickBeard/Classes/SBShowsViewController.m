@@ -31,11 +31,15 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+	
 	refreshHeader = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
 	refreshHeader.delegate = self;
 	[self.tableView addSubview:refreshHeader];
 	[refreshHeader refreshLastUpdatedDate];
+	
+	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
+	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -53,9 +57,6 @@
 		}		
 	}
 }
-
-//- (void)viewDidAppear:(BOOL)animated {
-//}
 
 - (void)viewDidUnload
 {
@@ -79,8 +80,10 @@
 	[self.hud setCaption:@"Loading shows..."];
 	[self.hud show];
 	
+	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"name", @"sort", nil];
+	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShows 
-									   parameters:nil 
+									   parameters:params
 										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
@@ -92,7 +95,6 @@
 												  if (dataDict.allKeys.count > 0) {
 													  for (NSString *key in [dataDict allKeys]) {
 														  SBShow *show = [SBShow itemWithDictionary:[dataDict objectForKey:key]];
-														  show.tvdbID = key;
 														  [shows addObject:show];
 													  }
 												  }
@@ -132,7 +134,6 @@
 
 #pragma mark -
 #pragma mark EGORefreshTableHeaderDelegate Methods
-
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view {	
 	[self loadData];
 }
@@ -151,6 +152,10 @@
 	[self performSegueWithIdentifier:@"AddShowSegue" sender:nil];
 }
 
+- (IBAction)refresh:(id)sender {
+	[self loadData];
+}
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	return shows.count;
@@ -166,7 +171,7 @@
 	cell.showNameLabel.text = show.showName;
 	
 	[cell.posterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] createUrlWithEndpoint:show.posterUrlPath] 
-				   placeholderImage:nil];	
+						 placeholderImage:nil];	
 	
 	return cell;
 }

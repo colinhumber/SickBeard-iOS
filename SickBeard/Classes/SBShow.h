@@ -17,16 +17,16 @@ typedef enum {
 
 @interface SBShow : NSObject <DictionaryCreation>
 
-@property (nonatomic, copy) NSString *tvdbID;
-@property (nonatomic, assign) BOOL airByDate;
-@property (nonatomic, assign) BOOL hasBannerCached;
-@property (nonatomic, assign) BOOL hasPosterCached;
-@property (nonatomic, copy) NSString *languageCode;
-@property (nonatomic, assign) BOOL isPaused;
-@property (nonatomic, assign) ShowQuality quality;
-@property (nonatomic, copy) NSString *showName;
-@property (weak, nonatomic, readonly) NSString *bannerUrlPath;
-@property (weak, nonatomic, readonly) NSString *posterUrlPath;
+@property (nonatomic, strong) NSString *tvdbID;
+@property (nonatomic) BOOL airByDate;
+@property (nonatomic) BOOL hasBannerCached;
+@property (nonatomic) BOOL hasPosterCached;
+@property (nonatomic, strong) NSString *languageCode;
+@property (nonatomic) BOOL isPaused;
+@property (nonatomic) ShowQuality quality;
+@property (nonatomic, strong) NSString *showName;
+@property (nonatomic, readonly) NSString *bannerUrlPath;
+@property (nonatomic, readonly) NSString *posterUrlPath;
 
 
 @end

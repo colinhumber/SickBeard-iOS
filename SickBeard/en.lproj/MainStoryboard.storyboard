@@ -429,6 +429,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="contentInset" minX="0.0" minY="0.0" maxX="0.0" maxY="900"/>
+                                <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="44"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ShowCell" rowHeight="65" id="Tjg-rG-EVz" customClass="ShowCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="65"/>
@@ -441,7 +443,7 @@
                                                     <rect key="frame" x="5" y="5" width="55" height="55"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="IuD-ID-mnY">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="IuD-ID-mnY">
                                                     <rect key="frame" x="68" y="20" width="220" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1085,29 +1087,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r6O-9q-W8w" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="SBMainViewController" autoresizesArchivedViewToFullSize="NO" id="Qb3-JO-gB5" customClass="SBMainViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YNQ-yQ-1Jf">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Pdb-Tg-XtA">
-                        <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Settings" id="6x2-fE-jeP">
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="refresh" id="Gjg-G5-pDf"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="QRF-Ld-Eze"/>
+                        <barButtonItem title="Settings" id="6x2-fE-jeP">
                             <connections>
                                 <segue destination="EuR-Rk-35x" kind="modal" id="eD0-ic-Q5O"/>
                             </connections>
                         </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" id="Pdb-Tg-XtA">
+                        <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="wbm-5g-Wl6">
-                            <rect key="frame" x="91" y="7" width="137" height="30"/>
+                            <rect key="frame" x="86" y="7" width="147" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Shows"/>
-                                <segment title="Episodes"/>
+                                <segment title="Upcoming"/>
                             </segments>
                             <connections>
                                 <action selector="viewModeChanged:" destination="Qb3-JO-gB5" eventType="valueChanged" id="xsg-jb-iLe"/>
                             </connections>
                         </segmentedControl>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="228" y="-121"/>
@@ -1132,15 +1139,15 @@
         <scene sceneID="pcP-dz-QmQ">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MEu-It-0MQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController storyboardIdentifier="" id="Zuk-Bn-c35" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="" toolbarHidden="NO" id="Zuk-Bn-c35" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="vdQ-uF-05d">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="cvh-Tj-UWz">
-                        <rect key="frame" x="0.0" y="416" width="320" height="44"/>
+                    <toolbar key="toolbar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" barStyle="blackTranslucent" id="cvh-Tj-UWz">
+                        <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -1254,6 +1261,7 @@
         <class className="SBShowsViewController" superclassName="SBBaseViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBShowsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="refresh:"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
         </class>

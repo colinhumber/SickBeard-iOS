@@ -18,8 +18,8 @@
 @synthesize isPaused;
 @synthesize quality;
 @synthesize showName;
-@synthesize bannerUrlPath;
-@synthesize posterUrlPath;
+@dynamic bannerUrlPath;
+@dynamic posterUrlPath;
 
 - (id)initWithDictionary:(NSDictionary*)dict {
 	self = [super init];
@@ -42,7 +42,8 @@
 			self.quality = ShowQualityUnknown;
 		}
 		
-		self.showName = [dict objectForKey:@"show_name"];
+		self.tvdbID = [dict objectForKey:@"tvdbid"];
+		self.showName = [dict objectForKey:@"tvrage_name"];
 	}
 	
 	return self;

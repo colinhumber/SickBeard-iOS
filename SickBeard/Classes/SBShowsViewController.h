@@ -16,6 +16,7 @@
 }
 
 - (void)addShow;
+- (IBAction)refresh:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 

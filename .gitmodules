@@ -10,6 +10,3 @@
 [submodule "SickBeard/SDURLCache"]
 	path = SickBeard/SDURLCache
 	url = https://github.com/steipete/SDURLCache.git
-[submodule "SickBeard/EGOTableViewPullRefresh"]
-	path = SickBeard/EGOTableViewPullRefresh
-	url = https://github.com/enormego/EGOTableViewPullRefresh.git

@@ -75,6 +75,13 @@
 		passwordTextField.text = server.password;
 		apiKeyTextField.text = server.apiKey;
 	}
+	
+#if DEBUG
+	nameTextField.text = @"Home";
+	hostTextField.text = @"colinhumber.dyndns.org";
+	portTextField.text = @"8081";
+	apiKeyTextField.text = @"aefc639b299bbbe8ed0e526ef83d415c";
+#endif
 }
 
 - (void)viewDidUnload

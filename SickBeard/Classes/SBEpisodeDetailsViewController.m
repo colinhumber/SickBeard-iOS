@@ -26,22 +26,65 @@
 @synthesize episode;
 @synthesize hud;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+#pragma mark - View lifecycle
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+	self.title = @"Details";
+	
+	self.hud = [[ATMHud alloc] init];
+	[self.view addSubview:self.hud.view];
+	
+	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+							episode.show.tvdbID, @"tvdbid", 
+							[NSNumber numberWithInt:episode.season], @"season",
+							[NSNumber numberWithInt:episode.number], @"episode", nil];
+	
+	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisode 
+									   parameters:params
+										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+											  NSString *result = [JSON objectForKey:@"result"];
+											  
+											  if ([result isEqualToString:RESULT_SUCCESS]) {
+												  episode.episodeDescription = [[JSON objectForKey:@"data"] objectForKey:@"description"];												  
+											  }
+											  else {
+												  episode.episodeDescription = @"Unable to retrieve episode description";
+											  }
+											  
+											  self.titleLabel.text = episode.name;
+											  self.airDateLabel.text = [NSString stringWithFormat:@"Aired on %@", episode.airDate];
+											  self.seasonLabel.text = [NSString stringWithFormat:@"Season %d, episode %d", episode.season, episode.number];
+											  self.descriptionLabel.text = episode.episodeDescription;
+										  }
+										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+											  [PRPAlertView showWithTitle:@"Error retrieving episode" 
+																  message:[NSString stringWithFormat:@"Could not retreive episode details \n%@", error.localizedDescription] 
+															  buttonTitle:@"OK"];											  
+										  }];
+	
+	
+    [super viewDidLoad];
 }
 
-- (void)didReceiveMemoryWarning
+
+- (void)viewDidUnload
 {
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
+    [self setTitleLabel:nil];
+    [self setAirDateLabel:nil];
+    [self setSeasonLabel:nil];
+    [self setDescriptionLabel:nil];
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
 }
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
 
 #pragma mark - Actions
 - (IBAction)episodeAction:(id)sender {
@@ -154,76 +197,5 @@
 		}
 	}
 }	
-
-
-#pragma mark - View lifecycle
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-}
-*/
-
-
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
-	self.title = @"Details";
-
-	self.hud = [[ATMHud alloc] init];
-	[self.view addSubview:self.hud.view];
-	
-	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-							episode.show.tvdbID, @"tvdbid", 
-							[NSNumber numberWithInt:episode.season], @"season",
-							[NSNumber numberWithInt:episode.number], @"episode", nil];
-	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisode 
-									   parameters:params
-										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
-											  
-											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  episode.episodeDescription = [[JSON objectForKey:@"data"] objectForKey:@"description"];												  
-											  }
-											  else {
-												  episode.episodeDescription = @"Unable to retrieve episode description";
-											  }
-											  
-											  dispatch_async(dispatch_get_main_queue(), ^{
-												  self.titleLabel.text = episode.name;
-												  self.airDateLabel.text = [NSString stringWithFormat:@"Aired on %@", episode.airDate];
-												  self.seasonLabel.text = [NSString stringWithFormat:@"Season %d, episode %d", episode.season, episode.number];
-												  self.descriptionLabel.text = episode.episodeDescription;
-											  });
-										  }
-										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
-																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
-															  buttonTitle:@"OK"];											  
-										  }];
-
-	
-    [super viewDidLoad];
-}
-
-
-- (void)viewDidUnload
-{
-    [self setTitleLabel:nil];
-    [self setAirDateLabel:nil];
-    [self setSeasonLabel:nil];
-    [self setDescriptionLabel:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
 
 @end
