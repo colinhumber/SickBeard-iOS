@@ -21,7 +21,7 @@
 @property (nonatomic, copy) NSString *showStatus;
 @property (nonatomic, copy) NSString *tvdbID;
 @property (nonatomic, copy) NSString *weekday;
-@property (weak, nonatomic, readonly) NSString *bannerUrlPath;
-@property (weak, nonatomic, readonly) NSString *posterUrlPath;
+@property (nonatomic, readonly) NSString *bannerUrlPath;
+@property (nonatomic, readonly) NSString *posterUrlPath;
 
 @end

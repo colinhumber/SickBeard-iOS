@@ -7,15 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SBBaseViewController.h"
 
 @class SBEpisode;
 
-@interface SBEpisodeDetailsViewController : UIViewController <UIActionSheetDelegate>
+@interface SBEpisodeDetailsViewController : SBBaseViewController <UIActionSheetDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *airDateLabel;
 @property (strong, nonatomic) IBOutlet UILabel *seasonLabel;
 @property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *showPosterImageView;
 @property (nonatomic, strong) SBEpisode *episode;
 
 @end

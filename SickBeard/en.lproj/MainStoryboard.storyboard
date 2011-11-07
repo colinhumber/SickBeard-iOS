@@ -481,7 +481,7 @@
         <scene sceneID="DWF-Vk-0r2">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ajY-gn-H1J" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="qEb-Lz-g4Z" customClass="SBShowDetailsViewController" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="qEb-Lz-g4Z" customClass="SBShowDetailsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dFL-A4-Sfx">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -571,13 +571,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" id="x0f-4I-WIr">
-                                <rect key="frame" x="20" y="87" width="268" height="238"/>
+                                <rect key="frame" x="20" y="238" width="268" height="179"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <string key="text">Jay wants to go fishing on his birthday, but the family insists he have a big party, leading Claire and Mitchell to get trapped in their childhood yard, Phil to encounter his college nemesis at the mall and Cameron to have trouble at the bakery.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="wkR-Y2-55c">
+                                <rect key="frame" x="80" y="78" width="160" height="235"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -592,6 +596,7 @@
                         <outlet property="airDateLabel" destination="VT9-SN-RUd" id="5vM-H2-9M3"/>
                         <outlet property="descriptionLabel" destination="x0f-4I-WIr" id="bS3-x8-R2o"/>
                         <outlet property="seasonLabel" destination="MF0-7k-Bnf" id="Gfc-ho-ScV"/>
+                        <outlet property="showPosterImageView" destination="wkR-Y2-55c" id="Kye-Wt-KSK"/>
                         <outlet property="titleLabel" destination="YwU-gv-BXU" id="yoz-1p-iwr"/>
                     </connections>
                 </viewController>
@@ -611,7 +616,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ComingEpisodeCell" rowHeight="120" id="TpL-WD-QBc" customClass="ComingEpisodeCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ComingEpisodeCell" rowHeight="120" id="TpL-WD-QBc" customClass="ComingEpisodeCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -1092,7 +1097,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems>
-                        <barButtonItem style="plain" systemItem="refresh" id="Gjg-G5-pDf"/>
+                        <barButtonItem style="plain" systemItem="refresh" id="Gjg-G5-pDf">
+                            <connections>
+                                <action selector="refresh:" destination="Qb3-JO-gB5" id="xfa-C9-GcO"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="QRF-Ld-Eze"/>
                         <barButtonItem title="Settings" id="6x2-fE-jeP">
                             <connections>
@@ -1196,12 +1205,13 @@
         <class className="SBBaseViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBBaseViewController.h"/>
         </class>
-        <class className="SBEpisodeDetailsViewController" superclassName="UIViewController">
+        <class className="SBEpisodeDetailsViewController" superclassName="SBBaseViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBEpisodeDetailsViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="airDateLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="seasonLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="showPosterImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
@@ -1214,6 +1224,7 @@
         <class className="SBMainViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBMainViewController.h"/>
             <relationships>
+                <relationship kind="action" name="refresh:"/>
                 <relationship kind="action" name="viewModeChanged:"/>
             </relationships>
         </class>
@@ -1261,7 +1272,6 @@
         <class className="SBShowsViewController" superclassName="SBBaseViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBShowsViewController.h"/>
             <relationships>
-                <relationship kind="action" name="refresh:"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
         </class>

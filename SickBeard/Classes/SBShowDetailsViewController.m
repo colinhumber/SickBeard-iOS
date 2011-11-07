@@ -15,6 +15,7 @@
 #import "OrderedDictionary.h"
 #import "SBEpisodeDetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "NSDate+Utilities.h"
 
 @implementation SBShowDetailsViewController
 
@@ -115,10 +116,8 @@
 													  
 													  [seasons setObject:episodes forKey:seasonNumber];
 												  }
-												  
-												  dispatch_async(dispatch_get_main_queue(), ^{
-													  [self.tableView reloadData];
-												  });
+
+												  [self.tableView reloadData];
 											  }
 											  else {
 												  [PRPAlertView showWithTitle:@"Error retrieving shows" 
@@ -189,7 +188,7 @@
 	SBEpisode *episode = [episodes objectAtIndex:indexPath.row];
 	
 	cell.textLabel.text = episode.name;
-	cell.detailTextLabel.text = episode.airDate;
+	cell.detailTextLabel.text = episode.airDate ? [episode.airDate displayString] : @"Unknown Air Date";
 	
 	return cell;
 }

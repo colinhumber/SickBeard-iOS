@@ -36,19 +36,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
+	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
+
 	refreshHeader = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
 	refreshHeader.delegate = self;
+	refreshHeader.defaultInsets = self.tableView.contentInset;
 	[self.tableView addSubview:refreshHeader];
 	[refreshHeader refreshLastUpdatedDate];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-	if ([NSUserDefaults standardUserDefaults].serverHasBeenSetup) {
-		[comingEpisodes removeAllObjects];
-		
-		if (!comingEpisodes) {
-			[self loadData];
-		}
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	if ([self.tableView.dataSource numberOfSectionsInTableView:self.tableView] > 0) {
+		[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
+	}
+	else {
+		if ([NSUserDefaults standardUserDefaults].serverHasBeenSetup) {
+			if (!comingEpisodes) {
+				[comingEpisodes removeAllObjects];
+				[self loadData];
+			}
+		}		
 	}
 }
 
@@ -66,12 +76,17 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - Actions
+- (IBAction)refresh:(id)sender {
+	[self loadData];
+}
+
 #pragma mark - Loading
 - (void)loadData {
 	[super loadData];
 	
 	[self.hud setActivity:YES];
-	[self.hud setCaption:@"Loading shows..."];
+	[self.hud setCaption:@"Loading upcoming episodes..."];
 	[self.hud show];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandComingEpisodes 

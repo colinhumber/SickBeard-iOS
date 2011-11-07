@@ -23,13 +23,13 @@ typedef enum {
 
 @interface SBEpisode : NSObject <DictionaryCreation>
 
-@property (nonatomic, copy) NSString *airDate;
-@property (nonatomic, copy) NSString *episodeDescription;
-@property (nonatomic, copy) NSString *location;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, assign) EpisodeStatus status;
-@property (nonatomic, assign) int season;
-@property (nonatomic, assign) int number;
+@property (nonatomic, strong) NSDate *airDate;
+@property (nonatomic, strong) NSString *episodeDescription;
+@property (nonatomic, strong) NSString *location;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic) EpisodeStatus status;
+@property (nonatomic) int season;
+@property (nonatomic) int number;
 @property (nonatomic, strong) SBShow *show;
 
 + (NSString*)episodeStatusAsString:(EpisodeStatus)status;

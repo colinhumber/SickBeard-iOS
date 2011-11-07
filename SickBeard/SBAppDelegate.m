@@ -16,29 +16,11 @@
 @implementation SBAppDelegate
 
 @synthesize window = _window;
-//@synthesize managedObjectContext = __managedObjectContext;
-//@synthesize managedObjectModel = __managedObjectModel;
-//@synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
 + (void)initialize {
 	NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Defaults" ofType:@"plist"]];
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
-
-//- (void)registerDefaults {
-//	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//	
-//	if (!defaults.defaultsRegistered) {
-//		defaults.status = @"Wanted";
-//		defaults.initialQualities = [NSArray arrayWithObject:@"SD TV"];
-//		defaults.archiveQualities = [NSArray arrayWithObject:@"SD DVD"];
-//		defaults.useSeasonFolders = YES;
-//		defaults.defaultDirectoryIndex = -1;
-//		defaults.defaultsRegistered = YES;
-//		
-//		[defaults synchronize];
-//	}
-//}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	[TestFlight takeOff:@"9677d08cdc79deabbe7610f9edb5b4f9_MzY5MTgyMDExLTEwLTI1IDIyOjUwOjMxLjg0Mjg3OA"];
@@ -65,7 +47,12 @@
 		[SickbeardAPIClient sharedClient].currentServer = server;
 		[self.window makeKeyAndVisible];
 	}
-
+	
+	[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar_bg"] 
+									   forBarMetrics:UIBarMetricsDefault];
+	[[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:RGBCOLOR(122, 134, 0)];
+	[[UISegmentedControl appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:RGBCOLOR(122, 134, 0)];
+	
     return YES;
 }
 							

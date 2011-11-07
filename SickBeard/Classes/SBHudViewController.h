@@ -11,6 +11,8 @@
 
 @protocol SBHudViewController <NSObject>
 
+- (void)refresh:(id)sender;
+
 @property (nonatomic, strong) ATMHud *hud;
 
 @end

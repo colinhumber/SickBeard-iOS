@@ -31,15 +31,15 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	refreshHeader = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
-	refreshHeader.delegate = self;
-	[self.tableView addSubview:refreshHeader];
-	[refreshHeader refreshLastUpdatedDate];
-	
+
 	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
 	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
 
+	refreshHeader = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
+	refreshHeader.delegate = self;
+	refreshHeader.defaultInsets = self.tableView.contentInset;
+	[self.tableView addSubview:refreshHeader];
+	[refreshHeader refreshLastUpdatedDate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -97,6 +97,9 @@
 														  SBShow *show = [SBShow itemWithDictionary:[dataDict objectForKey:key]];
 														  [shows addObject:show];
 													  }
+													  
+													  NSSortDescriptor *sorter = [NSSortDescriptor sortDescriptorWithKey:@"showName" ascending:YES];
+													  [shows sortUsingDescriptors:[NSArray arrayWithObject:sorter]];
 												  }
 												  else {
 													  NSLog(@"No shows");
@@ -156,6 +159,13 @@
 	[self loadData];
 }
 
+#pragma mark - UITableViewDelegate
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+	[super setEditing:editing animated:animated];
+	[self.parentViewController setEditing:editing animated:animated];
+	[self.tableView setEditing:editing animated:YES];
+}
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	return shows.count;
@@ -168,12 +178,56 @@
 	ShowCell *cell = (ShowCell*)[tv dequeueReusableCellWithIdentifier:@"ShowCell"];
 	
 	SBShow *show = [shows objectAtIndex:indexPath.row];
-	cell.showNameLabel.text = show.showName;
-	
+	cell.showNameLabel.text = show.showName;	
 	[cell.posterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] createUrlWithEndpoint:show.posterUrlPath] 
 						 placeholderImage:nil];	
-	
+		
 	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (indexPath.row % 2 == 0) {
+		cell.backgroundColor = RGBCOLOR(245, 241, 226); 
+	}
+	else {
+		cell.backgroundColor = RGBCOLOR(223, 218, 206); 		
+	}
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		SBShow *show = [shows objectAtIndex:indexPath.row];
+		NSDictionary *params = [NSDictionary dictionaryWithObject:show.tvdbID forKey:@"tvdbid"];
+		
+		[self.hud setActivity:YES];
+		[self.hud setCaption:@"Deleting show..."];
+		[self.hud show];
+		
+		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShowDelete 
+										   parameters:params 
+											  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+												  NSString *result = [JSON objectForKey:@"result"];
+												  
+												  if ([result isEqualToString:RESULT_SUCCESS]) {
+													  [shows removeObjectAtIndex:indexPath.row];
+													  [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] 
+																			withRowAnimation:UITableViewRowAnimationAutomatic];
+												  }
+												  else {
+													  [PRPAlertView showWithTitle:@"Could not delete show" 
+																		  message:[JSON objectForKey:@"message"] 
+																	  buttonTitle:@"Okay"];
+												  }				
+												  
+												  [self.hud hide];
+											  }
+											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+												  [PRPAlertView showWithTitle:@"Error deleting show" 
+																	  message:error.localizedDescription 
+																  buttonTitle:@"Okay"];			
+												  [self.hud hide];
+											  }];
+	}
 }
 
 

@@ -21,6 +21,9 @@
 	[self.view addSubview:self.hud.view];
 }
 
+- (void)refresh:(id)sender{
+}
+
 - (void)loadData {
 	
 }

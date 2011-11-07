@@ -8,6 +8,7 @@
 
 #import "SBEpisode.h"
 #import "SBShow.h"
+#import "NSDate+Utilities.h"
 
 @implementation SBEpisode
 
@@ -24,7 +25,7 @@
 	self = [super init];
 	
 	if (self) {
-		self.airDate = [dict objectForKey:@"airdate"];
+		self.airDate = [NSDate dateWithString:[dict objectForKey:@"airdate"]];
 		self.episodeDescription = [dict objectForKey:@"description"];
 		self.location = [dict objectForKey:@"location"];
 		self.name = [dict objectForKey:@"name"];
@@ -59,6 +60,16 @@
 + (id)itemWithDictionary:(NSDictionary*)dict {
 	return [[self alloc] initWithDictionary:dict];
 }
+
+- (void)setEpisodeDescription:(NSString *)ed {
+	if (episodeDescription.length == 0) {
+		episodeDescription = @"No episode description";
+	}
+	else {
+		episodeDescription = ed;
+	}
+}
+
 
 - (NSString*)description {
 	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | number = %d>", [self class], self, name, number];

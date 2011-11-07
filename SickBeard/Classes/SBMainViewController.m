@@ -30,6 +30,12 @@
 	[self.view addSubview:self.currentController.view];
 	self.navigationItem.rightBarButtonItem = addItem;
 	self.navigationItem.leftBarButtonItem = self.currentController.editButtonItem;
+	
+	self.title = self.currentController.title;
+}
+
+- (IBAction)refresh:(id)sender {
+	[self.currentController refresh:sender];
 }
 
 - (IBAction)viewModeChanged:(id)sender {
@@ -47,7 +53,8 @@
 							}];
 
 	self.currentController = [self.childViewControllers objectAtIndex:segment.selectedSegmentIndex];
-	
+	self.title = self.currentController.title;
+
 	switch (segment.selectedSegmentIndex) {
 		case 0:
 			[self.navigationItem setLeftBarButtonItem:self.currentController.editButtonItem animated:YES];
@@ -63,5 +70,13 @@
 			break;
 	}
 }
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+	[super setEditing:editing animated:animated];
+	
+	self.navigationItem.rightBarButtonItem.enabled = !editing;
+}
+
+
 
 @end

@@ -81,6 +81,7 @@
 		95BDF1901423AF4100A9B7C3 /* SickbeardAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDF18F1423AF4100A9B7C3 /* SickbeardAPIClient.m */; };
 		95BDF1931423AF5200A9B7C3 /* SBShowDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDF1921423AF5200A9B7C3 /* SBShowDetailsViewController.m */; };
 		95D858AF1464590800B7DDC7 /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95D858AE1464590800B7DDC7 /* Defaults.plist */; };
+		95D9B3FF1468905200E4CA9D /* navbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D9B3FE1468905200E4CA9D /* navbar_bg@2x.png */; };
 		95DD4201140837B8001FE32F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95DD4200140837B8001FE32F /* Foundation.framework */; };
 		95DD4207140837B8001FE32F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 95DD4205140837B8001FE32F /* InfoPlist.strings */; };
 		95DD4209140837B8001FE32F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DD4208140837B8001FE32F /* main.m */; };
@@ -221,6 +222,7 @@
 		95BDF1911423AF5200A9B7C3 /* SBShowDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBShowDetailsViewController.h; path = Classes/SBShowDetailsViewController.h; sourceTree = "<group>"; };
 		95BDF1921423AF5200A9B7C3 /* SBShowDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBShowDetailsViewController.m; path = Classes/SBShowDetailsViewController.m; sourceTree = "<group>"; };
 		95D858AE1464590800B7DDC7 /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Defaults.plist; path = Resources/Defaults.plist; sourceTree = "<group>"; };
+		95D9B3FE1468905200E4CA9D /* navbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_bg@2x.png"; sourceTree = "<group>"; };
 		95DD41FA140837B8001FE32F /* SickBeard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SickBeard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95DD4200140837B8001FE32F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		95DD4204140837B8001FE32F /* SickBeard-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SickBeard-Info.plist"; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 		9563CD3F140D47B800920795 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				95D9B3FE1468905200E4CA9D /* navbar_bg@2x.png */,
 				9563CD91140D4C3800920795 /* Icon.png */,
 				9563CD40140D47B800920795 /* Default.png */,
 				9563CD41140D47B800920795 /* Default@2x.png */,
@@ -784,6 +787,7 @@
 				9527ED341463952D001B3E51 /* whiteArrow.png in Resources */,
 				9527ED351463952D001B3E51 /* whiteArrow@2x.png in Resources */,
 				95D858AF1464590800B7DDC7 /* Defaults.plist in Resources */,
+				95D9B3FF1468905200E4CA9D /* navbar_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -987,6 +991,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SickBeard/SickBeard-Prefix.pch";
@@ -997,6 +1002,7 @@
 				);
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};

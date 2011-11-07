@@ -12,10 +12,8 @@
 #import "SickbeardAPIClient.h"
 #import "PRPAlertView.h"
 #import "ATMHud.h"
+#import "UIImageView+AFNetworking.h"
 
-@interface SBEpisodeDetailsViewController ()
-@property (nonatomic, strong) ATMHud *hud;
-@end
 
 @implementation SBEpisodeDetailsViewController
 
@@ -23,18 +21,14 @@
 @synthesize airDateLabel;
 @synthesize seasonLabel;
 @synthesize descriptionLabel;
+@synthesize showPosterImageView;
 @synthesize episode;
-@synthesize hud;
 
 #pragma mark - View lifecycle
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
 	self.title = @"Details";
-	
-	self.hud = [[ATMHud alloc] init];
-	[self.view addSubview:self.hud.view];
-	
+		
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
 							episode.show.tvdbID, @"tvdbid", 
 							[NSNumber numberWithInt:episode.season], @"season",
@@ -53,9 +47,19 @@
 											  }
 											  
 											  self.titleLabel.text = episode.name;
-											  self.airDateLabel.text = [NSString stringWithFormat:@"Aired on %@", episode.airDate];
+											  self.airDateLabel.text = episode.airDate ? [NSString stringWithFormat:@"Aired on %@", episode.airDate] : @"Unknown Air Date";
 											  self.seasonLabel.text = [NSString stringWithFormat:@"Season %d, episode %d", episode.season, episode.number];
 											  self.descriptionLabel.text = episode.episodeDescription;
+											  
+											  NSURL *posterUrl = [[SickbeardAPIClient sharedClient] createUrlWithEndpoint:episode.show.posterUrlPath];
+											  [self.showPosterImageView setImageWithURLRequest:[NSURLRequest requestWithURL:posterUrl]
+																			  placeholderImage:nil
+																					   success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+																						   
+																					   }
+																					   failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+																						   NSLog(@"Couldn't load image at %@", request.URL);
+																					   }];
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving episode" 
@@ -94,7 +98,7 @@
 											   destructiveButtonTitle:nil 
 													 otherButtonTitles:@"Search", @"Set Status", nil];
 	actionSheet.tag = 998;
-	[actionSheet showFromTabBar:self.tabBarController.tabBar];
+	[actionSheet showInView:self.view];
 }
 
 - (void)searchForEpisode {
@@ -103,27 +107,27 @@
 							[NSNumber numberWithInt:episode.season], @"season",
 							[NSNumber numberWithInt:episode.number], @"episode", nil];
 
-	[hud setCaption:@"Searching for episode..."];
-	[hud setActivity:YES];
-	[hud show];
+	[self.hud setCaption:@"Searching for episode..."];
+	[self.hud setActivity:YES];
+	[self.hud show];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
 									   parameters:params 
 										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
-											  [hud setActivity:NO];
+											  [self.hud setActivity:NO];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [hud setCaption:@"Episode found and is downloading."];
-												  [hud setImage:[UIImage imageNamed:@"19-check"]];
-												  [hud update];
-												  [hud hideAfter:2];
+												  [self.hud setCaption:@"Episode found and is downloading."];
+												  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
+												  [self.hud update];
+												  [self.hud hideAfter:2];
 											  }
 											  else {
-												  [hud setCaption:[JSON objectForKey:@"message"]];
-												  [hud update];
-												  [hud hideAfter:2];
+												  [self.hud setCaption:[JSON objectForKey:@"message"]];
+												  [self.hud update];
+												  [self.hud hideAfter:2];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
@@ -152,28 +156,28 @@
 							[NSNumber numberWithInt:episode.number], @"episode",
 							statusString, @"status", nil];
 	
-	[hud setCaption:[NSString stringWithFormat:@"Setting episode status to %@", statusString]];
-	[hud setActivity:YES];
-	[hud show];
+	[self.hud setCaption:[NSString stringWithFormat:@"Setting episode status to %@", statusString]];
+	[self.hud setActivity:YES];
+	[self.hud show];
 
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
 									   parameters:params 
 										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 																 
-											  [hud setActivity:NO];
+											  [self.hud setActivity:NO];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [hud setCaption:@"Status successfully set!"];
-												  [hud setImage:[UIImage imageNamed:@"19-check"]];
+												  [self.hud setCaption:@"Status successfully set!"];
+												  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
 											  }
 											  else {
-												  [hud setCaption:[JSON objectForKey:@"message"]];
-												  [hud setImage:[UIImage imageNamed:@"11-x"]];
+												  [self.hud setCaption:[JSON objectForKey:@"message"]];
+												  [self.hud setImage:[UIImage imageNamed:@"11-x"]];
 											  }
 												   
-											  [hud update];
-											  [hud hideAfter:2];
+											  [self.hud update];
+											  [self.hud hideAfter:2];
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
