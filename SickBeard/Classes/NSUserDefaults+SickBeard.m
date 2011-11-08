@@ -56,17 +56,17 @@ NSString *const SBStatusKey = @"SBStatusKey";
 }
 
 - (NSArray*)getDefaultDirectories {
-	NSArray *dirs = [self objectForKey:SBDefaultDirectoriesKey];
+	NSData *data = [self objectForKey:SBDefaultDirectoriesKey];
 	
-	if (!dirs) {
-		dirs = [NSArray array];
+	if (data) {
+		return [NSKeyedUnarchiver unarchiveObjectWithData:data];
 	}
 	
-	return dirs;
+	return [NSArray array];
 }
 
 - (void)setDefaultDirectories:(NSArray *)defaultDirectories {
-	[self setObject:defaultDirectories forKey:SBDefaultDirectoriesKey];
+	[self setObject:[NSKeyedArchiver archivedDataWithRootObject:defaultDirectories] forKey:SBDefaultDirectoriesKey];
 }
 
 - (int)getDefaultDirectoryIndex {

@@ -72,6 +72,7 @@
 		9577B0D3140C09AD007F48FE /* ATMSoundFX.m in Sources */ = {isa = PBXBuildFile; fileRef = 9577B0CF140C0999007F48FE /* ATMSoundFX.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9577B0D5140C09D2007F48FE /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9577B0D4140C09D2007F48FE /* libz.1.2.5.dylib */; };
 		959439461423032F0069E008 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 959439441423032F0069E008 /* libTestFlight.a */; };
+		95A0AB3F1469D65E009EADA7 /* SBRootDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A0AB3E1469D65E009EADA7 /* SBRootDirectory.m */; };
 		95BC1327140D5D74009F9FBC /* SBShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BC1326140D5D74009F9FBC /* SBShow.m */; };
 		95BC1328140D5D74009F9FBC /* SBShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BC1326140D5D74009F9FBC /* SBShow.m */; };
 		95BC1330140D779F009F9FBC /* SBEpisode.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BC132F140D779F009F9FBC /* SBEpisode.m */; };
@@ -210,6 +211,8 @@
 		9577B0D4140C09D2007F48FE /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		959439441423032F0069E008 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		959439451423032F0069E008 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		95A0AB3D1469D65E009EADA7 /* SBRootDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBRootDirectory.h; path = Classes/SBRootDirectory.h; sourceTree = "<group>"; };
+		95A0AB3E1469D65E009EADA7 /* SBRootDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBRootDirectory.m; path = Classes/SBRootDirectory.m; sourceTree = "<group>"; };
 		95BC1325140D5D74009F9FBC /* SBShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBShow.h; path = Classes/SBShow.h; sourceTree = "<group>"; };
 		95BC1326140D5D74009F9FBC /* SBShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBShow.m; path = Classes/SBShow.m; sourceTree = "<group>"; };
 		95BC1329140D5F2E009F9FBC /* DictionaryCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DictionaryCreation.h; path = Classes/DictionaryCreation.h; sourceTree = "<group>"; };
@@ -646,6 +649,8 @@
 				95BC132F140D779F009F9FBC /* SBEpisode.m */,
 				950E3F011411723000275A57 /* SBComingEpisode.h */,
 				950E3F021411723000275A57 /* SBComingEpisode.m */,
+				95A0AB3D1469D65E009EADA7 /* SBRootDirectory.h */,
+				95A0AB3E1469D65E009EADA7 /* SBRootDirectory.m */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -889,6 +894,7 @@
 				9575EC2E14632EF000D600E9 /* SBBaseViewController.m in Sources */,
 				9575EC3114632F2C00D600E9 /* SBBaseTableViewController.m in Sources */,
 				9527ED2D1463952D001B3E51 /* EGORefreshTableHeaderView.m in Sources */,
+				95A0AB3F1469D65E009EADA7 /* SBRootDirectory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

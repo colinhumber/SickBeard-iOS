@@ -8,6 +8,7 @@
 
 #import "SBOptionsViewController.h"
 #import "SBShow.h"
+#import "SBRootDirectory.h"
 #import "ATMHud.h"
 #import "SickbeardAPIClient.h"
 #import "PRPAlertView.h"
@@ -60,11 +61,15 @@
 
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
-	int defaultDirectoryIndex = defaults.defaultDirectoryIndex;
 	NSArray *defaultDirs = defaults.defaultDirectories;
 	
-	if (defaultDirectoryIndex >= 0 && defaultDirectoryIndex < defaultDirs.count) {
-		locationTextField.text = [defaultDirs objectAtIndex:defaultDirectoryIndex];
+	if (defaultDirs.count > 0) {
+		SBRootDirectory *defaultRootDir = [defaultDirs find:^BOOL(id obj) {
+			SBRootDirectory *dir = obj;
+			return dir.isDefault;
+		}];
+		
+		locationTextField.text = defaultRootDir.path;
 	}
 	
 	initialQualities = defaults.initialQualities;

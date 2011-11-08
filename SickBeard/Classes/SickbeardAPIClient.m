@@ -13,6 +13,7 @@
 #import "AFJSONRequestOperation.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "NSUserDefaults+SickBeard.h"
+#import "SBRootDirectory.h"
 
 NSString *const RESULT_SUCCESS = @"success";
 NSString *const RESULT_FAILURE = @"failure";
@@ -89,14 +90,14 @@ static SickbeardAPIClient *sharedClient = nil;
 																								NSString *result = [JSON objectForKey:@"result"];
 																								
 																								if ([result isEqualToString:RESULT_SUCCESS]) {
-																									NSDictionary *data = [JSON objectForKey:@"data"];
+																									NSArray *data = [JSON objectForKey:@"data"];
 																									
-																									int defaultIndex = [[data objectForKey:@"default_index"] intValue];
-																									NSArray *rootDirs = [data objectForKey:@"root_dirs"];
-																									
+																									NSMutableArray *directories = [NSMutableArray arrayWithCapacity:data.count];
+																									for (NSDictionary *dir in data) {
+																										[directories addObject:[SBRootDirectory itemWithDictionary:dir]];
+																									}
 																									NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-																									defaults.defaultDirectories = rootDirs;
-																									defaults.defaultDirectoryIndex = defaultIndex;
+																									defaults.defaultDirectories = directories;
 																									
 																									[defaults synchronize];
 																								}
