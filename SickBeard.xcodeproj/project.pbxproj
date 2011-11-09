@@ -73,6 +73,13 @@
 		9577B0D5140C09D2007F48FE /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9577B0D4140C09D2007F48FE /* libz.1.2.5.dylib */; };
 		959439461423032F0069E008 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 959439441423032F0069E008 /* libTestFlight.a */; };
 		95A0AB3F1469D65E009EADA7 /* SBRootDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A0AB3E1469D65E009EADA7 /* SBRootDirectory.m */; };
+		95A0AB441469DD95009EADA7 /* SBHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A0AB431469DD95009EADA7 /* SBHistoryViewController.m */; };
+		95A0AB47146A253D009EADA7 /* SBHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A0AB46146A253D009EADA7 /* SBHistory.m */; };
+		95A0AB4A146A266B009EADA7 /* SBHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A0AB49146A266B009EADA7 /* SBHistoryCell.m */; };
+		95A0AB91146AE795009EADA7 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A0AB90146AE795009EADA7 /* NSData+Base64.m */; };
+		95A0AB95146AE7E8009EADA7 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A0AB94146AE7E8009EADA7 /* NSString+Base64.m */; };
+		95A0ABD7146AEF69009EADA7 /* AFImageRequestOperation+NSURLCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A0ABD6146AEF68009EADA7 /* AFImageRequestOperation+NSURLCredential.m */; };
+		95A0ABDA146AFD65009EADA7 /* AFHTTPRequestOperation+NSURLCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A0ABD9146AFD64009EADA7 /* AFHTTPRequestOperation+NSURLCredential.m */; };
 		95BC1327140D5D74009F9FBC /* SBShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BC1326140D5D74009F9FBC /* SBShow.m */; };
 		95BC1328140D5D74009F9FBC /* SBShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BC1326140D5D74009F9FBC /* SBShow.m */; };
 		95BC1330140D779F009F9FBC /* SBEpisode.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BC132F140D779F009F9FBC /* SBEpisode.m */; };
@@ -213,6 +220,20 @@
 		959439451423032F0069E008 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		95A0AB3D1469D65E009EADA7 /* SBRootDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBRootDirectory.h; path = Classes/SBRootDirectory.h; sourceTree = "<group>"; };
 		95A0AB3E1469D65E009EADA7 /* SBRootDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBRootDirectory.m; path = Classes/SBRootDirectory.m; sourceTree = "<group>"; };
+		95A0AB421469DD95009EADA7 /* SBHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBHistoryViewController.h; path = Classes/SBHistoryViewController.h; sourceTree = "<group>"; };
+		95A0AB431469DD95009EADA7 /* SBHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBHistoryViewController.m; path = Classes/SBHistoryViewController.m; sourceTree = "<group>"; };
+		95A0AB45146A253C009EADA7 /* SBHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBHistory.h; path = Classes/SBHistory.h; sourceTree = "<group>"; };
+		95A0AB46146A253D009EADA7 /* SBHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBHistory.m; path = Classes/SBHistory.m; sourceTree = "<group>"; };
+		95A0AB48146A266A009EADA7 /* SBHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBHistoryCell.h; path = Classes/SBHistoryCell.h; sourceTree = "<group>"; };
+		95A0AB49146A266B009EADA7 /* SBHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBHistoryCell.m; path = Classes/SBHistoryCell.m; sourceTree = "<group>"; };
+		95A0AB8F146AE795009EADA7 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "Classes/NSData+Base64.h"; sourceTree = "<group>"; };
+		95A0AB90146AE795009EADA7 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "Classes/NSData+Base64.m"; sourceTree = "<group>"; };
+		95A0AB93146AE7E8009EADA7 /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Base64.h"; path = "Classes/NSString+Base64.h"; sourceTree = "<group>"; };
+		95A0AB94146AE7E8009EADA7 /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Base64.m"; path = "Classes/NSString+Base64.m"; sourceTree = "<group>"; };
+		95A0ABD5146AEF68009EADA7 /* AFImageRequestOperation+NSURLCredential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AFImageRequestOperation+NSURLCredential.h"; path = "Classes/AFImageRequestOperation+NSURLCredential.h"; sourceTree = "<group>"; };
+		95A0ABD6146AEF68009EADA7 /* AFImageRequestOperation+NSURLCredential.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AFImageRequestOperation+NSURLCredential.m"; path = "Classes/AFImageRequestOperation+NSURLCredential.m"; sourceTree = "<group>"; };
+		95A0ABD8146AFD64009EADA7 /* AFHTTPRequestOperation+NSURLCredential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AFHTTPRequestOperation+NSURLCredential.h"; path = "Classes/AFHTTPRequestOperation+NSURLCredential.h"; sourceTree = "<group>"; };
+		95A0ABD9146AFD64009EADA7 /* AFHTTPRequestOperation+NSURLCredential.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AFHTTPRequestOperation+NSURLCredential.m"; path = "Classes/AFHTTPRequestOperation+NSURLCredential.m"; sourceTree = "<group>"; };
 		95BC1325140D5D74009F9FBC /* SBShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBShow.h; path = Classes/SBShow.h; sourceTree = "<group>"; };
 		95BC1326140D5D74009F9FBC /* SBShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBShow.m; path = Classes/SBShow.m; sourceTree = "<group>"; };
 		95BC1329140D5F2E009F9FBC /* DictionaryCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DictionaryCreation.h; path = Classes/DictionaryCreation.h; sourceTree = "<group>"; };
@@ -390,6 +411,8 @@
 		9563CD8C140D4B5500920795 /* Additions */ = {
 			isa = PBXGroup;
 			children = (
+				95A0AB8F146AE795009EADA7 /* NSData+Base64.h */,
+				95A0AB90146AE795009EADA7 /* NSData+Base64.m */,
 				95BC1332140D847D009F9FBC /* OrderedDictionary.h */,
 				95BC1333140D847D009F9FBC /* OrderedDictionary.m */,
 				9563CD83140D4B4E00920795 /* NSArray+Blocks.h */,
@@ -404,6 +427,12 @@
 				9563CCF6140D421600920795 /* NSUserDefaults+SickBeard.m */,
 				950E3F0514117D2900275A57 /* NSDate+Utilities.h */,
 				950E3F0614117D2900275A57 /* NSDate+Utilities.m */,
+				95A0AB93146AE7E8009EADA7 /* NSString+Base64.h */,
+				95A0AB94146AE7E8009EADA7 /* NSString+Base64.m */,
+				95A0ABD5146AEF68009EADA7 /* AFImageRequestOperation+NSURLCredential.h */,
+				95A0ABD6146AEF68009EADA7 /* AFImageRequestOperation+NSURLCredential.m */,
+				95A0ABD8146AFD64009EADA7 /* AFHTTPRequestOperation+NSURLCredential.h */,
+				95A0ABD9146AFD64009EADA7 /* AFHTTPRequestOperation+NSURLCredential.m */,
 			);
 			name = Additions;
 			sourceTree = "<group>";
@@ -484,6 +513,25 @@
 				959439451423032F0069E008 /* TestFlight.h */,
 			);
 			path = TestFlight;
+			sourceTree = "<group>";
+		};
+		95A0AB411469DD7F009EADA7 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				95A0AB4B146A2AE4009EADA7 /* Views */,
+				95A0AB421469DD95009EADA7 /* SBHistoryViewController.h */,
+				95A0AB431469DD95009EADA7 /* SBHistoryViewController.m */,
+			);
+			name = History;
+			sourceTree = "<group>";
+		};
+		95A0AB4B146A2AE4009EADA7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				95A0AB48146A266A009EADA7 /* SBHistoryCell.h */,
+				95A0AB49146A266B009EADA7 /* SBHistoryCell.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		95DD41EF140837B8001FE32F = {
@@ -575,6 +623,7 @@
 				95F7F60914083A3C00E17F3E /* Shows */,
 				95F7F60D14083AA400E17F3E /* Episodes */,
 				95F7F61414083D8A00E17F3E /* Settings */,
+				95A0AB411469DD7F009EADA7 /* History */,
 				9575EC2C14632EEF00D600E9 /* SBBaseViewController.h */,
 				9575EC2D14632EEF00D600E9 /* SBBaseViewController.m */,
 				9575EC2F14632F2A00D600E9 /* SBBaseTableViewController.h */,
@@ -651,6 +700,8 @@
 				950E3F021411723000275A57 /* SBComingEpisode.m */,
 				95A0AB3D1469D65E009EADA7 /* SBRootDirectory.h */,
 				95A0AB3E1469D65E009EADA7 /* SBRootDirectory.m */,
+				95A0AB45146A253C009EADA7 /* SBHistory.h */,
+				95A0AB46146A253D009EADA7 /* SBHistory.m */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -895,6 +946,13 @@
 				9575EC3114632F2C00D600E9 /* SBBaseTableViewController.m in Sources */,
 				9527ED2D1463952D001B3E51 /* EGORefreshTableHeaderView.m in Sources */,
 				95A0AB3F1469D65E009EADA7 /* SBRootDirectory.m in Sources */,
+				95A0AB441469DD95009EADA7 /* SBHistoryViewController.m in Sources */,
+				95A0AB47146A253D009EADA7 /* SBHistory.m in Sources */,
+				95A0AB4A146A266B009EADA7 /* SBHistoryCell.m in Sources */,
+				95A0AB91146AE795009EADA7 /* NSData+Base64.m in Sources */,
+				95A0AB95146AE7E8009EADA7 /* NSString+Base64.m in Sources */,
+				95A0ABD7146AEF69009EADA7 /* AFImageRequestOperation+NSURLCredential.m in Sources */,
+				95A0ABDA146AFD65009EADA7 /* AFHTTPRequestOperation+NSURLCredential.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

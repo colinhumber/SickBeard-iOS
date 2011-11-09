@@ -13,6 +13,7 @@ NSString *const SBDefaultsRegisteredKey = @"SBDefaultsRegisteredKey";
 
 NSString *const SBServerHasBeenSetupKey = @"SBServerHasBeenSetupKey";
 NSString *const SBServerKey = @"SBServerKey";
+NSString *const SBTemporaryServerKey = @"SBTemporaryServerKey";
 NSString *const SBDefaultDirectoriesKey = @"SBDefaultDirectoriesKey";
 NSString *const SBDefaultDirectoryIndexKey = @"SBDefaultDirectoryIndexKey";
 
@@ -52,6 +53,20 @@ NSString *const SBStatusKey = @"SBStatusKey";
 
 - (void)setServer:(SBServer*)val {
 	[self setObject:[NSKeyedArchiver archivedDataWithRootObject:val] forKey:SBServerKey];
+	[self synchronize];
+}
+
+- (SBServer*)getTemporaryServer {
+	NSData *data = [self objectForKey:SBTemporaryServerKey];
+	if (data) {
+		return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+	}
+	
+	return nil;
+}
+
+- (void)setTemporaryServer:(SBServer*)val {
+	[self setObject:[NSKeyedArchiver archivedDataWithRootObject:val] forKey:SBTemporaryServerKey];
 	[self synchronize];
 }
 

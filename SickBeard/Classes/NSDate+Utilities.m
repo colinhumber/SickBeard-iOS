@@ -30,6 +30,17 @@
 	return d;
 }
 
+// Sickbeard history date format
++ (NSDate *) dateTimeWithString:(NSString *)string
+{
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+	[formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+	
+	NSDate *d = [formatter dateFromString:string];
+	
+	return d;
+}
+
 #pragma mark Relative Dates
 
 + (NSDate *) dateWithDaysFromNow: (NSUInteger) days
@@ -353,6 +364,17 @@
 	if (!formatter) {
 		formatter = [[NSDateFormatter alloc] init];
 		[formatter setDateFormat:@"EEEE, LLL d"];
+	}
+	
+	return [formatter stringFromDate:self];
+}
+
+- (NSString*)displayDateTimeString {
+	static NSDateFormatter *formatter = nil;
+	
+	if (!formatter) {
+		formatter = [[NSDateFormatter alloc] init];
+		[formatter setDateFormat:@"EEEE, LLL d, h:mm a"];
 	}
 	
 	return [formatter stringFromDate:self];

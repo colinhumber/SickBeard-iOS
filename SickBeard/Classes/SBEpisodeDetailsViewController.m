@@ -13,7 +13,7 @@
 #import "PRPAlertView.h"
 #import "ATMHud.h"
 #import "UIImageView+AFNetworking.h"
-
+#import "NSDate+Utilities.h"
 
 @implementation SBEpisodeDetailsViewController
 
@@ -47,7 +47,7 @@
 											  }
 											  
 											  self.titleLabel.text = episode.name;
-											  self.airDateLabel.text = episode.airDate ? [NSString stringWithFormat:@"Aired on %@", episode.airDate] : @"Unknown Air Date";
+											  self.airDateLabel.text = episode.airDate ? [NSString stringWithFormat:@"Aired on %@", [episode.airDate displayString]] : @"Unknown Air Date";
 											  self.seasonLabel.text = [NSString stringWithFormat:@"Season %d, episode %d", episode.season, episode.number];
 											  self.descriptionLabel.text = episode.episodeDescription;
 											  

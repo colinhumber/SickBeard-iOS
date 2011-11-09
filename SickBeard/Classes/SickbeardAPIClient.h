@@ -29,12 +29,15 @@ typedef void (^APIErrorBlock)(NSURLRequest *request, NSHTTPURLResponse *response
 @interface SickbeardAPIClient : NSObject
 
 + (SickbeardAPIClient*)sharedClient;
++ (NSString*)posterUrlPath:(NSString*)tvdbID;
++ (NSString*)bannerUrlPath:(NSString*)tvdbID;
 
 // loads defaults and root directories for the specified server
 - (void)loadDefaults:(SBServer*)server;
 
 // tests an undefined server to see if it is valid or not
 - (void)pingServer:(SBServer*)server success:(APISuccessBlock)success failure:(APIErrorBlock)failure;
+- (void)validateServerCredentials:(SBServer*)server success:(void (^)(id object))success failure:(void (^)(NSHTTPURLResponse *response, NSError *error))failure;
 
 // runs API commands against a pre-defined server
 - (void)runCommand:(SickBeardCommand)command parameters:(NSDictionary*)params success:(APISuccessBlock)success failure:(APIErrorBlock)failure;
@@ -42,6 +45,7 @@ typedef void (^APIErrorBlock)(NSURLRequest *request, NSHTTPURLResponse *response
 
 // create URL endpoint directly against the server
 - (NSURL*)createUrlWithEndpoint:(NSString*)endpoint;
+//- (NSURLRequest*)authenticatedURLRequestForEndpoint:(NSString*)endpoint;
 
 @property (nonatomic, strong) SBServer *currentServer;
 

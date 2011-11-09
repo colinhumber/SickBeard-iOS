@@ -1,41 +1,33 @@
 //
-//  SBShowsViewController.m
+//  SBHistoryViewController.m
 //  SickBeard
 //
-//  Created by Colin Humber on 8/26/11.
+//  Created by Colin Humber on 11/8/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "SBShowsViewController.h"
+#import "SBHistoryViewController.h"
 #import "SickbeardAPIClient.h"
-#import "SBShow.h"
+#import "SBHistory.h"
 #import "PRPAlertView.h"
-#import "SBShowDetailsViewController.h"
 #import "NSUserDefaults+SickBeard.h"
 #import "UIImageView+AFNetworking.h"
-#import "ShowCell.h"
+#import "SBHistoryCell.h"
+#import "NSDate+Utilities.h"
 
-
-@implementation SBShowsViewController
+@implementation SBHistoryViewController
 
 @synthesize tableView;
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-	if ([segue.identifier isEqualToString:@"ShowDetailsSegue"]) {
-		SBShowDetailsViewController *detailsController = [segue destinationViewController];
-		detailsController.show = [shows objectAtIndex:[self.tableView indexPathForSelectedRow].row];
-	}
-}
 
 #pragma mark - View lifecycle
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+	
 	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
 	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
-
+	
 	refreshHeader = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
 	refreshHeader.delegate = self;
 	refreshHeader.defaultInsets = self.tableView.contentInset;
@@ -51,8 +43,8 @@
 	}
 	else {
 		if ([NSUserDefaults standardUserDefaults].serverHasBeenSetup) {
-			if (!shows) {
-				[shows removeAllObjects];
+			if (!history) {
+				[history removeAllObjects];
 				[self loadData];
 			}
 		}		
@@ -78,47 +70,55 @@
 	[super loadData];
 	
 	[self.hud setActivity:YES];
-	[self.hud setCaption:@"Loading shows..."];
+	[self.hud setCaption:@"Loading history..."];
 	[self.hud show];
 	
-	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"name", @"sort", nil];
+	NSString *filter = @"";
+	if (historyType == SBHistoryTypeSnatched) {
+		filter = @"snatched";
+	}
+	else {
+		filter = @"downloaded";
+	}
+
+	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:filter, @"type", nil];
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShows 
+	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistory 
 									   parameters:params
 										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  shows = [[NSMutableArray alloc] init];
+												  history = [[NSMutableArray alloc] init];
 												  
-												  NSDictionary *dataDict = [JSON objectForKey:@"data"];
+												  NSArray *data = [JSON objectForKey:@"data"];
 												  
-												  if (dataDict.allKeys.count > 0) {
-													  for (NSString *key in [dataDict allKeys]) {
-														  SBShow *show = [SBShow itemWithDictionary:[dataDict objectForKey:key]];
-														  [shows addObject:show];
+												  if (data.count > 0) {
+													  for (NSDictionary *entry in data) {
+														  SBHistory *item = [SBHistory itemWithDictionary:entry];
+														  [history addObject:item];
 													  }
 													  
-													  NSSortDescriptor *sorter = [NSSortDescriptor sortDescriptorWithKey:@"showName" ascending:YES];
-													  [shows sortUsingDescriptors:[NSArray arrayWithObject:sorter]];
+													  NSSortDescriptor *sorter = [NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:NO];
+													  [history sortUsingDescriptors:[NSArray arrayWithObject:sorter]];
 												  }
 												  else {
-													  NSLog(@"No shows");
+													  NSLog(@"No history");
 												  }
 											  }
 											  else {
-												  [PRPAlertView showWithTitle:@"Error retrieving shows" 
+												  [PRPAlertView showWithTitle:@"Error retrieving history" 
 																	  message:[JSON objectForKey:@"message"] 
 																  buttonTitle:@"OK"];
 											  }
-										
+											  
 											  [self finishDataLoad:nil];
 											  [self.tableView reloadData];
 											  [refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
-																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
+											  [PRPAlertView showWithTitle:@"Error retrieving history" 
+																  message:[NSString stringWithFormat:@"Could not retreive history\n%@", error.localizedDescription] 
 															  buttonTitle:@"OK"];			
 											  
 											  [self finishDataLoad:error];
@@ -152,38 +152,38 @@
 
 
 #pragma mark - Actions
-- (void)addShow {
-	[self performSegueWithIdentifier:@"AddShowSegue" sender:nil];
+- (IBAction)done:(id)sender {
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)historyTypeChanged:(id)sender {
+	historyType = [(UISegmentedControl*)sender selectedSegmentIndex];
+	[self loadData];
 }
 
 - (IBAction)refresh:(id)sender {
 	[self loadData];
 }
 
-#pragma mark - UITableViewDelegate
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-	[super setEditing:editing animated:animated];
-	[self.parentViewController setEditing:editing animated:animated];
-	[self.tableView setEditing:editing animated:YES];
-}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return shows.count;
+	return history.count;
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	ShowCell *cell = (ShowCell*)[tv dequeueReusableCellWithIdentifier:@"ShowCell"];
+	SBHistoryCell *cell = (SBHistoryCell*)[tv dequeueReusableCellWithIdentifier:@"SBHistoryCell"];
 	
-	SBShow *show = [shows objectAtIndex:indexPath.row];
-	cell.showNameLabel.text = show.showName;	
+	SBHistory *entry = [history objectAtIndex:indexPath.row];
+	cell.showNameLabel.text = entry.showName;	
+	cell.createdDateLabel.text = [entry.createdDate displayDateTimeString];
+	cell.seasonEpisodeLabel.text = [NSString stringWithFormat:@"Season %d, Episode %d", entry.season, entry.episode];
+	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] createUrlWithEndpoint:[SickbeardAPIClient posterUrlPath:entry.tvdbID]]
+					   placeholderImage:[UIImage imageNamed:@"Icon"]];
 	
-	[cell.posterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] createUrlWithEndpoint:show.posterUrlPath] 
-						 placeholderImage:nil];	
-		
 	return cell;
 }
 
@@ -193,42 +193,6 @@
 	}
 	else {
 		cell.backgroundColor = RGBCOLOR(223, 218, 206); 		
-	}
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (editingStyle == UITableViewCellEditingStyleDelete) {
-		SBShow *show = [shows objectAtIndex:indexPath.row];
-		NSDictionary *params = [NSDictionary dictionaryWithObject:show.tvdbID forKey:@"tvdbid"];
-		
-		[self.hud setActivity:YES];
-		[self.hud setCaption:@"Deleting show..."];
-		[self.hud show];
-		
-		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShowDelete 
-										   parameters:params 
-											  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-												  NSString *result = [JSON objectForKey:@"result"];
-												  
-												  if ([result isEqualToString:RESULT_SUCCESS]) {
-													  [shows removeObjectAtIndex:indexPath.row];
-													  [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] 
-																			withRowAnimation:UITableViewRowAnimationAutomatic];
-												  }
-												  else {
-													  [PRPAlertView showWithTitle:@"Could not delete show" 
-																		  message:[JSON objectForKey:@"message"] 
-																	  buttonTitle:@"Okay"];
-												  }				
-												  
-												  [self.hud hide];
-											  }
-											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-												  [PRPAlertView showWithTitle:@"Error deleting show" 
-																	  message:error.localizedDescription 
-																  buttonTitle:@"Okay"];			
-												  [self.hud hide];
-											  }];
 	}
 }
 

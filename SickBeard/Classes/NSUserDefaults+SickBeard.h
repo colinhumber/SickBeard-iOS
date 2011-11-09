@@ -14,6 +14,7 @@ extern NSString *const SBDefaultsRegisteredKey;
 
 extern NSString *const SBServerHasBeenSetupKey;
 extern NSString *const SBServerKey;
+extern NSString *const SBTemporaryServerKey;
 extern NSString *const SBDefaultDirectoriesKey;
 extern NSString *const SBDefaultDirectoryIndexKey;
 
@@ -29,6 +30,8 @@ extern NSString *const SBStatusKey;
 
 @property (getter=getServerHasBeenSetup, setter=setServerHasBeenSetup:) BOOL serverHasBeenSetup;
 @property (weak, getter=getServer, setter=setServer:) SBServer *server;
+@property (weak, getter=getTemporaryServer, setter=setTemporaryServer:) SBServer *temporaryServer;
+
 @property (weak, getter=getDefaultDirectories, setter=setDefaultDirectories:) NSArray *defaultDirectories;
 @property (getter=getDefaultDirectoryIndex, setter=setDefaultDirectoryIndex:) int defaultDirectoryIndex;
 

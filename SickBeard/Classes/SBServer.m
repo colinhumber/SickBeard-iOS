@@ -69,5 +69,4 @@
 	return [NSString stringWithFormat:@"http://%@:%d/", self.host, self.port];
 }
 
-
 @end

@@ -17,6 +17,10 @@
 // Gets a date with the format mm/dd/yy
 + (NSDate *) dateWithString:(NSString *)string;
 
+// Gets a date with the format mm/dd/yy HH:mm
++ (NSDate *) dateTimeWithString:(NSString *)string;
+
+
 // Relative dates from the current date
 + (NSDate *) dateTomorrow;
 + (NSDate *) dateYesterday;
@@ -62,6 +66,7 @@
 
 // Sick Beard formatters
 - (NSString*)displayString;
+- (NSString*)displayDateTimeString;
 
 // Decomposing dates
 @property (readonly) NSInteger nearestHour;

@@ -16,4 +16,6 @@
 	#import "NSTimer+BlockAdditions.h"
 	#import "NSObject+BlockAdditions.h"
 	#import "NSUserDefaults+SickBeard.h"
+	#import "NSData+Base64.h"
+	#import "NSString+Base64.h"
 #endif

@@ -45,6 +45,14 @@ static SickbeardAPIClient *sharedClient = nil;
 	return sharedClient;
 }
 
++ (NSString*)posterUrlPath:(NSString*)tvdbID {
+	return [NSString stringWithFormat:@"showPoster/?show=%@&which=poster", tvdbID];
+}
+
++ (NSString*)bannerUrlPath:(NSString*)tvdbID {
+	return [NSString stringWithFormat:@"showPoster/?show=%@&which=banner", tvdbID];
+}
+
 - (id)init {
 	self = [super init];
 	
@@ -110,6 +118,7 @@ static SickbeardAPIClient *sharedClient = nil;
 	[self.operationQueue addOperation:dirsOperation];
 }
 
+
 - (void)pingServer:(SBServer*)server success:(APISuccessBlock)success failure:(APIErrorBlock)failure {
 	NSAssert(server != nil, @"Server cannot be nil");
 	
@@ -121,9 +130,39 @@ static SickbeardAPIClient *sharedClient = nil;
 	[self.operationQueue addOperation:operation];
 }
 
+
+- (void)validateServerCredentials:(SBServer*)server success:(void (^)(id object))success failure:(void (^)(NSHTTPURLResponse *response, NSError *error))failure {
+	NSAssert(server != nil, @"Server cannot be nil");
+	
+	NSURLCredentialStorage *store = [NSURLCredentialStorage sharedCredentialStorage];
+	
+	NSURLCredential *credential = [NSURLCredential credentialWithUser:server.username password:server.password persistence:NSURLCredentialPersistenceForSession];
+	NSURLProtectionSpace *space = [[NSURLProtectionSpace alloc] initWithHost:server.host port:server.port protocol:NSURLProtectionSpaceHTTP realm:@"SickBeard" authenticationMethod:NSURLAuthenticationMethodDefault];
+	[store setDefaultCredential:credential forProtectionSpace:space];
+
+	//	[[NSURLCredentialStorage sharedCredentialStorage] setCredential:credential forProtectionSpace:space];
+	
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:server.serviceEndpointPath]];
+	request.timeoutInterval = 5;
+
+	// create a plaintext string in the format username:password
+	NSString *loginString = [NSString stringWithFormat:@"%@:%@", server.username, server.password];
+	
+	// create the contents of the header 
+	NSString *authHeader = [@"Basic " stringByAppendingFormat:@"%@", [loginString base64Encode]];
+	
+	// add the header to the request.  Here's the $$$!!!
+	[request addValue:authHeader forHTTPHeaderField:@"Authorization"];
+
+	AFHTTPRequestOperation *operation = [AFHTTPRequestOperation HTTPRequestOperationWithRequest:request success:success failure:failure];
+	[self.operationQueue addOperation:operation];
+}
+
+
 - (void)runCommand:(SickBeardCommand)command parameters:(NSDictionary*)parameters success:(APISuccessBlock)success failure:(APIErrorBlock)failure {
 	[self runCommand:command method:HTTPMethodGET parameters:parameters success:success failure:failure];
 }
+
 
 - (void)runCommand:(SickBeardCommand)command method:(SBHTTPMethod)method parameters:(NSDictionary*)parameters success:(APISuccessBlock)success failure:(APIErrorBlock)failure {
 	// create custom request for POST. We just work with GET right now
@@ -134,12 +173,29 @@ static SickbeardAPIClient *sharedClient = nil;
 	
 	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:success failure:failure];
 	
+	// let any hud animations complete before kicking this in
 	[self.operationQueue performSelector:@selector(addOperation:) withObject:operation afterDelay:0.2];
-//	[self.operationQueue addOperation:operation];
 }
 
 - (NSURL*)createUrlWithEndpoint:(NSString*)endpoint {
 	return [NSURL URLWithString:[self.currentServer.serviceEndpointPath stringByAppendingPathComponent:endpoint]];
 }
+
+//- (NSURLRequest*)authenticatedURLRequestForEndpoint:(NSString*)endpoint {
+//	NSURL *url = [self createUrlWithEndpoint:endpoint];
+//		
+//	// create a plaintext string in the format username:password
+//	NSString *loginString = [NSString stringWithFormat:@"%@:%@", self.currentServer.username, self.currentServer.password];
+//		
+//	// create the contents of the header 
+//	NSString *authHeader = [@"Basic " stringByAppendingFormat:@"%@", [loginString base64Encode]];
+//	
+//	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];   
+//	
+//	// add the header to the request.  Here's the $$$!!!
+//	[request addValue:authHeader forHTTPHeaderField:@"Authorization"];
+//
+//	return request;
+//}
 
 @end
