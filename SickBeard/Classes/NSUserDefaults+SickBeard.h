@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class SBServer;
+@class SBRootDirectory;
 
 extern NSString *const SBDefaultsRegisteredKey;
 
@@ -16,7 +17,6 @@ extern NSString *const SBServerHasBeenSetupKey;
 extern NSString *const SBServerKey;
 extern NSString *const SBTemporaryServerKey;
 extern NSString *const SBDefaultDirectoriesKey;
-extern NSString *const SBDefaultDirectoryIndexKey;
 
 extern NSString *const SBInitialQualitiesKey;
 extern NSString *const SBArchiveQualitiesKey;
@@ -32,9 +32,8 @@ extern NSString *const SBStatusKey;
 @property (weak, getter=getServer, setter=setServer:) SBServer *server;
 @property (weak, getter=getTemporaryServer, setter=setTemporaryServer:) SBServer *temporaryServer;
 
-@property (weak, getter=getDefaultDirectories, setter=setDefaultDirectories:) NSArray *defaultDirectories;
-@property (getter=getDefaultDirectoryIndex, setter=setDefaultDirectoryIndex:) int defaultDirectoryIndex;
-
+@property (weak, getter=getDefaultDirectories, setter=setDefaultDirectories:) NSMutableArray *defaultDirectories;
+@property (readonly) SBRootDirectory *defaultDirectory;
 @property (weak, getter=getInitialQualities, setter=setInitialQualities:) NSMutableArray *initialQualities;
 @property (weak, getter=getArchiveQualities, setter=setArchiveQualities:) NSMutableArray *archiveQualities;
 @property (weak, getter=getStatus, setter=setStatus:) NSString *status;

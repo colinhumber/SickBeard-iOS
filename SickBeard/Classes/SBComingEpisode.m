@@ -14,6 +14,7 @@
 @synthesize airDate;
 @synthesize airs;
 @synthesize name;
+@synthesize plot;
 @synthesize network;
 @synthesize quality;
 @synthesize season;
@@ -30,6 +31,7 @@
 		self.airDate = [NSDate dateWithString:[dict objectForKey:@"airdate"]];		
 		self.airs = [dict objectForKey:@"airs"];
 		self.name = [dict objectForKey:@"ep_name"];
+		self.plot = [[dict objectForKey:@"ep_plot"] length] > 0 ? [dict objectForKey:@"ep_plot"] : @"No plot summary available"; 
 		self.network = [dict objectForKey:@"network"];
 		self.quality = [dict objectForKey:@"quality"];
 		self.season = [[dict objectForKey:@"season"] intValue];
@@ -45,14 +47,6 @@
 
 + (id)itemWithDictionary:(NSDictionary*)dict {
 	return [[self alloc] initWithDictionary:dict];
-}
-
-- (NSString*)bannerUrlPath {
-	return [NSString stringWithFormat:@"showPoster/?show=%@&which=banner", self.tvdbID];
-}
-
-- (NSString*)posterUrlPath {
-	return [NSString stringWithFormat:@"showPoster/?show=%@&which=poster", self.tvdbID];
 }
 
 

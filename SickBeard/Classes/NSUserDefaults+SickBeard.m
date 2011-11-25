@@ -8,6 +8,7 @@
 
 #import "NSUserDefaults+SickBeard.h"
 #import "SBServer.h"
+#import "SBRootDirectory.h"
 
 NSString *const SBDefaultsRegisteredKey = @"SBDefaultsRegisteredKey";
 
@@ -74,22 +75,20 @@ NSString *const SBStatusKey = @"SBStatusKey";
 	NSData *data = [self objectForKey:SBDefaultDirectoriesKey];
 	
 	if (data) {
-		return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+		return [[NSKeyedUnarchiver unarchiveObjectWithData:data] mutableCopy];
 	}
 	
-	return [NSArray array];
+	return [NSMutableArray array];
 }
 
 - (void)setDefaultDirectories:(NSArray *)defaultDirectories {
 	[self setObject:[NSKeyedArchiver archivedDataWithRootObject:defaultDirectories] forKey:SBDefaultDirectoriesKey];
 }
 
-- (int)getDefaultDirectoryIndex {
-	return [[self objectForKey:SBDefaultDirectoryIndexKey] integerValue];
-}
-
-- (void)setDefaultDirectoryIndex:(int)defaultDirectoryIndex {
-	[self setObject:[NSNumber numberWithInt:defaultDirectoryIndex] forKey:SBDefaultDirectoryIndexKey];
+- (SBRootDirectory*)defaultDirectory {
+	return [self.defaultDirectories find:^BOOL(SBRootDirectory *dir) {
+		return dir.isDefault;
+	}];
 }
 
 #pragma mark - Settings

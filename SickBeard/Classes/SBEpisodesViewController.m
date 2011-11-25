@@ -14,11 +14,15 @@
 #import "PRPAlertView.h"
 #import "NSDate+Utilities.h"
 #import "ComingEpisodeCell.h"
-#import "UIImageView+AFNetworking.h"
+
+@interface SBEpisodesViewController ()
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+@end
 
 @implementation SBEpisodesViewController
 
 @synthesize tableView;
+@synthesize selectedIndexPath;
 
 
 - (void)didReceiveMemoryWarning
@@ -204,14 +208,37 @@
 	NSString *sectionKey = [keys objectAtIndex:indexPath.section];
 	SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:indexPath.row];
 	
-	[cell.bannerImageView setImageWithURL:[[SickbeardAPIClient sharedClient] createUrlWithEndpoint:episode.bannerUrlPath] 
+	[cell.bannerImageView setImageWithURL:[[SickbeardAPIClient sharedClient] bannerURL:episode.tvdbID] 
 						 placeholderImage:nil];	
 
 	cell.episodeNameLabel.text = episode.name;
 	cell.seasonEpisodeLabel.text = [NSString stringWithFormat:@"Season %d, Episode %d", episode.season, episode.number];
 	cell.airDateLabel.text = [NSString stringWithFormat:@"%@ on %@ (%@)", [episode.airDate displayString], episode.network, episode.quality];
+	cell.plotLabel.text = episode.plot;
 	
 	return cell;
+}
+
+#pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	if ([indexPath compare:self.selectedIndexPath] == NSOrderedSame) {
+		return 150;
+	}
+	else {
+		return 120;
+	}
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	if ([indexPath compare:self.selectedIndexPath] == NSOrderedSame) {
+		self.selectedIndexPath = nil;
+	}
+	else {
+		self.selectedIndexPath = indexPath;
+	}
+	
+	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] 
+						  withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

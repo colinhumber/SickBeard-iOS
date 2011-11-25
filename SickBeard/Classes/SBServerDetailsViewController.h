@@ -7,13 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ATMHudDelegate.h"
+#import "SBBaseTableViewController.h"
 
 @class SBServer;
 
-@interface SBServerDetailsViewController : UITableViewController <UITextFieldDelegate, ATMHudDelegate> {
+@interface SBServerDetailsViewController : SBBaseTableViewController <UITextFieldDelegate> {
 	UITextField *currentResponder;
-	BOOL isHudShowing;
+	
+	struct {
+		unsigned int didCancel:1;
+		unsigned int initialSetup:1;
+	} _flags;
 }
 
 @property (nonatomic, strong) SBServer *server;

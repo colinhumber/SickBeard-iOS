@@ -7,6 +7,9 @@
 //
 
 #import "SBGlobal.h"
+#import "SickbeardAPIClient.h"
+#import "GTMNSString+URLArguments.h"
+#import "AFJSONRequestOperation.h"
 
 @implementation SBGlobal
 
@@ -33,7 +36,7 @@
 		[langs setObject:@"no" forKey:@"Norweigan"]; 
 		[langs setObject:@"pl" forKey:@"Polish"]; 
 		[langs setObject:@"pt" forKey:@"Portuguese"]; 
-		[langs setObject:@"ru" forKey:@"Russian"]; 
+		[langs setObject:@"ru" forKey:@"Russian"];
 		[langs setObject:@"sl" forKey:@"Slovenian"];
 		[langs setObject:@"es" forKey:@"Spanish"];
 		[langs setObject:@"sv" forKey:@"Swedish"];

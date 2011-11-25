@@ -19,8 +19,6 @@
 - (IBAction)viewModeChanged:(id)sender;
 - (IBAction)refresh:(id)sender;
 
-@property (nonatomic, strong) SBShowsViewController *showsController;
-@property (nonatomic, strong) SBEpisodesViewController *episodesController;
 @property (nonatomic, weak) UIViewController<SBHudViewController> *currentController;
 
 @end

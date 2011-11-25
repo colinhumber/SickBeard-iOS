@@ -12,7 +12,7 @@
 
 @class OrderedDictionary;
 
-@interface SBEpisodesViewController : SBBaseViewController <EGORefreshTableHeaderDelegate> {
+@interface SBEpisodesViewController : SBBaseViewController <EGORefreshTableHeaderDelegate, UITableViewDelegate, UITableViewDataSource> {
 	OrderedDictionary *comingEpisodes;
 	EGORefreshTableHeaderView *refreshHeader;
 }

@@ -45,12 +45,12 @@ static SickbeardAPIClient *sharedClient = nil;
 	return sharedClient;
 }
 
-+ (NSString*)posterUrlPath:(NSString*)tvdbID {
-	return [NSString stringWithFormat:@"showPoster/?show=%@&which=poster", tvdbID];
+- (NSURL*)posterURL:(NSString*)tvdbID {
+	return [self createUrlWithEndpoint:[NSString stringWithFormat:@"showPoster/?show=%@&which=poster", tvdbID]];
 }
 
-+ (NSString*)bannerUrlPath:(NSString*)tvdbID {
-	return [NSString stringWithFormat:@"showPoster/?show=%@&which=banner", tvdbID];
+- (NSURL*)bannerURL:(NSString*)tvdbID {
+	return [self createUrlWithEndpoint:[NSString stringWithFormat:@"showPoster/?show=%@&which=banner", tvdbID]];
 }
 
 - (id)init {
@@ -102,7 +102,10 @@ static SickbeardAPIClient *sharedClient = nil;
 																									
 																									NSMutableArray *directories = [NSMutableArray arrayWithCapacity:data.count];
 																									for (NSDictionary *dir in data) {
-																										[directories addObject:[SBRootDirectory itemWithDictionary:dir]];
+																										SBRootDirectory *directory = [SBRootDirectory itemWithDictionary:dir];
+																										if (directory.isValid) {
+																											[directories addObject:directory];
+																										}
 																									}
 																									NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 																									defaults.defaultDirectories = directories;

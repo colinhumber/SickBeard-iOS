@@ -18,8 +18,6 @@
 @synthesize isPaused;
 @synthesize quality;
 @synthesize showName;
-@dynamic bannerUrlPath;
-@dynamic posterUrlPath;
 
 - (id)initWithDictionary:(NSDictionary*)dict {
 	self = [super init];
@@ -51,14 +49,6 @@
 
 + (id)itemWithDictionary:(NSDictionary*)dict {
 	return [[self alloc] initWithDictionary:dict];
-}
-
-- (NSString*)bannerUrlPath {
-	return [NSString stringWithFormat:@"showPoster/?show=%@&which=banner", self.tvdbID];
-}
-
-- (NSString*)posterUrlPath {
-	return [NSString stringWithFormat:@"showPoster/?show=%@&which=poster", self.tvdbID];
 }
 
 

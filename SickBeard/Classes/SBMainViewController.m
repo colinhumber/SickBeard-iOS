@@ -12,8 +12,6 @@
 
 @implementation SBMainViewController
 
-@synthesize showsController;
-@synthesize episodesController;
 @synthesize currentController;
 
 - (void)viewDidLoad {
@@ -43,7 +41,7 @@
 	
 	[self transitionFromViewController:self.currentController 
 					  toViewController:[self.childViewControllers objectAtIndex:segment.selectedSegmentIndex] 
-							  duration:0.3
+							  duration:0
 							   options:UIViewAnimationOptionTransitionNone
 							animations:nil 
 							completion:^(BOOL finished) {

@@ -12,7 +12,6 @@
 #import "SickbeardAPIClient.h"
 #import "PRPAlertView.h"
 #import "ATMHud.h"
-#import "UIImageView+AFNetworking.h"
 #import "NSDate+Utilities.h"
 
 @implementation SBEpisodeDetailsViewController
@@ -51,15 +50,8 @@
 											  self.seasonLabel.text = [NSString stringWithFormat:@"Season %d, episode %d", episode.season, episode.number];
 											  self.descriptionLabel.text = episode.episodeDescription;
 											  
-											  NSURL *posterUrl = [[SickbeardAPIClient sharedClient] createUrlWithEndpoint:episode.show.posterUrlPath];
-											  [self.showPosterImageView setImageWithURLRequest:[NSURLRequest requestWithURL:posterUrl]
-																			  placeholderImage:nil
-																					   success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-																						   
-																					   }
-																					   failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-																						   NSLog(@"Couldn't load image at %@", request.URL);
-																					   }];
+											  [self.showPosterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURL:episode.show.tvdbID]
+																	   placeholderImage:nil];
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving episode" 

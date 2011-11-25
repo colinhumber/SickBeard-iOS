@@ -87,6 +87,14 @@
 			commandString = @"sb.getrootdirs";
 			break;
 			
+		case SickBeardCommandAddRootDirectory:
+			commandString = @"sb.addrootdir";
+			break;
+			
+		case SickBeardCommandDeleteRootDirectory:
+			commandString = @"sb.deleterootdir";
+			break;
+			
 		case SickBeardCommandComingEpisodes:
 			commandString = @"future";
 			break;

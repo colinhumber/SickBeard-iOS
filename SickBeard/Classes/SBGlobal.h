@@ -23,6 +23,8 @@ typedef enum {
 	SickBeardCommandSetDefaults,
 	SickBeardCommandShutdown,
 	SickBeardCommandGetRootDirectories,
+	SickBeardCommandAddRootDirectory,
+	SickBeardCommandDeleteRootDirectory,
 	
 	// episode commands
 	SickBeardCommandComingEpisodes,

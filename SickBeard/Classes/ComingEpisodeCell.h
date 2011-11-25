@@ -14,5 +14,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *episodeNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *seasonEpisodeLabel;
 @property (nonatomic, strong) IBOutlet UILabel *airDateLabel;
+@property (nonatomic, strong) IBOutlet UILabel *plotLabel;
 
 @end

@@ -11,19 +11,24 @@
 #import "SBStatusViewController.h"
 
 @class SBShow;
+@class SBRootDirectory;
 
 @interface SBOptionsViewController : UITableViewController <SBQualityViewControllerDelegate, SBStatusViewControllerDelegate, UITextFieldDelegate> {
 	NSMutableArray *initialQualities;
 	NSMutableArray *archiveQualities;
+	NSMutableArray *defaultDirectories;
 	NSString *status;
+	SBRootDirectory *parentFolder;
+	BOOL useSeasonFolders;
 }
 
+- (IBAction)useSeasonFoldersChanged:(id)sender;
+
 @property (nonatomic, strong) SBShow *show;
-@property (nonatomic, strong) IBOutlet UITextField *locationTextField;
-@property (nonatomic, strong) IBOutlet UILabel *initialQualityLabel;
-@property (nonatomic, strong) IBOutlet UILabel *archiveQualityLabel;
-@property (nonatomic, strong) IBOutlet UILabel *statusLabel;
-@property (nonatomic, strong) IBOutlet UISwitch *seasonFolderSwitch;
+//@property (nonatomic, strong) IBOutlet UILabel *initialQualityLabel;
+//@property (nonatomic, strong) IBOutlet UILabel *archiveQualityLabel;
+//@property (nonatomic, strong) IBOutlet UILabel *statusLabel;
+//@property (nonatomic, strong) IBOutlet UISwitch *seasonFolderSwitch;
 
 
 @end

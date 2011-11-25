@@ -12,7 +12,6 @@
 #import "PRPAlertView.h"
 #import "SBShowDetailsViewController.h"
 #import "NSUserDefaults+SickBeard.h"
-#import "UIImageView+AFNetworking.h"
 #import "ShowCell.h"
 
 
@@ -172,8 +171,6 @@
 	return shows.count;
 }
 
-// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
-// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	ShowCell *cell = (ShowCell*)[tv dequeueReusableCellWithIdentifier:@"ShowCell"];
@@ -181,7 +178,7 @@
 	SBShow *show = [shows objectAtIndex:indexPath.row];
 	cell.showNameLabel.text = show.showName;	
 	
-	[cell.posterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] createUrlWithEndpoint:show.posterUrlPath] 
+	[cell.posterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURL:show.tvdbID] 
 						 placeholderImage:nil];	
 		
 	return cell;

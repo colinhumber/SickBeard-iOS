@@ -13,3 +13,6 @@
 [submodule "SickBeard/EGOTableViewPullRefresh"]
 	path = SickBeard/EGOTableViewPullRefresh
 	url = https://github.com/typeoneerror/EGOTableViewPullRefresh.git
+[submodule "SickBeard/SDWebImage"]
+	path = SickBeard/SDWebImage
+	url = https://github.com/rs/SDWebImage.git

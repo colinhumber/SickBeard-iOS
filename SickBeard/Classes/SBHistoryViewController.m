@@ -11,7 +11,6 @@
 #import "SBHistory.h"
 #import "PRPAlertView.h"
 #import "NSUserDefaults+SickBeard.h"
-#import "UIImageView+AFNetworking.h"
 #import "SBHistoryCell.h"
 #import "NSDate+Utilities.h"
 
@@ -181,7 +180,7 @@
 	cell.showNameLabel.text = entry.showName;	
 	cell.createdDateLabel.text = [entry.createdDate displayDateTimeString];
 	cell.seasonEpisodeLabel.text = [NSString stringWithFormat:@"Season %d, Episode %d", entry.season, entry.episode];
-	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] createUrlWithEndpoint:[SickbeardAPIClient posterUrlPath:entry.tvdbID]]
+	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURL:entry.tvdbID]
 					   placeholderImage:[UIImage imageNamed:@"Icon"]];
 	
 	return cell;

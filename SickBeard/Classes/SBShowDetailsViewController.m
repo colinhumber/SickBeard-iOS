@@ -14,7 +14,6 @@
 #import "SBEpisode.h"
 #import "OrderedDictionary.h"
 #import "SBEpisodeDetailsViewController.h"
-#import "UIImageView+AFNetworking.h"
 #import "NSDate+Utilities.h"
 
 @implementation SBShowDetailsViewController
@@ -63,7 +62,7 @@
 	
 	UIImageView *tableHeaderView = [[UIImageView alloc] init];
 	tableHeaderView.frame = CGRectMake(0, 0, 320, 60);
-	[tableHeaderView setImageWithURL:[[SickbeardAPIClient sharedClient] createUrlWithEndpoint:show.bannerUrlPath] 
+	[tableHeaderView setImageWithURL:[[SickbeardAPIClient sharedClient] bannerURL:show.tvdbID] 
 					placeholderImage:nil];	
 	
 	self.tableView.tableHeaderView = tableHeaderView;

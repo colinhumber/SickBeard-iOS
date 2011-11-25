@@ -11,13 +11,13 @@
 #import "SBServer.h"
 #import "SBServer+SickBeardAdditions.h"
 #import "PRPAlertView.h"
-#import "ATMHud.h"
 #import "NSUserDefaults+SickBeard.h"
 
 @interface SBServerDetailsViewController()
 - (void)updateServerValues;
+- (void)setInitialServerValues;
+- (void)enableFields:(BOOL)enabled;
 
-@property (nonatomic, strong) ATMHud *hud;
 @end
 
 @implementation SBServerDetailsViewController
@@ -28,19 +28,20 @@
 @synthesize usernameTextField;
 @synthesize passwordTextField;
 @synthesize apiKeyTextField;
-@synthesize hud;
 @synthesize server;
 //@synthesize managedObjectContext;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+	
+	if (self) {
+		_flags.didCancel = NO;
+		_flags.initialSetup = ![NSUserDefaults standardUserDefaults].serverHasBeenSetup;
+;
+	}
+	
+	return self;
 }
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -52,28 +53,26 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
 	self.title = @"Server";
 
-	if (![NSUserDefaults standardUserDefaults].serverHasBeenSetup) {
+	if (_flags.initialSetup) {
 		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" 
 																				   style:UIBarButtonItemStyleDone 
 																				  target:self 
 																				  action:@selector(saveServer)];
 	}
+	else {
+		self.navigationItem.rightBarButtonItem = self.editButtonItem;
+		[self enableFields:NO];
+	}
 	
 	self.server = [NSUserDefaults standardUserDefaults].server;
 	
 	if (server) {
-		nameTextField.text = server.name;
-		hostTextField.text = server.host;
-		portTextField.text = [NSString stringWithFormat:@"%d", server.port];
-		usernameTextField.text = server.username;
-		passwordTextField.text = server.password;
-		apiKeyTextField.text = server.apiKey;
+		[self setInitialServerValues];
 	}
 	
 #if DEBUG
@@ -106,27 +105,25 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+#pragma mark - Actions
+- (void)enableFields:(BOOL)enabled {
+	nameTextField.enabled = enabled;
+	hostTextField.enabled = enabled;
+	portTextField.enabled = enabled;
+	usernameTextField.enabled = enabled;
+	passwordTextField.enabled = enabled;
+	apiKeyTextField.enabled = enabled;
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
+- (void)setInitialServerValues {
+	nameTextField.text = server.name;
+	hostTextField.text = server.host;
+	portTextField.text = [NSString stringWithFormat:@"%d", server.port];
+	usernameTextField.text = server.username;
+	passwordTextField.text = server.password;
+	apiKeyTextField.text = server.apiKey;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
-
-#pragma mark - Actions -
 - (void)updateServerValues {
 	server.name = nameTextField.text;
 	server.host = hostTextField.text;
@@ -134,6 +131,14 @@
 	server.username = usernameTextField.text;
 	server.password = passwordTextField.text;
 	server.apiKey = apiKeyTextField.text;
+}
+
+- (void)cancelEdit {
+	_flags.didCancel = YES;
+	[currentResponder resignFirstResponder];
+	currentResponder = nil;
+	[self setInitialServerValues];
+	[self setEditing:NO animated:YES];
 }
 
 - (void)close {
@@ -165,6 +170,7 @@
 																 [NSUserDefaults standardUserDefaults].temporaryServer = nil;
 
 																 [self.hud setCaption:@"Validating API key"];
+																 [self.hud setActivity:YES];
 																 [self.hud update];
 																 
 																 [[SickbeardAPIClient sharedClient] pingServer:server
@@ -188,14 +194,17 @@
 																													   [self.hud setImage:[UIImage imageNamed:@"19-check"]];
 																													   [self.hud performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:YES];
 																													   [self.hud update];
+																													   [self.hud hideAfter:1];
 																													   
-																													   RunAfterDelay(1.5, ^{
-																														   [self close];
-																													   });
+																													   if (_flags.initialSetup) {
+																														   RunAfterDelay(1.5, ^{
+																															   [self close];
+																														   });
+																													   }
 																												   });
 																											   }
 																											   else {
-																												   [self.hud hideAfter:2.0];
+																												   [self.hud hideAfter:1.0];
 																												   [self.hud update];
 																											   }
 																										   }
@@ -204,7 +213,7 @@
 																											   [self.hud setImage:[UIImage imageNamed:@"11-x"]];
 																											   [self.hud setActivity:NO];
 																											   [self.hud update];
-																											   [self.hud hideAfter:2.0];
+																											   [self.hud hideAfter:1.0];
 																										   }
 																										   
 																									   }
@@ -212,7 +221,7 @@
 																										   [self.hud setCaption:[NSString stringWithFormat:@"Unable to connect to Sick Beard at %@", server.serviceEndpointPath]];
 																										   [self.hud setActivity:NO];
 																										   [self.hud update];
-																										   [self.hud hideAfter:2.0];
+																										   [self.hud hideAfter:1.0];
 																									   }];
 															 }
 															 failure:^(NSHTTPURLResponse *response, NSError *error) {
@@ -235,92 +244,9 @@
 
 - (void)saveServer {
 	[self validateServer:YES];
-//	if (!server) {
-//		self.server = [[SBServer alloc] init];
-//	}
-//	
-//	[self updateServerValues];
-//	
-//	if (![server isValid]) {
-//		[PRPAlertView showWithTitle:@"Invalid server" 
-//							message:@"Some information you have provided is invalid. Please check again." 
-//						buttonTitle:@"OK"];
-//	}
-//	else {
-//		[currentResponder resignFirstResponder];
-//
-//		[self.hud setCaption:@"Saving server"];
-//		[self.hud setActivity:YES];
-//		
-//		if (isHudShowing) {
-//			[self.hud update];
-//		}
-//		else {
-//			[self.hud show];
-//		}
-//		
-//		[[SickbeardAPIClient sharedClient] loadDefaults:server];
-//		
-//		RunAfterDelay(2, ^{
-//			[NSUserDefaults standardUserDefaults].serverHasBeenSetup = YES;
-//			[NSUserDefaults standardUserDefaults].server = server;
-//			[SickbeardAPIClient sharedClient].currentServer = server;
-//			[self.hud setCaption:@"Server saved"];
-//			[self.hud setActivity:NO];
-//			[self.hud setImage:[UIImage imageNamed:@"19-check"]];
-//			[self.hud performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:YES];
-//		
-//			RunAfterDelay(3, ^{
-//				[self close];
-//			});
-//		});
-		
-//		[self.managedObjectContext saveRemoteWithBlock:^(BOOL saved, NSError *error) {
-//			if (saved) {
-//				[NSUserDefaults standardUserDefaults].serverHasBeenSetup = YES;
-//				[self.hud setCaption:@"Server saved"];
-//				[self.hud setActivity:NO];
-//				[self.hud setImage:[UIImage imageNamed:@"19-check"]];
-//				[self.hud performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:YES];
-//				
-//				RunOnMainThread(NO, ^{
-//					[self performSelector:@selector(close) withObject:nil afterDelay:1];
-//				});
-//			}
-//			else {
-//				[PRPAlertView showWithTitle:@"Error saving server" 
-//									message:[NSString stringWithFormat:@"An error has occured saving your server. \n%@", error.localizedDescription] 
-//								buttonTitle:@"OK"];
-//
-//			}
-//		}];
-	//}
 }
 
-- (ATMHud*)hud {
-	if (!hud) {
-		hud = [[ATMHud alloc] init];
-		[self.view addSubview:hud.view];
-		
-		// reset the origin to 0,0 to account for contentOffset of table view
-		CGRect frame = hud.view.frame;
-		frame.origin = CGPointZero;
-		hud.view.frame = frame;
-	}
-	
-	return hud;
-}
-
-- (void)hudDidAppear:(ATMHud *)_hud {
-	isHudShowing = YES;
-}
-
-- (void)hudDidDisappear:(ATMHud *)_hud {
-	isHudShowing = NO;
-}
-
-
-#pragma mark - UITextFieldDelegate -
+#pragma mark - UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
 	currentResponder = textField;
 }
@@ -333,7 +259,28 @@
 	return YES;
 }
 
-#pragma mark - UITableViewDelegate -
+#pragma mark - UITableViewDelegate
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+	[super setEditing:editing animated:animated];
+	[self.tableView setEditing:editing animated:YES];
+	
+	[self enableFields:editing];
+	
+	if (editing) {
+		_flags.didCancel = NO;
+		[self.nameTextField becomeFirstResponder];
+		self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
+																							  target:self 
+																							  action:@selector(cancelEdit)];
+	}
+	else {
+		if (!_flags.didCancel) {
+			[self saveServer];
+		}
+		self.navigationItem.leftBarButtonItem = nil;
+	}
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
@@ -347,5 +294,12 @@
 	}
 }
 
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+	return NO;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return UITableViewCellEditingStyleNone;
+}
 
 @end

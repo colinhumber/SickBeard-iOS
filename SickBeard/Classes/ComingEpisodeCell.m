@@ -14,6 +14,7 @@
 @synthesize episodeNameLabel;
 @synthesize seasonEpisodeLabel;
 @synthesize airDateLabel;
+@synthesize plotLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
