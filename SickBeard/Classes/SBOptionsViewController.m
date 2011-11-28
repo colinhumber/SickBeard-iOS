@@ -77,6 +77,7 @@
 	archiveQualities = defaults.archiveQualities;
 	status = defaults.status;
 	useSeasonFolders = defaults.useSeasonFolders;
+	parentFolder = defaults.defaultDirectory;
 	
 //	self.initialQualityLabel.text = [NSString stringWithFormat:@"%d", initialQualities.count];
 //	self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", archiveQualities.count];
@@ -116,6 +117,7 @@
 							show.tvdbID, @"tvdbid",
 							parentFolder.path, @"location",
 							show.languageCode, @"lang",
+							show.showName, @"show_name",
 							[NSString stringWithFormat:@"%d", useSeasonFolders], @"season_folder",
 							[[SBGlobal qualitiesAsCodes:initialQualities] componentsJoinedByString:@"|"], @"initial",
 							[[SBGlobal qualitiesAsCodes:archiveQualities] componentsJoinedByString:@"|"], @"archive",
