@@ -16,3 +16,6 @@
 [submodule "SickBeard/SDWebImage"]
 	path = SickBeard/SDWebImage
 	url = https://github.com/rs/SDWebImage.git
+[submodule "SickBeard/SVProgressHUD"]
+	path = SickBeard/SVProgressHUD
+	url = https://github.com/samvermette/SVProgressHUD.git

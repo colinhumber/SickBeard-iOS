@@ -89,9 +89,10 @@
 - (void)loadData {
 	[super loadData];
 	
-	[self.hud setActivity:YES];
-	[self.hud setCaption:@"Loading upcoming episodes..."];
-	[self.hud show];
+	[SVProgressHUD showWithStatus:@"Loading upcoming episodes"];
+//	[self.hud setActivity:YES];
+//	[self.hud setCaption:@"Loading upcoming episodes..."];
+//	[self.hud show];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandComingEpisodes 
 									   parameters:nil 
@@ -118,10 +119,7 @@
 												  NSMutableArray *future = [NSMutableArray array];
 												  
 												  for (SBComingEpisode *episode in episodes) {
-													  if ([episode.airDate isEarlierThanDate:[NSDate date]]) {
-														  [past addObject:episode];
-													  }
-													  else if ([episode.airDate isToday]) {
+													  if ([episode.airDate isToday]) {
 														  [today addObject:episode];
 													  }
 													  else if ([episode.airDate isThisWeek]) {
@@ -129,6 +127,9 @@
 													  }
 													  else if ([episode.airDate isNextWeek]) {
 														  [nextWeek addObject:episode];
+													  }
+													  else if ([episode.airDate isEarlierThanDate:[NSDate date]]) {
+														  [past addObject:episode];
 													  }
 													  else {
 														  [future addObject:episode];

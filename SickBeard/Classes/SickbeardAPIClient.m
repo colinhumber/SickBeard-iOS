@@ -184,21 +184,4 @@ static SickbeardAPIClient *sharedClient = nil;
 	return [NSURL URLWithString:[self.currentServer.serviceEndpointPath stringByAppendingPathComponent:endpoint]];
 }
 
-//- (NSURLRequest*)authenticatedURLRequestForEndpoint:(NSString*)endpoint {
-//	NSURL *url = [self createUrlWithEndpoint:endpoint];
-//		
-//	// create a plaintext string in the format username:password
-//	NSString *loginString = [NSString stringWithFormat:@"%@:%@", self.currentServer.username, self.currentServer.password];
-//		
-//	// create the contents of the header 
-//	NSString *authHeader = [@"Basic " stringByAppendingFormat:@"%@", [loginString base64Encode]];
-//	
-//	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];   
-//	
-//	// add the header to the request.  Here's the $$$!!!
-//	[request addValue:authHeader forHTTPHeaderField:@"Authorization"];
-//
-//	return request;
-//}
-
 @end

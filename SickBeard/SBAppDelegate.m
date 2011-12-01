@@ -12,6 +12,7 @@
 #import "SickbeardAPIClient.h"
 #import "TestFlight.h"
 #import "SDURLCache.h"
+#import "SBITunesUrlCache.h"
 
 @implementation SBAppDelegate
 
@@ -23,7 +24,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	[TestFlight takeOff:@"9677d08cdc79deabbe7610f9edb5b4f9_MzY5MTgyMDExLTEwLTI1IDIyOjUwOjMxLjg0Mjg3OA"];
+	//[TestFlight takeOff:@"9677d08cdc79deabbe7610f9edb5b4f9_MzY5MTgyMDExLTEwLTI1IDIyOjUwOjMxLjg0Mjg3OA"];
 
 	SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024   // 1MB mem cache
 														 diskCapacity:1024*1024*5 // 5MB disk cache
@@ -64,12 +65,8 @@
 	 */
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-	/*
-	 Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-	 If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-	 */
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+	[[SBITunesUrlCache sharedCache] save];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

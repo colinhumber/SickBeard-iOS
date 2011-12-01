@@ -11,7 +11,6 @@
 #import "SBShow.h"
 #import "SickbeardAPIClient.h"
 #import "PRPAlertView.h"
-#import "ATMHud.h"
 #import "NSDate+Utilities.h"
 
 @implementation SBEpisodeDetailsViewController
@@ -99,33 +98,37 @@
 							[NSNumber numberWithInt:episode.season], @"season",
 							[NSNumber numberWithInt:episode.number], @"episode", nil];
 
-	[self.hud setCaption:@"Searching for episode..."];
-	[self.hud setActivity:YES];
-	[self.hud show];
+	[SVProgressHUD showWithStatus:@"Searching for episode"];
+//	[self.hud setCaption:@"Searching for episode..."];
+//	[self.hud setActivity:YES];
+//	[self.hud show];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
 									   parameters:params 
 										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
-											  [self.hud setActivity:NO];
+											  //[self.hud setActivity:NO];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [self.hud setCaption:@"Episode found and is downloading."];
-												  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
-												  [self.hud update];
-												  [self.hud hideAfter:2];
+												  [SVProgressHUD dismissWithSuccess:@"Episode found and is downloading" afterDelay:2];
+//												  [self.hud setCaption:@"Episode found and is downloading."];
+//												  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
+//												  [self.hud update];
+//												  [self.hud hideAfter:2];
 											  }
 											  else {
-												  [self.hud setCaption:[JSON objectForKey:@"message"]];
-												  [self.hud update];
-												  [self.hud hideAfter:2];
+												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
+//												  [self.hud setCaption:[JSON objectForKey:@"message"]];
+//												  [self.hud update];
+//												  [self.hud hideAfter:2];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
 																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
 															  buttonTitle:@"OK"];	
+											  [SVProgressHUD dismiss];
 										  }];
 }
 
@@ -148,33 +151,37 @@
 							[NSNumber numberWithInt:episode.number], @"episode",
 							statusString, @"status", nil];
 	
-	[self.hud setCaption:[NSString stringWithFormat:@"Setting episode status to %@", statusString]];
-	[self.hud setActivity:YES];
-	[self.hud show];
+	[SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Setting episode status to %@", statusString]];
+//	[self.hud setCaption:[NSString stringWithFormat:@"Setting episode status to %@", statusString]];
+//	[self.hud setActivity:YES];
+//	[self.hud show];
 
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
 									   parameters:params 
 										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 																 
-											  [self.hud setActivity:NO];
+											  //[self.hud setActivity:NO];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [self.hud setCaption:@"Status successfully set!"];
-												  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
+												  [SVProgressHUD dismissWithSuccess:@"Status successfully set!" afterDelay:2];
+//												  [self.hud setCaption:@"Status successfully set!"];
+//												  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
 											  }
 											  else {
-												  [self.hud setCaption:[JSON objectForKey:@"message"]];
-												  [self.hud setImage:[UIImage imageNamed:@"11-x"]];
+												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
+//												  [self.hud setCaption:[JSON objectForKey:@"message"]];
+//												  [self.hud setImage:[UIImage imageNamed:@"11-x"]];
 											  }
 												   
-											  [self.hud update];
-											  [self.hud hideAfter:2];
+//											  [self.hud update];
+//											  [self.hud hideAfter:2];
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
 																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
 															  buttonTitle:@"OK"];	
+											  [SVProgressHUD dismiss];
 										  }];
 }
 

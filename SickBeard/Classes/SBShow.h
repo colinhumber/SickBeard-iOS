@@ -25,6 +25,9 @@ typedef enum {
 @property (nonatomic) BOOL isPaused;
 @property (nonatomic) ShowQuality quality;
 @property (nonatomic, strong) NSString *showName;
-
+@property (nonatomic, strong) NSString *network;
+@property (nonatomic, strong) NSString *status;
+@property (nonatomic, strong) NSDate *nextEpisodeDate;
+@property (readonly, strong) NSString *sanitizedShowName;
 
 @end

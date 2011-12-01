@@ -7,23 +7,18 @@
 //
 
 #import "SBAddShowViewController.h"
-#import "ATMHud.h"
 #import "SickbeardAPIClient.h"
 #import "PRPAlertView.h"
 #import "UIImageView+AFNetworking.h"
 #import "SBShow.h"
 #import "SBOptionsViewController.h"
 
-@interface SBAddShowViewController()
-@property (nonatomic, strong) ATMHud *hud;
-@end
 
 @implementation SBAddShowViewController
 
 @synthesize tableView;
 @synthesize languagePickerView;
 @synthesize showNameTextField;
-@synthesize hud;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([segue.identifier isEqualToString:@"AddNewShowSegue"]) {
@@ -63,8 +58,8 @@
 - (void)viewDidLoad {
 	currentLanguage = @"English";
 
-	self.hud = [[ATMHud alloc] init];
-	[self.view addSubview:self.hud.view];
+//	self.hud = [[ATMHud alloc] init];
+//	[self.view addSubview:self.hud.view];
 	
     [super viewDidLoad];
 }
@@ -114,9 +109,10 @@
 }
 
 - (IBAction)performSearch:(id)sender {
-	[self.hud setCaption:@"Searching TVDB..."];
-	[self.hud setActivity:YES];
-	[self.hud show];
+	[SVProgressHUD showWithStatus:@"Searching TVDB"];
+//	[self.hud setCaption:@"Searching TVDB..."];
+//	[self.hud setActivity:YES];
+//	[self.hud show];
 	
 	if ([showNameTextField isFirstResponder]) {
 		[showNameTextField resignFirstResponder];
@@ -131,14 +127,15 @@
 	
 	isSearching = YES;
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShowSearchTVDB 
+	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandSearchTVDB 
 									   parameters:params 
 										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  dispatch_async(dispatch_get_main_queue(), ^{
-													  [self.hud hide]; 
+													  [SVProgressHUD dismiss];
+													  //[self.hud hide]; 
 												  });
 												  
 												  results = [[JSON objectForKey:@"data"] objectForKey:@"results"];

@@ -95,6 +95,10 @@
 			commandString = @"sb.deleterootdir";
 			break;
 			
+		case SickBeardCommandSearchTVDB:
+			commandString = @"sb.searchtvdb";
+			break;
+			
 		case SickBeardCommandComingEpisodes:
 			commandString = @"future";
 			break;
@@ -162,11 +166,7 @@
 		case SickBeardCommandShowRefresh:
 			commandString = @"show.refresh";
 			break;
-			
-		case SickBeardCommandShowSearchTVDB:
-			commandString = @"show.searchtvdb";
-			break;
-			
+						
 		case SickBeardCommandShowSetQuality:
 			commandString = @"show.setquality";
 			break;

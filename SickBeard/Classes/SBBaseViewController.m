@@ -17,8 +17,8 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	self.hud = [[ATMHud alloc] init];
-	[self.view addSubview:self.hud.view];
+//	self.hud = [[ATMHud alloc] init];
+//	[self.view addSubview:self.hud.view];
 }
 
 - (void)refresh:(id)sender {
@@ -30,7 +30,8 @@
 
 - (void)finishDataLoad:(NSError*)error {
 	self.isDataLoading = NO;
-	[self.hud hide];
+	//[self.hud hide];
+	[SVProgressHUD dismiss];
 	
 	if (!error) {
 		self.loadDate = [NSDate date];

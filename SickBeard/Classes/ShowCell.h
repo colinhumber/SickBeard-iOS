@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ShowCell : UITableViewCell
+@interface ShowCell : UITableViewCell 
+
+- (void)findiTunesArtworkForShow:(NSString*)showName;
 
 @property (nonatomic, strong) IBOutlet UIImageView *posterImageView;
 @property (nonatomic, strong) IBOutlet UILabel *showNameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *networkLabel;
+@property (nonatomic, strong) IBOutlet UILabel *statusLabel;
+@property (nonatomic, strong) IBOutlet UILabel *nextEpisodeAirdateLabel;
+
 
 @end

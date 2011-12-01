@@ -25,6 +25,7 @@ typedef enum {
 	SickBeardCommandGetRootDirectories,
 	SickBeardCommandAddRootDirectory,
 	SickBeardCommandDeleteRootDirectory,
+	SickBeardCommandSearchTVDB,
 	
 	// episode commands
 	SickBeardCommandComingEpisodes,
@@ -50,7 +51,6 @@ typedef enum {
 	SickBeardCommandShowDelete,
 	SickBeardCommandShowGetQuality,
 	SickBeardCommandShowRefresh,
-	SickBeardCommandShowSearchTVDB,
 	SickBeardCommandShowSetQuality,
 	SickBeardCommandShowStatus,
 	SickBeardCommandShowUpdate,

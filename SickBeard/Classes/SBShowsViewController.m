@@ -11,9 +11,9 @@
 #import "SBShow.h"
 #import "PRPAlertView.h"
 #import "SBShowDetailsViewController.h"
-#import "NSUserDefaults+SickBeard.h"
 #import "ShowCell.h"
-
+#import "NSUserDefaults+SickBeard.h"
+#import "NSDate+Utilities.h"
 
 @implementation SBShowsViewController
 
@@ -42,7 +42,7 @@
 	[refreshHeader refreshLastUpdatedDate];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
 	if ([self tableView:self.tableView numberOfRowsInSection:0] > 0) {
@@ -75,10 +75,11 @@
 #pragma mark - Loading
 - (void)loadData {
 	[super loadData];
-	
-	[self.hud setActivity:YES];
-	[self.hud setCaption:@"Loading shows..."];
-	[self.hud show];
+
+	[SVProgressHUD showWithStatus:@"Loading shows"];
+//	[self.hud setActivity:YES];
+//	[self.hud setCaption:@"Loading shows..."];
+//	[self.hud show];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"name", @"sort", nil];
 	
@@ -95,6 +96,7 @@
 												  if (dataDict.allKeys.count > 0) {
 													  for (NSString *key in [dataDict allKeys]) {
 														  SBShow *show = [SBShow itemWithDictionary:[dataDict objectForKey:key]];
+														  show.showName = key;
 														  [shows addObject:show];
 													  }
 													  
@@ -177,9 +179,13 @@
 	
 	SBShow *show = [shows objectAtIndex:indexPath.row];
 	cell.showNameLabel.text = show.showName;	
-	
-	[cell.posterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURL:show.tvdbID] 
-						 placeholderImage:nil];	
+	cell.networkLabel.text = show.network;
+	cell.statusLabel.text = show.status;
+	cell.nextEpisodeAirdateLabel.text = show.nextEpisodeDate != nil ? [show.nextEpisodeDate displayString] : @"No airdate found";
+
+	[cell findiTunesArtworkForShow:show.sanitizedShowName];
+//	[cell.posterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURL:show.tvdbID] 
+//						 placeholderImage:nil];	
 		
 	return cell;
 }
@@ -197,10 +203,11 @@
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
 		SBShow *show = [shows objectAtIndex:indexPath.row];
 		NSDictionary *params = [NSDictionary dictionaryWithObject:show.tvdbID forKey:@"tvdbid"];
-		
-		[self.hud setActivity:YES];
-		[self.hud setCaption:@"Deleting show..."];
-		[self.hud show];
+
+		[SVProgressHUD showWithStatus:@"Deleting show"];
+//		[self.hud setActivity:YES];
+//		[self.hud setCaption:@"Deleting show..."];
+//		[self.hud show];
 		
 		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShowDelete 
 										   parameters:params 
@@ -218,13 +225,15 @@
 																	  buttonTitle:@"Okay"];
 												  }				
 												  
-												  [self.hud hide];
+												  [SVProgressHUD dismiss];
+												  //[self.hud hide];
 											  }
 											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 												  [PRPAlertView showWithTitle:@"Error deleting show" 
 																	  message:error.localizedDescription 
 																  buttonTitle:@"Okay"];			
-												  [self.hud hide];
+												  [SVProgressHUD dismiss];
+												  //[self.hud hide];
 											  }];
 	}
 }

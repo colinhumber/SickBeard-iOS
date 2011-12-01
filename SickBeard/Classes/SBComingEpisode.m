@@ -49,6 +49,9 @@
 	return [[self alloc] initWithDictionary:dict];
 }
 
+- (NSString*)description {
+	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | show_name = %@>", [self class], self, name, showName];
+}
 
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "SBShow.h"
+#import "NSDate+Utilities.h"
 
 @implementation SBShow
 
@@ -18,6 +19,10 @@
 @synthesize isPaused;
 @synthesize quality;
 @synthesize showName;
+@synthesize network;
+@synthesize status;
+@synthesize nextEpisodeDate;
+@synthesize sanitizedShowName;
 
 - (id)initWithDictionary:(NSDictionary*)dict {
 	self = [super init];
@@ -42,6 +47,9 @@
 		
 		self.tvdbID = [dict objectForKey:@"tvdbid"];
 		self.showName = [dict objectForKey:@"tvrage_name"];
+		self.network = [dict objectForKey:@"network"];
+		self.status = [dict objectForKey:@"status"];
+		self.nextEpisodeDate = [NSDate dateWithString:[dict objectForKey:@"next_ep_airdate"]];
 	}
 	
 	return self;
@@ -49,6 +57,30 @@
 
 + (id)itemWithDictionary:(NSDictionary*)dict {
 	return [[self alloc] initWithDictionary:dict];
+}
+
+- (NSString*)description {
+	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | network = %@ | status = %@>", [self class], self, showName, network, status];
+}
+
+- (NSString*)sanitizedShowName {
+	if ([self.showName rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"()"]].location != NSNotFound) {
+		NSString *foundData = @"";
+		int left, right;
+
+		NSScanner *scanner = [NSScanner scannerWithString:self.showName];
+		[scanner scanUpToString:@"(" intoString:nil];
+		left = [scanner scanLocation];
+		
+		[scanner scanUpToString:@")" intoString:nil];
+		right = [scanner scanLocation] + 1;
+		
+		foundData = [self.showName substringWithRange:NSMakeRange(left, (right - left))];
+
+		return [self.showName stringByReplacingOccurrencesOfString:foundData withString:@""];
+	}
+
+	return self.showName;
 }
 
 

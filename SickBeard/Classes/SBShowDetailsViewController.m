@@ -7,7 +7,6 @@
 //
 
 #import "SBShowDetailsViewController.h"
-#import "ATMHud.h"
 #import "SickbeardAPIClient.h"
 #import "SBShow.h"
 #import "PRPAlertView.h"

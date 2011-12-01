@@ -15,12 +15,13 @@ typedef enum {
 	SBHistoryTypeDownloaded
 } SBHistoryType;
 
-@interface SBHistoryViewController : SBBaseViewController <UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate> {
+@interface SBHistoryViewController : SBBaseViewController <UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, UIActionSheetDelegate> {
 	NSMutableArray *history;
 	SBHistoryType historyType;
 	EGORefreshTableHeaderView *refreshHeader;
 }
 
+- (IBAction)showHistoryActions:(id)sender;
 - (IBAction)done:(id)sender;
 - (IBAction)historyTypeChanged:(id)sender;
 

@@ -68,9 +68,10 @@
 - (void)loadData {
 	[super loadData];
 	
-	[self.hud setActivity:YES];
-	[self.hud setCaption:@"Loading history..."];
-	[self.hud show];
+	[SVProgressHUD showWithStatus:@"Loading history"];
+//	[self.hud setActivity:YES];
+//	[self.hud setCaption:@"Loading history..."];
+//	[self.hud show];
 	
 	NSString *filter = @"";
 	if (historyType == SBHistoryTypeSnatched) {
@@ -151,6 +152,15 @@
 
 
 #pragma mark - Actions
+- (IBAction)showHistoryActions:(id)sender {
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" 
+															 delegate:self 
+													cancelButtonTitle:@"Cancel" 
+											   destructiveButtonTitle:@"Clear History" 
+													otherButtonTitles:@"Trim History", nil];
+	[actionSheet showFromToolbar:self.navigationController.toolbar];
+}
+
 - (IBAction)done:(id)sender {
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -162,6 +172,37 @@
 
 - (IBAction)refresh:(id)sender {
 	[self loadData];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+	if (buttonIndex == actionSheet.destructiveButtonIndex) {
+		[SVProgressHUD showWithStatus:@"Clearing history"];
+		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistoryClear 
+										   parameters:nil 
+											  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+												  [SVProgressHUD dismiss];
+												  [self loadData];
+											  } 
+											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+												  [PRPAlertView showWithTitle:@"Error clearing history" 
+																	  message:[NSString stringWithFormat:@"Could clear history\n%@", error.localizedDescription] 
+																  buttonTitle:@"OK"];
+											  }];
+	}
+	else if (buttonIndex == 1) {
+		[SVProgressHUD showWithStatus:@"Trimming history"];
+		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistoryClear 
+										   parameters:nil 
+											  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+												  [SVProgressHUD dismiss];
+												  [self loadData];
+											  } 
+											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+												  [PRPAlertView showWithTitle:@"Error trimming history" 
+																	  message:[NSString stringWithFormat:@"Could trim history\n%@", error.localizedDescription] 
+																  buttonTitle:@"OK"];
+											  }];
+	}
 }
 
 
