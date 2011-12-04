@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SBHudViewController.h"
 
-@class SBShowsViewController;
-@class SBEpisodesViewController;
+@class SBBaseViewController;
 
 @interface SBMainViewController : UIViewController {
 	UIBarButtonItem *addItem;
@@ -19,6 +17,6 @@
 - (IBAction)viewModeChanged:(id)sender;
 - (IBAction)refresh:(id)sender;
 
-@property (nonatomic, weak) UIViewController<SBHudViewController> *currentController;
+@property (nonatomic, weak) SBBaseViewController *currentController;
 
 @end

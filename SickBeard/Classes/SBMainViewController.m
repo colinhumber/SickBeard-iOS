@@ -9,6 +9,8 @@
 #import "SBMainViewController.h"
 #import "SBShowsViewController.h"
 #import "SBEpisodesViewController.h"
+#import "SVSegmentedControl.h"
+#import "SBBaseViewController.h"
 
 @implementation SBMainViewController
 
@@ -17,9 +19,15 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	[self addChildViewController:[self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([SBShowsViewController class])]];
-	[self addChildViewController:[self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([SBEpisodesViewController class])]];
+	SBShowsViewController *showVc = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([SBShowsViewController class])];
+	SBEpisodesViewController *episodesVc = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([SBEpisodesViewController class])];
+
+	[self addChildViewController:showVc];
+	[showVc didMoveToParentViewController:self];
 	
+	[self addChildViewController:episodesVc];
+	[episodesVc didMoveToParentViewController:self];
+		
 	self.currentController = [self.childViewControllers objectAtIndex:0];
 	addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd 
 															target:[self.childViewControllers objectAtIndex:0]
@@ -30,6 +38,10 @@
 	self.navigationItem.leftBarButtonItem = self.currentController.editButtonItem;
 	
 	self.title = self.currentController.title;
+	
+	SVSegmentedControl *navControl = [[SVSegmentedControl alloc] initWithSectionTitles:[NSArray arrayWithObjects:@"Shows", @"Episodes", nil]];
+	[navControl addTarget:self action:@selector(viewModeChanged:) forControlEvents:UIControlEventValueChanged];
+	self.navigationItem.titleView = navControl;
 }
 
 - (IBAction)refresh:(id)sender {
@@ -37,23 +49,24 @@
 }
 
 - (IBAction)viewModeChanged:(id)sender {
-	UISegmentedControl *segment = sender;
+	SVSegmentedControl *segment = sender;
+	
+	SBBaseViewController *destinationController = [self.childViewControllers objectAtIndex:segment.selectedIndex];
+	if (self.currentController == destinationController){
+		return;
+	}
 	
 	[self transitionFromViewController:self.currentController 
-					  toViewController:[self.childViewControllers objectAtIndex:segment.selectedSegmentIndex] 
+					  toViewController:destinationController 
 							  duration:0
-							   options:UIViewAnimationOptionTransitionNone
+							   options:UIViewAnimationOptionLayoutSubviews | UIViewAnimationOptionTransitionNone
 							animations:nil 
-							completion:^(BOOL finished) {
-								if (finished) {
-									[self.currentController didMoveToParentViewController:self];
-								}
-							}];
+							completion:nil];
 
-	self.currentController = [self.childViewControllers objectAtIndex:segment.selectedSegmentIndex];
+	self.currentController = destinationController;
 	self.title = self.currentController.title;
 
-	switch (segment.selectedSegmentIndex) {
+	switch (segment.selectedIndex) {
 		case 0:
 			[self.navigationItem setLeftBarButtonItem:self.currentController.editButtonItem animated:YES];
 			[self.navigationItem setRightBarButtonItem:addItem animated:YES];

@@ -137,26 +137,29 @@ static SickbeardAPIClient *sharedClient = nil;
 - (void)validateServerCredentials:(SBServer*)server success:(void (^)(id object))success failure:(void (^)(NSHTTPURLResponse *response, NSError *error))failure {
 	NSAssert(server != nil, @"Server cannot be nil");
 	
-	NSURLCredentialStorage *store = [NSURLCredentialStorage sharedCredentialStorage];
-	
-	NSURLCredential *credential = [NSURLCredential credentialWithUser:server.username password:server.password persistence:NSURLCredentialPersistenceForSession];
-	NSURLProtectionSpace *space = [[NSURLProtectionSpace alloc] initWithHost:server.host port:server.port protocol:NSURLProtectionSpaceHTTP realm:@"SickBeard" authenticationMethod:NSURLAuthenticationMethodDefault];
-	[store setDefaultCredential:credential forProtectionSpace:space];
-
-	//	[[NSURLCredentialStorage sharedCredentialStorage] setCredential:credential forProtectionSpace:space];
-	
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:server.serviceEndpointPath]];
 	request.timeoutInterval = 5;
 
-	// create a plaintext string in the format username:password
-	NSString *loginString = [NSString stringWithFormat:@"%@:%@", server.username, server.password];
-	
-	// create the contents of the header 
-	NSString *authHeader = [@"Basic " stringByAppendingFormat:@"%@", [loginString base64Encode]];
-	
-	// add the header to the request.  Here's the $$$!!!
-	[request addValue:authHeader forHTTPHeaderField:@"Authorization"];
+	//if (server.username.length > 0 || server.password.length > 0) {
+		NSURLCredentialStorage *store = [NSURLCredentialStorage sharedCredentialStorage];
+		
+		NSURLCredential *credential = [NSURLCredential credentialWithUser:server.username password:server.password persistence:NSURLCredentialPersistenceForSession];
+		NSURLProtectionSpace *space = [[NSURLProtectionSpace alloc] initWithHost:server.host port:server.port protocol:NSURLProtectionSpaceHTTP realm:@"SickBeard" authenticationMethod:NSURLAuthenticationMethodDefault];
+		[store setDefaultCredential:credential forProtectionSpace:space];
 
+		//	[[NSURLCredentialStorage sharedCredentialStorage] setCredential:credential forProtectionSpace:space];
+		
+
+		// create a plaintext string in the format username:password
+		NSString *loginString = [NSString stringWithFormat:@"%@:%@", server.username, server.password];
+		
+		// create the contents of the header 
+		NSString *authHeader = [@"Basic " stringByAppendingFormat:@"%@", [loginString base64Encode]];
+		
+		// add the header to the request.  Here's the $$$!!!
+		[request addValue:authHeader forHTTPHeaderField:@"Authorization"];
+	//}
+	
 	AFHTTPRequestOperation *operation = [AFHTTPRequestOperation HTTPRequestOperationWithRequest:request success:success failure:failure];
 	[self.operationQueue addOperation:operation];
 }

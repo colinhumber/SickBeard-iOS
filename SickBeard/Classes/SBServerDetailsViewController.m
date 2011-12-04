@@ -17,6 +17,8 @@
 - (void)updateServerValues;
 - (void)setInitialServerValues;
 - (void)enableFields:(BOOL)enabled;
+- (void)validateServer:(BOOL)saveOnSuccess;
+- (void)_validateServer:(BOOL)saveOnSuccess;
 
 @end
 
@@ -74,15 +76,17 @@
 	if (server) {
 		[self setInitialServerValues];
 	}
-	
+	else {
 #if DEBUG
-	nameTextField.text = @"Home";
-	hostTextField.text = @"colinhumber.dyndns.org";
-	portTextField.text = @"8081";
-	apiKeyTextField.text = @"aefc639b299bbbe8ed0e526ef83d415c";
-	usernameTextField.text = @"colinhumber";
-	passwordTextField.text = @"Square99";
-#endif
+		nameTextField.text = @"Home";
+		hostTextField.text = @"colinhumber.dyndns.org";
+		portTextField.text = @"8081";
+		apiKeyTextField.text = @"aefc639b299bbbe8ed0e526ef83d415c";
+		usernameTextField.text = @"colinhumber";
+		passwordTextField.text = @"Square99";
+#endif		
+	}
+	
 }
 
 - (void)viewDidUnload
@@ -158,36 +162,37 @@
 						buttonTitle:@"OK"];
 	}
 	else {
-		[currentResponder resignFirstResponder];
+		NSTimeInterval delay = 0.0;
 		
-		RunAfterDelay(0.5, ^{		// allow the keyboard to hide before displaying the HUD
-			[SVProgressHUD showWithStatus:@"Validating username and password"];			
+		if (currentResponder && [currentResponder isFirstResponder]) {
+			delay = 0.5;
+			[currentResponder resignFirstResponder];
+			currentResponder = nil;	
+		}
+		
+		RunAfterDelay(delay, ^{		// allow the keyboard to hide before displaying the HUD
+			[self _validateServer:saveOnSuccess];
 		});
-//		[self.hud setCaption:@"Validating username and password"];
-//		[self.hud setActivity:YES];
-//		[self.hud show];
-		
-		[NSUserDefaults standardUserDefaults].temporaryServer = server;
-		
-		[[SickbeardAPIClient sharedClient] validateServerCredentials:server 
-															 success:^(id object) {
-																 [NSUserDefaults standardUserDefaults].temporaryServer = nil;
+	}
+}
 
-																 [SVProgressHUD setStatus:@"Validating API key"];
-//																 [self.hud setCaption:@"Validating API key"];
-//																 [self.hud setActivity:YES];
-//																 [self.hud update];
-																 
+- (void)_validateServer:(BOOL)saveOnSuccess {
+	[SVProgressHUD showWithStatus:@"Validating username and password"];			
+	
+	[NSUserDefaults standardUserDefaults].temporaryServer = server;
+	
+	[[SickbeardAPIClient sharedClient] validateServerCredentials:server 
+														 success:^(id object) {
+															 [NSUserDefaults standardUserDefaults].temporaryServer = nil;
+															 
+															 [SVProgressHUD setStatus:@"Validating API key"];
+															 
+															 RunAfterDelay(0.5, ^{
 																 [[SickbeardAPIClient sharedClient] pingServer:server
 																									   success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 																										   NSString *result = [JSON objectForKey:@"result"];
 																										   
 																										   if ([result isEqualToString:RESULT_SUCCESS]) {
-																											   [SVProgressHUD setStatus:@"Server validated!"];
-//																											   [self.hud setActivity:NO];
-//																											   [self.hud setCaption:@"Server validated!"];
-//																											   [self.hud setImage:[UIImage imageNamed:@"19-check"]];
-																											   
 																											   if (saveOnSuccess) {
 																												   [[SickbeardAPIClient sharedClient] loadDefaults:server];
 																												   
@@ -196,13 +201,7 @@
 																													   [NSUserDefaults standardUserDefaults].server = server;
 																													   [SickbeardAPIClient sharedClient].currentServer = server;
 																													   
-																													   [SVProgressHUD dismissWithSuccess:@"Server saved" afterDelay:1];
-//																													   [self.hud setCaption:@"Server saved"];
-//																													   [self.hud setActivity:NO];
-//																													   [self.hud setImage:[UIImage imageNamed:@"19-check"]];
-//																													   [self.hud performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:YES];
-//																													   [self.hud update];
-//																													   [self.hud hideAfter:1];
+																													   [SVProgressHUD dismissWithSuccess:@"Server saved"];
 																													   
 																													   if (_flags.initialSetup) {
 																														   RunAfterDelay(1.5, ^{
@@ -212,49 +211,30 @@
 																												   });
 																											   }
 																											   else {
-																												   [SVProgressHUD dismiss];
-//																												   [self.hud hideAfter:1.0];
-//																												   [self.hud update];
+																												   [SVProgressHUD dismissWithSuccess:@"Server validated"];
 																											   }
 																										   }
 																										   else if ([result isEqualToString:RESULT_DENIED]) {
-																											   [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:1];
-//																											   [self.hud setCaption:[JSON objectForKey:@"message"]];
-//																											   [self.hud setImage:[UIImage imageNamed:@"11-x"]];
-//																											   [self.hud setActivity:NO];
-//																											   [self.hud update];
-//																											   [self.hud hideAfter:1.0];
+																											   [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"]];
+																											   [self.hud hideAfter:1.0];
 																										   }
-																										   
 																									   }
 																									   failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 																										   [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard at %@", server.serviceEndpointPath] 
 																																afterDelay:1];
-//																										   [self.hud setCaption:[NSString stringWithFormat:@"Unable to connect to Sick Beard at %@", server.serviceEndpointPath]];
-//																										   [self.hud setActivity:NO];
-//																										   [self.hud update];
-//																										   [self.hud hideAfter:1.0];
+																										   [self.hud hideAfter:1.0];
 																									   }];
+															 });
+														 }
+														 failure:^(NSHTTPURLResponse *response, NSError *error) {
+															 if ([response statusCode] == 401) {
+																 [SVProgressHUD dismissWithError:@"Username and password invalid" afterDelay:2];
 															 }
-															 failure:^(NSHTTPURLResponse *response, NSError *error) {
-																 if ([response statusCode] == 401) {
-																	 [SVProgressHUD dismissWithError:@"Username and password invalid" afterDelay:2];
-//																	 [self.hud setCaption:@"Username and password invalid"];
-//																	 [self.hud setImage:[UIImage imageNamed:@"11-x"]];
-//																	 [self.hud setActivity:NO];
-//																	 [self.hud update];
-//																	 [self.hud hideAfter:2.0];
-																 }
-																 else {
-																	 [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard at %@", server.serviceEndpointPath] 
-																						  afterDelay:2];
-//																	 [self.hud setCaption:[NSString stringWithFormat:@"Unable to connect to Sick Beard at %@", server.serviceEndpointPath]];
-//																	 [self.hud setActivity:NO];
-//																	 [self.hud update];
-//																	 [self.hud hideAfter:2.0];
-																 }
-															 }];
-	}
+															 else {
+																 [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard at %@", server.serviceEndpointPath] 
+																					  afterDelay:2];
+															 }
+														 }];
 }
 
 - (void)saveServer {

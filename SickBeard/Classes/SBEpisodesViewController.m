@@ -150,8 +150,8 @@
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
-																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
+											  [PRPAlertView showWithTitle:@"Error retrieving episodes" 
+																  message:error.localizedDescription 
 															  buttonTitle:@"OK"];			
 											  [self finishDataLoad:error];
 											  [refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];

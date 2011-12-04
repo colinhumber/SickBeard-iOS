@@ -10,7 +10,6 @@
 
 @implementation SBBaseViewController
 
-@synthesize hud;
 @synthesize isDataLoading;
 @synthesize loadDate;
 

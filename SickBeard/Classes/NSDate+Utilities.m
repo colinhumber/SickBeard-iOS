@@ -363,7 +363,7 @@
 	
 	if (!formatter) {
 		formatter = [[NSDateFormatter alloc] init];
-		[formatter setDateFormat:@"EEEE, LLL d"];
+		[formatter setDateFormat:@"EEEE, LLLL d"];
 	}
 	
 	return [formatter stringFromDate:self];
@@ -374,7 +374,7 @@
 	
 	if (!formatter) {
 		formatter = [[NSDateFormatter alloc] init];
-		[formatter setDateFormat:@"EEEE, LLL d, h:mm a"];
+		[formatter setDateFormat:@"EEEE, LLLL d, h:mm a"];
 	}
 	
 	return [formatter stringFromDate:self];

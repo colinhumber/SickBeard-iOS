@@ -15,8 +15,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "95DD41F9140837B8001FE32F"
                BuildableName = "SickBeard.app"
-               BlueprintName = "SickBeard"
-               ReferencedContainer = "container:SickBeard.xcodeproj">
+               BlueprintName = "SickBeard">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

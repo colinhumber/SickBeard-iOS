@@ -125,7 +125,7 @@
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving show information" 
-																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
+																  message:error.localizedDescription 
 															  buttonTitle:@"OK"];											  
 										  }];
 }

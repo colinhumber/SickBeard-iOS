@@ -76,8 +76,9 @@
 		right = [scanner scanLocation] + 1;
 		
 		foundData = [self.showName substringWithRange:NSMakeRange(left, (right - left))];
-
-		return [self.showName stringByReplacingOccurrencesOfString:foundData withString:@""];
+		
+		NSString *sanitized = [[self.showName stringByReplacingOccurrencesOfString:foundData withString:@""] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+		return sanitized;
 	}
 
 	return self.showName;

@@ -77,9 +77,6 @@
 	[super loadData];
 
 	[SVProgressHUD showWithStatus:@"Loading shows"];
-//	[self.hud setActivity:YES];
-//	[self.hud setCaption:@"Loading shows..."];
-//	[self.hud show];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"name", @"sort", nil];
 	
@@ -119,7 +116,7 @@
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
-																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
+																  message:error.localizedDescription 
 															  buttonTitle:@"OK"];			
 											  
 											  [self finishDataLoad:error];
@@ -151,6 +148,17 @@
 	return self.loadDate; // should return date data source was last changed
 }
 
+
+#pragma mark - SBAddShowDelegate
+- (void)didAddShow {
+	[self dismissViewControllerAnimated:YES completion:^{
+		[self loadData];
+	}];
+}
+
+- (void)didCancelAddShow {
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark - Actions
 - (void)addShow {

@@ -19,10 +19,12 @@
 @synthesize tableView;
 @synthesize languagePickerView;
 @synthesize showNameTextField;
+@synthesize delegate;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([segue.identifier isEqualToString:@"AddNewShowSegue"]) {
 		SBOptionsViewController *vc = segue.destinationViewController;
+		vc.delegate = self.delegate;
 		
 		NSIndexPath *ip = [self.tableView indexPathForSelectedRow];
 		
@@ -58,9 +60,6 @@
 - (void)viewDidLoad {
 	currentLanguage = @"English";
 
-//	self.hud = [[ATMHud alloc] init];
-//	[self.view addSubview:self.hud.view];
-	
     [super viewDidLoad];
 }
 
@@ -78,9 +77,6 @@
 	self.tableView = nil;
 	self.languagePickerView = nil;
 	self.showNameTextField = nil;
-	
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -110,9 +106,6 @@
 
 - (IBAction)performSearch:(id)sender {
 	[SVProgressHUD showWithStatus:@"Searching TVDB"];
-//	[self.hud setCaption:@"Searching TVDB..."];
-//	[self.hud setActivity:YES];
-//	[self.hud show];
 	
 	if ([showNameTextField isFirstResponder]) {
 		[showNameTextField resignFirstResponder];
@@ -151,7 +144,7 @@
 }
 
 - (IBAction)cancel:(id)sender {
-	[self dismissViewControllerAnimated:YES completion:nil];
+	[self.delegate didCancelAddShow];
 }
 
 #pragma mark - UITextFieldDelegate

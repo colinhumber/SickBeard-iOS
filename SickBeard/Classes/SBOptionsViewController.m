@@ -30,6 +30,7 @@
 @implementation SBOptionsViewController
 
 @synthesize show;
+@synthesize delegate;
 //@synthesize locationTextField;
 //@synthesize initialQualityLabel;
 //@synthesize archiveQualityLabel;
@@ -129,7 +130,7 @@
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [SVProgressHUD dismissWithSuccess:@"Show has been added" afterDelay:2];
+												  [SVProgressHUD dismissWithSuccess:@"Show has been added" afterDelay:1.5];
 //												  [self.hud setCaption:@"Show has been added"];
 //												  [self.hud setActivity:NO];
 //												  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
@@ -137,8 +138,8 @@
 //												  
 //												  [self.hud hideAfter:2];
 												  
-												  RunAfterDelay(3, ^{
-													  [self dismissViewControllerAnimated:YES completion:nil];
+												  RunAfterDelay(1.5, ^{
+													  [self.delegate didAddShow];
 												  });
 											  }
 											  else {

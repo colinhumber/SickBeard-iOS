@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SBQualityViewController.h"
 #import "SBStatusViewController.h"
+#import "SBAddShowDelegate.h"
 
 @class SBShow;
 @class SBRootDirectory;
@@ -25,6 +26,8 @@
 - (IBAction)useSeasonFoldersChanged:(id)sender;
 
 @property (nonatomic, strong) SBShow *show;
+@property (nonatomic, weak) id<SBAddShowDelegate> delegate;
+
 //@property (nonatomic, strong) IBOutlet UILabel *initialQualityLabel;
 //@property (nonatomic, strong) IBOutlet UILabel *archiveQualityLabel;
 //@property (nonatomic, strong) IBOutlet UILabel *statusLabel;

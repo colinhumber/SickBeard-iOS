@@ -13,6 +13,7 @@
 #import "NSUserDefaults+SickBeard.h"
 #import "SBHistoryCell.h"
 #import "NSDate+Utilities.h"
+#import "SVSegmentedControl.h"
 
 @implementation SBHistoryViewController
 
@@ -32,6 +33,17 @@
 	refreshHeader.defaultInsets = self.tableView.contentInset;
 	[self.tableView addSubview:refreshHeader];
 	[refreshHeader refreshLastUpdatedDate];
+	
+	SVSegmentedControl *historyControl = [[SVSegmentedControl alloc] initWithSectionTitles:[NSArray arrayWithObjects:@"Snatched", @"Downloaded", nil]];
+	historyControl.selectedSegmentChangedHandler = ^(id sender) {
+		historyType = [(SVSegmentedControl*)sender selectedIndex];
+		[self loadData];
+	};
+	
+	UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:historyControl];
+	NSMutableArray *items = [self.toolbarItems mutableCopy];
+	[items insertObject:barItem atIndex:2];
+	self.toolbarItems = items;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -40,14 +52,14 @@
 	if ([self tableView:self.tableView numberOfRowsInSection:0] > 0) {
 		[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
 	}
-	else {
-		if ([NSUserDefaults standardUserDefaults].serverHasBeenSetup) {
-			if (!history) {
-				[history removeAllObjects];
-				[self loadData];
-			}
-		}		
-	}
+//	else {
+//		if ([NSUserDefaults standardUserDefaults].serverHasBeenSetup) {
+//			if (!history) {
+//				[history removeAllObjects];
+//				[self loadData];
+//			}
+//		}		
+//	}
 }
 
 - (void)viewDidUnload
@@ -69,9 +81,6 @@
 	[super loadData];
 	
 	[SVProgressHUD showWithStatus:@"Loading history"];
-//	[self.hud setActivity:YES];
-//	[self.hud setCaption:@"Loading history..."];
-//	[self.hud show];
 	
 	NSString *filter = @"";
 	if (historyType == SBHistoryTypeSnatched) {
@@ -118,7 +127,7 @@
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving history" 
-																  message:[NSString stringWithFormat:@"Could not retreive history\n%@", error.localizedDescription] 
+																  message:error.localizedDescription 
 															  buttonTitle:@"OK"];			
 											  
 											  [self finishDataLoad:error];
@@ -165,10 +174,6 @@
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)historyTypeChanged:(id)sender {
-	historyType = [(UISegmentedControl*)sender selectedSegmentIndex];
-	[self loadData];
-}
 
 - (IBAction)refresh:(id)sender {
 	[self loadData];
@@ -185,7 +190,7 @@
 											  } 
 											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 												  [PRPAlertView showWithTitle:@"Error clearing history" 
-																	  message:[NSString stringWithFormat:@"Could clear history\n%@", error.localizedDescription] 
+																	  message:error.localizedDescription 
 																  buttonTitle:@"OK"];
 											  }];
 	}
@@ -199,7 +204,7 @@
 											  } 
 											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 												  [PRPAlertView showWithTitle:@"Error trimming history" 
-																	  message:[NSString stringWithFormat:@"Could trim history\n%@", error.localizedDescription] 
+																	  message:error.localizedDescription 
 																  buttonTitle:@"OK"];
 											  }];
 	}

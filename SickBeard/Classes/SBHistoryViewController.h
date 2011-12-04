@@ -23,7 +23,6 @@ typedef enum {
 
 - (IBAction)showHistoryActions:(id)sender;
 - (IBAction)done:(id)sender;
-- (IBAction)historyTypeChanged:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 

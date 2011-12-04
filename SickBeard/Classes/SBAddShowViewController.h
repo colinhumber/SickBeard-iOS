@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SBAddShowDelegate.h"
 
 @interface SBAddShowViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate> {
 	NSArray *results;
@@ -17,5 +18,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UIPickerView *languagePickerView;
 @property (nonatomic, strong) IBOutlet UITextField *showNameTextField;
+@property (nonatomic, weak) id<SBAddShowDelegate> delegate;
+
 
 @end

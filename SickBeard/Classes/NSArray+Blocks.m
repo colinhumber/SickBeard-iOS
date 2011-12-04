@@ -8,10 +8,6 @@
 
 #import "NSArray+Blocks.h"
 
-static NSComparisonResult sortUsingBlock(id arg1, id arg2, NSComparisonResult (^block)(id, id)) {
-    return block(arg1, arg2);
-}
-
 @implementation NSArray (Blocks)
 
 - (BOOL) all:(BOOL (^)(id obj))block {
@@ -44,8 +40,8 @@ static NSComparisonResult sortUsingBlock(id arg1, id arg2, NSComparisonResult (^
     }
 }
 
-- (NSArray *) sort:(NSComparisonResult (^)(id obj1, id obj2))block {
-    return [self sortedArrayUsingFunction:&sortUsingBlock context:block];
+- (NSArray *) sort:(NSComparator)block {
+    return [self sortedArrayUsingComparator:block];
 }
 
 - (id) find:(BOOL (^)(id obj))block {

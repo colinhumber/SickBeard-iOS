@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SBHudViewController.h"
 #import "SBDataLoader.h"
 
-@interface SBBaseViewController : UIViewController <SBHudViewController, SBDataLoader>
+@interface SBBaseViewController : UIViewController <SBDataLoader>
 
+- (void)refresh:(id)sender;
 
 @end

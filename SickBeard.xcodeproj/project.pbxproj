@@ -33,6 +33,9 @@
 		9527ED351463952D001B3E51 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9527ED2C1463952D001B3E51 /* whiteArrow@2x.png */; };
 		952D1EAA1487FF02000ABD7C /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 952D1EA71487FF02000ABD7C /* SVProgressHUD.bundle */; };
 		952D1EAB1487FF02000ABD7C /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 952D1EA91487FF02000ABD7C /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		952D1EEE148940E2000ABD7C /* SVSegmentedControl.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 952D1EE9148940E2000ABD7C /* SVSegmentedControl.bundle */; };
+		952D1EEF148940E2000ABD7C /* SVSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 952D1EEB148940E2000ABD7C /* SVSegmentedControl.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		952D1EF0148940E2000ABD7C /* SVSegmentedThumb.m in Sources */ = {isa = PBXBuildFile; fileRef = 952D1EED148940E2000ABD7C /* SVSegmentedThumb.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		95515BF1140C3C59008CA8D5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B1405EBBB093810F5A8D2F5 /* CFNetwork.framework */; };
 		95515BF2140C3C59008CA8D5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A706C8E4BFF8502C453BD44 /* MobileCoreServices.framework */; };
 		95515BF3140C3C59008CA8D5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3280CBF7B21A6464DA2AC4C /* Security.framework */; };
@@ -163,6 +166,12 @@
 		952D1EA71487FF02000ABD7C /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		952D1EA81487FF02000ABD7C /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		952D1EA91487FF02000ABD7C /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		952D1EE9148940E2000ABD7C /* SVSegmentedControl.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVSegmentedControl.bundle; sourceTree = "<group>"; };
+		952D1EEA148940E2000ABD7C /* SVSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSegmentedControl.h; sourceTree = "<group>"; };
+		952D1EEB148940E2000ABD7C /* SVSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSegmentedControl.m; sourceTree = "<group>"; };
+		952D1EEC148940E2000ABD7C /* SVSegmentedThumb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSegmentedThumb.h; sourceTree = "<group>"; };
+		952D1EED148940E2000ABD7C /* SVSegmentedThumb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSegmentedThumb.m; sourceTree = "<group>"; };
+		952D1EF614894739000ABD7C /* SBAddShowDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBAddShowDelegate.h; path = Classes/SBAddShowDelegate.h; sourceTree = "<group>"; };
 		95515BF5140C3C6C008CA8D5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9557C2401417E1DC00C0D2A7 /* SBAddShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBAddShowViewController.h; path = Classes/SBAddShowViewController.h; sourceTree = "<group>"; };
 		9557C2411417E1DC00C0D2A7 /* SBAddShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBAddShowViewController.m; path = Classes/SBAddShowViewController.m; sourceTree = "<group>"; };
@@ -443,6 +452,19 @@
 			path = SVProgressHUD/SVProgressHUD;
 			sourceTree = "<group>";
 		};
+		952D1EE8148940E1000ABD7C /* SVSegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				952D1EE9148940E2000ABD7C /* SVSegmentedControl.bundle */,
+				952D1EEA148940E2000ABD7C /* SVSegmentedControl.h */,
+				952D1EEB148940E2000ABD7C /* SVSegmentedControl.m */,
+				952D1EEC148940E2000ABD7C /* SVSegmentedThumb.h */,
+				952D1EED148940E2000ABD7C /* SVSegmentedThumb.m */,
+			);
+			name = SVSegmentedControl;
+			path = SVSegmentedControl/SVSegmentedControl;
+			sourceTree = "<group>";
+		};
 		9563CD3F140D47B800920795 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -576,6 +598,7 @@
 			children = (
 				9575EC2814632EAA00D600E9 /* SBHudViewController.h */,
 				9527ED3714639742001B3E51 /* SBDataLoader.h */,
+				952D1EF614894739000ABD7C /* SBAddShowDelegate.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -785,6 +808,7 @@
 		95F7F61E1408492700E17F3E /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				952D1EE8148940E1000ABD7C /* SVSegmentedControl */,
 				952D1EA61487FF02000ABD7C /* SVProgressHUD */,
 				956F7C3B1478AFEB00543214 /* SDWebImage */,
 				9527ED1F1463952D001B3E51 /* EGOTableViewPullRefresh */,
@@ -923,6 +947,7 @@
 				95D858AF1464590800B7DDC7 /* Defaults.plist in Resources */,
 				95D9B3FF1468905200E4CA9D /* navbar_bg@2x.png in Resources */,
 				952D1EAA1487FF02000ABD7C /* SVProgressHUD.bundle in Resources */,
+				952D1EEE148940E2000ABD7C /* SVSegmentedControl.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1042,6 +1067,8 @@
 				956F7C5B1478B43000543214 /* SDWebImageDownloader+NSURLCredential.m in Sources */,
 				9527B72814843CD700F173D9 /* SBITunesUrlCache.m in Sources */,
 				952D1EAB1487FF02000ABD7C /* SVProgressHUD.m in Sources */,
+				952D1EEF148940E2000ABD7C /* SVSegmentedControl.m in Sources */,
+				952D1EF0148940E2000ABD7C /* SVSegmentedThumb.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

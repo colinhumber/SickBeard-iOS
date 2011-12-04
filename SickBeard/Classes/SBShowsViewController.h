@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SBBaseViewController.h"
 #import "EGORefreshTableHeaderView.h"
+#import "SBAddShowDelegate.h"
 
-@interface SBShowsViewController : SBBaseViewController <UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate> {
+@interface SBShowsViewController : SBBaseViewController <UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, SBAddShowDelegate> {
 	NSMutableArray *shows;
 	EGORefreshTableHeaderView *refreshHeader;
 }
