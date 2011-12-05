@@ -7,13 +7,15 @@
 //
 
 #import "SBShowsViewController.h"
+#import "SBShowDetailsViewController.h"
+#import "SBAddShowViewController.h"
 #import "SickbeardAPIClient.h"
 #import "SBShow.h"
 #import "PRPAlertView.h"
-#import "SBShowDetailsViewController.h"
 #import "ShowCell.h"
 #import "NSUserDefaults+SickBeard.h"
 #import "NSDate+Utilities.h"
+
 
 @implementation SBShowsViewController
 
@@ -23,6 +25,11 @@
 	if ([segue.identifier isEqualToString:@"ShowDetailsSegue"]) {
 		SBShowDetailsViewController *detailsController = [segue destinationViewController];
 		detailsController.show = [shows objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+	}
+	else if ([segue.identifier isEqualToString:@"AddShowSegue"]) {
+		UINavigationController *navController = [segue destinationViewController];
+		SBAddShowViewController *addShowController = (SBAddShowViewController*)navController.topViewController;
+		addShowController.delegate = self;
 	}
 }
 

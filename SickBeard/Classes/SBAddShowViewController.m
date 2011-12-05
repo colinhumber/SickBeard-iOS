@@ -29,8 +29,8 @@
 		NSIndexPath *ip = [self.tableView indexPathForSelectedRow];
 		
 		SBShow *show = [[SBShow alloc] init];
-		show.tvdbID = [[results objectAtIndex:ip.row] objectAtIndex:0];
-		show.showName = [[results objectAtIndex:ip.row] objectAtIndex:1];
+		show.tvdbID = [[results objectAtIndex:ip.row] objectForKey:@"tvdbid"];
+		show.showName = [[results objectAtIndex:ip.row] objectForKey:@"name"];
 		show.languageCode = [[SBGlobal validLanguages] objectForKey:currentLanguage];
 		
 		vc.show = show;
@@ -217,14 +217,14 @@
 			cell.accessoryType = UITableViewCellAccessoryNone;
 		}
 		else {
-			NSArray *result = [results objectAtIndex:indexPath.row];
+			NSDictionary *result = [results objectAtIndex:indexPath.row];
 			
-			cell.textLabel.text = [result objectAtIndex:1];
+			cell.textLabel.text = [result objectForKey:@"name"];
 			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			
-			id airDate = [result objectAtIndex:2];
-			if (airDate == [NSNull null]) {
+			id airDate = [result objectForKey:@"first_aired"];
+			if (airDate == [NSNull null] || [airDate length] == 0) {
 				airDate = @"Unknown air date";
 			}
 			else {
