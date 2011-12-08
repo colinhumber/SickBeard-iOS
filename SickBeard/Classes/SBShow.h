@@ -18,6 +18,7 @@ typedef enum {
 @interface SBShow : NSObject <DictionaryCreation>
 
 @property (nonatomic, strong) NSString *tvdbID;
+@property (nonatomic, strong) NSString *tvRageID;
 @property (nonatomic) BOOL airByDate;
 @property (nonatomic) BOOL hasBannerCached;
 @property (nonatomic) BOOL hasPosterCached;

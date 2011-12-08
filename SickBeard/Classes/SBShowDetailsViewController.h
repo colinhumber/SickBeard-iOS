@@ -11,9 +11,11 @@
 @class SBShow;
 @class OrderedDictionary;
 
-@interface SBShowDetailsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface SBShowDetailsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate> {
 	OrderedDictionary *seasons;
 }
+
+- (IBAction)showActions;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) SBShow *show;

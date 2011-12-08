@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SBBaseShowCell.h"
 
-@interface SBHistoryCell : UITableViewCell
+@interface SBHistoryCell : SBBaseShowCell
 
-@property (nonatomic, strong) IBOutlet UIImageView *showImageView;
 @property (nonatomic, strong) IBOutlet UILabel *showNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *seasonEpisodeLabel;
 @property (nonatomic, strong) IBOutlet UILabel *createdDateLabel;

@@ -40,6 +40,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
+	self.tableView.tableFooterView = [[UIView alloc] init];
+		
 	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
 	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
 
@@ -51,6 +55,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+	[TestFlight passCheckpoint:@"Viewed coming episodes"];
+	
 	[super viewWillAppear:animated];
 	
 	if ([self.tableView.dataSource numberOfSectionsInTableView:self.tableView] > 0) {
@@ -199,8 +205,6 @@
 	return [[comingEpisodes objectForKey:sectionKey] count];
 }
 
-// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
-// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	ComingEpisodeCell *cell = (ComingEpisodeCell*)[tv dequeueReusableCellWithIdentifier:@"ComingEpisodeCell"];
@@ -208,28 +212,17 @@
 	NSArray *keys = [comingEpisodes allKeys];
 	NSString *sectionKey = [keys objectAtIndex:indexPath.section];
 	SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:indexPath.row];
-	
-	[cell.bannerImageView setImageWithURL:[[SickbeardAPIClient sharedClient] bannerURL:episode.tvdbID] 
-						 placeholderImage:nil];	
 
+	[cell findiTunesArtworkForShow:episode.showName];
+	cell.showNameLabel.text = episode.showName;
 	cell.episodeNameLabel.text = episode.name;
-	cell.seasonEpisodeLabel.text = [NSString stringWithFormat:@"Season %d, Episode %d", episode.season, episode.number];
 	cell.airDateLabel.text = [NSString stringWithFormat:@"%@ on %@ (%@)", [episode.airDate displayString], episode.network, episode.quality];
-	cell.plotLabel.text = episode.plot;
 	
 	return cell;
 }
 
-#pragma mark - UITableViewDelegate
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	if ([indexPath compare:self.selectedIndexPath] == NSOrderedSame) {
-		return 150;
-	}
-	else {
-		return 120;
-	}
-}
 
+#pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if ([indexPath compare:self.selectedIndexPath] == NSOrderedSame) {
 		self.selectedIndexPath = nil;

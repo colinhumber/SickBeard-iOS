@@ -110,9 +110,6 @@
 #pragma mark - Actions
 - (IBAction)addShow {
 	[SVProgressHUD showWithStatus:@"Adding show"];
-//	[self.hud setCaption:@"Adding show..."];
-//	[self.hud setActivity:YES];
-//	[self.hud show];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
 							show.tvdbID, @"tvdbid",
@@ -131,12 +128,6 @@
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  [SVProgressHUD dismissWithSuccess:@"Show has been added" afterDelay:1.5];
-//												  [self.hud setCaption:@"Show has been added"];
-//												  [self.hud setActivity:NO];
-//												  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
-//												  [self.hud update];
-//												  
-//												  [self.hud hideAfter:2];
 												  
 												  RunAfterDelay(1.5, ^{
 													  [self.delegate didAddShow];
@@ -144,12 +135,6 @@
 											  }
 											  else {
 												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
-//												  [self.hud setCaption:[JSON objectForKey:@"message"]];
-//												  [self.hud setActivity:NO];
-//												  [self.hud setImage:[UIImage imageNamed:@"11-x"]];
-//												  [self.hud update];
-//												  
-//												  [self.hud hideAfter:2];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
@@ -161,10 +146,8 @@
 }
 
 - (void)saveDefaults {
+	[TestFlight passCheckpoint:@"Saved server defaults"];
 	[SVProgressHUD showWithStatus:@"Saving defaults"];
-//	[self.hud setCaption:@"Saving defaults..."];
-//	[self.hud setActivity:YES];
-//	[self.hud show];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
 							[NSString stringWithFormat:@"%d", useSeasonFolders], @"season_folder",
@@ -265,6 +248,8 @@
 }
 
 - (void)qualityViewController:(SBQualityViewController *)controller didSelectQualities:(NSMutableArray *)qualities {
+	[TestFlight passCheckpoint:@"Changed quality options"];
+	
 	if (controller.qualityType == QualityTypeInitial) {
 		initialQualities = qualities;
 		[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:kInitialQualityIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];

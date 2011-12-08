@@ -36,6 +36,8 @@
 	
 	SVSegmentedControl *historyControl = [[SVSegmentedControl alloc] initWithSectionTitles:[NSArray arrayWithObjects:@"Snatched", @"Downloaded", nil]];
 	historyControl.selectedSegmentChangedHandler = ^(id sender) {
+		[TestFlight passCheckpoint:@"Changed history type"];
+		
 		historyType = [(SVSegmentedControl*)sender selectedIndex];
 		[self loadData];
 	};
@@ -176,11 +178,15 @@
 
 
 - (IBAction)refresh:(id)sender {
+	[TestFlight passCheckpoint:@"Refreshed history"];
+	
 	[self loadData];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	if (buttonIndex == actionSheet.destructiveButtonIndex) {
+		[TestFlight passCheckpoint:@"Cleared history"];
+		
 		[SVProgressHUD showWithStatus:@"Clearing history"];
 		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistoryClear 
 										   parameters:nil 
@@ -195,6 +201,8 @@
 											  }];
 	}
 	else if (buttonIndex == 1) {
+		[TestFlight passCheckpoint:@"Trimmed history"];
+		
 		[SVProgressHUD showWithStatus:@"Trimming history"];
 		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistoryClear 
 										   parameters:nil 
@@ -226,8 +234,7 @@
 	cell.showNameLabel.text = entry.showName;	
 	cell.createdDateLabel.text = [entry.createdDate displayDateTimeString];
 	cell.seasonEpisodeLabel.text = [NSString stringWithFormat:@"Season %d, Episode %d", entry.season, entry.episode];
-	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURL:entry.tvdbID]
-					   placeholderImage:[UIImage imageNamed:@"Icon"]];
+	[cell findiTunesArtworkForShow:entry.showName];
 	
 	return cell;
 }

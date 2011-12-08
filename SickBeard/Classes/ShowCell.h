@@ -7,12 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SBBaseShowCell.h"
 
-@interface ShowCell : UITableViewCell 
+@interface ShowCell : SBBaseShowCell 
 
-- (void)findiTunesArtworkForShow:(NSString*)showName;
-
-@property (nonatomic, strong) IBOutlet UIImageView *posterImageView;
 @property (nonatomic, strong) IBOutlet UILabel *showNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *networkLabel;
 @property (nonatomic, strong) IBOutlet UILabel *statusLabel;

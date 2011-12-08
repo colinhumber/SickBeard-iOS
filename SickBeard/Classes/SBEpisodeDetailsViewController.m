@@ -25,6 +25,8 @@
 #pragma mark - View lifecycle
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
+	[TestFlight passCheckpoint:@"Viewed episode details"];
+	
 	self.title = @"Details";
 		
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -45,12 +47,25 @@
 											  }
 											  
 											  self.titleLabel.text = episode.name;
-											  self.airDateLabel.text = episode.airDate ? [NSString stringWithFormat:@"Aired on %@", [episode.airDate displayString]] : @"Unknown Air Date";
 											  self.seasonLabel.text = [NSString stringWithFormat:@"Season %d, episode %d", episode.season, episode.number];
-											  self.descriptionLabel.text = episode.episodeDescription;
-											  
+											  self.descriptionLabel.text = episode.episodeDescription;											  
 											  [self.showPosterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURL:episode.show.tvdbID]
 																	   placeholderImage:nil];
+											  
+											  if (episode.airDate) {
+												  if ([episode.airDate isToday]) {
+													  self.airDateLabel.text = @"Airing today";
+												  }
+												  else if ([episode.airDate isLaterThanDate:[NSDate date]]) {
+													  self.airDateLabel.text = [NSString stringWithFormat:@"Airing on %@", [episode.airDate displayString]];
+												  }
+												  else {
+													  self.airDateLabel.text = [NSString stringWithFormat:@"Aired on %@", [episode.airDate displayString]];
+												  }												  
+											  }
+											  else {
+												  self.airDateLabel.text = @"Unknown air date";
+											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving episode" 
@@ -99,29 +114,17 @@
 							[NSNumber numberWithInt:episode.number], @"episode", nil];
 
 	[SVProgressHUD showWithStatus:@"Searching for episode"];
-//	[self.hud setCaption:@"Searching for episode..."];
-//	[self.hud setActivity:YES];
-//	[self.hud show];
-	
+
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
 									   parameters:params 
 										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
-											  //[self.hud setActivity:NO];
-											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  [SVProgressHUD dismissWithSuccess:@"Episode found and is downloading" afterDelay:2];
-//												  [self.hud setCaption:@"Episode found and is downloading."];
-//												  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
-//												  [self.hud update];
-//												  [self.hud hideAfter:2];
 											  }
 											  else {
 												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
-//												  [self.hud setCaption:[JSON objectForKey:@"message"]];
-//												  [self.hud update];
-//												  [self.hud hideAfter:2];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
@@ -139,7 +142,7 @@
 												destructiveButtonTitle:nil 
 													 otherButtonTitles:@"Wanted", @"Skipped", @"Archived", @"Ignored", nil];
 	actionSheet.tag = 999;
-	[actionSheet showFromTabBar:self.tabBarController.tabBar];
+	[actionSheet showInView:self.view];
 }
 
 - (void)performSetEpisodeStatus:(EpisodeStatus)status {
@@ -152,30 +155,18 @@
 							statusString, @"status", nil];
 	
 	[SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Setting episode status to %@", statusString]];
-//	[self.hud setCaption:[NSString stringWithFormat:@"Setting episode status to %@", statusString]];
-//	[self.hud setActivity:YES];
-//	[self.hud show];
 
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
 									   parameters:params 
 										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
-																 
-											  //[self.hud setActivity:NO];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  [SVProgressHUD dismissWithSuccess:@"Status successfully set!" afterDelay:2];
-//												  [self.hud setCaption:@"Status successfully set!"];
-//												  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
 											  }
 											  else {
 												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
-//												  [self.hud setCaption:[JSON objectForKey:@"message"]];
-//												  [self.hud setImage:[UIImage imageNamed:@"11-x"]];
 											  }
-												   
-//											  [self.hud update];
-//											  [self.hud hideAfter:2];
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
@@ -188,6 +179,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	if (actionSheet.tag == 998) {
 		if (buttonIndex == 0) {
+			[TestFlight passCheckpoint:@"Searched for episode"];
 			[self searchForEpisode];
 		}
 		else if (buttonIndex == 1) {
@@ -196,6 +188,7 @@
 	}
 	else {
 		if (buttonIndex < 4) {
+			[TestFlight passCheckpoint:@"Set episode status"];
 			[self performSetEpisodeStatus:buttonIndex];
 		}
 	}

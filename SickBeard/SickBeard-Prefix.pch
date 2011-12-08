@@ -20,4 +20,5 @@
 	#import "NSString+Base64.h"
 	#import "UIImageView+WebCache.h"
 	#import "SVProgressHUD.h"
+	#import "TestFlight.h"
 #endif

@@ -48,6 +48,11 @@
 	[self.currentController refresh:sender];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	[SVProgressHUD dismiss];
+}
+
 - (IBAction)viewModeChanged:(id)sender {
 	SVSegmentedControl *segment = sender;
 	
@@ -55,7 +60,7 @@
 	if (self.currentController == destinationController){
 		return;
 	}
-	
+		
 	[self transitionFromViewController:self.currentController 
 					  toViewController:destinationController 
 							  duration:0

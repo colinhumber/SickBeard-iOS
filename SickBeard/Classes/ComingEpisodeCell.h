@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SBBaseShowCell.h"
 
-@interface ComingEpisodeCell : UITableViewCell
+@interface ComingEpisodeCell : SBBaseShowCell
 
-@property (nonatomic, strong) IBOutlet UIImageView *bannerImageView;
+@property (nonatomic, strong) IBOutlet UILabel *showNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *episodeNameLabel;
-@property (nonatomic, strong) IBOutlet UILabel *seasonEpisodeLabel;
 @property (nonatomic, strong) IBOutlet UILabel *airDateLabel;
-@property (nonatomic, strong) IBOutlet UILabel *plotLabel;
 
 @end

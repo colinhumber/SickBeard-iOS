@@ -14,6 +14,7 @@
 #import "OrderedDictionary.h"
 #import "SBEpisodeDetailsViewController.h"
 #import "NSDate+Utilities.h"
+#import "SVModalWebViewController.h"
 
 @implementation SBShowDetailsViewController
 
@@ -33,28 +34,11 @@
 	}
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 #pragma mark - View lifecycle
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
+	
+	[TestFlight passCheckpoint:@"Viewed show details"];
 	
 	seasons = [[OrderedDictionary alloc] init];
 	self.title = show.showName;
@@ -65,6 +49,7 @@
 					placeholderImage:nil];	
 	
 	self.tableView.tableHeaderView = tableHeaderView;
+	self.tableView.tableFooterView = [[UIView alloc] init];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandSeasons
 									   parameters:[NSDictionary dictionaryWithObject:show.tvdbID forKey:@"tvdbid"]
@@ -144,6 +129,31 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - Actions
+- (IBAction)showActions {
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" 
+															 delegate:self 
+													cancelButtonTitle:@"Cancel" 
+											   destructiveButtonTitle:nil 
+													otherButtonTitles:@"View on TheTVDB", @"View on TVRage", nil];
+	[actionSheet showInView:self.view];
+}
+
+#pragma mark - UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+	NSString *urlPath = @"";
+	
+	if (buttonIndex == 0) {
+		urlPath = [NSString stringWithFormat:kTVDBLinkFormat, show.tvdbID];
+	}
+	else if (buttonIndex == 1) {
+		urlPath = [NSString stringWithFormat:kTVRageLinkFormat, show.tvRageID];		
+	}
+	
+	SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:urlPath];
+	webViewController.availableActions = SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink | SVWebViewControllerAvailableActionsOpenInSafari;
+	[self presentViewController:webViewController animated:YES completion:nil];
+}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView {

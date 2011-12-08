@@ -6,7 +6,7 @@
 //  Copyright 2011 TestFlight. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#define TESTFLIGHT_SDK_VERSION @"0.8.1"
+#define TESTFLIGHT_SDK_VERSION @"0.8.2beta2"
 #undef TFLog
 
 void TFLog(NSString *format, ...);
@@ -45,6 +45,8 @@ void TFLog(NSString *format, ...);
  *                                                               library installs crash handlers overtop of the TestFlight Crash Handlers
  *   logToConsole                [ NSNumber numberWithBool:YES ] YES - default, sends log statements to Apple System Log and TestFlight log 
  *                                                               NO  - sends log statements to TestFlight log only
+ *   sendLogOnlyOnCrash         [ NSNumber numberWithBool:YES ]  NO  - default, sends logs to TestFlight at the end of every session
+ *                                                               YES - sends logs statements to TestFlight only if there was a crash
  */
 + (void)setOptions:(NSDictionary*)options;
 

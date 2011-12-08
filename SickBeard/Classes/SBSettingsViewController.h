@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SBQualityViewController.h"
 #import "SBStatusViewController.h"
+#import <MessageUI/MessageUI.h>
 
-@interface SBSettingsViewController : UITableViewController <SBQualityViewControllerDelegate, SBStatusViewControllerDelegate>
+@interface SBSettingsViewController : UITableViewController <SBQualityViewControllerDelegate, SBStatusViewControllerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet UILabel *initialQualityLabel;
 @property (nonatomic, strong) IBOutlet UILabel *archiveQualityLabel;

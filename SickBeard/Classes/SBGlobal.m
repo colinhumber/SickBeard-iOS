@@ -120,4 +120,20 @@
 	return list;
 }
 
++ (NSString*)feedbackBody {
+	NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
+	UIDevice *device = [UIDevice currentDevice];
+	
+	NSMutableString *string = [NSMutableString string];
+	[string appendString:@"\n\n==================\n"];
+	[string appendString:@"Please leave the following information in the email as it will help us debug any issues.\n"];
+	[string appendFormat:@"App Name: %@\n", [info objectForKey:@"CFBundleDisplayName"]];
+	[string appendFormat:@"Version: %@ (%@)\n", [info	objectForKey:@"CFBundleShortVersionString"], [info objectForKey:@"CFBundleVersion"]];
+	[string appendFormat:@"Model: %@\n", device.model];
+	[string appendFormat:@"OS Version: %@ %@\n", device.systemName, device.systemVersion];
+	
+	return string;
+}
+
+
 @end

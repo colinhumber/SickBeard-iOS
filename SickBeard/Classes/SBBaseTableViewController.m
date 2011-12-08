@@ -11,14 +11,10 @@
 
 @implementation SBBaseTableViewController
 
-@synthesize hud;
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.hud = [[ATMHud alloc] init];
-	[self.view addSubview:self.hud.view];
+	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
 }
 
 - (void)refresh:(id)sender{

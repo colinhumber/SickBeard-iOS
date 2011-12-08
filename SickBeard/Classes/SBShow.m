@@ -12,6 +12,7 @@
 @implementation SBShow
 
 @synthesize tvdbID;
+@synthesize tvRageID;
 @synthesize airByDate;
 @synthesize hasBannerCached;
 @synthesize hasPosterCached;
@@ -46,6 +47,7 @@
 		}
 		
 		self.tvdbID = [dict objectForKey:@"tvdbid"];
+		self.tvRageID = [dict objectForKey:@"tvrage_id"];
 		self.showName = [dict objectForKey:@"tvrage_name"];
 		self.network = [dict objectForKey:@"network"];
 		self.status = [dict objectForKey:@"status"];

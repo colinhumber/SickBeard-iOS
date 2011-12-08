@@ -39,6 +39,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
+
 	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
 	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
 
@@ -50,6 +53,8 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+	[TestFlight passCheckpoint:@"Viewed show list"];
+	
 	[super viewWillAppear:animated];
 	
 	if ([self tableView:self.tableView numberOfRowsInSection:0] > 0) {
@@ -65,12 +70,9 @@
 	}
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     [self setTableView:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -158,22 +160,26 @@
 
 #pragma mark - SBAddShowDelegate
 - (void)didAddShow {
+	[TestFlight passCheckpoint:@"Did add show"];
 	[self dismissViewControllerAnimated:YES completion:^{
 		[self loadData];
 	}];
 }
 
 - (void)didCancelAddShow {
+	[TestFlight passCheckpoint:@"Cancel add show"];
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Actions
 - (void)addShow {
 	[self performSegueWithIdentifier:@"AddShowSegue" sender:nil];
+	[TestFlight passCheckpoint:@"Adding show"];
 }
 
 - (IBAction)refresh:(id)sender {
 	[self loadData];
+	[TestFlight passCheckpoint:@"Refreshed shows list"];
 }
 
 #pragma mark - UITableViewDelegate
@@ -198,21 +204,11 @@
 	cell.statusLabel.text = show.status;
 	cell.nextEpisodeAirdateLabel.text = show.nextEpisodeDate != nil ? [show.nextEpisodeDate displayString] : @"No airdate found";
 
-	[cell findiTunesArtworkForShow:show.sanitizedShowName];
-//	[cell.posterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURL:show.tvdbID] 
-//						 placeholderImage:nil];	
-		
+	[cell findiTunesArtworkForShow:show.showName];
+	
 	return cell;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath.row % 2 == 0) {
-		cell.backgroundColor = RGBCOLOR(245, 241, 226); 
-	}
-	else {
-		cell.backgroundColor = RGBCOLOR(223, 218, 206); 		
-	}
-}
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
@@ -220,9 +216,6 @@
 		NSDictionary *params = [NSDictionary dictionaryWithObject:show.tvdbID forKey:@"tvdbid"];
 
 		[SVProgressHUD showWithStatus:@"Deleting show"];
-//		[self.hud setActivity:YES];
-//		[self.hud setCaption:@"Deleting show..."];
-//		[self.hud show];
 		
 		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShowDelete 
 										   parameters:params 
@@ -241,14 +234,12 @@
 												  }				
 												  
 												  [SVProgressHUD dismiss];
-												  //[self.hud hide];
 											  }
 											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 												  [PRPAlertView showWithTitle:@"Error deleting show" 
 																	  message:error.localizedDescription 
 																  buttonTitle:@"Okay"];			
 												  [SVProgressHUD dismiss];
-												  //[self.hud hide];
 											  }];
 	}
 }

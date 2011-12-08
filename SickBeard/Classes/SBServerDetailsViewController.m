@@ -31,7 +31,6 @@
 @synthesize passwordTextField;
 @synthesize apiKeyTextField;
 @synthesize server;
-//@synthesize managedObjectContext;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
 	self = [super initWithCoder:aDecoder];
@@ -59,7 +58,8 @@
     [super viewDidLoad];
 
 	self.title = @"Server";
-
+	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
+	
 	if (_flags.initialSetup) {
 		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" 
 																				   style:UIBarButtonItemStyleDone 
@@ -97,10 +97,7 @@
     [self setUsernameTextField:nil];
     [self setPasswordTextField:nil];
     [self setApiKeyTextField:nil];
-	//[self setHud:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -153,6 +150,8 @@
 	if (!server) {
 		self.server = [[SBServer alloc] init];
 	}
+	
+	[TestFlight passCheckpoint:saveOnSuccess ? @"Saving server" : @"Testing server"];
 	
 	[self updateServerValues];
 	
@@ -216,13 +215,11 @@
 																										   }
 																										   else if ([result isEqualToString:RESULT_DENIED]) {
 																											   [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"]];
-																											   [self.hud hideAfter:1.0];
 																										   }
 																									   }
 																									   failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-																										   [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard at %@", server.serviceEndpointPath] 
+																										   [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard. Are your ports forwarded correctly?", server.serviceEndpointPath] 
 																																afterDelay:1];
-																										   [self.hud hideAfter:1.0];
 																									   }];
 															 });
 														 }
@@ -231,7 +228,7 @@
 																 [SVProgressHUD dismissWithError:@"Username and password invalid" afterDelay:2];
 															 }
 															 else {
-																 [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard at %@", server.serviceEndpointPath] 
+																 [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard. Are your ports forwarded correctly?", server.serviceEndpointPath] 
 																					  afterDelay:2];
 															 }
 														 }];

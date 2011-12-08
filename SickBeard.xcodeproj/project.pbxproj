@@ -102,6 +102,20 @@
 		95BC1335140D8515009F9FBC /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BC1333140D847D009F9FBC /* OrderedDictionary.m */; };
 		95BDF1901423AF4100A9B7C3 /* SickbeardAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDF18F1423AF4100A9B7C3 /* SickbeardAPIClient.m */; };
 		95BDF1931423AF5200A9B7C3 /* SBShowDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDF1921423AF5200A9B7C3 /* SBShowDetailsViewController.m */; };
+		95BE14781491679D00FE1301 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95BE14771491679D00FE1301 /* MessageUI.framework */; };
+		95C76CE1148E8433008EDF7A /* SBBaseShowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C76CE0148E8433008EDF7A /* SBBaseShowCell.m */; };
+		95C76DE7148E90B9008EDF7A /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C76DE3148E90B9008EDF7A /* clock.png */; };
+		95C76DE8148E90B9008EDF7A /* clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C76DE4148E90B9008EDF7A /* clock@2x.png */; };
+		95C76DE9148E90B9008EDF7A /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C76DE5148E90B9008EDF7A /* gear.png */; };
+		95C76DEA148E90B9008EDF7A /* gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C76DE6148E90B9008EDF7A /* gear@2x.png */; };
+		95C76DEE148E92EC008EDF7A /* SBGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C76DED148E92EC008EDF7A /* SBGradientView.m */; };
+		95C76DF1148E9698008EDF7A /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C76DEF148E9698008EDF7A /* refresh.png */; };
+		95C76DF2148E9698008EDF7A /* refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C76DF0148E9698008EDF7A /* refresh@2x.png */; };
+		95D05554148ED0B900F12410 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D05552148ED0B900F12410 /* background.png */; };
+		95D05555148ED0B900F12410 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D05553148ED0B900F12410 /* background@2x.png */; };
+		95D3A79E1491779F005ED387 /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95D3A79A1491779F005ED387 /* SVModalWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		95D3A79F1491779F005ED387 /* SVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 95D3A79B1491779F005ED387 /* SVWebViewController.bundle */; };
+		95D3A7A01491779F005ED387 /* SVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95D3A79D1491779F005ED387 /* SVWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		95D858AF1464590800B7DDC7 /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95D858AE1464590800B7DDC7 /* Defaults.plist */; };
 		95D9B3FF1468905200E4CA9D /* navbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D9B3FE1468905200E4CA9D /* navbar_bg@2x.png */; };
 		95DD4201140837B8001FE32F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95DD4200140837B8001FE32F /* Foundation.framework */; };
@@ -290,6 +304,24 @@
 		95BDF18F1423AF4100A9B7C3 /* SickbeardAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SickbeardAPIClient.m; path = Classes/SickbeardAPIClient.m; sourceTree = "<group>"; };
 		95BDF1911423AF5200A9B7C3 /* SBShowDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBShowDetailsViewController.h; path = Classes/SBShowDetailsViewController.h; sourceTree = "<group>"; };
 		95BDF1921423AF5200A9B7C3 /* SBShowDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBShowDetailsViewController.m; path = Classes/SBShowDetailsViewController.m; sourceTree = "<group>"; };
+		95BE14771491679D00FE1301 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		95C76CDF148E8433008EDF7A /* SBBaseShowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBaseShowCell.h; path = Classes/SBBaseShowCell.h; sourceTree = "<group>"; };
+		95C76CE0148E8433008EDF7A /* SBBaseShowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBaseShowCell.m; path = Classes/SBBaseShowCell.m; sourceTree = "<group>"; };
+		95C76DE3148E90B9008EDF7A /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
+		95C76DE4148E90B9008EDF7A /* clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock@2x.png"; sourceTree = "<group>"; };
+		95C76DE5148E90B9008EDF7A /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
+		95C76DE6148E90B9008EDF7A /* gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear@2x.png"; sourceTree = "<group>"; };
+		95C76DEC148E92EC008EDF7A /* SBGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBGradientView.h; path = Classes/SBGradientView.h; sourceTree = "<group>"; };
+		95C76DED148E92EC008EDF7A /* SBGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBGradientView.m; path = Classes/SBGradientView.m; sourceTree = "<group>"; };
+		95C76DEF148E9698008EDF7A /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
+		95C76DF0148E9698008EDF7A /* refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh@2x.png"; sourceTree = "<group>"; };
+		95D05552148ED0B900F12410 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		95D05553148ED0B900F12410 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
+		95D3A7991491779F005ED387 /* SVModalWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVModalWebViewController.h; sourceTree = "<group>"; };
+		95D3A79A1491779F005ED387 /* SVModalWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVModalWebViewController.m; sourceTree = "<group>"; };
+		95D3A79B1491779F005ED387 /* SVWebViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVWebViewController.bundle; sourceTree = "<group>"; };
+		95D3A79C1491779F005ED387 /* SVWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewController.h; sourceTree = "<group>"; };
+		95D3A79D1491779F005ED387 /* SVWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewController.m; sourceTree = "<group>"; };
 		95D858AE1464590800B7DDC7 /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Defaults.plist; path = Resources/Defaults.plist; sourceTree = "<group>"; };
 		95D9B3FE1468905200E4CA9D /* navbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_bg@2x.png"; sourceTree = "<group>"; };
 		95DD41FA140837B8001FE32F /* SickBeard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SickBeard.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -341,6 +373,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95BE14781491679D00FE1301 /* MessageUI.framework in Frameworks */,
 				95515BF6140C3C6C008CA8D5 /* UIKit.framework in Frameworks */,
 				95515BF1140C3C59008CA8D5 /* CFNetwork.framework in Frameworks */,
 				95515BF2140C3C59008CA8D5 /* MobileCoreServices.framework in Frameworks */,
@@ -468,6 +501,14 @@
 		9563CD3F140D47B800920795 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				95D05552148ED0B900F12410 /* background.png */,
+				95D05553148ED0B900F12410 /* background@2x.png */,
+				95C76DEF148E9698008EDF7A /* refresh.png */,
+				95C76DF0148E9698008EDF7A /* refresh@2x.png */,
+				95C76DE3148E90B9008EDF7A /* clock.png */,
+				95C76DE4148E90B9008EDF7A /* clock@2x.png */,
+				95C76DE5148E90B9008EDF7A /* gear.png */,
+				95C76DE6148E90B9008EDF7A /* gear@2x.png */,
 				95D9B3FE1468905200E4CA9D /* navbar_bg@2x.png */,
 				9563CD91140D4C3800920795 /* Icon.png */,
 				9563CD40140D47B800920795 /* Default.png */,
@@ -631,6 +672,34 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		95C76DEB148E92C7008EDF7A /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				9575EC2C14632EEF00D600E9 /* SBBaseViewController.h */,
+				9575EC2D14632EEF00D600E9 /* SBBaseViewController.m */,
+				9575EC2F14632F2A00D600E9 /* SBBaseTableViewController.h */,
+				9575EC3014632F2B00D600E9 /* SBBaseTableViewController.m */,
+				95C76CDF148E8433008EDF7A /* SBBaseShowCell.h */,
+				95C76CE0148E8433008EDF7A /* SBBaseShowCell.m */,
+				95C76DEC148E92EC008EDF7A /* SBGradientView.h */,
+				95C76DED148E92EC008EDF7A /* SBGradientView.m */,
+			);
+			name = Global;
+			sourceTree = "<group>";
+		};
+		95D3A7981491779F005ED387 /* SVWebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				95D3A7991491779F005ED387 /* SVModalWebViewController.h */,
+				95D3A79A1491779F005ED387 /* SVModalWebViewController.m */,
+				95D3A79B1491779F005ED387 /* SVWebViewController.bundle */,
+				95D3A79C1491779F005ED387 /* SVWebViewController.h */,
+				95D3A79D1491779F005ED387 /* SVWebViewController.m */,
+			);
+			name = SVWebViewController;
+			path = SVWebViewController/SVWebViewController;
+			sourceTree = "<group>";
+		};
 		95DD41EF140837B8001FE32F = {
 			isa = PBXGroup;
 			children = (
@@ -653,6 +722,7 @@
 		95DD41FD140837B8001FE32F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				95BE14771491679D00FE1301 /* MessageUI.framework */,
 				9563CCCC140D3A1D00920795 /* CoreData.framework */,
 				95515BF5140C3C6C008CA8D5 /* UIKit.framework */,
 				9577B0D4140C09D2007F48FE /* libz.1.2.5.dylib */,
@@ -673,6 +743,7 @@
 		95DD4202140837B8001FE32F /* SickBeard */ = {
 			isa = PBXGroup;
 			children = (
+				95C76DEB148E92C7008EDF7A /* Global */,
 				9575EC2714632E9700D600E9 /* Protocols */,
 				9563CD8C140D4B5500920795 /* Additions */,
 				95F7F61A1408461B00E17F3E /* Domain */,
@@ -721,10 +792,6 @@
 				95F7F60D14083AA400E17F3E /* Episodes */,
 				95F7F61414083D8A00E17F3E /* Settings */,
 				95A0AB411469DD7F009EADA7 /* History */,
-				9575EC2C14632EEF00D600E9 /* SBBaseViewController.h */,
-				9575EC2D14632EEF00D600E9 /* SBBaseViewController.m */,
-				9575EC2F14632F2A00D600E9 /* SBBaseTableViewController.h */,
-				9575EC3014632F2B00D600E9 /* SBBaseTableViewController.m */,
 			);
 			name = "Tab Groups";
 			sourceTree = "<group>";
@@ -808,6 +875,7 @@
 		95F7F61E1408492700E17F3E /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				95D3A7981491779F005ED387 /* SVWebViewController */,
 				952D1EE8148940E1000ABD7C /* SVSegmentedControl */,
 				952D1EA61487FF02000ABD7C /* SVProgressHUD */,
 				956F7C3B1478AFEB00543214 /* SDWebImage */,
@@ -948,6 +1016,15 @@
 				95D9B3FF1468905200E4CA9D /* navbar_bg@2x.png in Resources */,
 				952D1EAA1487FF02000ABD7C /* SVProgressHUD.bundle in Resources */,
 				952D1EEE148940E2000ABD7C /* SVSegmentedControl.bundle in Resources */,
+				95C76DE7148E90B9008EDF7A /* clock.png in Resources */,
+				95C76DE8148E90B9008EDF7A /* clock@2x.png in Resources */,
+				95C76DE9148E90B9008EDF7A /* gear.png in Resources */,
+				95C76DEA148E90B9008EDF7A /* gear@2x.png in Resources */,
+				95C76DF1148E9698008EDF7A /* refresh.png in Resources */,
+				95C76DF2148E9698008EDF7A /* refresh@2x.png in Resources */,
+				95D05554148ED0B900F12410 /* background.png in Resources */,
+				95D05555148ED0B900F12410 /* background@2x.png in Resources */,
+				95D3A79F1491779F005ED387 /* SVWebViewController.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1069,6 +1146,10 @@
 				952D1EAB1487FF02000ABD7C /* SVProgressHUD.m in Sources */,
 				952D1EEF148940E2000ABD7C /* SVSegmentedControl.m in Sources */,
 				952D1EF0148940E2000ABD7C /* SVSegmentedThumb.m in Sources */,
+				95C76CE1148E8433008EDF7A /* SBBaseShowCell.m in Sources */,
+				95C76DEE148E92EC008EDF7A /* SBGradientView.m in Sources */,
+				95D3A79E1491779F005ED387 /* SVModalWebViewController.m in Sources */,
+				95D3A7A01491779F005ED387 /* SVWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

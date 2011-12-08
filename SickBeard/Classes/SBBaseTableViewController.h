@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SBHudViewController.h"
 
-@interface SBBaseTableViewController : UITableViewController <SBHudViewController>
+@interface SBBaseTableViewController : UITableViewController
 
 - (void)loadData;
 

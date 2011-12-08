@@ -10,11 +10,9 @@
 
 @implementation ComingEpisodeCell
 
-@synthesize bannerImageView;
+@synthesize showNameLabel;
 @synthesize episodeNameLabel;
-@synthesize seasonEpisodeLabel;
 @synthesize airDateLabel;
-@synthesize plotLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -24,6 +22,7 @@
     }
     return self;
 }
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

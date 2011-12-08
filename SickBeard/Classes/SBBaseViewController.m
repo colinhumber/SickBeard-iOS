@@ -15,9 +15,6 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	
-//	self.hud = [[ATMHud alloc] init];
-//	[self.view addSubview:self.hud.view];
 }
 
 - (void)refresh:(id)sender {
