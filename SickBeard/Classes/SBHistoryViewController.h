@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SBBaseViewController.h"
+#import "SBBaseTableViewController.h"
 #import "EGORefreshTableHeaderView.h"
 
 typedef enum {
@@ -15,15 +15,12 @@ typedef enum {
 	SBHistoryTypeDownloaded
 } SBHistoryType;
 
-@interface SBHistoryViewController : SBBaseViewController <UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, UIActionSheetDelegate> {
+@interface SBHistoryViewController : SBBaseTableViewController <UIActionSheetDelegate> {
 	NSMutableArray *history;
 	SBHistoryType historyType;
-	EGORefreshTableHeaderView *refreshHeader;
 }
 
 - (IBAction)showHistoryActions:(id)sender;
 - (IBAction)done:(id)sender;
-
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

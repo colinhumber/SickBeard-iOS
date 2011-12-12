@@ -15,15 +15,16 @@
 @implementation SBBaseShowCell
 
 @synthesize showImageView;
+@synthesize containerView;
 
 - (void)commonInit {
 	// Initialization code
-	SBGradientView *gradientView = [[SBGradientView alloc] init];
-	gradientView.colors = [NSArray arrayWithObjects:
-						   (id)RGBCOLOR(245, 241, 226).CGColor, 
-						   (id)RGBCOLOR(223, 218, 206).CGColor, 
-						   nil];
-	self.backgroundView = gradientView;
+//	SBGradientView *gradientView = [[SBGradientView alloc] init];
+//	gradientView.colors = [NSArray arrayWithObjects:
+//						   (id)RGBCOLOR(245, 241, 226).CGColor, 
+//						   (id)RGBCOLOR(223, 218, 206).CGColor, 
+//						   nil];
+//	self.backgroundView = gradientView;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -45,10 +46,20 @@
 	return self;
 }
 
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+	[super setHighlighted:highlighted animated:animated];
+	
+	if (highlighted) {
+		self.containerView.image = [UIImage imageNamed:@"list-item-background-selected"];
+	}
+	else {
+		self.containerView.image = [UIImage imageNamed:@"list-item-background"];		
+	}
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 

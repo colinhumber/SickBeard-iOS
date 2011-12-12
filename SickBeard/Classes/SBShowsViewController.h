@@ -7,17 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SBBaseViewController.h"
+#import "SBBaseTableViewController.h"
 #import "EGORefreshTableHeaderView.h"
 #import "SBAddShowDelegate.h"
 
-@interface SBShowsViewController : SBBaseViewController <UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, SBAddShowDelegate> {
+@interface SBShowsViewController : SBBaseTableViewController <UITableViewDelegate, UITableViewDataSource, SBAddShowDelegate> {
 	NSMutableArray *shows;
-	EGORefreshTableHeaderView *refreshHeader;
 }
 
 - (void)addShow;
-
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

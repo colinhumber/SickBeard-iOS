@@ -26,7 +26,7 @@
 
 - (void)finishDataLoad:(NSError*)error {
 	self.isDataLoading = NO;
-	//[self.hud hide];
+
 	[SVProgressHUD dismiss];
 	
 	if (!error) {

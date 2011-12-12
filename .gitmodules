@@ -25,3 +25,9 @@
 [submodule "SickBeard/SVWebViewController"]
 	path = SickBeard/SVWebViewController
 	url = https://github.com/samvermette/SVWebViewController.git
+[submodule "SickBeard/LKBadgeView"]
+	path = SickBeard/LKBadgeView
+	url = https://github.com/lakesoft/LKbadgeView.git
+[submodule "SickBeard/TDHUDProgressBar"]
+	path = SickBeard/TDHUDProgressBar
+	url = https://github.com/tmdvs/TDHUDProgressBar.git

@@ -45,11 +45,11 @@ static SickbeardAPIClient *sharedClient = nil;
 	return sharedClient;
 }
 
-- (NSURL*)posterURL:(NSString*)tvdbID {
+- (NSURL*)posterURLForTVDBID:(NSString*)tvdbID {
 	return [self createUrlWithEndpoint:[NSString stringWithFormat:@"showPoster/?show=%@&which=poster", tvdbID]];
 }
 
-- (NSURL*)bannerURL:(NSString*)tvdbID {
+- (NSURL*)bannerURLForTVDBID:(NSString*)tvdbID {
 	return [self createUrlWithEndpoint:[NSString stringWithFormat:@"showPoster/?show=%@&which=banner", tvdbID]];
 }
 

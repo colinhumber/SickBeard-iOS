@@ -22,6 +22,14 @@
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
 
+- (void)applyStylesheet {
+	[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"menu-bar"] 
+									   forBarMetrics:UIBarMetricsDefault];
+	[[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:RGBCOLOR(127, 92, 59)];
+//	[[UISegmentedControl appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:RGBCOLOR(122, 134, 0)];
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	[TestFlight takeOff:@"9677d08cdc79deabbe7610f9edb5b4f9_MzY5MTgyMDExLTEwLTI1IDIyOjUwOjMxLjg0Mjg3OA"];
 
@@ -48,13 +56,11 @@
 		[self.window makeKeyAndVisible];
 	}
 	
-	[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar_bg"] 
-									   forBarMetrics:UIBarMetricsDefault];
-	[[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:RGBCOLOR(33, 95, 47)];
-	[[UISegmentedControl appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:RGBCOLOR(122, 134, 0)];
+	[self applyStylesheet];
 	
     return YES;
 }
+
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {

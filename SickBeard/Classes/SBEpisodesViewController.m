@@ -21,7 +21,6 @@
 
 @implementation SBEpisodesViewController
 
-@synthesize tableView;
 @synthesize selectedIndexPath;
 
 
@@ -37,21 +36,11 @@
 #pragma mark - View lifecycle
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
-	
-	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
-	self.tableView.tableFooterView = [[UIView alloc] init];
-		
+- (void)viewDidLoad {		
 	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
 	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
-
-	refreshHeader = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
-	refreshHeader.delegate = self;
-	refreshHeader.defaultInsets = self.tableView.contentInset;
-	[self.tableView addSubview:refreshHeader];
-	[refreshHeader refreshLastUpdatedDate];
+	
+	[super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -151,7 +140,7 @@
 												  [self.tableView reloadData];
 												  
 												  [self finishDataLoad:nil];
-												  [refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+												  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 
 											  }
 										  }
@@ -160,34 +149,10 @@
 																  message:error.localizedDescription 
 															  buttonTitle:@"OK"];			
 											  [self finishDataLoad:error];
-											  [refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }];
 }
 
-#pragma mark - UIScrollViewDelegate Methods
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {	
-	[refreshHeader egoRefreshScrollViewDidScroll:scrollView];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-	[refreshHeader egoRefreshScrollViewDidEndDragging:scrollView];	
-}
-
-
-#pragma mark -
-#pragma mark EGORefreshTableHeaderDelegate Methods
-
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view {	
-	[self loadData];
-}
-
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view {	
-	return self.isDataLoading; // should return if data source model is reloading
-}
-
-- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view {
-	return self.loadDate; // should return date data source was last changed
-}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView {
@@ -196,6 +161,27 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	return [[comingEpisodes allKeys] objectAtIndex:section];
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	NSString *title = [self tableView:tableView titleForHeaderInSection:section];
+	UIView *headerView = nil;
+	
+	if (title) {
+		headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 22)];
+		headerView.backgroundColor = [UIColor clearColor];
+		
+		UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 310, 22)];
+		titleLabel.backgroundColor = [UIColor clearColor];
+		titleLabel.text = title;
+		titleLabel.font = [UIFont boldSystemFontOfSize:17];
+		titleLabel.textColor = [UIColor whiteColor];
+		titleLabel.shadowColor = [UIColor blackColor];
+		titleLabel.shadowOffset = CGSizeMake(0, 1);
+		[headerView addSubview:titleLabel];
+	}
+	
+	return headerView;
 }
 	
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -213,7 +199,8 @@
 	NSString *sectionKey = [keys objectAtIndex:indexPath.section];
 	SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:indexPath.row];
 
-	[cell findiTunesArtworkForShow:episode.showName];
+	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:episode.tvdbID] 
+					   placeholderImage:nil];
 	cell.showNameLabel.text = episode.showName;
 	cell.episodeNameLabel.text = episode.name;
 	cell.airDateLabel.text = [NSString stringWithFormat:@"%@ on %@ (%@)", [episode.airDate displayString], episode.network, episode.quality];

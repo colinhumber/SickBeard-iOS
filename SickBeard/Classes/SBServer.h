@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *host;
 @property (nonatomic, assign) int port;
+@property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *apiKey;
 @property (nonatomic, strong) NSString *password;

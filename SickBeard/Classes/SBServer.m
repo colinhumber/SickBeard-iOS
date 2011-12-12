@@ -14,6 +14,7 @@
 @synthesize name;
 @synthesize host;
 @synthesize port;
+@synthesize path;
 @synthesize username;
 @synthesize apiKey;
 @synthesize password;
@@ -23,6 +24,7 @@
 	[encoder encodeObject:name forKey:@"name"];
 	[encoder encodeObject:host forKey:@"host"];
 	[encoder encodeInt:port forKey:@"port"];
+	[encoder encodeObject:path forKey:@"path"];
 	[encoder encodeObject:username forKey:@"username"];
 	[encoder encodeObject:password forKey:@"password"];
 	[encoder encodeObject:apiKey forKey:@"apiKey"];
@@ -35,6 +37,7 @@
 		self.name = [decoder decodeObjectForKey:@"name"];
 		self.host = [decoder decodeObjectForKey:@"host"];
 		self.port = [decoder decodeIntForKey:@"port"];
+		self.path = [decoder decodeObjectForKey:@"path"];
 		self.username = [decoder decodeObjectForKey:@"username"];
 		self.password = [decoder decodeObjectForKey:@"password"];
 		self.apiKey = [decoder decodeObjectForKey:@"apiKey"];
@@ -66,7 +69,13 @@
 }
 
 - (NSString*)serviceEndpointPath {
-	return [NSString stringWithFormat:@"http://%@:%d/", self.host, self.port];
+	NSString *endpoint = [NSString stringWithFormat:@"http://%@:%d/", self.host, self.port];
+	
+	if (self.path) {
+		endpoint = [endpoint stringByAppendingFormat:@"%@/", self.path];
+	}
+	
+	return endpoint;
 }
 
 @end

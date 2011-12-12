@@ -27,6 +27,7 @@
 @synthesize nameTextField;
 @synthesize hostTextField;
 @synthesize portTextField;
+@synthesize pathTextField;
 @synthesize usernameTextField;
 @synthesize passwordTextField;
 @synthesize apiKeyTextField;
@@ -79,7 +80,7 @@
 	else {
 #if DEBUG
 		nameTextField.text = @"Home";
-		hostTextField.text = @"colinhumber.dyndns.org";
+		hostTextField.text = @"colin.kicks-ass.net";
 		portTextField.text = @"8081";
 		apiKeyTextField.text = @"aefc639b299bbbe8ed0e526ef83d415c";
 		usernameTextField.text = @"colinhumber";
@@ -94,6 +95,7 @@
     [self setNameTextField:nil];
     [self setHostTextField:nil];
     [self setPortTextField:nil];
+	[self setPathTextField:nil];
     [self setUsernameTextField:nil];
     [self setPasswordTextField:nil];
     [self setApiKeyTextField:nil];
@@ -111,6 +113,7 @@
 	nameTextField.enabled = enabled;
 	hostTextField.enabled = enabled;
 	portTextField.enabled = enabled;
+	pathTextField.enabled = enabled;
 	usernameTextField.enabled = enabled;
 	passwordTextField.enabled = enabled;
 	apiKeyTextField.enabled = enabled;
@@ -120,6 +123,7 @@
 	nameTextField.text = server.name;
 	hostTextField.text = server.host;
 	portTextField.text = [NSString stringWithFormat:@"%d", server.port];
+	pathTextField.text = server.path;
 	usernameTextField.text = server.username;
 	passwordTextField.text = server.password;
 	apiKeyTextField.text = server.apiKey;
@@ -127,8 +131,9 @@
 
 - (void)updateServerValues {
 	server.name = nameTextField.text;
-	server.host = hostTextField.text;
+	server.host = [hostTextField.text stringByReplacingOccurrencesOfString:@"http://" withString:@""];
 	server.port = [portTextField.text intValue];
+	server.path = [pathTextField.text stringByReplacingOccurrencesOfString:@"/" withString:@""];
 	server.username = usernameTextField.text;
 	server.password = passwordTextField.text;
 	server.apiKey = apiKeyTextField.text;
@@ -176,7 +181,7 @@
 }
 
 - (void)_validateServer:(BOOL)saveOnSuccess {
-	[SVProgressHUD showWithStatus:@"Validating username and password"];			
+	[SVProgressHUD showWithStatus:@"Validating username and password" maskType:SVProgressHUDMaskTypeGradient];
 	
 	[NSUserDefaults standardUserDefaults].temporaryServer = server;
 	
@@ -184,7 +189,7 @@
 														 success:^(id object) {
 															 [NSUserDefaults standardUserDefaults].temporaryServer = nil;
 															 
-															 [SVProgressHUD setStatus:@"Validating API key"];
+															 [SVProgressHUD showWithStatus:@"Validating API key" maskType:SVProgressHUDMaskTypeGradient];
 															 
 															 RunAfterDelay(0.5, ^{
 																 [[SickbeardAPIClient sharedClient] pingServer:server
@@ -218,7 +223,7 @@
 																										   }
 																									   }
 																									   failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-																										   [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard. Are your ports forwarded correctly?", server.serviceEndpointPath] 
+																										   [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard (%@)", server.serviceEndpointPath] 
 																																afterDelay:1];
 																									   }];
 															 });
@@ -228,7 +233,7 @@
 																 [SVProgressHUD dismissWithError:@"Username and password invalid" afterDelay:2];
 															 }
 															 else {
-																 [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard. Are your ports forwarded correctly?", server.serviceEndpointPath] 
+																 [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard (%@)", server.serviceEndpointPath] 
 																					  afterDelay:2];
 															 }
 														 }];

@@ -24,15 +24,18 @@
 		SBQualityViewController *vc = segue.destinationViewController;
 		vc.qualityType = QualityTypeInitial;
 		vc.delegate = self;
+		vc.currentQuality = [NSUserDefaults standardUserDefaults].initialQualities;
 	}
 	else if ([identifier isEqualToString:@"ArchiveQualitySegue"]) {
 		SBQualityViewController *vc = segue.destinationViewController;
 		vc.qualityType = QualityTypeInitial;
 		vc.delegate = self;
+		vc.currentQuality = [NSUserDefaults standardUserDefaults].archiveQualities;
 	}
 	else if ([identifier isEqualToString:@"StatusSegue"]) {
 		SBStatusViewController *vc = segue.destinationViewController;
 		vc.delegate = self;
+		vc.currentStatus = [NSUserDefaults standardUserDefaults].status;
 	}
 	else if ([identifier isEqualToString:@"ServerSegue"]) {
 		

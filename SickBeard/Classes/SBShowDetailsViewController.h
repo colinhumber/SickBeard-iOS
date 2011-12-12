@@ -7,17 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SBBaseTableViewController.h"
 
 @class SBShow;
+@class SBShowDetailsHeaderView;
 @class OrderedDictionary;
 
-@interface SBShowDetailsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate> {
+@interface SBShowDetailsViewController : SBBaseTableViewController <UIActionSheetDelegate> {
 	OrderedDictionary *seasons;
+	
+	struct {
+		int menuIsShowing:1;
+		int menuIsHiding:1;
+	} _menuFlags;
+	NSIndexPath *menuIndexPath;
 }
 
 - (IBAction)showActions;
 
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) SBShow *show;
+@property (nonatomic, strong) IBOutlet SBShowDetailsHeaderView *detailsHeaderView;
 
 @end

@@ -19,8 +19,6 @@
 
 @implementation SBShowsViewController
 
-@synthesize tableView;
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([segue.identifier isEqualToString:@"ShowDetailsSegue"]) {
 		SBShowDetailsViewController *detailsController = [segue destinationViewController];
@@ -37,19 +35,10 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-    [super viewDidLoad];
-
-	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
-
 	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
 	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
 
-	refreshHeader = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
-	refreshHeader.delegate = self;
-	refreshHeader.defaultInsets = self.tableView.contentInset;
-	[self.tableView addSubview:refreshHeader];
-	[refreshHeader refreshLastUpdatedDate];
+	[super viewDidLoad];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -75,9 +64,7 @@
     [super viewDidUnload];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
@@ -121,7 +108,7 @@
 										
 											  [self finishDataLoad:nil];
 											  [self.tableView reloadData];
-											  [refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
@@ -129,34 +116,9 @@
 															  buttonTitle:@"OK"];			
 											  
 											  [self finishDataLoad:error];
-											  [refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }];
 }
-
-#pragma mark - UIScrollViewDelegate Methods
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {	
-	[refreshHeader egoRefreshScrollViewDidScroll:scrollView];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-	[refreshHeader egoRefreshScrollViewDidEndDragging:scrollView];	
-}
-
-
-#pragma mark -
-#pragma mark EGORefreshTableHeaderDelegate Methods
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view {	
-	[self loadData];
-}
-
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view {	
-	return self.isDataLoading; // should return if data source model is reloading
-}
-
-- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view {
-	return self.loadDate; // should return date data source was last changed
-}
-
 
 #pragma mark - SBAddShowDelegate
 - (void)didAddShow {
@@ -204,7 +166,8 @@
 	cell.statusLabel.text = show.status;
 	cell.nextEpisodeAirdateLabel.text = show.nextEpisodeDate != nil ? [show.nextEpisodeDate displayString] : @"No airdate found";
 
-	[cell findiTunesArtworkForShow:show.showName];
+	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID] 
+					   placeholderImage:nil];
 	
 	return cell;
 }

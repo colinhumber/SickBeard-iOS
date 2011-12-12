@@ -49,7 +49,7 @@
 											  self.titleLabel.text = episode.name;
 											  self.seasonLabel.text = [NSString stringWithFormat:@"Season %d, episode %d", episode.season, episode.number];
 											  self.descriptionLabel.text = episode.episodeDescription;											  
-											  [self.showPosterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURL:episode.show.tvdbID]
+											  [self.showPosterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:episode.show.tvdbID]
 																	   placeholderImage:nil];
 											  
 											  if (episode.airDate) {
@@ -146,7 +146,7 @@
 }
 
 - (void)performSetEpisodeStatus:(EpisodeStatus)status {
-	NSString *statusString = [SBEpisode episodeStatusAsString:status];
+	NSString *statusString = [[SBEpisode episodeStatusAsString:status] lowercaseString];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
 							episode.show.tvdbID, @"tvdbid", 

@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SBDataLoader.h"
+#import "EGORefreshTableHeaderView.h"
 
-@interface SBBaseTableViewController : UITableViewController
+@interface SBBaseTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, SBDataLoader>
 
 - (void)loadData;
+
+@property (nonatomic, strong) EGORefreshTableHeaderView *refreshHeader;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
 
 @end

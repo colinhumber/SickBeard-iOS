@@ -40,6 +40,7 @@
 	self.title = self.currentController.title;
 	
 	SVSegmentedControl *navControl = [[SVSegmentedControl alloc] initWithSectionTitles:[NSArray arrayWithObjects:@"Shows", @"Episodes", nil]];
+	navControl.thumb.tintColor = RGBCOLOR(127, 92, 59);
 	[navControl addTarget:self action:@selector(viewModeChanged:) forControlEvents:UIControlEventValueChanged];
 	self.navigationItem.titleView = navControl;
 }

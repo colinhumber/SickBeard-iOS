@@ -46,8 +46,8 @@
 			self.quality = ShowQualityUnknown;
 		}
 		
-		self.tvdbID = [dict objectForKey:@"tvdbid"];
-		self.tvRageID = [dict objectForKey:@"tvrage_id"];
+		self.tvdbID = [NSString stringWithFormat:@"%@", [dict objectForKey:@"tvdbid"]];
+		self.tvRageID = [NSString stringWithFormat:@"%@", [dict objectForKey:@"tvrage_id"]];
 		self.showName = [dict objectForKey:@"tvrage_name"];
 		self.network = [dict objectForKey:@"network"];
 		self.status = [dict objectForKey:@"status"];

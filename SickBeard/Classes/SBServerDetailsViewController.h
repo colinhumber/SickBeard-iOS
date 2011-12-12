@@ -11,7 +11,7 @@
 
 @class SBServer;
 
-@interface SBServerDetailsViewController : SBBaseTableViewController <UITextFieldDelegate> {
+@interface SBServerDetailsViewController : UITableViewController <UITextFieldDelegate> {
 	UITextField *currentResponder;
 	
 	struct {
@@ -25,6 +25,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *nameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *hostTextField;
 @property (strong, nonatomic) IBOutlet UITextField *portTextField;
+@property (strong, nonatomic) IBOutlet UITextField *pathTextField;
 @property (strong, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (strong, nonatomic) IBOutlet UITextField *apiKeyTextField;

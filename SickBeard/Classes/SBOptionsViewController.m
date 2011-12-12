@@ -22,7 +22,6 @@
 #define kStatusSegue @"StatusSegue"
 
 @interface SBOptionsViewController()
-//@property (nonatomic, strong) ATMHud *hud;
 @property (nonatomic, strong) NSIndexPath *parentFolderIndexPath;
 @end
 
@@ -31,12 +30,6 @@
 
 @synthesize show;
 @synthesize delegate;
-//@synthesize locationTextField;
-//@synthesize initialQualityLabel;
-//@synthesize archiveQualityLabel;
-//@synthesize statusLabel;
-//@synthesize seasonFolderSwitch;
-//@synthesize hud;
 @synthesize parentFolderIndexPath;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -67,8 +60,7 @@
 
 #pragma mark - View lifecycle
 - (void)viewDidLoad {
-//	self.hud = [[ATMHud alloc] init];
-//	[self.view addSubview:self.hud.view];
+	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
 
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
@@ -79,20 +71,10 @@
 	useSeasonFolders = defaults.useSeasonFolders;
 	parentFolder = defaults.defaultDirectory;
 	
-//	self.initialQualityLabel.text = [NSString stringWithFormat:@"%d", initialQualities.count];
-//	self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", archiveQualities.count];
-//	self.statusLabel.text = status;
-//	self.seasonFolderSwitch.on = defaults.useSeasonFolders;
-	
     [super viewDidLoad];
 }
 
 - (void)viewDidUnload {
-//	self.initialQualityLabel = nil;
-//	self.archiveQualityLabel = nil;
-//	self.statusLabel = nil;
-//	self.seasonFolderSwitch = nil;
-	
     [super viewDidUnload];
 }
 
@@ -109,7 +91,7 @@
 
 #pragma mark - Actions
 - (IBAction)addShow {
-	[SVProgressHUD showWithStatus:@"Adding show"];
+	[SVProgressHUD showWithStatus:@"Adding show" maskType:SVProgressHUDMaskTypeGradient];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
 							show.tvdbID, @"tvdbid",
@@ -192,20 +174,9 @@
 																									[defaults synchronize];
 																									
 																									[SVProgressHUD dismissWithSuccess:@"Defaults saved" afterDelay:2];
-//																									[self.hud setCaption:@"Defaults saved"];
-//																									[self.hud setActivity:NO];
-//																									[self.hud setImage:[UIImage imageNamed:@"19-check"]];
-//																									[self.hud update];
-//																									[self.hud hideAfter:2];
 																								}
 																								else {
 																									[SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
-//																									[self.hud setCaption:[JSON objectForKey:@"message"]];
-//																									[self.hud setActivity:NO];
-//																									[self.hud setImage:[UIImage imageNamed:@"11-x"]];
-//																									[self.hud update];
-//																									
-//																									[self.hud hideAfter:2];
 																								}
 																							}
 																							failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
@@ -216,20 +187,10 @@
 												  }
 												  else {
 													  [SVProgressHUD dismissWithSuccess:@"Defaults saved" afterDelay:2];
-//													  [self.hud setCaption:@"Defaults saved"];
-//													  [self.hud setActivity:NO];
-//													  [self.hud setImage:[UIImage imageNamed:@"19-check"]];
-//													  [self.hud update];
 												  }
 											  }
 											  else {
 												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
-//												  [self.hud setCaption:[JSON objectForKey:@"message"]];
-//												  [self.hud setActivity:NO];
-//												  [self.hud setImage:[UIImage imageNamed:@"11-x"]];
-//												  [self.hud update];
-//												  
-//												  [self.hud hideAfter:2];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {

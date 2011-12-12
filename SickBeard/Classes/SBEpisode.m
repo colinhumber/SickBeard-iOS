@@ -78,25 +78,25 @@
 + (NSString*)episodeStatusAsString:(EpisodeStatus)status {
 	switch (status) {
 		case EpisodeStatusArchived:
-			return @"archived";
+			return @"Archived";
 			
 		case EpisodeStatusDownloaded:
-			return @"downloaded";
+			return @"Downloaded";
 			
 		case EpisodeStatusIgnored:
-			return @"ignored";
+			return @"Ignored";
 			
 		case EpisodeStatusSkipped:
-			return @"skipped";
+			return @"Skipped";
 			
 		case EpisodeStatusUnaired:
-			return @"unaired";
+			return @"Unaired";
 			
 		case EpisodeStatusWanted:
-			return @"wanted";
+			return @"Wanted";
 			
 		default:
-			return @"unknown";
+			return @"Unknown";
 	}
 }
 

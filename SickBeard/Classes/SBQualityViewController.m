@@ -38,10 +38,11 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	
+	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
+
 	if (qualityType == QualityTypeInitial) {
 		qualities = [[SBGlobal initialQualities] allKeys];
 	}

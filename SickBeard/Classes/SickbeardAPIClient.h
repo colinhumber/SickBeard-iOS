@@ -29,8 +29,8 @@ typedef void (^APIErrorBlock)(NSURLRequest *request, NSHTTPURLResponse *response
 @interface SickbeardAPIClient : NSObject
 
 + (SickbeardAPIClient*)sharedClient;
-- (NSURL*)posterURL:(NSString*)tvdbID;
-- (NSURL*)bannerURL:(NSString*)tvdbID;
+- (NSURL*)posterURLForTVDBID:(NSString*)tvdbID;
+- (NSURL*)bannerURLForTVDBID:(NSString*)tvdbID;
 
 // loads defaults and root directories for the specified server
 - (void)loadDefaults:(SBServer*)server;
