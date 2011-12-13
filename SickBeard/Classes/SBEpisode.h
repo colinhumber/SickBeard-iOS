@@ -18,7 +18,8 @@ typedef enum {
 	EpisodeStatusArchived = 2,
 	EpisodeStatusIgnored = 3,
 	EpisodeStatusUnaired = 4,
-	EpisodeStatusDownloaded = 5
+	EpisodeStatusDownloaded = 5,
+	EpisodeStatusSnatched = 6
 } EpisodeStatus;
 
 @interface SBEpisode : NSObject <DictionaryCreation>

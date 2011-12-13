@@ -23,10 +23,6 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-    [super viewDidLoad];
-
-	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
 	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
 	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
 	
@@ -43,6 +39,8 @@
 	NSMutableArray *items = [self.toolbarItems mutableCopy];
 	[items insertObject:barItem atIndex:2];
 	self.toolbarItems = items;
+	
+	[super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

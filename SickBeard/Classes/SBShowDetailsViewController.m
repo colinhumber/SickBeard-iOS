@@ -106,6 +106,7 @@
 
 - (void)menuControllerDidHide:(NSNotification*)notification {
 	_menuFlags.menuIsShowing = NO;
+	_menuFlags.menuIsHiding = NO;
 }
 
 - (void)menuControllerWillShow:(NSNotification *)notification {
@@ -317,6 +318,7 @@
 			break;
 			
 		case EpisodeStatusDownloaded:
+		case EpisodeStatusSnatched:
 			badgeColor = RGBCOLOR(50, 151, 56);
 			break;
 			
@@ -350,8 +352,8 @@
 		return;
 	}
 	
-	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 	[self performSegueWithIdentifier:@"EpisodeDetailsSegue" sender:nil];
+	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - Menu Actions

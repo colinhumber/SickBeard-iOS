@@ -517,53 +517,50 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="wkR-Y2-55c">
-                                <rect key="frame" x="18" y="0.0" width="283" height="416"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="episode-details-bg.png" id="wkR-Y2-55c">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view contentMode="scaleToFill" id="1iE-qL-dOo">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="YwU-gv-BXU">
+                                <rect key="frame" x="10" y="63" width="300" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="The One That Got Away" lineBreakMode="tailTruncation" minimumFontSize="10" id="YwU-gv-BXU">
-                                        <rect key="frame" x="10" y="8" width="280" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Air date: May 25, 2011" lineBreakMode="tailTruncation" minimumFontSize="10" id="VT9-SN-RUd">
-                                        <rect key="frame" x="10" y="27" width="280" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Season 2, episode 24" lineBreakMode="tailTruncation" minimumFontSize="10" id="MF0-7k-Bnf">
-                                        <rect key="frame" x="10" y="46" width="280" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" id="hMY-x8-yx7">
-                                <rect key="frame" x="0.0" y="259" width="320" height="157"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="0.41996433423913049" green="0.28807250598537709" blue="0.10352495136786359" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="VT9-SN-RUd">
+                                <rect key="frame" x="20" y="104" width="280" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" id="x0f-4I-WIr">
-                                        <rect key="frame" x="26" y="-11" width="268" height="179"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <string key="text">Jay wants to go fishing on his birthday, but the family insists he have a big party, leading Claire and Mitchell to get trapped in their childhood yard, Phil to encounter his college nemesis at the mall and Cameron to have trouble at the bakery.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
-                            </view>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="MF0-7k-Bnf">
+                                <rect key="frame" x="20" y="83" width="280" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="4dg-M5-Cs1">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Episode Summary" lineBreakMode="tailTruncation" minimumFontSize="10" id="M6F-d3-vXj">
+                                <rect key="frame" x="90" y="205" width="140" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" id="oBD-Wg-kid">
+                                <rect key="frame" x="20" y="234" width="280" height="162"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -576,9 +573,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="airDateLabel" destination="VT9-SN-RUd" id="5vM-H2-9M3"/>
-                        <outlet property="descriptionLabel" destination="x0f-4I-WIr" id="bS3-x8-R2o"/>
+                        <outlet property="descriptionLabel" destination="oBD-Wg-kid" id="iRB-Tz-xAe"/>
                         <outlet property="seasonLabel" destination="MF0-7k-Bnf" id="Gfc-ho-ScV"/>
-                        <outlet property="showPosterImageView" destination="wkR-Y2-55c" id="Kye-Wt-KSK"/>
+                        <outlet property="showPosterImageView" destination="4dg-M5-Cs1" id="jxk-R1-m5h"/>
                         <outlet property="titleLabel" destination="YwU-gv-BXU" id="yoz-1p-iwr"/>
                     </connections>
                 </viewController>
@@ -1388,6 +1385,7 @@
         <image name="calendar-icon.png" width="23" height="23"/>
         <image name="chevron.png" width="9" height="15"/>
         <image name="clock.png" width="20" height="20"/>
+        <image name="episode-details-bg.png" width="320" height="416"/>
         <image name="gear.png" width="20" height="20"/>
         <image name="list-item-background.png" width="310" height="100"/>
     </resources>
@@ -1503,10 +1501,21 @@
                 <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
+        <class className="SBShowDetailsHeaderView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBShowDetailsHeaderView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="episodeCountLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="networkLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="progressBar" candidateClass="TDHUDProgressBar"/>
+                <relationship kind="outlet" name="showImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="showNameLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
         <class className="SBShowDetailsViewController" superclassName="SBBaseTableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBShowDetailsViewController.h"/>
             <relationships>
                 <relationship kind="action" name="showActions"/>
+                <relationship kind="outlet" name="detailsHeaderView" candidateClass="SBShowDetailsHeaderView"/>
             </relationships>
         </class>
         <class className="SBShowsViewController" superclassName="SBBaseTableViewController">
@@ -1523,6 +1532,9 @@
                 <relationship kind="outlet" name="showNameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
             </relationships>
+        </class>
+        <class className="TDHUDProgressBar" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TDHUDProgressBar.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

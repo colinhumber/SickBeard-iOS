@@ -15,6 +15,9 @@
 @synthesize statusLabel;
 @synthesize nextEpisodeAirdateLabel;
 
+- (void)awakeFromNib {
+	self.showNameLabel.font = [UIFont fontWithName:@"FuturaStd-Bold" size:self.showNameLabel.font.pointSize];
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

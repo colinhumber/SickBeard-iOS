@@ -46,6 +46,9 @@
 		else if ([statusString isEqualToString:@"archived"]) {
 			self.status = EpisodeStatusArchived;
 		}
+		else if ([statusString isEqualToString:@"snatched"]) {
+			self.status = EpisodeStatusSnatched;
+		}
 		else if ([statusString rangeOfString:@"downloaded"].location != NSNotFound) {
 			self.status = EpisodeStatusDownloaded;
 		}
@@ -88,6 +91,9 @@
 			
 		case EpisodeStatusSkipped:
 			return @"Skipped";
+			
+		case EpisodeStatusSnatched:
+			return @"Snatched";
 			
 		case EpisodeStatusUnaired:
 			return @"Unaired";
