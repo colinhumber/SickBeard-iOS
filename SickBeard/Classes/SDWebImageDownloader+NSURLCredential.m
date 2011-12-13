@@ -12,18 +12,18 @@
 
 @implementation SDWebImageDownloader (NSURLCredential)
 
-- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
-	if (challenge.previousFailureCount == 0) {
-		SBServer *server = [SickbeardAPIClient sharedClient].currentServer;
-		NSURLCredential *credential = [NSURLCredential credentialWithUser:server.username 
-																 password:server.password 
-															  persistence:NSURLCredentialPersistenceForSession];
-		
-		[challenge.sender useCredential:credential forAuthenticationChallenge:challenge];
-	}
-	else {
-		[[challenge sender] cancelAuthenticationChallenge:challenge];
-	}
-}
+//- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+//	if (challenge.previousFailureCount == 0) {
+//		SBServer *server = [SickbeardAPIClient sharedClient].currentServer;
+//		NSURLCredential *credential = [NSURLCredential credentialWithUser:server.username 
+//																 password:server.password 
+//															  persistence:NSURLCredentialPersistenceForSession];
+//		
+//		[challenge.sender useCredential:credential forAuthenticationChallenge:challenge];
+//	}
+//	else {
+//		[[challenge sender] cancelAuthenticationChallenge:challenge];
+//	}
+//}
 
 @end

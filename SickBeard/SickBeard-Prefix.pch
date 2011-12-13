@@ -21,4 +21,5 @@
 	#import "UIImageView+WebCache.h"
 	#import "SVProgressHUD.h"
 	#import "TestFlight.h"
+	#import "SBDrawingHelpers.h"
 #endif

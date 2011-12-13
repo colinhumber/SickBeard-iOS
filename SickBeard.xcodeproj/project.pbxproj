@@ -31,6 +31,9 @@
 		9527ED331463952D001B3E51 /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9527ED2A1463952D001B3E51 /* grayArrow@2x.png */; };
 		9527ED341463952D001B3E51 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9527ED2B1463952D001B3E51 /* whiteArrow.png */; };
 		9527ED351463952D001B3E51 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9527ED2C1463952D001B3E51 /* whiteArrow@2x.png */; };
+		9529C8F814980DC4007614A5 /* SBSeasonHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9529C8F714980DC4007614A5 /* SBSeasonHeaderView.m */; };
+		9529C8FC14981253007614A5 /* SBDrawingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9529C8FB14981253007614A5 /* SBDrawingHelpers.m */; };
+		9529C8FF1498131C007614A5 /* SBCellBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 9529C8FE1498131C007614A5 /* SBCellBackground.m */; };
 		952D1EAA1487FF02000ABD7C /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 952D1EA71487FF02000ABD7C /* SVProgressHUD.bundle */; };
 		952D1EAB1487FF02000ABD7C /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 952D1EA91487FF02000ABD7C /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		952D1EEE148940E2000ABD7C /* SVSegmentedControl.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 952D1EE9148940E2000ABD7C /* SVSegmentedControl.bundle */; };
@@ -111,6 +114,7 @@
 		95C54BD51496A82800111B96 /* texture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C54BD31496A82700111B96 /* texture@2x.png */; };
 		95C54C1714971C5D00111B96 /* episode-details-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C54C1514971C5D00111B96 /* episode-details-bg.png */; };
 		95C54C1814971C5D00111B96 /* episode-details-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C54C1614971C5D00111B96 /* episode-details-bg@2x.png */; };
+		95C54CDC1497CDDF00111B96 /* SBEpisodeDetailsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C54CDB1497CDDD00111B96 /* SBEpisodeDetailsHeaderView.m */; };
 		95C76CE1148E8433008EDF7A /* SBBaseShowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C76CE0148E8433008EDF7A /* SBBaseShowCell.m */; };
 		95C76DE7148E90B9008EDF7A /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C76DE3148E90B9008EDF7A /* clock.png */; };
 		95C76DE8148E90B9008EDF7A /* clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C76DE4148E90B9008EDF7A /* clock@2x.png */; };
@@ -199,6 +203,12 @@
 		9527ED2B1463952D001B3E51 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
 		9527ED2C1463952D001B3E51 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
 		9527ED3714639742001B3E51 /* SBDataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDataLoader.h; path = Classes/SBDataLoader.h; sourceTree = "<group>"; };
+		9529C8F614980DC4007614A5 /* SBSeasonHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSeasonHeaderView.h; path = Classes/SBSeasonHeaderView.h; sourceTree = "<group>"; };
+		9529C8F714980DC4007614A5 /* SBSeasonHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSeasonHeaderView.m; path = Classes/SBSeasonHeaderView.m; sourceTree = "<group>"; };
+		9529C8FA14981253007614A5 /* SBDrawingHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDrawingHelpers.h; path = Classes/SBDrawingHelpers.h; sourceTree = "<group>"; };
+		9529C8FB14981253007614A5 /* SBDrawingHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDrawingHelpers.m; path = Classes/SBDrawingHelpers.m; sourceTree = "<group>"; };
+		9529C8FD1498131C007614A5 /* SBCellBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBCellBackground.h; path = Classes/SBCellBackground.h; sourceTree = "<group>"; };
+		9529C8FE1498131C007614A5 /* SBCellBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBCellBackground.m; path = Classes/SBCellBackground.m; sourceTree = "<group>"; };
 		952D1EA71487FF02000ABD7C /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		952D1EA81487FF02000ABD7C /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		952D1EA91487FF02000ABD7C /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
@@ -338,6 +348,8 @@
 		95C54BD31496A82700111B96 /* texture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "texture@2x.png"; sourceTree = "<group>"; };
 		95C54C1514971C5D00111B96 /* episode-details-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "episode-details-bg.png"; path = "SickBeard/Resources/Images/episode-details-bg.png"; sourceTree = SOURCE_ROOT; };
 		95C54C1614971C5D00111B96 /* episode-details-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "episode-details-bg@2x.png"; path = "SickBeard/Resources/Images/episode-details-bg@2x.png"; sourceTree = SOURCE_ROOT; };
+		95C54CDA1497CDDC00111B96 /* SBEpisodeDetailsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBEpisodeDetailsHeaderView.h; path = Classes/SBEpisodeDetailsHeaderView.h; sourceTree = "<group>"; };
+		95C54CDB1497CDDD00111B96 /* SBEpisodeDetailsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBEpisodeDetailsHeaderView.m; path = Classes/SBEpisodeDetailsHeaderView.m; sourceTree = "<group>"; };
 		95C76CDF148E8433008EDF7A /* SBBaseShowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBaseShowCell.h; path = Classes/SBBaseShowCell.h; sourceTree = "<group>"; };
 		95C76CE0148E8433008EDF7A /* SBBaseShowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBaseShowCell.m; path = Classes/SBBaseShowCell.m; sourceTree = "<group>"; };
 		95C76DE3148E90B9008EDF7A /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
@@ -463,6 +475,12 @@
 				95C54BC614969E3B00111B96 /* SBShowDetailsHeaderView.h */,
 				95C54BC714969E3B00111B96 /* SBShowDetailsHeaderView.m */,
 				95C54BC914969E9F00111B96 /* SBShowDetailsHeaderView.xib */,
+				95C54CDA1497CDDC00111B96 /* SBEpisodeDetailsHeaderView.h */,
+				95C54CDB1497CDDD00111B96 /* SBEpisodeDetailsHeaderView.m */,
+				9529C8F614980DC4007614A5 /* SBSeasonHeaderView.h */,
+				9529C8F714980DC4007614A5 /* SBSeasonHeaderView.m */,
+				9529C8FD1498131C007614A5 /* SBCellBackground.h */,
+				9529C8FE1498131C007614A5 /* SBCellBackground.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -771,6 +789,8 @@
 				95C76CE0148E8433008EDF7A /* SBBaseShowCell.m */,
 				95C76DEC148E92EC008EDF7A /* SBGradientView.h */,
 				95C76DED148E92EC008EDF7A /* SBGradientView.m */,
+				9529C8FA14981253007614A5 /* SBDrawingHelpers.h */,
+				9529C8FB14981253007614A5 /* SBDrawingHelpers.m */,
 			);
 			name = Global;
 			sourceTree = "<group>";
@@ -1272,6 +1292,10 @@
 				95C54B1E1494217600111B96 /* LKBadgeView.m in Sources */,
 				95C54BC2149696E300111B96 /* TDHUDProgressBar.m in Sources */,
 				95C54BC814969E3C00111B96 /* SBShowDetailsHeaderView.m in Sources */,
+				95C54CDC1497CDDF00111B96 /* SBEpisodeDetailsHeaderView.m in Sources */,
+				9529C8F814980DC4007614A5 /* SBSeasonHeaderView.m in Sources */,
+				9529C8FC14981253007614A5 /* SBDrawingHelpers.m in Sources */,
+				9529C8FF1498131C007614A5 /* SBCellBackground.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

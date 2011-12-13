@@ -178,7 +178,15 @@
 		case SickBeardCommandShowUpdate:
 			commandString = @"show.update";
 			break;
-			
+
+		case SickBeardCommandShowGetPoster:
+			commandString = @"show.getposter";
+			break;
+		
+		case SickBeardCommandShowGetBanner:
+			commandString = @"show.getbanner";
+			break;
+
 		case SickBeardCommandShows:
 			commandString = @"shows";
 			break;

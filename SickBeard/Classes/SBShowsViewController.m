@@ -59,6 +59,12 @@
 	}
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+	[super viewDidDisappear:animated];
+	
+	self.editing = NO;
+}
+
 - (void)viewDidUnload {
     [self setTableView:nil];
     [super viewDidUnload];

@@ -7,6 +7,7 @@
 //
 
 #import "EpisodeCell.h"
+#import "SBCellBackground.h"
 
 @implementation EpisodeCell
 
@@ -20,11 +21,16 @@
 	self.badgeView.horizontalAlignment = LKBadgeViewHorizontalAlignmentRight;
 }
 
+- (void)commonInit {
+	self.backgroundView = [[SBCellBackground alloc] init];
+	self.selectedBackgroundView = [[SBCellBackground alloc] init];
+}
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-       
+		[self commonInit];
     }
     return self;
 }
@@ -33,6 +39,7 @@
 	self = [super initWithCoder:aDecoder];
 	
 	if (self) {
+		[self commonInit];
 	}
 	
 	return self;

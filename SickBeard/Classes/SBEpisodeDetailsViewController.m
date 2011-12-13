@@ -6,21 +6,33 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "SBEpisodeDetailsViewController.h"
 #import "SBEpisode.h"
 #import "SBShow.h"
 #import "SickbeardAPIClient.h"
 #import "PRPAlertView.h"
 #import "NSDate+Utilities.h"
+#import "SBEpisodeDetailsHeaderView.h"
+
+#define kDefaultDescriptionFontSize 13;
+#define kDefaultDescriptionFrame CGRectMake(20, 234, 280, 162)
+
+@interface SBEpisodeDetailsViewController ()
+- (void)updateHeaderView;
+@end
 
 @implementation SBEpisodeDetailsViewController
 
-@synthesize titleLabel;
-@synthesize airDateLabel;
-@synthesize seasonLabel;
+@synthesize currentHeaderView;
+@synthesize nextHeaderView;
+@synthesize headerContainerView;
+@synthesize episodeSummaryLabel;
 @synthesize descriptionLabel;
 @synthesize showPosterImageView;
+@synthesize spinner;
 @synthesize episode;
+@synthesize dataSource;
 
 #pragma mark - View lifecycle
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -28,7 +40,11 @@
 	[TestFlight passCheckpoint:@"Viewed episode details"];
 	
 	self.title = @"Details";
-	
+
+	[self.showPosterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:episode.show.tvdbID]
+							 placeholderImage:nil];
+
+	[self updateHeaderView];
 	[self loadData];
 	
     [super viewDidLoad];
@@ -37,13 +53,14 @@
 
 - (void)viewDidUnload
 {
-    [self setTitleLabel:nil];
-    [self setAirDateLabel:nil];
-    [self setSeasonLabel:nil];
+    [self setCurrentHeaderView:nil];
+    [self setNextHeaderView:nil];
     [self setDescriptionLabel:nil];
+	[self setSpinner:nil];
+	[self setShowPosterImageView:nil];
+	[self setEpisodeSummaryLabel:nil];
+	[self setHeaderContainerView:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -53,13 +70,39 @@
 }
 
 #pragma mark - Loading
+- (void)updateHeaderView {	
+	self.currentHeaderView.titleLabel.text = episode.name;
+	self.currentHeaderView.seasonLabel.text = [NSString stringWithFormat:@"Season %d, episode %d", episode.season, episode.number];
+		
+	if (episode.airDate) {
+		if ([episode.airDate isToday]) {
+			self.currentHeaderView.airDateLabel.text = @"Airing today";
+		}
+		else if ([episode.airDate isLaterThanDate:[NSDate date]]) {
+			self.currentHeaderView.airDateLabel.text = [NSString stringWithFormat:@"Airing on %@", [episode.airDate displayString]];
+		}
+		else {
+			self.currentHeaderView.airDateLabel.text = [NSString stringWithFormat:@"Aired on %@", [episode.airDate displayString]];
+		}												  
+	}
+	else {
+		self.currentHeaderView.airDateLabel.text = @"Unknown air date";
+	}
+}
+
 - (void)loadData {
+	[UIView animateWithDuration:0.3 
+					 animations:^{
+						 self.episodeSummaryLabel.alpha = 0;
+						 self.descriptionLabel.alpha = 0;
+					 }];
+	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
 							episode.show.tvdbID, @"tvdbid", 
 							[NSNumber numberWithInt:episode.season], @"season",
 							[NSNumber numberWithInt:episode.number], @"episode", nil];
-	
-	[SVProgressHUD showWithStatus:@"Loading episode info"];
+
+	[self.spinner startAnimating];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisode 
 									   parameters:params
@@ -73,43 +116,14 @@
 												  episode.episodeDescription = @"Unable to retrieve episode description";
 											  }
 											  
-											  self.titleLabel.text = episode.name;
-											  self.seasonLabel.text = [NSString stringWithFormat:@"Season %d, episode %d", episode.season, episode.number];
-											  
-											  [self.showPosterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:episode.show.tvdbID]
-																	   placeholderImage:nil];
-											  
-											  if (episode.airDate) {
-												  if ([episode.airDate isToday]) {
-													  self.airDateLabel.text = @"Airing today";
-												  }
-												  else if ([episode.airDate isLaterThanDate:[NSDate date]]) {
-													  self.airDateLabel.text = [NSString stringWithFormat:@"Airing on %@", [episode.airDate displayString]];
-												  }
-												  else {
-													  self.airDateLabel.text = [NSString stringWithFormat:@"Aired on %@", [episode.airDate displayString]];
-												  }												  
-											  }
-											  else {
-												  self.airDateLabel.text = @"Unknown air date";
-											  }
-											  
-											  // 162
-											  CGFloat currentFontSize = self.descriptionLabel.font.pointSize;
-											  /*
-											   while (titleSize.height > MAX_TITLE_SIZE.height) {
-											   currentFontSize--;
-											   titleSize = [_titleLabel.text sizeWithFont:[_titleLabel.font fontWithSize:currentFontSize]
-											   constrainedToSize:CGSizeMake(MAX_TITLE_SIZE.width, CGFLOAT_MAX)
-											   lineBreakMode:UILineBreakModeWordWrap];
-											   }
-											   */
-											  CGRect frame = self.descriptionLabel.frame;
+											  CGFloat currentFontSize = kDefaultDescriptionFontSize;
+											  CGRect frame = kDefaultDescriptionFrame;
 											  self.descriptionLabel.text = episode.episodeDescription;
-											  CGSize size = [episode.episodeDescription sizeWithFont:self.descriptionLabel.font 
+											  CGSize size = [episode.episodeDescription sizeWithFont:[self.descriptionLabel.font fontWithSize:currentFontSize] 
 																				   constrainedToSize:CGSizeMake(frame.size.width, CGFLOAT_MAX)
 																					   lineBreakMode:UILineBreakModeWordWrap];
-											  while (size.height > self.descriptionLabel.frame.size.height) {
+											  
+											  while (size.height > frame.size.height) {
 												  currentFontSize--;
 												  size = [episode.episodeDescription sizeWithFont:[self.descriptionLabel.font fontWithSize:currentFontSize] 
 																				constrainedToSize:CGSizeMake(frame.size.width, CGFLOAT_MAX)
@@ -120,14 +134,66 @@
 											  frame.size = size;
 											  self.descriptionLabel.frame = frame;
 											  
-											  [SVProgressHUD dismiss];
+											  [UIView animateWithDuration:0.3 
+															   animations:^{
+																   self.episodeSummaryLabel.alpha = 1;
+																   self.descriptionLabel.alpha = 1;
+															   }];
+											  
+											  [self.spinner stopAnimating];
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-											  [SVProgressHUD dismiss];
+											  [self.spinner stopAnimating];
 											  [PRPAlertView showWithTitle:@"Error retrieving episode" 
 																  message:[NSString stringWithFormat:@"Could not retreive episode details \n%@", error.localizedDescription] 
 															  buttonTitle:@"OK"];											  
 										  }];
+}
+
+#pragma mark - Gestures
+- (void)transitionToEpisodeFromDirection:(NSString*)direction {
+	_isTransitioning = YES;
+		
+	CATransition *transition = [CATransition animation];
+	transition.duration = 0.2;
+	transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+	transition.type = kCATransitionPush;
+	transition.subtype = direction;
+	transition.delegate = self;
+	
+	[self.headerContainerView.layer addAnimation:transition forKey:nil];
+	self.currentHeaderView.hidden = YES;
+	self.nextHeaderView.hidden = NO;
+	
+	id tmp = nextHeaderView;
+	self.nextHeaderView = self.currentHeaderView;
+	self.currentHeaderView = tmp;	
+}
+
+- (IBAction)swipeLeft:(id)sender {
+	SBEpisode *nextEpisode = [self.dataSource nextEpisode];
+	
+	if (!_isTransitioning && nextEpisode) {
+		self.episode = nextEpisode;
+		[self loadData];
+		[self transitionToEpisodeFromDirection:kCATransitionFromRight];
+		[self updateHeaderView];
+	}
+}
+
+- (IBAction)swipeRight:(id)sender {
+	SBEpisode *previousEpisode = [self.dataSource previousEpisode];
+
+	if (!_isTransitioning && previousEpisode) {
+		self.episode = previousEpisode;
+		[self loadData];
+		[self transitionToEpisodeFromDirection:kCATransitionFromLeft];
+		[self updateHeaderView];
+	}
+}
+
+- (void)animationDidStop:(CAAnimation*)theAnimation finished:(BOOL)flag {
+    _isTransitioning = NO;
 }
 
 #pragma mark - Actions

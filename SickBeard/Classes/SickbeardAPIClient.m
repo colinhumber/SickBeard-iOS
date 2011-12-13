@@ -46,11 +46,18 @@ static SickbeardAPIClient *sharedClient = nil;
 }
 
 - (NSURL*)posterURLForTVDBID:(NSString*)tvdbID {
-	return [self createUrlWithEndpoint:[NSString stringWithFormat:@"showPoster/?show=%@&which=poster", tvdbID]];
+	NSDictionary *parameters = [NSDictionary dictionaryWithObject:tvdbID forKey:@"tvdbid"];
+	NSString *url = [SBCommandBuilder URLForCommand:SickBeardCommandShowGetPoster server:self.currentServer params:parameters];
+	return [NSURL URLWithString:url];
+	//return [self createUrlWithEndpoint:[NSString stringWithFormat:@"showPoster/?show=%@&which=poster", tvdbID]];
 }
 
 - (NSURL*)bannerURLForTVDBID:(NSString*)tvdbID {
-	return [self createUrlWithEndpoint:[NSString stringWithFormat:@"showPoster/?show=%@&which=banner", tvdbID]];
+	NSDictionary *parameters = [NSDictionary dictionaryWithObject:tvdbID forKey:@"tvdbid"];
+	NSString *url = [SBCommandBuilder URLForCommand:SickBeardCommandShowGetBanner server:self.currentServer params:parameters];
+	return [NSURL URLWithString:url];
+
+	//	return [self createUrlWithEndpoint:[NSString stringWithFormat:@"showPoster/?show=%@&which=banner", tvdbID]];
 }
 
 - (id)init {
@@ -134,35 +141,35 @@ static SickbeardAPIClient *sharedClient = nil;
 }
 
 
-- (void)validateServerCredentials:(SBServer*)server success:(void (^)(id object))success failure:(void (^)(NSHTTPURLResponse *response, NSError *error))failure {
-	NSAssert(server != nil, @"Server cannot be nil");
-	
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:server.serviceEndpointPath]];
-	request.timeoutInterval = 5;
-
-	//if (server.username.length > 0 || server.password.length > 0) {
-		NSURLCredentialStorage *store = [NSURLCredentialStorage sharedCredentialStorage];
-		
-		NSURLCredential *credential = [NSURLCredential credentialWithUser:server.username password:server.password persistence:NSURLCredentialPersistenceForSession];
-		NSURLProtectionSpace *space = [[NSURLProtectionSpace alloc] initWithHost:server.host port:server.port protocol:NSURLProtectionSpaceHTTP realm:@"SickBeard" authenticationMethod:NSURLAuthenticationMethodDefault];
-		[store setDefaultCredential:credential forProtectionSpace:space];
-
-		//	[[NSURLCredentialStorage sharedCredentialStorage] setCredential:credential forProtectionSpace:space];
-		
-
-		// create a plaintext string in the format username:password
-		NSString *loginString = [NSString stringWithFormat:@"%@:%@", server.username, server.password];
-		
-		// create the contents of the header 
-		NSString *authHeader = [@"Basic " stringByAppendingFormat:@"%@", [loginString base64Encode]];
-		
-		// add the header to the request.  Here's the $$$!!!
-		[request addValue:authHeader forHTTPHeaderField:@"Authorization"];
-	//}
-	
-	AFHTTPRequestOperation *operation = [AFHTTPRequestOperation HTTPRequestOperationWithRequest:request success:success failure:failure];
-	[self.operationQueue addOperation:operation];
-}
+//- (void)validateServerCredentials:(SBServer*)server success:(void (^)(id object))success failure:(void (^)(NSHTTPURLResponse *response, NSError *error))failure {
+//	NSAssert(server != nil, @"Server cannot be nil");
+//	
+//	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:server.serviceEndpointPath]];
+//	request.timeoutInterval = 5;
+//
+//	//if (server.username.length > 0 || server.password.length > 0) {
+//		NSURLCredentialStorage *store = [NSURLCredentialStorage sharedCredentialStorage];
+//		
+//		NSURLCredential *credential = [NSURLCredential credentialWithUser:server.username password:server.password persistence:NSURLCredentialPersistenceForSession];
+//		NSURLProtectionSpace *space = [[NSURLProtectionSpace alloc] initWithHost:server.host port:server.port protocol:NSURLProtectionSpaceHTTP realm:@"SickBeard" authenticationMethod:NSURLAuthenticationMethodDefault];
+//		[store setDefaultCredential:credential forProtectionSpace:space];
+//
+//		//	[[NSURLCredentialStorage sharedCredentialStorage] setCredential:credential forProtectionSpace:space];
+//		
+//
+//		// create a plaintext string in the format username:password
+//		NSString *loginString = [NSString stringWithFormat:@"%@:%@", server.username, server.password];
+//		
+//		// create the contents of the header 
+//		NSString *authHeader = [@"Basic " stringByAppendingFormat:@"%@", [loginString base64Encode]];
+//		
+//		// add the header to the request.  Here's the $$$!!!
+//		[request addValue:authHeader forHTTPHeaderField:@"Authorization"];
+//	//}
+//	
+//	AFHTTPRequestOperation *operation = [AFHTTPRequestOperation HTTPRequestOperationWithRequest:request success:success failure:failure];
+//	[self.operationQueue addOperation:operation];
+//}
 
 
 - (void)runCommand:(SickBeardCommand)command parameters:(NSDictionary*)parameters success:(APISuccessBlock)success failure:(APIErrorBlock)failure {

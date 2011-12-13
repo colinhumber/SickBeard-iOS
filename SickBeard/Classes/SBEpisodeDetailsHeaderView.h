@@ -10,4 +10,8 @@
 
 @interface SBEpisodeDetailsHeaderView : UIView
 
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *airDateLabel;
+@property (strong, nonatomic) IBOutlet UILabel *seasonLabel;
+
 @end

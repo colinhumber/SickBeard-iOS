@@ -12,11 +12,11 @@
 #import "PRPAlertView.h"
 #import "SBEpisode.h"
 #import "OrderedDictionary.h"
-#import "SBEpisodeDetailsViewController.h"
 #import "NSDate+Utilities.h"
 #import "SVModalWebViewController.h"
 #import "EpisodeCell.h"
 #import "SBShowDetailsHeaderView.h"
+#import "SBSeasonHeaderView.h"
 
 @interface SBShowDetailsViewController ()
 - (void)changeEpisodeStatus:(EpisodeStatus)status;
@@ -26,6 +26,7 @@
 
 @synthesize show;
 @synthesize detailsHeaderView;
+@synthesize currentEpisodeIndexPath;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([segue.identifier isEqualToString:@"EpisodeDetailsSegue"]) {
@@ -33,10 +34,12 @@
 		
 		[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 		SBEpisodeDetailsViewController *vc = segue.destinationViewController;
-	
+		vc.dataSource = self;
+		
 		NSArray *seasonKeys = [seasons allKeys];
 		SBEpisode *episode = [[seasons objectForKey:[seasonKeys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
 		vc.episode = episode;
+		self.currentEpisodeIndexPath = indexPath;
 	}
 }
 
@@ -186,7 +189,7 @@
 												  if (totalEpisodes > 0) {
 													  progress = (float)totalDownloadedEpisodes/totalEpisodes;
 												  }
-												  self.detailsHeaderView.progressBar.progress = progress;
+												  [self.detailsHeaderView.progressBar setProgress:progress];
 
 												  [self finishDataLoad:nil];
 												  [self.tableView reloadData];
@@ -226,6 +229,71 @@
 	
 	[actionSheet showInView:self.view];
 }
+
+#pragma mark - SBEpisodeDetailsDataSource
+- (SBEpisode*)nextEpisode {
+	SBEpisode *episode = nil;
+
+	NSArray *seasonKeys = [seasons allKeys];
+
+	if (self.currentEpisodeIndexPath.section == seasonKeys.count) {
+		return nil;
+	}
+
+	NSArray *seasonEpisodes = [seasons objectForKey:[seasonKeys objectAtIndex:self.currentEpisodeIndexPath.section]];
+	
+	NSIndexPath *nextEpisodeIndexPath = [NSIndexPath indexPathForRow:self.currentEpisodeIndexPath.row - 1 inSection:self.currentEpisodeIndexPath.section];
+	
+	if (nextEpisodeIndexPath.row >= 0) {	// check if the next episode lies within the current season
+		episode = [seasonEpisodes objectAtIndex:nextEpisodeIndexPath.row];
+	}
+	else {	// move the previous season		
+		if (nextEpisodeIndexPath.section - 1 >= 0) {	// check if the next season lies within the bounds of the number of seasons
+			seasonEpisodes = [seasons objectForKey:[seasonKeys objectAtIndex:self.currentEpisodeIndexPath.section - 1]];
+			nextEpisodeIndexPath = [NSIndexPath indexPathForRow:seasonEpisodes.count - 1 inSection:self.currentEpisodeIndexPath.section - 1];
+			episode = [seasonEpisodes objectAtIndex:nextEpisodeIndexPath.row];
+		}
+	}
+	
+	if (episode) {
+		self.currentEpisodeIndexPath = nextEpisodeIndexPath;
+	}
+	
+	return episode;
+}
+
+- (SBEpisode*)previousEpisode {
+	SBEpisode *episode = nil;
+	
+	NSArray *seasonKeys = [seasons allKeys];
+	
+	if (self.currentEpisodeIndexPath.section == seasonKeys.count) {
+		return nil;
+	}
+	
+	NSArray *seasonEpisodes = [seasons objectForKey:[seasonKeys objectAtIndex:self.currentEpisodeIndexPath.section]];
+	
+	NSIndexPath *previousEpisodeIndexPath = [NSIndexPath indexPathForRow:self.currentEpisodeIndexPath.row + 1 inSection:self.currentEpisodeIndexPath.section];
+
+	if (previousEpisodeIndexPath.row < seasonEpisodes.count) {	// check if the previous episode lies within the current season
+		episode = [seasonEpisodes objectAtIndex:previousEpisodeIndexPath.row];
+	}
+	else {	// move the next season
+		previousEpisodeIndexPath = [NSIndexPath indexPathForRow:0 inSection:self.currentEpisodeIndexPath.section + 1];
+		
+		if (previousEpisodeIndexPath.section < seasonKeys.count) {	// check if the previous season lies within the bounds of the number of seasons
+			seasonEpisodes = [seasons objectForKey:[seasonKeys objectAtIndex:previousEpisodeIndexPath.section]];
+			episode = [seasonEpisodes objectAtIndex:previousEpisodeIndexPath.row];
+		}
+	}
+	
+	if (episode) {
+		self.currentEpisodeIndexPath = previousEpisodeIndexPath;
+	}
+	
+	return episode;
+}
+
 
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -268,23 +336,30 @@
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	NSString *title = [self tableView:tableView titleForHeaderInSection:section];
-	UIView *headerView = nil;
-	
-	if (title) {
-		headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 22)];
-		headerView.backgroundColor = [UIColor clearColor];
-		
-		UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 310, 22)];
-		titleLabel.backgroundColor = [UIColor clearColor];
-		titleLabel.text = title;
-		titleLabel.font = [UIFont boldSystemFontOfSize:17];
-		titleLabel.textColor = [UIColor whiteColor];
-		titleLabel.shadowColor = [UIColor blackColor];
-		titleLabel.shadowOffset = CGSizeMake(0, 1);
-		[headerView addSubview:titleLabel];
-	}
-	
-	return headerView;
+//	UIView *headerView = nil;
+//	
+//	if (title) {
+//		headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 22)];
+//		headerView.backgroundColor = [UIColor clearColor];
+//		
+//		UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 310, 22)];
+//		titleLabel.backgroundColor = [UIColor clearColor];
+//		titleLabel.text = title;
+//		titleLabel.font = [UIFont boldSystemFontOfSize:17];
+//		titleLabel.textColor = [UIColor whiteColor];
+//		titleLabel.shadowColor = [UIColor blackColor];
+//		titleLabel.shadowOffset = CGSizeMake(0, 1);
+//		[headerView addSubview:titleLabel];
+//	}
+//	
+//	return headerView;
+	SBSeasonHeaderView *header = [[SBSeasonHeaderView alloc] init];
+	header.seasonLabel.text = title;
+	return header;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	return 50;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

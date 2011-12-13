@@ -75,7 +75,7 @@
 
 
 - (NSString*)description {
-	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | number = %d>", [self class], self, name, number];
+	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | episode = S%dE%d>", [self class], self, name, season, number];
 }
 
 + (NSString*)episodeStatusAsString:(EpisodeStatus)status {

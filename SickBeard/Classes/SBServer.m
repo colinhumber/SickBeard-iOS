@@ -15,9 +15,7 @@
 @synthesize host;
 @synthesize port;
 @synthesize path;
-@synthesize username;
 @synthesize apiKey;
-@synthesize password;
 @synthesize isCurrent;
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
@@ -25,8 +23,6 @@
 	[encoder encodeObject:host forKey:@"host"];
 	[encoder encodeInt:port forKey:@"port"];
 	[encoder encodeObject:path forKey:@"path"];
-	[encoder encodeObject:username forKey:@"username"];
-	[encoder encodeObject:password forKey:@"password"];
 	[encoder encodeObject:apiKey forKey:@"apiKey"];
 }
 
@@ -38,8 +34,6 @@
 		self.host = [decoder decodeObjectForKey:@"host"];
 		self.port = [decoder decodeIntForKey:@"port"];
 		self.path = [decoder decodeObjectForKey:@"path"];
-		self.username = [decoder decodeObjectForKey:@"username"];
-		self.password = [decoder decodeObjectForKey:@"password"];
 		self.apiKey = [decoder decodeObjectForKey:@"apiKey"];
 	}
 	

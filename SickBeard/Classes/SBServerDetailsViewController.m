@@ -28,8 +28,6 @@
 @synthesize hostTextField;
 @synthesize portTextField;
 @synthesize pathTextField;
-@synthesize usernameTextField;
-@synthesize passwordTextField;
 @synthesize apiKeyTextField;
 @synthesize server;
 
@@ -39,19 +37,11 @@
 	if (self) {
 		_flags.didCancel = NO;
 		_flags.initialSetup = ![NSUserDefaults standardUserDefaults].serverHasBeenSetup;
-;
 	}
 	
 	return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
 
 #pragma mark - View lifecycle
 
@@ -83,8 +73,6 @@
 		hostTextField.text = @"colin.kicks-ass.net";
 		portTextField.text = @"8081";
 		apiKeyTextField.text = @"aefc639b299bbbe8ed0e526ef83d415c";
-		usernameTextField.text = @"colinhumber";
-		passwordTextField.text = @"Square99";
 #endif		
 	}
 	
@@ -96,8 +84,6 @@
     [self setHostTextField:nil];
     [self setPortTextField:nil];
 	[self setPathTextField:nil];
-    [self setUsernameTextField:nil];
-    [self setPasswordTextField:nil];
     [self setApiKeyTextField:nil];
     [super viewDidUnload];
 }
@@ -114,8 +100,6 @@
 	hostTextField.enabled = enabled;
 	portTextField.enabled = enabled;
 	pathTextField.enabled = enabled;
-	usernameTextField.enabled = enabled;
-	passwordTextField.enabled = enabled;
 	apiKeyTextField.enabled = enabled;
 }
 
@@ -124,8 +108,8 @@
 	hostTextField.text = server.host;
 	portTextField.text = [NSString stringWithFormat:@"%d", server.port];
 	pathTextField.text = server.path;
-	usernameTextField.text = server.username;
-	passwordTextField.text = server.password;
+//	usernameTextField.text = server.username;
+//	passwordTextField.text = server.password;
 	apiKeyTextField.text = server.apiKey;
 }
 
@@ -134,8 +118,6 @@
 	server.host = [hostTextField.text stringByReplacingOccurrencesOfString:@"http://" withString:@""];
 	server.port = [portTextField.text intValue];
 	server.path = [pathTextField.text stringByReplacingOccurrencesOfString:@"/" withString:@""];
-	server.username = usernameTextField.text;
-	server.password = passwordTextField.text;
 	server.apiKey = apiKeyTextField.text;
 }
 
@@ -181,62 +163,44 @@
 }
 
 - (void)_validateServer:(BOOL)saveOnSuccess {
-	[SVProgressHUD showWithStatus:@"Validating username and password" maskType:SVProgressHUDMaskTypeGradient];
-	
-	[NSUserDefaults standardUserDefaults].temporaryServer = server;
-	
-	[[SickbeardAPIClient sharedClient] validateServerCredentials:server 
-														 success:^(id object) {
-															 [NSUserDefaults standardUserDefaults].temporaryServer = nil;
-															 
-															 [SVProgressHUD showWithStatus:@"Validating API key" maskType:SVProgressHUDMaskTypeGradient];
-															 
-															 RunAfterDelay(0.5, ^{
-																 [[SickbeardAPIClient sharedClient] pingServer:server
-																									   success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-																										   NSString *result = [JSON objectForKey:@"result"];
-																										   
-																										   if ([result isEqualToString:RESULT_SUCCESS]) {
-																											   if (saveOnSuccess) {
-																												   [[SickbeardAPIClient sharedClient] loadDefaults:server];
-																												   
-																												   RunAfterDelay(2, ^{
-																													   [NSUserDefaults standardUserDefaults].serverHasBeenSetup = YES;
-																													   [NSUserDefaults standardUserDefaults].server = server;
-																													   [SickbeardAPIClient sharedClient].currentServer = server;
-																													   
-																													   [SVProgressHUD dismissWithSuccess:@"Server saved"];
-																													   
-																													   if (_flags.initialSetup) {
-																														   RunAfterDelay(1.5, ^{
-																															   [self close];
-																														   });
-																													   }
-																												   });
-																											   }
-																											   else {
-																												   [SVProgressHUD dismissWithSuccess:@"Server validated"];
-																											   }
-																										   }
-																										   else if ([result isEqualToString:RESULT_DENIED]) {
-																											   [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"]];
-																										   }
-																									   }
-																									   failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-																										   [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard (%@)", server.serviceEndpointPath] 
-																																afterDelay:1];
-																									   }];
-															 });
-														 }
-														 failure:^(NSHTTPURLResponse *response, NSError *error) {
-															 if ([response statusCode] == 401) {
-																 [SVProgressHUD dismissWithError:@"Username and password invalid" afterDelay:2];
-															 }
-															 else {
-																 [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard (%@)", server.serviceEndpointPath] 
-																					  afterDelay:2];
-															 }
-														 }];
+	 [SVProgressHUD showWithStatus:@"Validating API key" maskType:SVProgressHUDMaskTypeGradient];
+	 
+	 RunAfterDelay(0.5, ^{
+		 [[SickbeardAPIClient sharedClient] pingServer:server
+											   success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+												   NSString *result = [JSON objectForKey:@"result"];
+												   
+												   if ([result isEqualToString:RESULT_SUCCESS]) {
+													   if (saveOnSuccess) {
+														   [[SickbeardAPIClient sharedClient] loadDefaults:server];
+														   
+														   RunAfterDelay(2, ^{
+															   [NSUserDefaults standardUserDefaults].serverHasBeenSetup = YES;
+															   [NSUserDefaults standardUserDefaults].server = server;
+															   [SickbeardAPIClient sharedClient].currentServer = server;
+															   
+															   [SVProgressHUD dismissWithSuccess:@"Server saved"];
+															   
+															   if (_flags.initialSetup) {
+																   RunAfterDelay(1.5, ^{
+																	   [self close];
+																   });
+															   }
+														   });
+													   }
+													   else {
+														   [SVProgressHUD dismissWithSuccess:@"Server validated"];
+													   }
+												   }
+												   else if ([result isEqualToString:RESULT_DENIED]) {
+													   [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"]];
+												   }
+											   }
+											   failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+												   [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard (%@)", server.serviceEndpointPath] 
+																		afterDelay:1];
+											   }];
+	 });
 }
 
 - (void)saveServer {

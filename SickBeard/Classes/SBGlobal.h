@@ -57,6 +57,8 @@ typedef enum {
 	SickBeardCommandShowSetQuality,
 	SickBeardCommandShowStatus,
 	SickBeardCommandShowUpdate,
+	SickBeardCommandShowGetPoster,
+	SickBeardCommandShowGetBanner,
 	SickBeardCommandShows,
 	SickBeardCommandShowsStats,
 } SickBeardCommand;

@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "SBBaseTableViewController.h"
+#import "SBEpisodeDetailsViewController.h"
 
 @class SBShow;
 @class SBShowDetailsHeaderView;
 @class OrderedDictionary;
 
-@interface SBShowDetailsViewController : SBBaseTableViewController <UIActionSheetDelegate> {
+@interface SBShowDetailsViewController : SBBaseTableViewController <UIActionSheetDelegate, SBEpisodeDetailsDataSource> {
 	OrderedDictionary *seasons;
 	
 	struct {
@@ -29,3 +30,5 @@
 @property (nonatomic, strong) IBOutlet SBShowDetailsHeaderView *detailsHeaderView;
 
 @end
+
+

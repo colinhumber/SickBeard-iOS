@@ -10,13 +10,62 @@
 
 @implementation SBEpisodeDetailsHeaderView
 
-- (id)initWithFrame:(CGRect)frame
-{
+@synthesize titleLabel;
+@synthesize airDateLabel;
+@synthesize seasonLabel;
+
+- (void)commonInit {
+	self.backgroundColor = [UIColor clearColor];
+	self.opaque = NO;
+	
+	self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+	self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+	self.titleLabel.textColor = RGBCOLOR(107, 73, 20);
+	self.titleLabel.textAlignment = UITextAlignmentCenter;
+	self.titleLabel.backgroundColor = self.backgroundColor;
+	self.titleLabel.opaque = NO;
+	[self addSubview:self.titleLabel];
+	
+	self.airDateLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+	self.airDateLabel.font = [UIFont systemFontOfSize:13];
+	self.airDateLabel.textColor = [UIColor whiteColor];
+	self.airDateLabel.textAlignment = UITextAlignmentCenter;
+	self.airDateLabel.backgroundColor = self.backgroundColor;
+	self.airDateLabel.opaque = NO;
+	[self addSubview:self.airDateLabel];
+	
+	self.seasonLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+	self.seasonLabel.font = [UIFont systemFontOfSize:13];
+	self.seasonLabel.textColor = [UIColor whiteColor];
+	self.seasonLabel.textAlignment = UITextAlignmentCenter;
+	self.seasonLabel.backgroundColor = self.backgroundColor;
+	self.seasonLabel.opaque = NO;
+	[self addSubview:self.seasonLabel];
+}
+
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+	
+	if (self) {
+		[self commonInit];
+	}
+	
+	return self;
+}
+
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
-    }
+		[self commonInit];
+	}
     return self;
+}
+
+- (void)layoutSubviews {
+	self.titleLabel.frame = CGRectMake(10, 3, 300, 21);
+	self.airDateLabel.frame = CGRectMake(20, 23, 280, 21);
+	self.seasonLabel.frame = CGRectMake(20, 44, 280, 21);
 }
 
 /*

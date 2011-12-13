@@ -37,7 +37,7 @@ typedef void (^APIErrorBlock)(NSURLRequest *request, NSHTTPURLResponse *response
 
 // tests an undefined server to see if it is valid or not
 - (void)pingServer:(SBServer*)server success:(APISuccessBlock)success failure:(APIErrorBlock)failure;
-- (void)validateServerCredentials:(SBServer*)server success:(void (^)(id object))success failure:(void (^)(NSHTTPURLResponse *response, NSError *error))failure;
+//- (void)validateServerCredentials:(SBServer*)server success:(void (^)(id object))success failure:(void (^)(NSHTTPURLResponse *response, NSError *error))failure;
 
 // runs API commands against a pre-defined server
 - (void)runCommand:(SickBeardCommand)command parameters:(NSDictionary*)params success:(APISuccessBlock)success failure:(APIErrorBlock)failure;

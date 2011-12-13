@@ -521,48 +521,52 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="YwU-gv-BXU">
-                                <rect key="frame" x="10" y="63" width="300" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" red="0.41996433423913049" green="0.28807250598537709" blue="0.10352495136786359" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="VT9-SN-RUd">
-                                <rect key="frame" x="20" y="104" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="MF0-7k-Bnf">
-                                <rect key="frame" x="20" y="83" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="4dg-M5-Cs1">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Episode Summary" lineBreakMode="tailTruncation" minimumFontSize="10" id="M6F-d3-vXj">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" text="Episode Summary" lineBreakMode="tailTruncation" minimumFontSize="10" id="M6F-d3-vXj">
                                 <rect key="frame" x="90" y="205" width="140" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" id="oBD-Wg-kid">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" id="oBD-Wg-kid">
                                 <rect key="frame" x="20" y="234" width="280" height="162"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="white" id="Ija-Uo-irN">
+                                <rect key="frame" x="151" y="304" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                            <view contentMode="scaleToFill" id="f4x-Qe-Q8L" userLabel="Header Container View">
+                                <rect key="frame" x="0.0" y="59" width="320" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" id="nj4-E1-fY7" userLabel="Current Header View" customClass="SBEpisodeDetailsHeaderView">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="68"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view hidden="YES" contentMode="scaleToFill" id="0zs-9k-vWO" userLabel="Next Header View" customClass="SBEpisodeDetailsHeaderView">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="68"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="avm-9Q-30M" appends="YES" id="fje-91-klE"/>
+                            <outletCollection property="gestureRecognizers" destination="CMI-8U-yAR" appends="YES" id="TJv-z3-f0S"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Omj-GS-tmr">
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="C03-oM-lS2">
@@ -572,13 +576,25 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="airDateLabel" destination="VT9-SN-RUd" id="5vM-H2-9M3"/>
+                        <outlet property="currentHeaderView" destination="nj4-E1-fY7" id="goi-7E-HkT"/>
                         <outlet property="descriptionLabel" destination="oBD-Wg-kid" id="iRB-Tz-xAe"/>
-                        <outlet property="seasonLabel" destination="MF0-7k-Bnf" id="Gfc-ho-ScV"/>
+                        <outlet property="episodeSummaryLabel" destination="M6F-d3-vXj" id="kx6-dD-RAa"/>
+                        <outlet property="headerContainerView" destination="f4x-Qe-Q8L" id="AEu-HC-K0A"/>
+                        <outlet property="nextHeaderView" destination="0zs-9k-vWO" id="hAJ-ke-Vcv"/>
                         <outlet property="showPosterImageView" destination="4dg-M5-Cs1" id="jxk-R1-m5h"/>
-                        <outlet property="titleLabel" destination="YwU-gv-BXU" id="yoz-1p-iwr"/>
+                        <outlet property="spinner" destination="Ija-Uo-irN" id="Sjv-m6-bQC"/>
                     </connections>
                 </viewController>
+                <swipeGestureRecognizer direction="right" id="avm-9Q-30M">
+                    <connections>
+                        <action selector="swipeRight:" destination="gKl-mM-jBe" id="6lw-f4-4uP"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="CMI-8U-yAR">
+                    <connections>
+                        <action selector="swipeLeft:" destination="gKl-mM-jBe" id="ahF-Q1-9mY"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1401" y="-317"/>
         </scene>
@@ -1034,66 +1050,8 @@
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5rr-2C-Kzk">
-                                        <rect key="frame" x="0.0" y="187" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Username" lineBreakMode="tailTruncation" minimumFontSize="10" id="3js-tY-tpy">
-                                                    <rect key="frame" x="10" y="11" width="84" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="right" minimumFontSize="17" id="Qnd-aM-Akn">
-                                                    <rect key="frame" x="113" y="6" width="173" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="textColor" red="0.0" green="0.20850745130000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                                    <connections>
-                                                        <outlet property="delegate" destination="Me1-Xf-mxJ" id="Gve-nE-fvt"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="eDJ-GK-7RG">
-                                        <rect key="frame" x="0.0" y="231" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Password" lineBreakMode="tailTruncation" minimumFontSize="10" id="JI0-tR-bdg">
-                                                    <rect key="frame" x="10" y="11" width="81" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="right" minimumFontSize="17" id="nPp-rD-RpO">
-                                                    <rect key="frame" x="113" y="6" width="173" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="textColor" red="0.0" green="0.20850745130000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
-                                                    <connections>
-                                                        <outlet property="delegate" destination="Me1-Xf-mxJ" id="qZy-N7-V2x"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="grJ-a5-7TI">
-                                        <rect key="frame" x="0.0" y="275" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="187" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -1126,7 +1084,7 @@
                             <tableViewSection id="30m-OZ-atx">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="rCw-O8-EhU">
-                                        <rect key="frame" x="0.0" y="340" width="320" height="46"/>
+                                        <rect key="frame" x="0.0" y="252" width="320" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -1157,10 +1115,8 @@
                         <outlet property="apiKeyTextField" destination="YpL-QH-EMT" id="0Hu-CA-wdp"/>
                         <outlet property="hostTextField" destination="nSD-x0-wdd" id="yDt-su-RS5"/>
                         <outlet property="nameTextField" destination="7c0-gy-wme" id="iYD-UK-PdJ"/>
-                        <outlet property="passwordTextField" destination="nPp-rD-RpO" id="sVz-GN-OWH"/>
                         <outlet property="pathTextField" destination="5cG-r6-dp5" id="3Fc-JL-hYz"/>
                         <outlet property="portTextField" destination="Wbd-jZ-YuY" id="m4m-Tk-Nyz"/>
-                        <outlet property="usernameTextField" destination="Qnd-aM-Akn" id="ORw-j0-fve"/>
                     </connections>
                 </tableViewController>
             </objects>
@@ -1328,7 +1284,7 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="History" id="zDC-4n-yJh">
-                        <barButtonItem key="rightBarButtonItem" title="Done" style="plain" id="yuf-Kc-XiM">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="yuf-Kc-XiM">
                             <connections>
                                 <action selector="done:" destination="O0R-aC-zPf" id="yzj-a7-5ex"/>
                             </connections>
@@ -1389,154 +1345,6 @@
         <image name="gear.png" width="20" height="20"/>
         <image name="list-item-background.png" width="310" height="100"/>
     </resources>
-    <classes>
-        <class className="ComingEpisodeCell" superclassName="SBBaseShowCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ComingEpisodeCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="airDateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="episodeNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="showNameLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="EpisodeCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EpisodeCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="airdateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="badgeView" candidateClass="LKBadgeView"/>
-                <relationship kind="outlet" name="episodeNameLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="LKBadgeView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LKBadgeView.h"/>
-        </class>
-        <class className="SBAddShowViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBAddShowViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="languagePickerView" candidateClass="UIPickerView"/>
-                <relationship kind="outlet" name="showNameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="SBBaseShowCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBBaseShowCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="containerView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="showImageView" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="SBBaseTableViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBBaseTableViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="SBBaseViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBBaseViewController.h"/>
-        </class>
-        <class className="SBEpisodeDetailsViewController" superclassName="SBBaseViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBEpisodeDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="airDateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="seasonLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="showPosterImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SBEpisodesViewController" superclassName="SBBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBEpisodesViewController.h"/>
-        </class>
-        <class className="SBHistoryCell" superclassName="SBBaseShowCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBHistoryCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="createdDateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="qualityLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="seasonEpisodeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="showNameLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SBHistoryViewController" superclassName="SBBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBHistoryViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="action" name="showHistoryActions:"/>
-            </relationships>
-        </class>
-        <class className="SBMainViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBMainViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="refresh:"/>
-                <relationship kind="action" name="viewModeChanged:"/>
-            </relationships>
-        </class>
-        <class className="SBOptionsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBOptionsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="useSeasonFoldersChanged:"/>
-            </relationships>
-        </class>
-        <class className="SBQualityViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBQualityViewController.h"/>
-        </class>
-        <class className="SBServerDetailsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBServerDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="apiKeyTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="hostTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="nameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="pathTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="portTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="usernameTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="SBSettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBSettingsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="action" name="seasonFolderSwitched:"/>
-                <relationship kind="outlet" name="archiveQualityLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="initialQualityLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="seasonFolderSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SBShowDetailsHeaderView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBShowDetailsHeaderView.h"/>
-            <relationships>
-                <relationship kind="outlet" name="episodeCountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="networkLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="progressBar" candidateClass="TDHUDProgressBar"/>
-                <relationship kind="outlet" name="showImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="showNameLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SBShowDetailsViewController" superclassName="SBBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBShowDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="showActions"/>
-                <relationship kind="outlet" name="detailsHeaderView" candidateClass="SBShowDetailsHeaderView"/>
-            </relationships>
-        </class>
-        <class className="SBShowsViewController" superclassName="SBBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBShowsViewController.h"/>
-        </class>
-        <class className="SBStatusViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBStatusViewController.h"/>
-        </class>
-        <class className="ShowCell" superclassName="SBBaseShowCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShowCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="networkLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nextEpisodeAirdateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="showNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="TDHUDProgressBar" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TDHUDProgressBar.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
