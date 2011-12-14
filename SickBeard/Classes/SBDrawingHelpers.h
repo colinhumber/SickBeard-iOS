@@ -13,4 +13,10 @@
 @end
 
 
-void drawLinearGradient(CGContextRef ctx, CGRect rect, CGColorRef startColor, CGColorRef endColor);
+void drawLinearGradient(CGContextRef ctx, CGRect rect, UIColor *startColor, UIColor *endColor);
+
+CGRect rectForStroke(CGRect rect);
+
+void drawStroke(CGContextRef ctx, CGPoint startPoint, CGPoint endPoint, UIColor *color);
+
+void drawGlossAndGradient(CGContextRef ctx, CGRect rect, UIColor *startColor, UIColor *endColor);

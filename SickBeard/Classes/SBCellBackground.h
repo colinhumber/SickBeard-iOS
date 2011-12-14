@@ -10,4 +10,8 @@
 
 @interface SBCellBackground : UIView
 
+@property (nonatomic) BOOL grouped;
+@property (nonatomic) BOOL lastCell;
+@property (nonatomic) BOOL selected;
+
 @end

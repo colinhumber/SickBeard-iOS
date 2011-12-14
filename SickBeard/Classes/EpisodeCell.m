@@ -23,7 +23,10 @@
 
 - (void)commonInit {
 	self.backgroundView = [[SBCellBackground alloc] init];
-	self.selectedBackgroundView = [[SBCellBackground alloc] init];
+	
+	SBCellBackground *selectedCellBackground = [[SBCellBackground alloc] init];
+	selectedCellBackground.selected = YES;
+	self.selectedBackgroundView = selectedCellBackground;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -52,6 +55,13 @@
     // Configure the view for the selected state
 }
 
+- (void)setLastCell:(BOOL)last {
+	SBCellBackground *backgroundView = (SBCellBackground*)self.backgroundView;
+	SBCellBackground *selectedBackgroundView = (SBCellBackground*)self.selectedBackgroundView;
+	
+	backgroundView.lastCell = last;
+	selectedBackgroundView.lastCell = last;
+}
 
 - (BOOL)canBecomeFirstResponder {
 	return YES;

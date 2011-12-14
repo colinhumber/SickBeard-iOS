@@ -14,5 +14,6 @@
 @property (nonatomic, strong) IBOutlet LKBadgeView *badgeView;
 @property (nonatomic, strong) IBOutlet UILabel *episodeNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *airdateLabel;
+@property (nonatomic) BOOL lastCell;
 
 @end

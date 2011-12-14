@@ -34,6 +34,7 @@
 		9529C8F814980DC4007614A5 /* SBSeasonHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9529C8F714980DC4007614A5 /* SBSeasonHeaderView.m */; };
 		9529C8FC14981253007614A5 /* SBDrawingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9529C8FB14981253007614A5 /* SBDrawingHelpers.m */; };
 		9529C8FF1498131C007614A5 /* SBCellBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 9529C8FE1498131C007614A5 /* SBCellBackground.m */; };
+		9529C98C14991BE5007614A5 /* SBPlainCellBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 9529C98B14991BE4007614A5 /* SBPlainCellBackground.m */; };
 		952D1EAA1487FF02000ABD7C /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 952D1EA71487FF02000ABD7C /* SVProgressHUD.bundle */; };
 		952D1EAB1487FF02000ABD7C /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 952D1EA91487FF02000ABD7C /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		952D1EEE148940E2000ABD7C /* SVSegmentedControl.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 952D1EE9148940E2000ABD7C /* SVSegmentedControl.bundle */; };
@@ -209,6 +210,8 @@
 		9529C8FB14981253007614A5 /* SBDrawingHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDrawingHelpers.m; path = Classes/SBDrawingHelpers.m; sourceTree = "<group>"; };
 		9529C8FD1498131C007614A5 /* SBCellBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBCellBackground.h; path = Classes/SBCellBackground.h; sourceTree = "<group>"; };
 		9529C8FE1498131C007614A5 /* SBCellBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBCellBackground.m; path = Classes/SBCellBackground.m; sourceTree = "<group>"; };
+		9529C98A14991BE4007614A5 /* SBPlainCellBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBPlainCellBackground.h; path = Classes/SBPlainCellBackground.h; sourceTree = "<group>"; };
+		9529C98B14991BE4007614A5 /* SBPlainCellBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBPlainCellBackground.m; path = Classes/SBPlainCellBackground.m; sourceTree = "<group>"; };
 		952D1EA71487FF02000ABD7C /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		952D1EA81487FF02000ABD7C /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		952D1EA91487FF02000ABD7C /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
@@ -481,6 +484,8 @@
 				9529C8F714980DC4007614A5 /* SBSeasonHeaderView.m */,
 				9529C8FD1498131C007614A5 /* SBCellBackground.h */,
 				9529C8FE1498131C007614A5 /* SBCellBackground.m */,
+				9529C98A14991BE4007614A5 /* SBPlainCellBackground.h */,
+				9529C98B14991BE4007614A5 /* SBPlainCellBackground.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1296,6 +1301,7 @@
 				9529C8F814980DC4007614A5 /* SBSeasonHeaderView.m in Sources */,
 				9529C8FC14981253007614A5 /* SBDrawingHelpers.m in Sources */,
 				9529C8FF1498131C007614A5 /* SBCellBackground.m in Sources */,
+				9529C98C14991BE5007614A5 /* SBPlainCellBackground.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

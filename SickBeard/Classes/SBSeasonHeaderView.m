@@ -56,7 +56,7 @@
 	CGColorRef whiteColor = RGBCOLOR(255, 255, 255).CGColor;
 	CGColorRef shadowColor = RGBACOLOR(50, 50, 50, 0.5).CGColor;
 		
-    CGContextSetFillColorWithColor(ctx, whiteColor);
+    CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
     CGContextFillRect(ctx, _paperRect);
 	
 	CGContextSaveGState(ctx);
@@ -64,6 +64,13 @@
     CGContextSetFillColorWithColor(ctx, self.lightColor.CGColor);
     CGContextFillRect(ctx, _coloredBoxRect);
 	CGContextRestoreGState(ctx);
+	
+	drawGlossAndGradient(ctx, _coloredBoxRect, self.lightColor, self.darkColor);
+	
+	CGRect outlineRect = rectForStroke(_coloredBoxRect);
+	CGContextSetStrokeColorWithColor(ctx, self.darkColor.CGColor);
+	CGContextSetLineWidth(ctx, 1);
+	CGContextStrokeRect(ctx, outlineRect);	
 }
 
 

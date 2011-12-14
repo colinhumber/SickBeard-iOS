@@ -407,6 +407,10 @@
 	}
 	cell.badgeView.badgeColor = badgeColor;
 	
+	if (indexPath.row == episodes.count - 1) {
+		cell.lastCell = YES;
+	}
+	
 	UILongPressGestureRecognizer *gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showMenu:)];
 	[cell addGestureRecognizer:gesture];
 	

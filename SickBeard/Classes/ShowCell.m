@@ -7,6 +7,7 @@
 //
 
 #import "ShowCell.h"
+#import "SBPlainCellBackground.h"
 
 @implementation ShowCell
 
@@ -15,17 +16,31 @@
 @synthesize statusLabel;
 @synthesize nextEpisodeAirdateLabel;
 
-- (void)awakeFromNib {
-	self.showNameLabel.font = [UIFont fontWithName:@"FuturaStd-Bold" size:self.showNameLabel.font.pointSize];
+- (void)commonInit {
+	self.backgroundView = [[SBPlainCellBackground alloc] init];
+	
+	SBPlainCellBackground *selectedCellBackground = [[SBPlainCellBackground alloc] init];
+	selectedCellBackground.selected = YES;
+	self.selectedBackgroundView = selectedCellBackground;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+		[self commonInit];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+	
+	if (self) {
+		[self commonInit];
+	}
+	
+	return self;
 }
 
 
