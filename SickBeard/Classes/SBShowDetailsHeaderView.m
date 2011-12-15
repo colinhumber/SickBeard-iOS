@@ -7,21 +7,22 @@
 //
 
 #import "SBShowDetailsHeaderView.h"
+#import "SBCellBackground.h"
 
 @implementation SBShowDetailsHeaderView
 
+@synthesize backgroundView;
 @synthesize showImageView;
 @synthesize showNameLabel;
+@synthesize statusLabel;
 @synthesize networkLabel;
 @synthesize episodeCountLabel;
 @synthesize progressBar;
 
 - (void)awakeFromNib {
-	self.progressBar.borderColor = [UIColor whiteColor];
-	self.progressBar.barColor = [UIColor whiteColor];
-	self.progressBar.backgroundColor = [UIColor clearColor];
-	
-	self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture"]];
+	self.progressBar.borderColor = RGBCOLOR(72, 34, 13);
+	self.progressBar.barColor = RGBCOLOR(72, 34, 13);
+	self.progressBar.backgroundColor = [UIColor clearColor];	
 }
 
 - (id)initWithFrame:(CGRect)frame

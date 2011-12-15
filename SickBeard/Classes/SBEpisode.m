@@ -66,7 +66,7 @@
 
 - (void)setEpisodeDescription:(NSString *)ed {
 	if (episodeDescription.length == 0) {
-		episodeDescription = @"No episode description";
+		episodeDescription = NSLocalizedString(@"No episode description", @"No episode description");
 	}
 	else {
 		episodeDescription = ed;
@@ -81,28 +81,28 @@
 + (NSString*)episodeStatusAsString:(EpisodeStatus)status {
 	switch (status) {
 		case EpisodeStatusArchived:
-			return @"Archived";
+			return NSLocalizedString(@"Archived", @"Archived");
 			
 		case EpisodeStatusDownloaded:
-			return @"Downloaded";
+			return NSLocalizedString(@"Downloaded", @"Downloaded");
 			
 		case EpisodeStatusIgnored:
-			return @"Ignored";
+			return NSLocalizedString(@"Ignored", @"Ignored");
 			
 		case EpisodeStatusSkipped:
-			return @"Skipped";
+			return NSLocalizedString(@"Skipped", @"Skipped");
 			
 		case EpisodeStatusSnatched:
-			return @"Snatched";
+			return NSLocalizedString(@"Snatched", @"Snatched");
 			
 		case EpisodeStatusUnaired:
-			return @"Unaired";
+			return NSLocalizedString(@"Unaired", @"Unaired");
 			
 		case EpisodeStatusWanted:
-			return @"Wanted";
+			return NSLocalizedString(@"Wanted", @"Wanted");
 			
 		default:
-			return @"Unknown";
+			return NSLocalizedString(@"Unknown", @"Unknown");
 	}
 }
 

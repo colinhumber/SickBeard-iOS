@@ -10,4 +10,6 @@
 
 @interface SBStaticTableViewCell : UITableViewCell
 
+@property (nonatomic) BOOL lastCell;
+
 @end

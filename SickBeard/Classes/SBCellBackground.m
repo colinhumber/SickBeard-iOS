@@ -16,17 +16,32 @@
 @synthesize selected;
 @synthesize applyShadow;
 
+- (void)commonInit {
+	self.grouped = NO;
+	self.lastCell = NO;
+	self.selected = NO;
+	self.applyShadow = YES;
+	self.backgroundColor = [UIColor clearColor];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+	
+	if (self) {
+		[self commonInit];
+	}
+	
+	return self;
+}
+
 - (id)init {
     self = [super init];
     if (self) {
-		self.grouped = NO;
-		self.lastCell = NO;
-		self.selected = NO;
-		self.applyShadow = YES;
-		self.backgroundColor = [UIColor clearColor];
+		[self commonInit];        
     }
     return self;
 }
+
 
 - (void)drawRect:(CGRect)rect {
 	if (self.applyShadow) {

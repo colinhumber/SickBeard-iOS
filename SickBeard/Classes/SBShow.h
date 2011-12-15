@@ -15,6 +15,12 @@ typedef enum {
 	ShowQualitySD
 } ShowQuality;
 
+typedef enum {
+	ShowStatusUnknown = -1,
+	ShowStatusContinuing = 0,
+	ShowStatusEnded = 2
+} ShowStatus;
+
 @interface SBShow : NSObject <DictionaryCreation>
 
 @property (nonatomic, strong) NSString *tvdbID;
@@ -27,8 +33,10 @@ typedef enum {
 @property (nonatomic) ShowQuality quality;
 @property (nonatomic, strong) NSString *showName;
 @property (nonatomic, strong) NSString *network;
-@property (nonatomic, strong) NSString *status;
+@property (nonatomic) ShowStatus status;
 @property (nonatomic, strong) NSDate *nextEpisodeDate;
 @property (readonly, strong) NSString *sanitizedShowName;
+
++ (NSString*)showStatusAsString:(ShowStatus)status;
 
 @end

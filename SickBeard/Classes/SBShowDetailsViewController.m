@@ -60,6 +60,18 @@
 	self.detailsHeaderView.showNameLabel.text = show.showName;
 	[self.detailsHeaderView.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID]];
 	self.detailsHeaderView.networkLabel.text = show.network;
+	
+	self.detailsHeaderView.statusLabel.text = [SBShow showStatusAsString:show.status];
+	if (show.status == ShowStatusContinuing) {
+		self.detailsHeaderView.statusLabel.textColor = RGBCOLOR(50, 151, 56);
+	}
+	else if (show.status == ShowStatusEnded) {
+		self.detailsHeaderView.statusLabel.textColor = RGBCOLOR(202, 50, 56);
+	}
+	else {
+		self.detailsHeaderView.statusLabel.textColor = [UIColor grayColor];
+	}
+	
 	self.tableView.tableHeaderView = self.detailsHeaderView;
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self 
@@ -197,7 +209,7 @@
 											  }
 											  else {
 												  [self finishDataLoad:nil];
-												  [PRPAlertView showWithTitle:@"Error retrieving shows" 
+												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
 																	  message:[JSON objectForKey:@"message"] 
 																  buttonTitle:@"OK"];
 												  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
@@ -205,7 +217,7 @@
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [self finishDataLoad:error];
-											  [PRPAlertView showWithTitle:@"Error retrieving show information" 
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving show information", @"Error retrieving show information") 
 																  message:error.localizedDescription 
 															  buttonTitle:@"OK"];		
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
@@ -218,17 +230,44 @@
 															 delegate:self 
 													cancelButtonTitle:nil 
 											   destructiveButtonTitle:nil 
-													otherButtonTitles:@"View on TheTVDB", nil];
+													otherButtonTitles:NSLocalizedString(@"Search iTunes", @"Search iTunes"), NSLocalizedString(@"View on TheTVDB", @"View on TheTVDB"), nil];
 	
 	if (show.tvRageID.length > 0) {
-		[actionSheet addButtonWithTitle:@"View on TVRage"];
+		[actionSheet addButtonWithTitle:NSLocalizedString(@"View on TVRage", @"View on TVRage")];
 	}
 	
-	[actionSheet addButtonWithTitle:@"Cancel"];
+	[actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", @"Cancel")];
 	actionSheet.cancelButtonIndex = actionSheet.numberOfButtons - 1;
 	
 	[actionSheet showInView:self.view];
 }
+
+#pragma mark - UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+	if (buttonIndex != actionSheet.cancelButtonIndex) {
+		NSString *urlPath = @"";
+		
+		if (buttonIndex == 0) {
+			urlPath = [SBGlobal itunesLinkForShow:show.showName];
+		}
+		else if (buttonIndex == 1) {
+			urlPath = [NSString stringWithFormat:kTVDBLinkFormat, show.tvdbID];
+		}
+		else if (buttonIndex == 2) {
+			urlPath = [NSString stringWithFormat:kTVRageLinkFormat, show.tvRageID];		
+		}
+		
+		if ([urlPath rangeOfString:@"itms://"].location == NSNotFound) {
+			SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:urlPath];
+			webViewController.availableActions = SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink | SVWebViewControllerAvailableActionsOpenInSafari;
+			[self presentViewController:webViewController animated:YES completion:nil];
+		}
+		else {
+			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlPath]];
+		}
+	}
+}
+
 
 #pragma mark - SBEpisodeDetailsDataSource
 - (SBEpisode*)nextEpisode {
@@ -294,25 +333,6 @@
 	return episode;
 }
 
-
-#pragma mark - UIActionSheetDelegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-	if (buttonIndex != actionSheet.cancelButtonIndex) {
-		NSString *urlPath = @"";
-		
-		if (buttonIndex == 0) {
-			urlPath = [NSString stringWithFormat:kTVDBLinkFormat, show.tvdbID];
-		}
-		else if (buttonIndex == 1) {
-			urlPath = [NSString stringWithFormat:kTVRageLinkFormat, show.tvRageID];		
-		}
-	
-		SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:urlPath];
-		webViewController.availableActions = SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink | SVWebViewControllerAvailableActionsOpenInSafari;
-		[self presentViewController:webViewController animated:YES completion:nil];
-	}
-}
-
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView {
 	return [[seasons allKeys] count];
@@ -325,10 +345,10 @@
 	NSString *sectionKey = [keys objectAtIndex:section];
 	
 	if ([sectionKey isEqualToString:@"0"]) {
-		title = @"Specials";
+		title = NSLocalizedString(@"Specials", @"Specials");
 	}
 	else {
-		title = [NSString stringWithFormat:@"Season %@", sectionKey];
+		title = [NSString stringWithFormat:NSLocalizedString(@"Season %@", @"Season %@"), sectionKey];
 	}
 	
 	return title;
@@ -366,7 +386,7 @@
 	SBEpisode *episode = [episodes objectAtIndex:indexPath.row];
 	
 	cell.episodeNameLabel.text = episode.name;
-	cell.airdateLabel.text = episode.airDate ? [episode.airDate displayString] : @"Unknown Air Date";
+	cell.airdateLabel.text = episode.airDate ? [episode.airDate displayString] : NSLocalizedString(@"Unknown Air Date", @"Unknown Air Date");
 	cell.badgeView.text = [SBEpisode episodeStatusAsString:episode.status];
 	
 	UIColor *badgeColor = nil;
@@ -428,8 +448,8 @@
 		
 		menuIndexPath = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
 		
-		UIMenuItem *item1 = [[UIMenuItem alloc] initWithTitle:@"Search" action:@selector(searchForEpisode)];
-		UIMenuItem *item2 = [[UIMenuItem alloc] initWithTitle:@"Set Status" action:@selector(setEpisodeStatus)];
+		UIMenuItem *item1 = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Search", @"Search") action:@selector(searchForEpisode)];
+		UIMenuItem *item2 = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Set Status", @"Set Status") action:@selector(setEpisodeStatus)];
 		
 		UIMenuController *menu = [UIMenuController sharedMenuController];
 		menu.menuItems = [NSArray arrayWithObjects:item1, item2, nil];
@@ -451,7 +471,7 @@
 							[NSNumber numberWithInt:episode.season], @"season",
 							[NSNumber numberWithInt:episode.number], @"episode", nil];
 	
-	[SVProgressHUD showWithStatus:@"Searching for episode"];
+	[SVProgressHUD showWithStatus:NSLocalizedString(@"Searching for episode", @"Searching for episode")];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
 									   parameters:params 
@@ -459,7 +479,8 @@
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [SVProgressHUD dismissWithSuccess:@"Episode found and is downloading" afterDelay:2];
+												  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading") 
+																		 afterDelay:2];
 												  [self loadData];
 											  }
 											  else {
@@ -467,19 +488,20 @@
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
-																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
-															  buttonTitle:@"OK"];	
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
+																  message:[NSString stringWithFormat:NSLocalizedString(@"Could not retreive shows \n%@",@"Could not retreive shows \n%@" ), 
+																		   error.localizedDescription] 
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
 											  [SVProgressHUD dismiss];
 										  }];
 }
 
 - (void)setEpisodeStatus {
 	UIMenuController *menu = [UIMenuController sharedMenuController];
-	UIMenuItem *item1 = [[UIMenuItem alloc] initWithTitle:@"Wanted" action:@selector(setEpisodeStatusToWanted)];
-	UIMenuItem *item2 = [[UIMenuItem alloc] initWithTitle:@"Skipped" action:@selector(setEpisodeStatusToSkipped)];
-	UIMenuItem *item3 = [[UIMenuItem alloc] initWithTitle:@"Archived" action:@selector(setEpisodeStatusToArchived)];
-	UIMenuItem *item4 = [[UIMenuItem alloc] initWithTitle:@"Ignored" action:@selector(setEpisodeStatusToIgnored)];
+	UIMenuItem *item1 = [[UIMenuItem alloc] initWithTitle:[SBEpisode episodeStatusAsString:EpisodeStatusWanted] action:@selector(setEpisodeStatusToWanted)];
+	UIMenuItem *item2 = [[UIMenuItem alloc] initWithTitle:[SBEpisode episodeStatusAsString:EpisodeStatusSkipped] action:@selector(setEpisodeStatusToSkipped)];
+	UIMenuItem *item3 = [[UIMenuItem alloc] initWithTitle:[SBEpisode episodeStatusAsString:EpisodeStatusArchived] action:@selector(setEpisodeStatusToArchived)];
+	UIMenuItem *item4 = [[UIMenuItem alloc] initWithTitle:[SBEpisode episodeStatusAsString:EpisodeStatusIgnored] action:@selector(setEpisodeStatusToIgnored)];
 	
 	menu.menuItems = [NSArray arrayWithObjects:item1, item2, item3, item4, nil];
 
@@ -518,7 +540,7 @@
 							[NSNumber numberWithInt:episode.number], @"episode",
 							statusString, @"status", nil];
 	
-	[SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Setting episode status to %@", statusString]];
+	[SVProgressHUD showWithStatus:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
 									   parameters:params 
@@ -526,7 +548,8 @@
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [SVProgressHUD dismissWithSuccess:@"Status successfully set!" afterDelay:2];
+												  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Status successfully set!", @"Status successfully set!") 
+																		 afterDelay:2];
 												  [self loadData];
 											  }
 											  else {
@@ -534,9 +557,9 @@
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
 																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
-															  buttonTitle:@"OK"];	
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
 											  [SVProgressHUD dismiss];
 										  }];
 }

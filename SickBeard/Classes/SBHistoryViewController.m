@@ -208,7 +208,7 @@
 	cell.createdDateLabel.text = [entry.createdDate displayDateTimeString];
 	cell.seasonEpisodeLabel.text = [NSString stringWithFormat:@"Season %d, Episode %d", entry.season, entry.episode];
 	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:entry.tvdbID] 
-					   placeholderImage:nil];
+					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
 	
 	return cell;
 }

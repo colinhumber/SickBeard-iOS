@@ -516,44 +516,56 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="4dg-M5-Cs1">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                            <view contentMode="scaleToFill" id="f4x-Qe-Q8L" userLabel="Header Container View" customClass="SBCellBackground">
+                                <rect key="frame" x="0.0" y="5" width="320" height="142"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" text="Episode Summary" lineBreakMode="tailTruncation" minimumFontSize="10" id="M6F-d3-vXj">
-                                <rect key="frame" x="90" y="205" width="140" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" id="oBD-Wg-kid">
-                                <rect key="frame" x="20" y="234" width="280" height="162"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="4dg-M5-Cs1">
+                                        <rect key="frame" x="10" y="10" width="300" height="55"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" id="tj2-BQ-9PY">
+                                        <rect key="frame" x="0.0" y="64" width="320" height="68"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" id="nj4-E1-fY7" userLabel="Current Header View" customClass="SBEpisodeDetailsHeaderView">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="68"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <view hidden="YES" contentMode="scaleToFill" id="0zs-9k-vWO" userLabel="Next Header View" customClass="SBEpisodeDetailsHeaderView">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="68"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="white" id="Ija-Uo-irN">
                                 <rect key="frame" x="151" y="304" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
-                            <view contentMode="scaleToFill" id="f4x-Qe-Q8L" userLabel="Header Container View">
-                                <rect key="frame" x="0.0" y="59" width="320" height="68"/>
+                            <view contentMode="scaleToFill" id="Cyp-4T-Vy5" userLabel="Background" customClass="SBCellBackground">
+                                <rect key="frame" x="4" y="214" width="312" height="188"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" id="nj4-E1-fY7" userLabel="Current Header View" customClass="SBEpisodeDetailsHeaderView">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="68"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" id="oBD-Wg-kid" userLabel="Episode Description">
+                                        <rect key="frame" x="20" y="9" width="280" height="168"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <view hidden="YES" contentMode="scaleToFill" id="0zs-9k-vWO" userLabel="Next Header View" customClass="SBEpisodeDetailsHeaderView">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="68"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </view>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="0yD-Yw-0cr" customClass="SBSectionHeaderView">
+                                <rect key="frame" x="0.0" y="170" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -571,10 +583,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="containerView" destination="tj2-BQ-9PY" id="oJ2-jp-5w3"/>
                         <outlet property="currentHeaderView" destination="nj4-E1-fY7" id="goi-7E-HkT"/>
                         <outlet property="descriptionLabel" destination="oBD-Wg-kid" id="iRB-Tz-xAe"/>
-                        <outlet property="episodeSummaryLabel" destination="M6F-d3-vXj" id="kx6-dD-RAa"/>
                         <outlet property="headerContainerView" destination="f4x-Qe-Q8L" id="AEu-HC-K0A"/>
+                        <outlet property="headerView" destination="0yD-Yw-0cr" id="uan-gC-mUJ"/>
                         <outlet property="nextHeaderView" destination="0zs-9k-vWO" id="hAJ-ke-Vcv"/>
                         <outlet property="showPosterImageView" destination="4dg-M5-Cs1" id="jxk-R1-m5h"/>
                         <outlet property="spinner" destination="Ija-Uo-irN" id="Sjv-m6-bQC"/>
@@ -1070,7 +1083,7 @@
                             </tableViewSection>
                             <tableViewSection id="30m-OZ-atx">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="rCw-O8-EhU">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="rCw-O8-EhU" customClass="SBStaticTableViewCell">
                                         <rect key="frame" x="0.0" y="252" width="320" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -1370,6 +1383,9 @@
         <class className="SBBaseViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBBaseViewController.h"/>
         </class>
+        <class className="SBCellBackground" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBCellBackground.h"/>
+        </class>
         <class className="SBEpisodeDetailsHeaderView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBEpisodeDetailsHeaderView.h"/>
             <relationships>
@@ -1383,10 +1399,12 @@
             <relationships>
                 <relationship kind="action" name="swipeLeft:"/>
                 <relationship kind="action" name="swipeRight:"/>
+                <relationship kind="outlet" name="containerView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="currentHeaderView" candidateClass="SBEpisodeDetailsHeaderView"/>
                 <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="episodeSummaryLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="headerContainerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="episodeDescriptionBackground" candidateClass="SBCellBackground"/>
+                <relationship kind="outlet" name="headerContainerView" candidateClass="SBCellBackground"/>
+                <relationship kind="outlet" name="headerView" candidateClass="SBSectionHeaderView"/>
                 <relationship kind="outlet" name="nextHeaderView" candidateClass="SBEpisodeDetailsHeaderView"/>
                 <relationship kind="outlet" name="showPosterImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="spinner" candidateClass="UIActivityIndicatorView"/>
@@ -1426,6 +1444,9 @@
         </class>
         <class className="SBQualityViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBQualityViewController.h"/>
+        </class>
+        <class className="SBSectionHeaderView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBSectionHeaderView.h"/>
         </class>
         <class className="SBServerDetailsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBServerDetailsViewController.h"/>
@@ -1493,7 +1514,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="f0c-09-hnO"/>
-        <segue reference="7BU-Bx-eWw"/>
+        <segue reference="WEB-uB-B40"/>
+        <segue reference="uye-n8-luE"/>
     </inferredMetricsTieBreakers>
 </document>

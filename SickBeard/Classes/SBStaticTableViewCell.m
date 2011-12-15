@@ -11,6 +11,8 @@
 
 @implementation SBStaticTableViewCell
 
+@synthesize lastCell;
+
 - (void)commonInit {
 	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
 	backgroundView.grouped = YES;
@@ -49,6 +51,22 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setLastCell:(BOOL)last {
+	lastCell = last;
+	
+	SBCellBackground *backgroundView = (SBCellBackground*)self.backgroundView;
+	SBCellBackground *selectedBackgroundView = (SBCellBackground*)self.selectedBackgroundView;
+	
+	backgroundView.lastCell = last;
+	selectedBackgroundView.lastCell = last;
+	
+	backgroundView.applyShadow = last;
+	selectedBackgroundView.applyShadow = last;
+	
+	[backgroundView setNeedsDisplay];
+	[selectedBackgroundView setNeedsDisplay];
 }
 
 @end

@@ -14,9 +14,11 @@
 #import "PRPAlertView.h"
 #import "NSDate+Utilities.h"
 #import "SBEpisodeDetailsHeaderView.h"
+#import "SBSectionHeaderView.h"
+#import "SBCellBackground.h"
 
 #define kDefaultDescriptionFontSize 13;
-#define kDefaultDescriptionFrame CGRectMake(20, 234, 280, 162)
+#define kDefaultDescriptionFrame CGRectMake(20, 9, 280, 162)
 
 @interface SBEpisodeDetailsViewController ()
 - (void)updateHeaderView;
@@ -27,12 +29,14 @@
 @synthesize currentHeaderView;
 @synthesize nextHeaderView;
 @synthesize headerContainerView;
-@synthesize episodeSummaryLabel;
+@synthesize containerView;
 @synthesize descriptionLabel;
 @synthesize showPosterImageView;
 @synthesize spinner;
 @synthesize episode;
 @synthesize dataSource;
+@synthesize headerView;
+@synthesize episodeDescriptionBackground;
 
 #pragma mark - View lifecycle
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -44,6 +48,9 @@
 	[self.showPosterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:episode.show.tvdbID]
 							 placeholderImage:nil];
 
+	self.headerView.sectionLabel.text = @"Episode Summary";
+	self.episodeDescriptionBackground.grouped = YES;
+	
 	[self updateHeaderView];
 	[self loadData];
 	
@@ -51,15 +58,16 @@
 }
 
 
-- (void)viewDidUnload
-{
-    [self setCurrentHeaderView:nil];
-    [self setNextHeaderView:nil];
-    [self setDescriptionLabel:nil];
-	[self setSpinner:nil];
-	[self setShowPosterImageView:nil];
-	[self setEpisodeSummaryLabel:nil];
-	[self setHeaderContainerView:nil];
+- (void)viewDidUnload {
+	self.containerView = nil;
+	self.currentHeaderView = nil;
+	self.nextHeaderView = nil;
+	self.descriptionLabel = nil;
+	self.spinner = nil;
+	self.showPosterImageView = nil;
+	self.headerContainerView = nil;
+	self.episodeDescriptionBackground = nil;
+	self.headerView = nil;
     [super viewDidUnload];
 }
 
@@ -93,7 +101,6 @@
 - (void)loadData {
 	[UIView animateWithDuration:0.3 
 					 animations:^{
-						 self.episodeSummaryLabel.alpha = 0;
 						 self.descriptionLabel.alpha = 0;
 					 }];
 	
@@ -136,7 +143,6 @@
 											  
 											  [UIView animateWithDuration:0.3 
 															   animations:^{
-																   self.episodeSummaryLabel.alpha = 1;
 																   self.descriptionLabel.alpha = 1;
 															   }];
 											  
@@ -161,7 +167,7 @@
 	transition.subtype = direction;
 	transition.delegate = self;
 	
-	[self.headerContainerView.layer addAnimation:transition forKey:nil];
+	[self.containerView.layer addAnimation:transition forKey:nil];
 	self.currentHeaderView.hidden = YES;
 	self.nextHeaderView.hidden = NO;
 	

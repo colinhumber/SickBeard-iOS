@@ -46,11 +46,22 @@
 			self.quality = ShowQualityUnknown;
 		}
 		
+		NSString *stat = [[dict objectForKey:@"status"] lowercaseString];
+		
+		if ([stat isEqualToString:@"continuing"]) {
+			self.status = ShowStatusContinuing;
+		}
+		else if ([stat isEqualToString:@"ended"]) {
+			self.status = ShowStatusEnded;
+		}
+		else {
+			self.status = ShowStatusUnknown;
+		}
+		
 		self.tvdbID = [NSString stringWithFormat:@"%@", [dict objectForKey:@"tvdbid"]];
 		self.tvRageID = [NSString stringWithFormat:@"%@", [dict objectForKey:@"tvrage_id"]];
 		self.showName = [dict objectForKey:@"tvrage_name"];
 		self.network = [dict objectForKey:@"network"];
-		self.status = [dict objectForKey:@"status"];
 		self.nextEpisodeDate = [NSDate dateWithString:[dict objectForKey:@"next_ep_airdate"]];
 	}
 	
@@ -62,7 +73,7 @@
 }
 
 - (NSString*)description {
-	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | network = %@ | status = %@>", [self class], self, showName, network, status];
+	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | network = %@ | status = %d>", [self class], self, showName, network, status];
 }
 
 - (NSString*)sanitizedShowName {
@@ -84,6 +95,19 @@
 	}
 
 	return self.showName;
+}
+
++ (NSString*)showStatusAsString:(ShowStatus)status {
+	switch (status) {
+		case ShowStatusContinuing:
+			return NSLocalizedString(@"Continuing", @"Continuing");
+			
+		case ShowStatusEnded:
+			return NSLocalizedString(@"Ended", @"Ended");
+			
+		default:
+			return NSLocalizedString(@"Unknown", @"Unknown");
+	}
 }
 
 

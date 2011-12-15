@@ -14,23 +14,37 @@
 @synthesize lightColor;
 @synthesize darkColor;
 
+- (void)commonInit {
+	self.backgroundColor = [UIColor clearColor];
+	self.opaque = NO;
+	self.sectionLabel = [[UILabel alloc] init];
+	sectionLabel.textAlignment = UITextAlignmentCenter;
+	sectionLabel.opaque = NO;
+	sectionLabel.backgroundColor = [UIColor clearColor];
+	sectionLabel.font = [UIFont boldSystemFontOfSize:20.0];
+	sectionLabel.textColor = [UIColor whiteColor];
+	sectionLabel.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+	sectionLabel.shadowOffset = CGSizeMake(0, -1);
+	[self addSubview:sectionLabel];
+	
+	self.lightColor = RGBCOLOR(189, 121, 86);
+	self.darkColor = RGBCOLOR(71, 36, 12);
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+	
+	if (self) {
+		[self commonInit];
+	}
+	
+	return self;
+}
+
 - (id)init {
     self = [super init];
     if (self) {
-		self.backgroundColor = [UIColor clearColor];
-        self.opaque = NO;
-        self.sectionLabel = [[UILabel alloc] init];
-        sectionLabel.textAlignment = UITextAlignmentCenter;
-        sectionLabel.opaque = NO;
-        sectionLabel.backgroundColor = [UIColor clearColor];
-        sectionLabel.font = [UIFont boldSystemFontOfSize:20.0];
-        sectionLabel.textColor = [UIColor whiteColor];
-        sectionLabel.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-        sectionLabel.shadowOffset = CGSizeMake(0, -1);
-        [self addSubview:sectionLabel];
-		
-        self.lightColor = RGBCOLOR(189, 121, 86);
-        self.darkColor = RGBCOLOR(71, 36, 12);        
+		[self commonInit];        
     }
     return self;
 }

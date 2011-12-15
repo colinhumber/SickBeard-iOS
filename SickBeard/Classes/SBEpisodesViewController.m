@@ -188,12 +188,12 @@
 	NSString *sectionKey = [keys objectAtIndex:indexPath.section];
 	SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:indexPath.row];
 
-	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:episode.tvdbID] 
-					   placeholderImage:nil];
 	cell.showNameLabel.text = episode.showName;
 	cell.episodeNameLabel.text = episode.name;
 	cell.airDateLabel.text = [NSString stringWithFormat:@"%@ on %@ (%@)", [episode.airDate displayString], episode.network, episode.quality];
-	
+	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:episode.tvdbID] 
+					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
+
 	if (indexPath.row == [self tableView:tv numberOfRowsInSection:indexPath.section] - 1) {
 		cell.lastCell = YES;
 	}
@@ -203,19 +203,5 @@
 	
 	return cell;
 }
-
-
-//#pragma mark - UITableViewDelegate
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//	if ([indexPath compare:self.selectedIndexPath] == NSOrderedSame) {
-//		self.selectedIndexPath = nil;
-//	}
-//	else {
-//		self.selectedIndexPath = indexPath;
-//	}
-//	
-//	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] 
-//						  withRowAnimation:UITableViewRowAnimationAutomatic];
-//}
 
 @end

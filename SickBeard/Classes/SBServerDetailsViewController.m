@@ -12,7 +12,7 @@
 #import "SBServer+SickBeardAdditions.h"
 #import "PRPAlertView.h"
 #import "NSUserDefaults+SickBeard.h"
-#import "SBCellBackground.h"
+#import "SBStaticTableViewCell.h"
 
 @interface SBServerDetailsViewController()
 - (void)updateServerValues;
@@ -77,6 +77,13 @@
 #endif		
 	}
 	
+	for (int section = 0; section < [self numberOfSectionsInTableView:self.tableView]; section++) {
+		int numberOfRows = [self tableView:self.tableView numberOfRowsInSection:section];
+		
+		NSIndexPath *indexPath = [NSIndexPath indexPathForRow:numberOfRows - 1 inSection:section];
+		SBStaticTableViewCell *cell = (SBStaticTableViewCell*)[self tableView:self.tableView cellForRowAtIndexPath:indexPath];
+		cell.lastCell = YES;
+	}
 }
 
 - (void)viewDidUnload
@@ -109,8 +116,6 @@
 	hostTextField.text = server.host;
 	portTextField.text = [NSString stringWithFormat:@"%d", server.port];
 	pathTextField.text = server.path;
-//	usernameTextField.text = server.username;
-//	passwordTextField.text = server.password;
 	apiKeyTextField.text = server.apiKey;
 }
 

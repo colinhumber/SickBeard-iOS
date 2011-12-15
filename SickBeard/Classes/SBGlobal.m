@@ -135,5 +135,10 @@
 	return string;
 }
 
++ (NSString*)itunesLinkForShow:(NSString*)showName {		
+//	return [NSString stringWithFormat:@"itms://phobos.apple.com/WebObjects/MZSearch.woa/wa/search?siteID=2822298&partnerId=&term=%@", [showName gtm_stringByEscapingForURLArgument]];
+	return [NSString stringWithFormat:@"itms://phobos.apple.com/WebObjects/MZSearch.woa/wa/search?term=%@", [showName gtm_stringByEscapingForURLArgument]];
+}
+
 
 @end

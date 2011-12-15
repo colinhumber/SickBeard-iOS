@@ -169,11 +169,11 @@
 	SBShow *show = [shows objectAtIndex:indexPath.row];
 	cell.showNameLabel.text = show.showName;	
 	cell.networkLabel.text = show.network;
-	cell.statusLabel.text = show.status;
-	cell.nextEpisodeAirdateLabel.text = show.nextEpisodeDate != nil ? [show.nextEpisodeDate displayString] : @"No airdate found";
+	cell.statusLabel.text = [SBShow showStatusAsString:show.status];
+	cell.nextEpisodeAirdateLabel.text = show.nextEpisodeDate != nil ? [show.nextEpisodeDate displayString] : NSLocalizedString(@"No airdate found", @"No airdate found");
 
 	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID] 
-					   placeholderImage:nil];
+					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
 	
 	return cell;
 }
@@ -197,7 +197,7 @@
 																			withRowAnimation:UITableViewRowAnimationAutomatic];
 												  }
 												  else {
-													  [PRPAlertView showWithTitle:@"Could not delete show" 
+													  [PRPAlertView showWithTitle:NSLocalizedString(@"Could not delete show", @"Could not delete show") 
 																		  message:[JSON objectForKey:@"message"] 
 																	  buttonTitle:@"Okay"];
 												  }				

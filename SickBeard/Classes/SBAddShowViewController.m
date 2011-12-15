@@ -55,6 +55,10 @@
 							  animated:NO];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	[SVProgressHUD dismiss];
+}
 
 - (void)viewDidUnload
 {
@@ -90,6 +94,13 @@
 }
 
 - (IBAction)performSearch:(id)sender {
+	if (showNameTextField.text.length == 0) {
+		[PRPAlertView showWithTitle:@"Missing information" 
+							message:@"Please enter a show to search" 
+						buttonTitle:@"OK"];
+		return;
+	}
+	
 	[SVProgressHUD showWithStatus:@"Searching TVDB"];
 	
 	if ([showNameTextField isFirstResponder]) {

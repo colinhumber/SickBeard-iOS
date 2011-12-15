@@ -10,6 +10,7 @@
 #import "PRPAlertView.h"
 #import "SVModalWebViewController.h"
 #import "SBSectionHeaderView.h"
+#import "SBStaticTableViewCell.h"
 
 @implementation SBSettingsViewController
 
@@ -67,18 +68,23 @@
 	self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", defaults.archiveQualities.count];
 	self.statusLabel.text = defaults.status;
 	self.seasonFolderSwitch.on = defaults.useSeasonFolders;
+	
+	for (int section = 0; section < [self numberOfSectionsInTableView:self.tableView]; section++) {
+		int numberOfRows = [self tableView:self.tableView numberOfRowsInSection:section];
+		
+		NSIndexPath *indexPath = [NSIndexPath indexPathForRow:numberOfRows - 1 inSection:section];
+		SBStaticTableViewCell *cell = (SBStaticTableViewCell*)[self tableView:self.tableView cellForRowAtIndexPath:indexPath];
+		cell.lastCell = YES;
+	}
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
 	self.initialQualityLabel = nil;
 	self.archiveQualityLabel = nil;
 	self.statusLabel = nil;
 	self.seasonFolderSwitch = nil;
 	
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated

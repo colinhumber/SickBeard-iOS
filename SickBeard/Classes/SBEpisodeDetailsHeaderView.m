@@ -23,12 +23,14 @@
 	self.titleLabel.textColor = RGBCOLOR(107, 73, 20);
 	self.titleLabel.textAlignment = UITextAlignmentCenter;
 	self.titleLabel.backgroundColor = self.backgroundColor;
+	self.titleLabel.shadowColor = RGBACOLOR(255, 255, 255, 0.5);
+	self.titleLabel.shadowOffset = CGSizeMake(0, -1);
 	self.titleLabel.opaque = NO;
 	[self addSubview:self.titleLabel];
 	
 	self.airDateLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	self.airDateLabel.font = [UIFont systemFontOfSize:13];
-	self.airDateLabel.textColor = [UIColor whiteColor];
+	self.airDateLabel.textColor = [UIColor blackColor];
 	self.airDateLabel.textAlignment = UITextAlignmentCenter;
 	self.airDateLabel.backgroundColor = self.backgroundColor;
 	self.airDateLabel.opaque = NO;
@@ -36,7 +38,7 @@
 	
 	self.seasonLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	self.seasonLabel.font = [UIFont systemFontOfSize:13];
-	self.seasonLabel.textColor = [UIColor whiteColor];
+	self.seasonLabel.textColor = [UIColor blackColor];
 	self.seasonLabel.textAlignment = UITextAlignmentCenter;
 	self.seasonLabel.backgroundColor = self.backgroundColor;
 	self.seasonLabel.opaque = NO;

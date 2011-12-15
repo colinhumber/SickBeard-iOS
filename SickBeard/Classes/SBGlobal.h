@@ -75,4 +75,6 @@ typedef enum {
 
 + (NSString*)feedbackBody;
 
++ (NSString*)itunesLinkForShow:(NSString*)showName;
+
 @end
