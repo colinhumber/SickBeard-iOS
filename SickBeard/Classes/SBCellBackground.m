@@ -14,20 +14,57 @@
 @synthesize grouped;
 @synthesize lastCell;
 @synthesize selected;
+@synthesize applyShadow;
 
 - (id)init {
     self = [super init];
     if (self) {
+		self.grouped = NO;
+		self.lastCell = NO;
+		self.selected = NO;
+		self.applyShadow = YES;
 		self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
 
 - (void)drawRect:(CGRect)rect {
+	if (self.applyShadow) {
+		self.layer.shadowColor = [UIColor blackColor].CGColor;
+		self.layer.shadowOpacity = 0.7f;
+		self.layer.shadowOffset = CGSizeMake(0, 10.0f);
+		self.layer.shadowRadius = 5.0f;
+		self.layer.masksToBounds = NO;
+		
+		CGSize size = self.bounds.size;
+		CGFloat curlFactor = 15.0f;
+		CGFloat shadowDepth = 3.0f;
+		UIBezierPath *path = [UIBezierPath bezierPath];
+		[path moveToPoint:CGPointMake(0.0f, 0.0f)];
+		[path addLineToPoint:CGPointMake(size.width, 0.0f)];
+		[path addLineToPoint:CGPointMake(size.width, size.height + shadowDepth)];
+		[path addCurveToPoint:CGPointMake(0.0f, size.height + shadowDepth)
+				controlPoint1:CGPointMake(size.width - curlFactor, size.height + shadowDepth - curlFactor)
+				controlPoint2:CGPointMake(curlFactor, size.height + shadowDepth - curlFactor)];
+		self.layer.shadowPath = path.CGPath;
+	}
+	else {
+		self.layer.shadowColor = nil;
+		self.layer.shadowOpacity = 0;
+		self.layer.shadowOffset = CGSizeMake(0, 0);
+		self.layer.shadowRadius = 0;
+		self.layer.masksToBounds = NO;
+		self.layer.shadowPath = nil;
+	}
+	
     CGContextRef ctx = UIGraphicsGetCurrentContext();
 
-	// gradient BG
 	CGRect paperRect = self.bounds;
+	
+	// gradient BG
+	if (!grouped) {
+		paperRect = CGRectInset(self.bounds, 5, 5);
+	}
 	
 	UIColor *lightGrayColor = RGBCOLOR(230, 230, 230);
 	UIColor *whiteColor = RGBCOLOR(255, 255, 255);

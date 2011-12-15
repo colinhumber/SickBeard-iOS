@@ -13,5 +13,6 @@
 @property (nonatomic) BOOL grouped;
 @property (nonatomic) BOOL lastCell;
 @property (nonatomic) BOOL selected;
+@property (nonatomic) BOOL applyShadow;
 
 @end

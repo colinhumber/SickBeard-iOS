@@ -7,7 +7,7 @@
 //
 
 #import "SBStatusViewController.h"
-
+#import "SBCellBackground.h"
 
 @implementation SBStatusViewController
 
@@ -95,6 +95,24 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StatusCell"];
     
+	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
+	backgroundView.grouped = YES;
+	backgroundView.applyShadow = NO;
+	
+	SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
+	selectedBackgroundView.grouped = YES;
+	selectedBackgroundView.applyShadow = NO;
+	selectedBackgroundView.selected = YES;
+	
+	if (indexPath.row == [self tableView:tableView numberOfRowsInSection:indexPath.section] - 1) {
+		backgroundView.lastCell = YES;
+		backgroundView.applyShadow = YES;
+		selectedBackgroundView.lastCell = YES;
+		selectedBackgroundView.applyShadow = YES;
+	}
+	
+	cell.backgroundView = backgroundView;
+	cell.selectedBackgroundView = selectedBackgroundView;
 	NSString *status = [[[SBGlobal statuses] allKeys] objectAtIndex:indexPath.row];
 	
 	cell.textLabel.text = status;

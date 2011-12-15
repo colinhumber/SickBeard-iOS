@@ -14,6 +14,7 @@
 #import "PRPAlertView.h"
 #import "NSDate+Utilities.h"
 #import "ComingEpisodeCell.h"
+#import "SBSectionHeaderView.h"
 
 @interface SBEpisodesViewController ()
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
@@ -85,9 +86,6 @@
 	[super loadData];
 	
 	[SVProgressHUD showWithStatus:@"Loading upcoming episodes"];
-//	[self.hud setActivity:YES];
-//	[self.hud setCaption:@"Loading upcoming episodes..."];
-//	[self.hud show];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandComingEpisodes 
 									   parameters:nil 
@@ -165,23 +163,14 @@
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	NSString *title = [self tableView:tableView titleForHeaderInSection:section];
-	UIView *headerView = nil;
 	
-	if (title) {
-		headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 22)];
-		headerView.backgroundColor = [UIColor clearColor];
-		
-		UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 310, 22)];
-		titleLabel.backgroundColor = [UIColor clearColor];
-		titleLabel.text = title;
-		titleLabel.font = [UIFont boldSystemFontOfSize:17];
-		titleLabel.textColor = [UIColor whiteColor];
-		titleLabel.shadowColor = [UIColor blackColor];
-		titleLabel.shadowOffset = CGSizeMake(0, 1);
-		[headerView addSubview:titleLabel];
-	}
-	
-	return headerView;
+	SBSectionHeaderView *header = [[SBSectionHeaderView alloc] init];
+	header.sectionLabel.text = title;
+	return header;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	return 50;
 }
 	
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -205,21 +194,28 @@
 	cell.episodeNameLabel.text = episode.name;
 	cell.airDateLabel.text = [NSString stringWithFormat:@"%@ on %@ (%@)", [episode.airDate displayString], episode.network, episode.quality];
 	
+	if (indexPath.row == [self tableView:tv numberOfRowsInSection:indexPath.section] - 1) {
+		cell.lastCell = YES;
+	}
+	else {
+		cell.lastCell = NO;
+	}
+	
 	return cell;
 }
 
 
-#pragma mark - UITableViewDelegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if ([indexPath compare:self.selectedIndexPath] == NSOrderedSame) {
-		self.selectedIndexPath = nil;
-	}
-	else {
-		self.selectedIndexPath = indexPath;
-	}
-	
-	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] 
-						  withRowAnimation:UITableViewRowAnimationAutomatic];
-}
+//#pragma mark - UITableViewDelegate
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//	if ([indexPath compare:self.selectedIndexPath] == NSOrderedSame) {
+//		self.selectedIndexPath = nil;
+//	}
+//	else {
+//		self.selectedIndexPath = indexPath;
+//	}
+//	
+//	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] 
+//						  withRowAnimation:UITableViewRowAnimationAutomatic];
+//}
 
 @end

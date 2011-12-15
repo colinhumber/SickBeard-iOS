@@ -14,5 +14,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *showNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *episodeNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *airDateLabel;
+@property (nonatomic) BOOL lastCell;
 
 @end

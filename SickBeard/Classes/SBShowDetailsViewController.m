@@ -16,7 +16,7 @@
 #import "SVModalWebViewController.h"
 #import "EpisodeCell.h"
 #import "SBShowDetailsHeaderView.h"
-#import "SBSeasonHeaderView.h"
+#import "SBSectionHeaderView.h"
 
 @interface SBShowDetailsViewController ()
 - (void)changeEpisodeStatus:(EpisodeStatus)status;
@@ -336,25 +336,9 @@
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	NSString *title = [self tableView:tableView titleForHeaderInSection:section];
-//	UIView *headerView = nil;
-//	
-//	if (title) {
-//		headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 22)];
-//		headerView.backgroundColor = [UIColor clearColor];
-//		
-//		UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 310, 22)];
-//		titleLabel.backgroundColor = [UIColor clearColor];
-//		titleLabel.text = title;
-//		titleLabel.font = [UIFont boldSystemFontOfSize:17];
-//		titleLabel.textColor = [UIColor whiteColor];
-//		titleLabel.shadowColor = [UIColor blackColor];
-//		titleLabel.shadowOffset = CGSizeMake(0, 1);
-//		[headerView addSubview:titleLabel];
-//	}
-//	
-//	return headerView;
-	SBSeasonHeaderView *header = [[SBSeasonHeaderView alloc] init];
-	header.seasonLabel.text = title;
+
+	SBSectionHeaderView *header = [[SBSectionHeaderView alloc] init];
+	header.sectionLabel.text = title;
 	return header;
 }
 
@@ -410,7 +394,9 @@
 	if (indexPath.row == episodes.count - 1) {
 		cell.lastCell = YES;
 	}
-	
+	else {
+		cell.lastCell = NO;
+	}	
 	UILongPressGestureRecognizer *gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showMenu:)];
 	[cell addGestureRecognizer:gesture];
 	

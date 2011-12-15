@@ -9,6 +9,7 @@
 #import "SBSettingsViewController.h"
 #import "PRPAlertView.h"
 #import "SVModalWebViewController.h"
+#import "SBSectionHeaderView.h"
 
 @implementation SBSettingsViewController
 
@@ -132,6 +133,29 @@
 		[NSUserDefaults standardUserDefaults].archiveQualities = qualities;
 		self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", qualities.count];
 	}
+}
+
+#pragma mark - UITableViewDelegate
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	NSString *title = [self tableView:tableView titleForHeaderInSection:section];
+	
+	if (!title || title.length == 0) {
+		return nil;
+	}
+	
+	SBSectionHeaderView *header = [[SBSectionHeaderView alloc] init];
+	header.sectionLabel.text = title;
+	return header;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	NSString *title = [self tableView:tableView titleForHeaderInSection:section];
+	
+	if (!title || title.length == 0) {
+		return 0;
+	}
+	
+	return 50;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

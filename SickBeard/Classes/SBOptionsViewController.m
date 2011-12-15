@@ -11,6 +11,8 @@
 #import "SBRootDirectory.h"
 #import "SickbeardAPIClient.h"
 #import "PRPAlertView.h"
+#import "SBCellBackground.h"
+#import "SBSectionHeaderView.h"
 
 #define kInitialQualityIndex 0
 #define kArchiveQualityIndex 1
@@ -275,6 +277,22 @@
 	return title;
 }
 
+- (UIView*)tableView:(UITableView *)tv viewForHeaderInSection:(NSInteger)section {
+	NSString *title = [self tableView:tv titleForHeaderInSection:section];
+	
+	if (!title) {
+		return nil;
+	}
+	
+	SBSectionHeaderView *header = [[SBSectionHeaderView alloc] init];
+	header.sectionLabel.text = title;
+	return header;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	return 50;
+}
+
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = nil;
 	
@@ -325,6 +343,25 @@
 	else {
 		cell = [tableView dequeueReusableCellWithIdentifier:@"SaveDefaultsCell"];
 	}
+	
+	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
+	backgroundView.grouped = YES;
+	backgroundView.applyShadow = NO;
+	
+	SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
+	selectedBackgroundView.grouped = YES;
+	selectedBackgroundView.applyShadow = NO;
+	selectedBackgroundView.selected = YES;
+	
+	if (indexPath.row == [self tableView:tableView numberOfRowsInSection:indexPath.section] - 1) {
+		backgroundView.lastCell = YES;
+		backgroundView.applyShadow = YES;
+		selectedBackgroundView.lastCell = YES;
+		selectedBackgroundView.applyShadow = YES;
+	}
+	
+	cell.backgroundView = backgroundView;
+	cell.selectedBackgroundView = selectedBackgroundView;
 	
 	return cell;
 }

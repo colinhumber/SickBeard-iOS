@@ -12,7 +12,8 @@
 #import "UIImageView+AFNetworking.h"
 #import "SBShow.h"
 #import "SBOptionsViewController.h"
-
+#import "SBCellBackground.h"
+#import "SBSectionHeaderView.h"
 
 @implementation SBAddShowViewController
 
@@ -157,6 +158,19 @@
 	}
 }
 
+- (UIView*)tableView:(UITableView *)tv viewForHeaderInSection:(NSInteger)section {
+	NSString *title = [self tableView:tv titleForHeaderInSection:section];
+	
+	SBSectionHeaderView *header = [[SBSectionHeaderView alloc] init];
+	header.sectionLabel.text = title;
+	return header;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	return 50;
+}
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	if (section == 0) {
 		return 2;
@@ -177,7 +191,6 @@
 	if (indexPath.section == 0) {
 		if (indexPath.row == 0) {
 			cell = [tv dequeueReusableCellWithIdentifier:@"ShowNameCell"];
-//			cell.textLabel.text = @"Show Name";
 			self.showNameTextField = (UITextField*)[cell viewWithTag:900];
 			
 			if (!isSearching) {
@@ -187,7 +200,6 @@
 		}
 		else {
 			cell = [tv dequeueReusableCellWithIdentifier:@"LanguageCell"];
-//			cell.textLabel.text = @"Language";
 			cell.detailTextLabel.text = currentLanguage;
 		}
 	}
@@ -219,13 +231,30 @@
 		}
 	}
 	
+	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
+	backgroundView.grouped = YES;
+	backgroundView.applyShadow = NO;
+	
+	SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
+	selectedBackgroundView.grouped = YES;
+	selectedBackgroundView.applyShadow = NO;
+	selectedBackgroundView.selected = YES;
+	
+	if (indexPath.row == [self tableView:tableView numberOfRowsInSection:indexPath.section] - 1) {
+		backgroundView.lastCell = YES;
+		backgroundView.applyShadow = YES;
+		selectedBackgroundView.lastCell = YES;
+		selectedBackgroundView.applyShadow = YES;
+	}
+	
+	cell.backgroundView = backgroundView;
+	cell.selectedBackgroundView = selectedBackgroundView;
+	
 	return cell;
 }
 
 #pragma mark - UITableViewDelegate
-- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	[tv deselectRowAtIndexPath:indexPath animated:YES];
-	
+- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath {	
 	if (indexPath.section == 0 && indexPath.row == 1) {
 		[self showPicker];
 	}
@@ -234,6 +263,8 @@
 			[self performSegueWithIdentifier:@"AddNewShowSegue" sender:nil];
 		}
 	}
+	
+	[tv deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - UIPickerViewDataSource

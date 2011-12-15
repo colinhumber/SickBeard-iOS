@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B5D5B2A1499277E00B77613 /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B261499277E00B77613 /* SVModalWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3B5D5B2B1499277E00B77613 /* SVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3B5D5B271499277E00B77613 /* SVWebViewController.bundle */; };
+		3B5D5B2C1499277E00B77613 /* SVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B291499277E00B77613 /* SVWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3B5D5B421499278800B77613 /* TDHUDProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B351499278800B77613 /* TDHUDProgressBar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3B5D5B8B1499492D00B77613 /* SBStaticTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B8A1499492C00B77613 /* SBStaticTableViewCell.m */; };
+		3BCA9A6A149954CB000E0290 /* SBSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCA9A69149954CB000E0290 /* SBSectionHeaderView.m */; };
 		7ECA24EAC72A5D2539779137 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B01D6AEDD900882ACFF64 /* libsqlite3.0.dylib */; };
 		870443F41EA367FFD855F402 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B1405EBBB093810F5A8D2F5 /* CFNetwork.framework */; };
 		8C0C4F0DE18FD69306EF9C4E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3B522F28656BDBBA22E3155 /* SystemConfiguration.framework */; };
@@ -31,7 +37,6 @@
 		9527ED331463952D001B3E51 /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9527ED2A1463952D001B3E51 /* grayArrow@2x.png */; };
 		9527ED341463952D001B3E51 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9527ED2B1463952D001B3E51 /* whiteArrow.png */; };
 		9527ED351463952D001B3E51 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9527ED2C1463952D001B3E51 /* whiteArrow@2x.png */; };
-		9529C8F814980DC4007614A5 /* SBSeasonHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9529C8F714980DC4007614A5 /* SBSeasonHeaderView.m */; };
 		9529C8FC14981253007614A5 /* SBDrawingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9529C8FB14981253007614A5 /* SBDrawingHelpers.m */; };
 		9529C8FF1498131C007614A5 /* SBCellBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 9529C8FE1498131C007614A5 /* SBCellBackground.m */; };
 		9529C98C14991BE5007614A5 /* SBPlainCellBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 9529C98B14991BE4007614A5 /* SBPlainCellBackground.m */; };
@@ -108,7 +113,6 @@
 		95BDF1931423AF5200A9B7C3 /* SBShowDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDF1921423AF5200A9B7C3 /* SBShowDetailsViewController.m */; };
 		95BE14781491679D00FE1301 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95BE14771491679D00FE1301 /* MessageUI.framework */; };
 		95C54B1E1494217600111B96 /* LKBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C54B1D1494217600111B96 /* LKBadgeView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		95C54BC2149696E300111B96 /* TDHUDProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C54BB5149696E300111B96 /* TDHUDProgressBar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		95C54BC814969E3C00111B96 /* SBShowDetailsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C54BC714969E3B00111B96 /* SBShowDetailsHeaderView.m */; };
 		95C54BCA14969E9F00111B96 /* SBShowDetailsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 95C54BC914969E9F00111B96 /* SBShowDetailsHeaderView.xib */; };
 		95C54BD41496A82800111B96 /* texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C54BD21496A82700111B96 /* texture.png */; };
@@ -126,9 +130,6 @@
 		95C76DF2148E9698008EDF7A /* refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C76DF0148E9698008EDF7A /* refresh@2x.png */; };
 		95D05554148ED0B900F12410 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D05552148ED0B900F12410 /* background.png */; };
 		95D05555148ED0B900F12410 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D05553148ED0B900F12410 /* background@2x.png */; };
-		95D3A79E1491779F005ED387 /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95D3A79A1491779F005ED387 /* SVModalWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		95D3A79F1491779F005ED387 /* SVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 95D3A79B1491779F005ED387 /* SVWebViewController.bundle */; };
-		95D3A7A01491779F005ED387 /* SVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95D3A79D1491779F005ED387 /* SVWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		95D3A7AE1491BE47005ED387 /* calendar-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D3A7AA1491BE47005ED387 /* calendar-icon.png */; };
 		95D3A7AF1491BE47005ED387 /* calendar-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D3A7AB1491BE47005ED387 /* calendar-icon@2x.png */; };
 		95D3A7B01491BE47005ED387 /* menu-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D3A7AC1491BE47005ED387 /* menu-bar.png */; };
@@ -142,7 +143,6 @@
 		95D3A8001492AE74005ED387 /* greenArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D3A7FE1492AE74005ED387 /* greenArrow.png */; };
 		95D3A8011492AE74005ED387 /* greenArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D3A7FF1492AE74005ED387 /* greenArrow@2x.png */; };
 		95D3A8431492B61C005ED387 /* EpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95D3A8421492B61C005ED387 /* EpisodeCell.m */; };
-		95D3A8461492BE4D005ED387 /* FuturaStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 95D3A8451492BE4D005ED387 /* FuturaStd-Bold.otf */; };
 		95D858AF1464590800B7DDC7 /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95D858AE1464590800B7DDC7 /* Defaults.plist */; };
 		95D9B3FF1468905200E4CA9D /* navbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D9B3FE1468905200E4CA9D /* navbar_bg@2x.png */; };
 		95DD4201140837B8001FE32F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95DD4200140837B8001FE32F /* Foundation.framework */; };
@@ -171,6 +171,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B5D5B251499277E00B77613 /* SVModalWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVModalWebViewController.h; sourceTree = "<group>"; };
+		3B5D5B261499277E00B77613 /* SVModalWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVModalWebViewController.m; sourceTree = "<group>"; };
+		3B5D5B271499277E00B77613 /* SVWebViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVWebViewController.bundle; sourceTree = "<group>"; };
+		3B5D5B281499277E00B77613 /* SVWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewController.h; sourceTree = "<group>"; };
+		3B5D5B291499277E00B77613 /* SVWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewController.m; sourceTree = "<group>"; };
+		3B5D5B341499278800B77613 /* TDHUDProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDHUDProgressBar.h; sourceTree = "<group>"; };
+		3B5D5B351499278800B77613 /* TDHUDProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDHUDProgressBar.m; sourceTree = "<group>"; };
+		3B5D5B891499492C00B77613 /* SBStaticTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBStaticTableViewCell.h; path = Classes/SBStaticTableViewCell.h; sourceTree = "<group>"; };
+		3B5D5B8A1499492C00B77613 /* SBStaticTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBStaticTableViewCell.m; path = Classes/SBStaticTableViewCell.m; sourceTree = "<group>"; };
+		3BCA9A68149954CB000E0290 /* SBSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSectionHeaderView.h; path = Classes/SBSectionHeaderView.h; sourceTree = "<group>"; };
+		3BCA9A69149954CB000E0290 /* SBSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSectionHeaderView.m; path = Classes/SBSectionHeaderView.m; sourceTree = "<group>"; };
 		6B1405EBBB093810F5A8D2F5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		8A706C8E4BFF8502C453BD44 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		95068BC814102AED00847FC4 /* SBEpisodeDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBEpisodeDetailsViewController.h; path = Classes/SBEpisodeDetailsViewController.h; sourceTree = "<group>"; };
@@ -204,8 +215,6 @@
 		9527ED2B1463952D001B3E51 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
 		9527ED2C1463952D001B3E51 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
 		9527ED3714639742001B3E51 /* SBDataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDataLoader.h; path = Classes/SBDataLoader.h; sourceTree = "<group>"; };
-		9529C8F614980DC4007614A5 /* SBSeasonHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSeasonHeaderView.h; path = Classes/SBSeasonHeaderView.h; sourceTree = "<group>"; };
-		9529C8F714980DC4007614A5 /* SBSeasonHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSeasonHeaderView.m; path = Classes/SBSeasonHeaderView.m; sourceTree = "<group>"; };
 		9529C8FA14981253007614A5 /* SBDrawingHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDrawingHelpers.h; path = Classes/SBDrawingHelpers.h; sourceTree = "<group>"; };
 		9529C8FB14981253007614A5 /* SBDrawingHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDrawingHelpers.m; path = Classes/SBDrawingHelpers.m; sourceTree = "<group>"; };
 		9529C8FD1498131C007614A5 /* SBCellBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBCellBackground.h; path = Classes/SBCellBackground.h; sourceTree = "<group>"; };
@@ -342,8 +351,6 @@
 		95BE14771491679D00FE1301 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		95C54B1C1494217600111B96 /* LKBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKBadgeView.h; path = LKBadgeView/LKBadgeView.h; sourceTree = "<group>"; };
 		95C54B1D1494217600111B96 /* LKBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKBadgeView.m; path = LKBadgeView/LKBadgeView.m; sourceTree = "<group>"; };
-		95C54BB4149696E300111B96 /* TDHUDProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDHUDProgressBar.h; sourceTree = "<group>"; };
-		95C54BB5149696E300111B96 /* TDHUDProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDHUDProgressBar.m; sourceTree = "<group>"; };
 		95C54BC614969E3B00111B96 /* SBShowDetailsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBShowDetailsHeaderView.h; path = Classes/SBShowDetailsHeaderView.h; sourceTree = "<group>"; };
 		95C54BC714969E3B00111B96 /* SBShowDetailsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBShowDetailsHeaderView.m; path = Classes/SBShowDetailsHeaderView.m; sourceTree = "<group>"; };
 		95C54BC914969E9F00111B96 /* SBShowDetailsHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SBShowDetailsHeaderView.xib; path = Classes/SBShowDetailsHeaderView.xib; sourceTree = "<group>"; };
@@ -365,11 +372,6 @@
 		95C76DF0148E9698008EDF7A /* refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh@2x.png"; sourceTree = "<group>"; };
 		95D05552148ED0B900F12410 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		95D05553148ED0B900F12410 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
-		95D3A7991491779F005ED387 /* SVModalWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVModalWebViewController.h; sourceTree = "<group>"; };
-		95D3A79A1491779F005ED387 /* SVModalWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVModalWebViewController.m; sourceTree = "<group>"; };
-		95D3A79B1491779F005ED387 /* SVWebViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVWebViewController.bundle; sourceTree = "<group>"; };
-		95D3A79C1491779F005ED387 /* SVWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewController.h; sourceTree = "<group>"; };
-		95D3A79D1491779F005ED387 /* SVWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewController.m; sourceTree = "<group>"; };
 		95D3A7AA1491BE47005ED387 /* calendar-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-icon.png"; sourceTree = "<group>"; };
 		95D3A7AB1491BE47005ED387 /* calendar-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-icon@2x.png"; sourceTree = "<group>"; };
 		95D3A7AC1491BE47005ED387 /* menu-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-bar.png"; sourceTree = "<group>"; };
@@ -384,7 +386,6 @@
 		95D3A7FF1492AE74005ED387 /* greenArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenArrow@2x.png"; sourceTree = "<group>"; };
 		95D3A8411492B61C005ED387 /* EpisodeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EpisodeCell.h; path = Classes/EpisodeCell.h; sourceTree = "<group>"; };
 		95D3A8421492B61C005ED387 /* EpisodeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EpisodeCell.m; path = Classes/EpisodeCell.m; sourceTree = "<group>"; };
-		95D3A8451492BE4D005ED387 /* FuturaStd-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FuturaStd-Bold.otf"; sourceTree = "<group>"; };
 		95D858AE1464590800B7DDC7 /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Defaults.plist; path = Resources/Defaults.plist; sourceTree = "<group>"; };
 		95D9B3FE1468905200E4CA9D /* navbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_bg@2x.png"; sourceTree = "<group>"; };
 		95DD41FA140837B8001FE32F /* SickBeard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SickBeard.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -468,9 +469,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B5D5B241499277E00B77613 /* SVWebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3B5D5B251499277E00B77613 /* SVModalWebViewController.h */,
+				3B5D5B261499277E00B77613 /* SVModalWebViewController.m */,
+				3B5D5B271499277E00B77613 /* SVWebViewController.bundle */,
+				3B5D5B281499277E00B77613 /* SVWebViewController.h */,
+				3B5D5B291499277E00B77613 /* SVWebViewController.m */,
+			);
+			name = SVWebViewController;
+			path = SVWebViewController/SVWebViewController;
+			sourceTree = "<group>";
+		};
+		3B5D5B2D1499278800B77613 /* TDHUDProgressBar */ = {
+			isa = PBXGroup;
+			children = (
+				3B5D5B341499278800B77613 /* TDHUDProgressBar.h */,
+				3B5D5B351499278800B77613 /* TDHUDProgressBar.m */,
+			);
+			name = TDHUDProgressBar;
+			path = TDHUDProgressBar/TDHUDProgressBar;
+			sourceTree = "<group>";
+		};
 		95068BD11411643000847FC4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3BCA9A68149954CB000E0290 /* SBSectionHeaderView.h */,
+				3BCA9A69149954CB000E0290 /* SBSectionHeaderView.m */,
 				95068BD21411644D00847FC4 /* ShowCell.h */,
 				95068BD31411644D00847FC4 /* ShowCell.m */,
 				95D3A8411492B61C005ED387 /* EpisodeCell.h */,
@@ -480,12 +506,12 @@
 				95C54BC914969E9F00111B96 /* SBShowDetailsHeaderView.xib */,
 				95C54CDA1497CDDC00111B96 /* SBEpisodeDetailsHeaderView.h */,
 				95C54CDB1497CDDD00111B96 /* SBEpisodeDetailsHeaderView.m */,
-				9529C8F614980DC4007614A5 /* SBSeasonHeaderView.h */,
-				9529C8F714980DC4007614A5 /* SBSeasonHeaderView.m */,
 				9529C8FD1498131C007614A5 /* SBCellBackground.h */,
 				9529C8FE1498131C007614A5 /* SBCellBackground.m */,
 				9529C98A14991BE4007614A5 /* SBPlainCellBackground.h */,
 				9529C98B14991BE4007614A5 /* SBPlainCellBackground.m */,
+				3B5D5B891499492C00B77613 /* SBStaticTableViewCell.h */,
+				3B5D5B8A1499492C00B77613 /* SBStaticTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -773,16 +799,6 @@
 			name = LKBadgeView;
 			sourceTree = "<group>";
 		};
-		95C54BAD149696E200111B96 /* TDHUDProgressBar */ = {
-			isa = PBXGroup;
-			children = (
-				95C54BB4149696E300111B96 /* TDHUDProgressBar.h */,
-				95C54BB5149696E300111B96 /* TDHUDProgressBar.m */,
-			);
-			name = TDHUDProgressBar;
-			path = TDHUDProgressBar/TDHUDProgressBar;
-			sourceTree = "<group>";
-		};
 		95C76DEB148E92C7008EDF7A /* Global */ = {
 			isa = PBXGroup;
 			children = (
@@ -798,28 +814,6 @@
 				9529C8FB14981253007614A5 /* SBDrawingHelpers.m */,
 			);
 			name = Global;
-			sourceTree = "<group>";
-		};
-		95D3A7981491779F005ED387 /* SVWebViewController */ = {
-			isa = PBXGroup;
-			children = (
-				95D3A7991491779F005ED387 /* SVModalWebViewController.h */,
-				95D3A79A1491779F005ED387 /* SVModalWebViewController.m */,
-				95D3A79B1491779F005ED387 /* SVWebViewController.bundle */,
-				95D3A79C1491779F005ED387 /* SVWebViewController.h */,
-				95D3A79D1491779F005ED387 /* SVWebViewController.m */,
-			);
-			name = SVWebViewController;
-			path = SVWebViewController/SVWebViewController;
-			sourceTree = "<group>";
-		};
-		95D3A8441492BE49005ED387 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				95D3A8451492BE4D005ED387 /* FuturaStd-Bold.otf */,
-			);
-			name = Fonts;
-			path = Resources/Fonts;
 			sourceTree = "<group>";
 		};
 		95DD41EF140837B8001FE32F = {
@@ -883,7 +877,6 @@
 		95DD4203140837B8001FE32F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				95D3A8441492BE49005ED387 /* Fonts */,
 				9563CD3F140D47B800920795 /* Images */,
 				95F7F61E1408492700E17F3E /* Libraries */,
 				95DD420E140837B8001FE32F /* MainStoryboard.storyboard */,
@@ -998,9 +991,9 @@
 		95F7F61E1408492700E17F3E /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				95C54BAD149696E200111B96 /* TDHUDProgressBar */,
+				3B5D5B2D1499278800B77613 /* TDHUDProgressBar */,
+				3B5D5B241499277E00B77613 /* SVWebViewController */,
 				95C54B1B1494216900111B96 /* LKBadgeView */,
-				95D3A7981491779F005ED387 /* SVWebViewController */,
 				952D1EE8148940E1000ABD7C /* SVSegmentedControl */,
 				952D1EA61487FF02000ABD7C /* SVProgressHUD */,
 				956F7C3B1478AFEB00543214 /* SDWebImage */,
@@ -1149,7 +1142,6 @@
 				95C76DF2148E9698008EDF7A /* refresh@2x.png in Resources */,
 				95D05554148ED0B900F12410 /* background.png in Resources */,
 				95D05555148ED0B900F12410 /* background@2x.png in Resources */,
-				95D3A79F1491779F005ED387 /* SVWebViewController.bundle in Resources */,
 				95D3A7AE1491BE47005ED387 /* calendar-icon.png in Resources */,
 				95D3A7AF1491BE47005ED387 /* calendar-icon@2x.png in Resources */,
 				95D3A7B01491BE47005ED387 /* menu-bar.png in Resources */,
@@ -1162,12 +1154,12 @@
 				95D3A7BD1491CF5B005ED387 /* list-item-background-selected@2x.png in Resources */,
 				95D3A8001492AE74005ED387 /* greenArrow.png in Resources */,
 				95D3A8011492AE74005ED387 /* greenArrow@2x.png in Resources */,
-				95D3A8461492BE4D005ED387 /* FuturaStd-Bold.otf in Resources */,
 				95C54BCA14969E9F00111B96 /* SBShowDetailsHeaderView.xib in Resources */,
 				95C54BD41496A82800111B96 /* texture.png in Resources */,
 				95C54BD51496A82800111B96 /* texture@2x.png in Resources */,
 				95C54C1714971C5D00111B96 /* episode-details-bg.png in Resources */,
 				95C54C1814971C5D00111B96 /* episode-details-bg@2x.png in Resources */,
+				3B5D5B2B1499277E00B77613 /* SVWebViewController.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1291,17 +1283,18 @@
 				952D1EF0148940E2000ABD7C /* SVSegmentedThumb.m in Sources */,
 				95C76CE1148E8433008EDF7A /* SBBaseShowCell.m in Sources */,
 				95C76DEE148E92EC008EDF7A /* SBGradientView.m in Sources */,
-				95D3A79E1491779F005ED387 /* SVModalWebViewController.m in Sources */,
-				95D3A7A01491779F005ED387 /* SVWebViewController.m in Sources */,
 				95D3A8431492B61C005ED387 /* EpisodeCell.m in Sources */,
 				95C54B1E1494217600111B96 /* LKBadgeView.m in Sources */,
-				95C54BC2149696E300111B96 /* TDHUDProgressBar.m in Sources */,
 				95C54BC814969E3C00111B96 /* SBShowDetailsHeaderView.m in Sources */,
 				95C54CDC1497CDDF00111B96 /* SBEpisodeDetailsHeaderView.m in Sources */,
-				9529C8F814980DC4007614A5 /* SBSeasonHeaderView.m in Sources */,
 				9529C8FC14981253007614A5 /* SBDrawingHelpers.m in Sources */,
 				9529C8FF1498131C007614A5 /* SBCellBackground.m in Sources */,
 				9529C98C14991BE5007614A5 /* SBPlainCellBackground.m in Sources */,
+				3B5D5B2A1499277E00B77613 /* SVModalWebViewController.m in Sources */,
+				3B5D5B2C1499277E00B77613 /* SVWebViewController.m in Sources */,
+				3B5D5B421499278800B77613 /* TDHUDProgressBar.m in Sources */,
+				3B5D5B8B1499492D00B77613 /* SBStaticTableViewCell.m in Sources */,
+				3BCA9A6A149954CB000E0290 /* SBSectionHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SBBaseTableViewController.h"
 
+@class SBCellBackground;
 @class SBServer;
 
 @interface SBServerDetailsViewController : UITableViewController <UITextFieldDelegate> {

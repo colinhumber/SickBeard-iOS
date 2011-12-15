@@ -12,6 +12,7 @@
 #import "SBServer+SickBeardAdditions.h"
 #import "PRPAlertView.h"
 #import "NSUserDefaults+SickBeard.h"
+#import "SBCellBackground.h"
 
 @interface SBServerDetailsViewController()
 - (void)updateServerValues;
