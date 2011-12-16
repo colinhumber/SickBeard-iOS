@@ -135,7 +135,7 @@
 
 #pragma mark - Loading
 - (void)loadData {
-	[SVProgressHUD showWithStatus:@"Loading show details"];
+	[SVProgressHUD showWithStatus:NSLocalizedString(@"Loading show details", @"Loading show details")];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandSeasons
 									   parameters:[NSDictionary dictionaryWithObject:show.tvdbID forKey:@"tvdbid"]
@@ -211,7 +211,7 @@
 												  [self finishDataLoad:nil];
 												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
 																	  message:[JSON objectForKey:@"message"] 
-																  buttonTitle:@"OK"];
+																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
 												  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 											  }
 										  }
@@ -219,7 +219,7 @@
 											  [self finishDataLoad:error];
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving show information", @"Error retrieving show information") 
 																  message:error.localizedDescription 
-															  buttonTitle:@"OK"];		
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];		
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }];
 }

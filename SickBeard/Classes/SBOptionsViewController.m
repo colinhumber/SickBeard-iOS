@@ -93,7 +93,7 @@
 
 #pragma mark - Actions
 - (IBAction)addShow {
-	[SVProgressHUD showWithStatus:@"Adding show" maskType:SVProgressHUDMaskTypeGradient];
+	[SVProgressHUD showWithStatus:NSLocalizedString(@"Adding show", @"Adding show") maskType:SVProgressHUDMaskTypeGradient];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
 							show.tvdbID, @"tvdbid",
@@ -111,7 +111,7 @@
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [SVProgressHUD dismissWithSuccess:@"Show has been added" afterDelay:1.5];
+												  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Show has been added", @"Show has been added") afterDelay:1.5];
 												  
 												  RunAfterDelay(1.5, ^{
 													  [self.delegate didAddShow];
@@ -122,16 +122,16 @@
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-											  [PRPAlertView showWithTitle:@"Error searching for show" 
-																  message:[NSString stringWithFormat:@"Could not perform search \n%@", error.localizedDescription] 
-															  buttonTitle:@"OK"];											  
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
+																  message:error.localizedDescription
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  
 											  
 										  }];
 }
 
 - (void)saveDefaults {
 	[TestFlight passCheckpoint:@"Saved server defaults"];
-	[SVProgressHUD showWithStatus:@"Saving defaults"];
+	[SVProgressHUD showWithStatus:NSLocalizedString(@"Saving defaults", @"Saving defaults")];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
 							[NSString stringWithFormat:@"%d", useSeasonFolders], @"season_folder",
@@ -175,20 +175,20 @@
 																									
 																									[defaults synchronize];
 																									
-																									[SVProgressHUD dismissWithSuccess:@"Defaults saved" afterDelay:2];
+																									[SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Defaults saved", @"Defaults saved") afterDelay:2];
 																								}
 																								else {
 																									[SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
 																								}
 																							}
 																							failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-																								[PRPAlertView showWithTitle:@"Error saving defaults" 
-																													message:[NSString stringWithFormat:@"Could not save defaults. \n%@", error.localizedDescription] 
-																												buttonTitle:@"OK"];
+																								[PRPAlertView showWithTitle:NSLocalizedString(@"Error saving defaults", @"Error saving defaults")
+																													message:error.localizedDescription 
+																												buttonTitle:NSLocalizedString(@"OK", @"OK")];
 																							}];
 												  }
 												  else {
-													  [SVProgressHUD dismissWithSuccess:@"Defaults saved" afterDelay:2];
+													  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Defaults saved", @"Defaults saved") afterDelay:2];
 												  }
 											  }
 											  else {
@@ -196,9 +196,9 @@
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-											  [PRPAlertView showWithTitle:@"Error saving defaults" 
-																  message:[NSString stringWithFormat:@"Could not save defaults. \n%@", error.localizedDescription] 
-															  buttonTitle:@"OK"];											  
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error saving defaults", @"Error saving defaults") 
+																  message:error.localizedDescription
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  
 											  
 										  }];
 }
@@ -263,11 +263,11 @@
 	
 	switch (section) {
 		case 0:
-			title = @"Parent Folder";
+			title = NSLocalizedString(@"Parent Folder", @"Parent folder");
 			break;
 			
 		case 1:
-			title = @"Customize Options";
+			title = NSLocalizedString(@"Customize Options", @"Customize Options");
 			break;
 			
 		default:
@@ -313,13 +313,13 @@
 		switch (indexPath.row) {
 			case 0:
 				cell = [tableView dequeueReusableCellWithIdentifier:@"TextOptionCell"];
-				cell.textLabel.text = @"Initial Quality";
+				cell.textLabel.text = NSLocalizedString(@"Initial Quality", @"Initial Quality");
 				cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", initialQualities.count];
 				break;
 			
 			case 1:
 				cell = [tableView dequeueReusableCellWithIdentifier:@"TextOptionCell"];
-				cell.textLabel.text = @"Archive Quality";
+				cell.textLabel.text = NSLocalizedString(@"Archive Quality", @"Archive Quality");
 				cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", archiveQualities.count];
 				break;
 				
@@ -333,7 +333,7 @@
 				
 			case 3:
 				cell = [tableView dequeueReusableCellWithIdentifier:@"TextOptionCell"];
-				cell.textLabel.text = @"Status";
+				cell.textLabel.text = NSLocalizedString(@"Status", @"Status");
 				cell.detailTextLabel.text = status;
 				break;
 			default:

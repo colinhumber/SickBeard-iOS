@@ -43,12 +43,12 @@
 - (void)viewDidLoad {
 	[TestFlight passCheckpoint:@"Viewed episode details"];
 	
-	self.title = @"Details";
+	self.title = NSLocalizedString(@"Details", @"Details");
 
 	[self.showPosterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:episode.show.tvdbID]
 							 placeholderImage:nil];
 
-	self.headerView.sectionLabel.text = @"Episode Summary";
+	self.headerView.sectionLabel.text = NSLocalizedString(@"Episode Summary", @"Episode Summary");
 	self.episodeDescriptionBackground.grouped = YES;
 	
 	[self updateHeaderView];
@@ -80,21 +80,21 @@
 #pragma mark - Loading
 - (void)updateHeaderView {	
 	self.currentHeaderView.titleLabel.text = episode.name;
-	self.currentHeaderView.seasonLabel.text = [NSString stringWithFormat:@"Season %d, episode %d", episode.season, episode.number];
+	self.currentHeaderView.seasonLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Season %d, episode %d", @"Season %d, episode %d"), episode.season, episode.number];
 		
 	if (episode.airDate) {
 		if ([episode.airDate isToday]) {
-			self.currentHeaderView.airDateLabel.text = @"Airing today";
+			self.currentHeaderView.airDateLabel.text = NSLocalizedString(@"Airing today", @"Airing today");
 		}
 		else if ([episode.airDate isLaterThanDate:[NSDate date]]) {
-			self.currentHeaderView.airDateLabel.text = [NSString stringWithFormat:@"Airing on %@", [episode.airDate displayString]];
+			self.currentHeaderView.airDateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Airing on %@", @"Airing on %@"), [episode.airDate displayString]];
 		}
 		else {
-			self.currentHeaderView.airDateLabel.text = [NSString stringWithFormat:@"Aired on %@", [episode.airDate displayString]];
+			self.currentHeaderView.airDateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Aired on %@", @"Aired on %@"), [episode.airDate displayString]];
 		}												  
 	}
 	else {
-		self.currentHeaderView.airDateLabel.text = @"Unknown air date";
+		self.currentHeaderView.airDateLabel.text = NSLocalizedString(@"Unknown air date", @"Unknown air date");
 	}
 }
 
@@ -120,7 +120,7 @@
 												  episode.episodeDescription = [[JSON objectForKey:@"data"] objectForKey:@"description"];												  
 											  }
 											  else {
-												  episode.episodeDescription = @"Unable to retrieve episode description";
+												  episode.episodeDescription = NSLocalizedString(@"Unable to retrieve episode description", @"Unable to retrieve episode description");
 											  }
 											  
 											  CGFloat currentFontSize = kDefaultDescriptionFontSize;
@@ -150,9 +150,9 @@
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 											  [self.spinner stopAnimating];
-											  [PRPAlertView showWithTitle:@"Error retrieving episode" 
-																  message:[NSString stringWithFormat:@"Could not retreive episode details \n%@", error.localizedDescription] 
-															  buttonTitle:@"OK"];											  
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving episode", @"Error retrieving episode") 
+																  message:[NSString stringWithFormat:NSLocalizedString(@"Could not retreive episode details \n%@", @"Could not retreive episode details \n%@"), error.localizedDescription] 
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  
 										  }];
 }
 
@@ -206,9 +206,9 @@
 - (IBAction)episodeAction:(id)sender {
 	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" 
 															 delegate:self 
-													cancelButtonTitle:@"Cancel" 
+													cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel") 
 											   destructiveButtonTitle:nil 
-													 otherButtonTitles:@"Search", @"Set Status", nil];
+													 otherButtonTitles:NSLocalizedString(@"Search", @"Search"), NSLocalizedString(@"Set Status", @"Set Status"), nil];
 	actionSheet.tag = 998;
 	[actionSheet showInView:self.view];
 }
@@ -219,7 +219,7 @@
 							[NSNumber numberWithInt:episode.season], @"season",
 							[NSNumber numberWithInt:episode.number], @"episode", nil];
 
-	[SVProgressHUD showWithStatus:@"Searching for episode"];
+	[SVProgressHUD showWithStatus:NSLocalizedString(@"Searching for episode", @"Searching for episode")];
 
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
 									   parameters:params 
@@ -227,16 +227,16 @@
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [SVProgressHUD dismissWithSuccess:@"Episode found and is downloading" afterDelay:2];
+												  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading") afterDelay:2];
 											  }
 											  else {
 												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
 																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
-															  buttonTitle:@"OK"];	
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
 											  [SVProgressHUD dismiss];
 										  }];
 }
@@ -244,9 +244,13 @@
 - (void)showEpisodeStatusActionSheet {
 	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" 
 															  delegate:self 
-													 cancelButtonTitle:@"Cancel" 
+													 cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel") 
 												destructiveButtonTitle:nil 
-													 otherButtonTitles:@"Wanted", @"Skipped", @"Archived", @"Ignored", nil];
+													 otherButtonTitles:
+															[SBEpisode episodeStatusAsString:EpisodeStatusWanted], 
+															[SBEpisode episodeStatusAsString:EpisodeStatusSkipped], 
+															[SBEpisode episodeStatusAsString:EpisodeStatusArchived], 
+															[SBEpisode episodeStatusAsString:EpisodeStatusIgnored], nil];
 	actionSheet.tag = 999;
 	[actionSheet showInView:self.view];
 }
@@ -260,7 +264,7 @@
 							[NSNumber numberWithInt:episode.number], @"episode",
 							statusString, @"status", nil];
 	
-	[SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Setting episode status to %@", statusString]];
+	[SVProgressHUD showWithStatus:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]];
 
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
 									   parameters:params 
@@ -268,16 +272,17 @@
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [SVProgressHUD dismissWithSuccess:@"Status successfully set!" afterDelay:2];
+												  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Status successfully set!", @"Status successfully set!") afterDelay:2];
 											  }
 											  else {
 												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
 																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
-															  buttonTitle:@"OK"];	
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
+	
 											  [SVProgressHUD dismiss];
 										  }];
 }

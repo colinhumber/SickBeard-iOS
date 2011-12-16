@@ -170,7 +170,9 @@
 	if (indexPath.section == 2) {
 		if (indexPath.row == 0) {
 			if (![MFMailComposeViewController canSendMail]) {
-				[PRPAlertView showWithTitle:@"Unable to send mail" message:@"Mail has not been setup on this device" buttonTitle:@"OK"];
+				[PRPAlertView showWithTitle:NSLocalizedString(@"Unable to send mail", @"Unable to send mail") 
+									message:NSLocalizedString(@"Mail has not been setup on this device", @"Mail has not been setup on this device")
+								buttonTitle:NSLocalizedString(@"OK", @"OK")];
 				return;
 			}
 			
@@ -197,7 +199,9 @@
 	[self dismissViewControllerAnimated:YES completion:nil];
 	
 	if (result == MFMailComposeResultFailed) {
-		[PRPAlertView showWithTitle:@"Unable to send email" message:[error localizedDescription] buttonTitle:@"OK"];
+		[PRPAlertView showWithTitle:NSLocalizedString(@"Unable to send email", @"Unable to send email") 
+							message:error.localizedDescription 
+						buttonTitle:NSLocalizedString(@"OK", @"OK")];
 	}
 }
 

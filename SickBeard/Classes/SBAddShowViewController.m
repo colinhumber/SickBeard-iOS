@@ -95,13 +95,13 @@
 
 - (IBAction)performSearch:(id)sender {
 	if (showNameTextField.text.length == 0) {
-		[PRPAlertView showWithTitle:@"Missing information" 
-							message:@"Please enter a show to search" 
-						buttonTitle:@"OK"];
+		[PRPAlertView showWithTitle:NSLocalizedString(@"Missing information", @"Missing information") 
+							message:NSLocalizedString(@"Please enter a show to search", @"Please enter a show to search")
+						buttonTitle:NSLocalizedString(@"OK", @"OK")];
 		return;
 	}
 	
-	[SVProgressHUD showWithStatus:@"Searching TVDB"];
+	[SVProgressHUD showWithStatus:NSLocalizedString(@"Searching TVDB", @"Searching TVDB")];
 	
 	if ([showNameTextField isFirstResponder]) {
 		[showNameTextField resignFirstResponder];
@@ -132,9 +132,9 @@
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-											  [PRPAlertView showWithTitle:@"Error searching for show" 
-																  message:[NSString stringWithFormat:@"Could not perform search \n%@", error.localizedDescription] 
-															  buttonTitle:@"OK"];											  
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
+																  message:[NSString stringWithFormat:NSLocalizedString(@"Could not perform search \n%@", @"Could not perform search \n%@"), error.localizedDescription] 
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  
 
 										  }];
 }
@@ -162,10 +162,10 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	if (section == 0) {
-		return @"Search";
+		return NSLocalizedString(@"Search", @"Search");
 	}
 	else {
-		return @"TVDB Results";
+		return NSLocalizedString(@"TVDB Results", @"TVDB Results");
 	}
 }
 
@@ -218,7 +218,7 @@
 		cell = [tv dequeueReusableCellWithIdentifier:@"ResultCell"];
 		
 		if (results.count == 0) {
-			cell.textLabel.text = @"No results found";
+			cell.textLabel.text = NSLocalizedString(@"No results found", @"No results found");
 			cell.detailTextLabel.text = nil;
 			cell.selectionStyle = UITableViewCellSelectionStyleNone;
 			cell.accessoryType = UITableViewCellAccessoryNone;

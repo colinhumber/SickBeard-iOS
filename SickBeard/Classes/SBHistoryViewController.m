@@ -28,7 +28,9 @@
 	
 	[super viewDidLoad];
 
-	SVSegmentedControl *historyControl = [[SVSegmentedControl alloc] initWithSectionTitles:[NSArray arrayWithObjects:@"Snatched", @"Downloaded", nil]];
+	SVSegmentedControl *historyControl = [[SVSegmentedControl alloc] initWithSectionTitles:
+										  [NSArray arrayWithObjects:NSLocalizedString(@"Snatched", @"Snatched"), NSLocalizedString(@"Downloaded", @"Downloaded"), nil]];
+
 	historyControl.thumb.tintColor = RGBCOLOR(127, 92, 59);
 	historyControl.selectedSegmentChangedHandler = ^(id sender) {
 		[TestFlight passCheckpoint:@"Changed history type"];
@@ -82,7 +84,7 @@
 - (void)loadData {
 	[super loadData];
 	
-	[SVProgressHUD showWithStatus:@"Loading history"];
+	[SVProgressHUD showWithStatus:NSLocalizedString(@"Loading history", @"Loading history")];
 	
 	NSString *filter = @"";
 	if (historyType == SBHistoryTypeSnatched) {
@@ -119,9 +121,9 @@
 												  }
 											  }
 											  else {
-												  [PRPAlertView showWithTitle:@"Error retrieving history" 
+												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving history", @"Error retrieving history")
 																	  message:[JSON objectForKey:@"message"] 
-																  buttonTitle:@"OK"];
+																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
 											  }
 											  
 											  [self finishDataLoad:nil];
@@ -129,9 +131,9 @@
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-											  [PRPAlertView showWithTitle:@"Error retrieving history" 
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving history", @"Error retrieving history") 
 																  message:error.localizedDescription 
-															  buttonTitle:@"OK"];			
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
 											  
 											  [self finishDataLoad:error];
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
@@ -142,9 +144,9 @@
 - (IBAction)showHistoryActions:(id)sender {
 	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" 
 															 delegate:self 
-													cancelButtonTitle:@"Cancel" 
-											   destructiveButtonTitle:@"Clear History" 
-													otherButtonTitles:@"Trim History", nil];
+													cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel") 
+											   destructiveButtonTitle:NSLocalizedString(@"Clear History", @"Clear History") 
+													otherButtonTitles:NSLocalizedString(@"Trim History", @"Trim History"), nil];
 	[actionSheet showFromToolbar:self.navigationController.toolbar];
 }
 
@@ -163,7 +165,7 @@
 	if (buttonIndex == actionSheet.destructiveButtonIndex) {
 		[TestFlight passCheckpoint:@"Cleared history"];
 		
-		[SVProgressHUD showWithStatus:@"Clearing history"];
+		[SVProgressHUD showWithStatus:NSLocalizedString(@"Clearing history", @"Clearing history")];
 		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistoryClear 
 										   parameters:nil 
 											  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
@@ -171,15 +173,15 @@
 												  [self loadData];
 											  } 
 											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-												  [PRPAlertView showWithTitle:@"Error clearing history" 
+												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error clearing history", @"Error clearing history")
 																	  message:error.localizedDescription 
-																  buttonTitle:@"OK"];
+																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
 											  }];
 	}
 	else if (buttonIndex == 1) {
 		[TestFlight passCheckpoint:@"Trimmed history"];
 		
-		[SVProgressHUD showWithStatus:@"Trimming history"];
+		[SVProgressHUD showWithStatus:NSLocalizedString(@"Trimming history", @"Trimming history")];
 		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistoryTrim
 										   parameters:nil 
 											  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
@@ -187,9 +189,9 @@
 												  [self loadData];
 											  } 
 											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-												  [PRPAlertView showWithTitle:@"Error trimming history" 
+												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error trimming history", @"Error trimming history") 
 																	  message:error.localizedDescription 
-																  buttonTitle:@"OK"];
+																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
 											  }];
 	}
 }
@@ -209,7 +211,7 @@
 	SBHistory *entry = [history objectAtIndex:indexPath.row];
 	cell.showNameLabel.text = entry.showName;	
 	cell.createdDateLabel.text = [entry.createdDate displayDateTimeString];
-	cell.seasonEpisodeLabel.text = [NSString stringWithFormat:@"Season %d, Episode %d", entry.season, entry.episode];
+	cell.seasonEpisodeLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Season %d, episode %d", @"Season %d, episode %d"), entry.season, entry.episode];
 	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:entry.tvdbID] 
 					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
 	

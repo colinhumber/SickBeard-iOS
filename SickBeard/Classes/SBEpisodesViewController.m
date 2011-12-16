@@ -85,7 +85,7 @@
 - (void)loadData {
 	[super loadData];
 	
-	[SVProgressHUD showWithStatus:@"Loading upcoming episodes"];
+	[SVProgressHUD showWithStatus:NSLocalizedString(@"Loading upcoming episodes", @"Loading upcoming episodes")];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandComingEpisodes 
 									   parameters:nil 
@@ -143,9 +143,9 @@
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-											  [PRPAlertView showWithTitle:@"Error retrieving episodes" 
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving episodes", @"Error retrieving episodes")
 																  message:error.localizedDescription 
-															  buttonTitle:@"OK"];			
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
 											  [self finishDataLoad:error];
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }];

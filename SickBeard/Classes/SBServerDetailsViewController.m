@@ -49,11 +49,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-	self.title = @"Server";
+	self.title = NSLocalizedString(@"Server", @"Server");
 	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
 	
 	if (_flags.initialSetup) {
-		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" 
+		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"Done")
 																				   style:UIBarButtonItemStyleDone 
 																				  target:self 
 																				  action:@selector(saveServer)];
@@ -149,9 +149,9 @@
 	[self updateServerValues];
 	
 	if (![server isValid]) {
-		[PRPAlertView showWithTitle:@"Invalid server" 
-							message:@"Some information you have provided is invalid. Please check again." 
-						buttonTitle:@"OK"];
+		[PRPAlertView showWithTitle:NSLocalizedString(@"Invalid server", @"Invalid server")
+							message:NSLocalizedString(@"Some information you have provided is invalid. Please check again.", @"Some information you have provided is invalid. Please check again.") 
+						buttonTitle:NSLocalizedString(@"OK", @"OK")];
 	}
 	else {
 		NSTimeInterval delay = 0.0;
@@ -169,7 +169,8 @@
 }
 
 - (void)_validateServer:(BOOL)saveOnSuccess {
-	 [SVProgressHUD showWithStatus:@"Validating API key" maskType:SVProgressHUDMaskTypeGradient];
+	 [SVProgressHUD showWithStatus:NSLocalizedString(@"Validating API key", @"Validating API key") 
+						  maskType:SVProgressHUDMaskTypeGradient];
 	 
 	 RunAfterDelay(0.5, ^{
 		 [[SickbeardAPIClient sharedClient] pingServer:server
@@ -185,7 +186,7 @@
 															   [NSUserDefaults standardUserDefaults].server = server;
 															   [SickbeardAPIClient sharedClient].currentServer = server;
 															   
-															   [SVProgressHUD dismissWithSuccess:@"Server saved"];
+															   [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Server saved", @"Server saved")];
 															   
 															   if (_flags.initialSetup) {
 																   RunAfterDelay(1.5, ^{
@@ -195,7 +196,7 @@
 														   });
 													   }
 													   else {
-														   [SVProgressHUD dismissWithSuccess:@"Server validated"];
+														   [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Server validated", @"Server validated")];
 													   }
 												   }
 												   else if ([result isEqualToString:RESULT_DENIED]) {
@@ -203,7 +204,8 @@
 												   }
 											   }
 											   failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-												   [SVProgressHUD dismissWithError:[NSString stringWithFormat:@"Unable to connect to Sick Beard (%@)", server.serviceEndpointPath] 
+												   [SVProgressHUD dismissWithError:[NSString stringWithFormat:NSLocalizedString(@"Unable to connect to Sick Beard (%@)", @"Unable to connect to Sick Beard (%@)"),
+																					server.serviceEndpointPath] 
 																		afterDelay:1];
 											   }];
 	 });

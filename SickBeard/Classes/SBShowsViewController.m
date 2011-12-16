@@ -80,7 +80,7 @@
 - (void)loadData {
 	[super loadData];
 
-	[SVProgressHUD showWithStatus:@"Loading shows"];
+	[SVProgressHUD showWithStatus:NSLocalizedString(@"Loading shows", @"Loading shows")];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"name", @"sort", nil];
 	
@@ -110,9 +110,9 @@
 												  }
 											  }
 											  else {
-												  [PRPAlertView showWithTitle:@"Error retrieving shows" 
+												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
 																	  message:[JSON objectForKey:@"message"] 
-																  buttonTitle:@"OK"];
+																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
 											  }
 										
 											  [self finishDataLoad:nil];
@@ -120,9 +120,9 @@
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }
 										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-											  [PRPAlertView showWithTitle:@"Error retrieving shows" 
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
 																  message:error.localizedDescription 
-															  buttonTitle:@"OK"];			
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
 											  
 											  [self finishDataLoad:error];
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
@@ -187,7 +187,7 @@
 		SBShow *show = [shows objectAtIndex:indexPath.row];
 		NSDictionary *params = [NSDictionary dictionaryWithObject:show.tvdbID forKey:@"tvdbid"];
 
-		[SVProgressHUD showWithStatus:@"Deleting show"];
+		[SVProgressHUD showWithStatus:NSLocalizedString(@"Deleting show", @"Deleting show")];
 		
 		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShowDelete 
 										   parameters:params 
@@ -202,15 +202,15 @@
 												  else {
 													  [PRPAlertView showWithTitle:NSLocalizedString(@"Could not delete show", @"Could not delete show") 
 																		  message:[JSON objectForKey:@"message"] 
-																	  buttonTitle:@"Okay"];
+																	  buttonTitle:NSLocalizedString(@"OK", @"OK")];
 												  }				
 												  
 												  [SVProgressHUD dismiss];
 											  }
 											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-												  [PRPAlertView showWithTitle:@"Error deleting show" 
+												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error deleting show", @"Error deleting show") 
 																	  message:error.localizedDescription 
-																  buttonTitle:@"Okay"];			
+																  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
 												  [SVProgressHUD dismiss];
 											  }];
 	}
