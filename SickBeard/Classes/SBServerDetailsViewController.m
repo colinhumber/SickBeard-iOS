@@ -13,6 +13,7 @@
 #import "PRPAlertView.h"
 #import "NSUserDefaults+SickBeard.h"
 #import "SBStaticTableViewCell.h"
+#import "SBCreditsViewController.h"
 
 @interface SBServerDetailsViewController()
 - (void)updateServerValues;
@@ -31,6 +32,14 @@
 @synthesize pathTextField;
 @synthesize apiKeyTextField;
 @synthesize server;
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+	if ([segue.identifier isEqualToString:@"CreditsSegue"]) {
+		SBCreditsViewController *vc = segue.destinationViewController;
+		vc.enableEmptyView = NO;
+		vc.enableRefreshHeader = NO;
+	}
+}
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
 	self = [super initWithCoder:aDecoder];

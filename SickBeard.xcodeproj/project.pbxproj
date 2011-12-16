@@ -44,6 +44,7 @@
 		952D1EEE148940E2000ABD7C /* SVSegmentedControl.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 952D1EE9148940E2000ABD7C /* SVSegmentedControl.bundle */; };
 		952D1EEF148940E2000ABD7C /* SVSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 952D1EEB148940E2000ABD7C /* SVSegmentedControl.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		952D1EF0148940E2000ABD7C /* SVSegmentedThumb.m in Sources */ = {isa = PBXBuildFile; fileRef = 952D1EED148940E2000ABD7C /* SVSegmentedThumb.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		95394403149BF66E002E4ACE /* Credits.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95394402149BF66E002E4ACE /* Credits.plist */; };
 		95515BF1140C3C59008CA8D5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B1405EBBB093810F5A8D2F5 /* CFNetwork.framework */; };
 		95515BF2140C3C59008CA8D5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A706C8E4BFF8502C453BD44 /* MobileCoreServices.framework */; };
 		95515BF3140C3C59008CA8D5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3280CBF7B21A6464DA2AC4C /* Security.framework */; };
@@ -96,6 +97,7 @@
 		959346C8149A622700C21971 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 959346C6149A622700C21971 /* placeholder.png */; };
 		959346C9149A622700C21971 /* placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 959346C7149A622700C21971 /* placeholder@2x.png */; };
 		95934710149BB55000C21971 /* SBEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9593470F149BB55000C21971 /* SBEmptyView.m */; };
+		95934758149BF47600C21971 /* SBCreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95934756149BF47600C21971 /* SBCreditsViewController.m */; };
 		959439461423032F0069E008 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 959439441423032F0069E008 /* libTestFlight.a */; };
 		95A0AB3F1469D65E009EADA7 /* SBRootDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A0AB3E1469D65E009EADA7 /* SBRootDirectory.m */; };
 		95A0AB441469DD95009EADA7 /* SBHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A0AB431469DD95009EADA7 /* SBHistoryViewController.m */; };
@@ -230,6 +232,7 @@
 		952D1EEC148940E2000ABD7C /* SVSegmentedThumb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSegmentedThumb.h; sourceTree = "<group>"; };
 		952D1EED148940E2000ABD7C /* SVSegmentedThumb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSegmentedThumb.m; sourceTree = "<group>"; };
 		952D1EF614894739000ABD7C /* SBAddShowDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBAddShowDelegate.h; path = Classes/SBAddShowDelegate.h; sourceTree = "<group>"; };
+		95394402149BF66E002E4ACE /* Credits.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Credits.plist; path = Resources/Credits.plist; sourceTree = "<group>"; };
 		95515BF5140C3C6C008CA8D5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9557C2401417E1DC00C0D2A7 /* SBAddShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBAddShowViewController.h; path = Classes/SBAddShowViewController.h; sourceTree = "<group>"; };
 		9557C2411417E1DC00C0D2A7 /* SBAddShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBAddShowViewController.m; path = Classes/SBAddShowViewController.m; sourceTree = "<group>"; };
@@ -323,6 +326,8 @@
 		959346C7149A622700C21971 /* placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholder@2x.png"; sourceTree = "<group>"; };
 		9593470E149BB55000C21971 /* SBEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBEmptyView.h; path = Classes/SBEmptyView.h; sourceTree = "<group>"; };
 		9593470F149BB55000C21971 /* SBEmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBEmptyView.m; path = Classes/SBEmptyView.m; sourceTree = "<group>"; };
+		95934755149BF47600C21971 /* SBCreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBCreditsViewController.h; path = Classes/SBCreditsViewController.h; sourceTree = "<group>"; };
+		95934756149BF47600C21971 /* SBCreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBCreditsViewController.m; path = Classes/SBCreditsViewController.m; sourceTree = "<group>"; };
 		959439441423032F0069E008 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		959439451423032F0069E008 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		95A0AB3D1469D65E009EADA7 /* SBRootDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBRootDirectory.h; path = Classes/SBRootDirectory.h; sourceTree = "<group>"; };
@@ -892,6 +897,7 @@
 				9563CCD5140D3ABF00920795 /* SickBeard.xcdatamodeld */,
 				95DD420A140837B8001FE32F /* SickBeard-Prefix.pch */,
 				95D858AE1464590800B7DDC7 /* Defaults.plist */,
+				95394402149BF66E002E4ACE /* Credits.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -957,6 +963,8 @@
 				9509F1D4140C283D00AFBF2C /* SBSettingsViewController.m */,
 				9509F1D6140C2AF100AFBF2C /* SBServerDetailsViewController.h */,
 				9509F1D7140C2AF100AFBF2C /* SBServerDetailsViewController.m */,
+				95934755149BF47600C21971 /* SBCreditsViewController.h */,
+				95934756149BF47600C21971 /* SBCreditsViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1168,6 +1176,7 @@
 				3B5D5B2B1499277E00B77613 /* SVWebViewController.bundle in Resources */,
 				959346C8149A622700C21971 /* placeholder.png in Resources */,
 				959346C9149A622700C21971 /* placeholder@2x.png in Resources */,
+				95394403149BF66E002E4ACE /* Credits.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1303,6 +1312,7 @@
 				3B5D5B8B1499492D00B77613 /* SBStaticTableViewCell.m in Sources */,
 				3BCA9A6A149954CB000E0290 /* SBSectionHeaderView.m in Sources */,
 				95934710149BB55000C21971 /* SBEmptyView.m in Sources */,
+				95934758149BF47600C21971 /* SBCreditsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

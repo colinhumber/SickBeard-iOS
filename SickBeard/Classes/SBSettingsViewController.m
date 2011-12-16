@@ -188,6 +188,8 @@
 		else if (indexPath.row == 1) {
 			[TestFlight passCheckpoint:@"Clicked Twitter"];
 			SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:@"http://twitter.com/sickbeardios"];
+			webViewController.toolbar.tintColor = nil;
+			webViewController.toolbar.barStyle = UIBarStyleBlack;
 			webViewController.availableActions = SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink | SVWebViewControllerAvailableActionsOpenInSafari;
 			[self presentViewController:webViewController animated:YES completion:nil];
 		}

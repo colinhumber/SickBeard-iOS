@@ -11,11 +11,24 @@
 
 @implementation SBBaseTableViewController
 
+@synthesize enableRefreshHeader;
+@synthesize enableEmptyView;
 @synthesize emptyView;
 @synthesize tableView;
 @synthesize refreshHeader;
 @synthesize isDataLoading;
 @synthesize loadDate;
+
+- (id)init {
+	self = [super init];
+	
+	if (self) {
+		self.enableRefreshHeader = YES;
+		self.enableEmptyView = YES;
+	}
+	
+	return self;
+}
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -24,26 +37,30 @@
 	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
 	self.tableView.tableFooterView = [[UIView alloc] init];
 
-	self.refreshHeader = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height) 
-													  arrowImageName:@"blackArrow" 
-														   textColor:[UIColor blackColor] 
-													 backgroundColor:[UIColor clearColor] 
-													   activityStyle:UIActivityIndicatorViewStyleWhite];
-	self.refreshHeader.delegate = self;
-	self.refreshHeader.defaultInsets = self.tableView.contentInset;
-	[self.tableView addSubview:self.refreshHeader];
-	[self.refreshHeader refreshLastUpdatedDate];
+	if (self.enableRefreshHeader) {
+		self.refreshHeader = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height) 
+														  arrowImageName:@"blackArrow" 
+															   textColor:[UIColor blackColor] 
+														 backgroundColor:[UIColor clearColor] 
+														   activityStyle:UIActivityIndicatorViewStyleWhite];
+		self.refreshHeader.delegate = self;
+		self.refreshHeader.defaultInsets = self.tableView.contentInset;
+		[self.tableView addSubview:self.refreshHeader];
+		[self.refreshHeader refreshLastUpdatedDate];
+	}
 	
-	CGFloat emptyViewHeight = 0;
-	if (self.navigationController.toolbar) {
-		emptyViewHeight = 372;
+	if (self.enableEmptyView) {
+		CGFloat emptyViewHeight = 0;
+		if (self.navigationController.toolbar) {
+			emptyViewHeight = 372;
+		}
+		else {
+			emptyViewHeight = 416;
+		}
+
+		self.emptyView = [[SBEmptyView alloc] initWithFrame:CGRectMake(0, 0, 320, emptyViewHeight)];
+		[self.view addSubview:self.emptyView];
 	}
-	else {
-		emptyViewHeight = 416;
-	}
-	self.emptyView = [[SBEmptyView alloc] initWithFrame:CGRectMake(0, 0, 320, emptyViewHeight)];
-	[self.view bringSubviewToFront:self.emptyView];
-	[self.view addSubview:self.emptyView];
 }
 
 

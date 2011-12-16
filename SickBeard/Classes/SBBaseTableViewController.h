@@ -16,6 +16,8 @@
 - (void)loadData;
 - (void)showEmptyView:(BOOL)show animated:(BOOL)animated;
 
+@property (nonatomic) BOOL enableRefreshHeader;
+@property (nonatomic) BOOL enableEmptyView;
 @property (nonatomic, strong) SBEmptyView *emptyView;
 @property (nonatomic, strong) EGORefreshTableHeaderView *refreshHeader;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;

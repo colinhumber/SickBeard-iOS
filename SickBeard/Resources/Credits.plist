@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Item 0</key>
+	<dict>
+		<key>items</key>
+		<array>
+			<dict>
+				<key>role</key>
+				<string>TDHUDProgressBar</string>
+				<key>name</key>
+				<string>Tim Davies</string>
+				<key>url</key>
+				<string>https://github.com/tmdvs/TDHUDProgressBar</string>
+			</dict>
+			<dict>
+				<key>role</key>
+				<string>SVWebViewController</string>
+				<key>name</key>
+				<string>Sam Vermette</string>
+				<key>url</key>
+				<string>https://github.com/samvermette/SVWebViewController</string>
+			</dict>
+			<dict>
+				<key>role</key>
+				<string>SVSegmentedControl</string>
+				<key>name</key>
+				<string>Sam Vermette</string>
+				<key>url</key>
+				<string>https://github.com/samvermette/SVSegmentedControl</string>
+			</dict>
+			<dict>
+				<key>role</key>
+				<string>SVProgressHUD</string>
+				<key>name</key>
+				<string>Sam Vermette</string>
+				<key>url</key>
+				<string>https://github.com/samvermette/SVProgressHUD</string>
+			</dict>
+			<dict>
+				<key>role</key>
+				<string>LKBadgeView</string>
+				<key>name</key>
+				<string>lakesoft</string>
+				<key>url</key>
+				<string>https://github.com/lakesoft/LKbadgeView</string>
+			</dict>
+			<dict>
+				<key>role</key>
+				<string>SDWebImage</string>
+				<key>name</key>
+				<string>Olivier Poitrey</string>
+				<key>url</key>
+				<string>https://github.com/rs/SDWebImage</string>
+			</dict>
+			<dict>
+				<key>role</key>
+				<string>SDURLCache</string>
+				<key>name</key>
+				<string>Olivier Poitrey</string>
+				<key>url</key>
+				<string>https://github.com/rs/SDURLCache</string>
+			</dict>
+			<dict>
+				<key>role</key>
+				<string>EGOTableViewPullRefresh</string>
+				<key>name</key>
+				<string>Enormego</string>
+				<key>url</key>
+				<string>https://github.com/enormego/EGOTableViewPullRefresh</string>
+			</dict>
+			<dict>
+				<key>role</key>
+				<string>JSONKit</string>
+				<key>name</key>
+				<string>John Engelhart</string>
+				<key>url</key>
+				<string>https://github.com/johnezang/JSONKit</string>
+			</dict>
+			<dict>
+				<key>role</key>
+				<string>AFNetworking</string>
+				<key>name</key>
+				<string>AFNetworking</string>
+				<key>url</key>
+				<string>Gowalla</string>
+			</dict>
+		</array>
+		<key>groupName</key>
+		<string>Libraries</string>
+	</dict>
+	<key>Item 1</key>
+	<dict>
+		<key>items</key>
+		<array>
+			<dict>
+				<key>role</key>
+				<string>Sick Beard Creation</string>
+				<key>name</key>
+				<string>midgetspy</string>
+				<key>url</key>
+				<string>https://github.com/midgetspy/Sick-Beard</string>
+			</dict>
+			<dict>
+				<key>role</key>
+				<string>API Creation</string>
+				<key>name</key>
+				<string>thezoggy</string>
+				<key>url</key>
+				<string>https://github.com/thezoggy</string>
+			</dict>
+		</array>
+		<key>groupName</key>
+		<string>Special Thanks</string>
+	</dict>
+</dict>
+</plist>

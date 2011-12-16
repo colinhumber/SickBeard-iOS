@@ -259,6 +259,8 @@
 		
 		if ([urlPath rangeOfString:@"itms://"].location == NSNotFound) {
 			SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:urlPath];
+			webViewController.toolbar.tintColor = nil;
+			webViewController.toolbar.barStyle = UIBarStyleBlack;
 			webViewController.availableActions = SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink | SVWebViewControllerAvailableActionsOpenInSafari;
 			[self presentViewController:webViewController animated:YES completion:nil];
 		}
