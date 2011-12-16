@@ -18,7 +18,7 @@
 
 - (void)awakeFromNib {
 	self.badgeView.outline = NO;
-	self.badgeView.font = [UIFont boldSystemFontOfSize:12];
+	self.badgeView.font = [UIFont boldSystemFontOfSize:18];
 	self.badgeView.horizontalAlignment = LKBadgeViewHorizontalAlignmentRight;
 }
 

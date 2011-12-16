@@ -26,6 +26,8 @@
 	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
 	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
 	
+	[super viewDidLoad];
+
 	SVSegmentedControl *historyControl = [[SVSegmentedControl alloc] initWithSectionTitles:[NSArray arrayWithObjects:@"Snatched", @"Downloaded", nil]];
 	historyControl.thumb.tintColor = RGBCOLOR(127, 92, 59);
 	historyControl.selectedSegmentChangedHandler = ^(id sender) {
@@ -39,8 +41,8 @@
 	NSMutableArray *items = [self.toolbarItems mutableCopy];
 	[items insertObject:barItem atIndex:2];
 	self.toolbarItems = items;
-	
-	[super viewDidLoad];
+		
+	self.emptyView.emptyLabel.text = NSLocalizedString(@"No history found", @"No history found");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -112,6 +114,7 @@
 													  [history sortUsingDescriptors:[NSArray arrayWithObject:sorter]];
 												  }
 												  else {
+													  [self showEmptyView:YES animated:YES];
 													  NSLog(@"No history");
 												  }
 											  }

@@ -39,6 +39,8 @@
 	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
 
 	[super viewDidLoad];
+	
+	self.emptyView.emptyLabel.text = NSLocalizedString(@"No shows found", @"No shows found");
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -103,6 +105,7 @@
 													  [shows sortUsingDescriptors:[NSArray arrayWithObject:sorter]];
 												  }
 												  else {
+													  [self showEmptyView:YES animated:YES];
 													  NSLog(@"No shows");
 												  }
 											  }

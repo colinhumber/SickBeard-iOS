@@ -63,7 +63,7 @@
 	
 	self.detailsHeaderView.statusLabel.text = [SBShow showStatusAsString:show.status];
 	if (show.status == ShowStatusContinuing) {
-		self.detailsHeaderView.statusLabel.textColor = RGBCOLOR(50, 151, 56);
+		self.detailsHeaderView.statusLabel.textColor = RGBCOLOR(21, 93, 45);
 	}
 	else if (show.status == ShowStatusEnded) {
 		self.detailsHeaderView.statusLabel.textColor = RGBCOLOR(202, 50, 56);
@@ -387,7 +387,7 @@
 	
 	cell.episodeNameLabel.text = episode.name;
 	cell.airdateLabel.text = episode.airDate ? [episode.airDate displayString] : NSLocalizedString(@"Unknown Air Date", @"Unknown Air Date");
-	cell.badgeView.text = [SBEpisode episodeStatusAsString:episode.status];
+	cell.badgeView.text = [[SBEpisode episodeStatusAsString:episode.status] substringToIndex:1];
 	
 	UIColor *badgeColor = nil;
 	
@@ -398,7 +398,7 @@
 			
 		case EpisodeStatusDownloaded:
 		case EpisodeStatusSnatched:
-			badgeColor = RGBCOLOR(50, 151, 56);
+			badgeColor = RGBCOLOR(21, 93, 45);
 			break;
 			
 		case EpisodeStatusSkipped:

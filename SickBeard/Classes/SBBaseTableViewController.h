@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "SBDataLoader.h"
 #import "EGORefreshTableHeaderView.h"
+#import "SBEmptyView.h"
 
 @interface SBBaseTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, SBDataLoader>
 
 - (void)loadData;
+- (void)showEmptyView:(BOOL)show animated:(BOOL)animated;
 
+@property (nonatomic, strong) SBEmptyView *emptyView;
 @property (nonatomic, strong) EGORefreshTableHeaderView *refreshHeader;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 

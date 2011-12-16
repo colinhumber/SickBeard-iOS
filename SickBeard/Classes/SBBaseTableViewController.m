@@ -11,6 +11,7 @@
 
 @implementation SBBaseTableViewController
 
+@synthesize emptyView;
 @synthesize tableView;
 @synthesize refreshHeader;
 @synthesize isDataLoading;
@@ -32,12 +33,25 @@
 	self.refreshHeader.defaultInsets = self.tableView.contentInset;
 	[self.tableView addSubview:self.refreshHeader];
 	[self.refreshHeader refreshLastUpdatedDate];
+	
+	CGFloat emptyViewHeight = 0;
+	if (self.navigationController.toolbar) {
+		emptyViewHeight = 372;
+	}
+	else {
+		emptyViewHeight = 416;
+	}
+	self.emptyView = [[SBEmptyView alloc] initWithFrame:CGRectMake(0, 0, 320, emptyViewHeight)];
+	[self.view bringSubviewToFront:self.emptyView];
+	[self.view addSubview:self.emptyView];
 }
+
 
 - (void)refresh:(id)sender {
 }
 
-- (void)loadData {	
+- (void)loadData {
+	[self showEmptyView:NO animated:NO];
 	self.isDataLoading = YES;
 }
 
@@ -48,6 +62,20 @@
 	
 	if (!error) {
 		self.loadDate = [NSDate date];
+	}
+}
+
+- (void)showEmptyView:(BOOL)show animated:(BOOL)animated {
+	CGFloat alpha = show ? 1.0 : 0.0;
+	
+	if (animated) {
+		[UIView animateWithDuration:0.3 
+						 animations:^{
+							 self.emptyView.alpha = alpha;
+						 }];
+	}
+	else {
+		self.emptyView.alpha = alpha;
 	}
 }
 
