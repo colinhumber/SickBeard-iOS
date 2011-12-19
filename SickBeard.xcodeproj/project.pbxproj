@@ -51,6 +51,9 @@
 		95515BF4140C3C59008CA8D5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3B522F28656BDBBA22E3155 /* SystemConfiguration.framework */; };
 		95515BF6140C3C6C008CA8D5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95515BF5140C3C6C008CA8D5 /* UIKit.framework */; };
 		9557C2421417E1DC00C0D2A7 /* SBAddShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9557C2411417E1DC00C0D2A7 /* SBAddShowViewController.m */; };
+		955DE2EE149FA36D00D08080 /* SBHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 955DE2ED149FA36D00D08080 /* SBHelpViewController.m */; };
+		955DE2F2149FA6C100D08080 /* SBFaqCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 955DE2F1149FA6C100D08080 /* SBFaqCell.m */; };
+		955DE2F3149FA8E400D08080 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B01D6AEDD900882ACFF64 /* libsqlite3.0.dylib */; };
 		9563CCD7140D3ABF00920795 /* SickBeard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9563CCD5140D3ABF00920795 /* SickBeard.xcdatamodeld */; };
 		9563CCEA140D3E6B00920795 /* SBServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9563CCE9140D3E6B00920795 /* SBServer.m */; };
 		9563CCF7140D421600920795 /* NSUserDefaults+SickBeard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9563CCF6140D421600920795 /* NSUserDefaults+SickBeard.m */; };
@@ -158,7 +161,6 @@
 		95F6275914195B8700F2DABC /* SBQualityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F6275814195B8700F2DABC /* SBQualityViewController.m */; };
 		95F6275C14195B9600F2DABC /* SBStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F6275B14195B9600F2DABC /* SBStatusViewController.m */; };
 		95F6275F14195D2A00F2DABC /* SBOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F6275E14195D2A00F2DABC /* SBOptionsViewController.m */; };
-		95F6276B1419AAEC00F2DABC /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F6276A1419AAEC00F2DABC /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		95F7F60C14083A6B00E17F3E /* SBShowsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F7F60B14083A6B00E17F3E /* SBShowsViewController.m */; };
 		95F7F61014083ABC00E17F3E /* SBEpisodesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F7F60F14083ABC00E17F3E /* SBEpisodesViewController.m */; };
 		95F7F6191408436200E17F3E /* SBCommandBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F7F6181408436200E17F3E /* SBCommandBuilder.m */; };
@@ -171,6 +173,7 @@
 		95F7F6FF1408504800E17F3E /* SickBeardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F7F6FE1408504800E17F3E /* SickBeardTests.m */; };
 		95FF5528140851CC008904EE /* CommandTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 95FF5527140851CC008904EE /* CommandTests.m */; };
 		95FF552A1408522B008904EE /* SBCommandBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F7F6181408436200E17F3E /* SBCommandBuilder.m */; };
+		A4EBAFCEDF9A6DE81C43E692 /* MaaSive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6683C04E273F0F5A4029593 /* MaaSive.framework */; };
 		CD8A81F4621C57EF20E85806 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3280CBF7B21A6464DA2AC4C /* Security.framework */; };
 		DE08ADE9E929D37C0104B0BC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A706C8E4BFF8502C453BD44 /* MobileCoreServices.framework */; };
 /* End PBXBuildFile section */
@@ -237,6 +240,10 @@
 		95515BF5140C3C6C008CA8D5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9557C2401417E1DC00C0D2A7 /* SBAddShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBAddShowViewController.h; path = Classes/SBAddShowViewController.h; sourceTree = "<group>"; };
 		9557C2411417E1DC00C0D2A7 /* SBAddShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBAddShowViewController.m; path = Classes/SBAddShowViewController.m; sourceTree = "<group>"; };
+		955DE2EC149FA36D00D08080 /* SBHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBHelpViewController.h; path = Classes/SBHelpViewController.h; sourceTree = "<group>"; };
+		955DE2ED149FA36D00D08080 /* SBHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBHelpViewController.m; path = Classes/SBHelpViewController.m; sourceTree = "<group>"; };
+		955DE2F0149FA6C100D08080 /* SBFaqCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBFaqCell.h; path = Classes/SBFaqCell.h; sourceTree = "<group>"; };
+		955DE2F1149FA6C100D08080 /* SBFaqCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBFaqCell.m; path = Classes/SBFaqCell.m; sourceTree = "<group>"; };
 		9563CCCC140D3A1D00920795 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9563CCD6140D3ABF00920795 /* SickBeard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SickBeard.xcdatamodel; sourceTree = "<group>"; };
 		9563CCE8140D3E6B00920795 /* SBServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBServer.h; path = Classes/SBServer.h; sourceTree = "<group>"; };
@@ -439,6 +446,7 @@
 		95F7F7001408504800E17F3E /* SickBeardTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SickBeardTests-Prefix.pch"; sourceTree = "<group>"; };
 		95FF5526140851CC008904EE /* CommandTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandTests.h; sourceTree = "<group>"; };
 		95FF5527140851CC008904EE /* CommandTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandTests.m; sourceTree = "<group>"; };
+		A6683C04E273F0F5A4029593 /* MaaSive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MaaSive.framework; sourceTree = "<group>"; };
 		C11B01D6AEDD900882ACFF64 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		D3B522F28656BDBBA22E3155 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F3280CBF7B21A6464DA2AC4C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -449,6 +457,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				955DE2F3149FA8E400D08080 /* libsqlite3.0.dylib in Frameworks */,
 				95BE14781491679D00FE1301 /* MessageUI.framework in Frameworks */,
 				95515BF6140C3C6C008CA8D5 /* UIKit.framework in Frameworks */,
 				95515BF1140C3C59008CA8D5 /* CFNetwork.framework in Frameworks */,
@@ -461,6 +470,7 @@
 				9577B0CB140C08F4007F48FE /* CoreGraphics.framework in Frameworks */,
 				95DD4201140837B8001FE32F /* Foundation.framework in Frameworks */,
 				959439461423032F0069E008 /* libTestFlight.a in Frameworks */,
+				A4EBAFCEDF9A6DE81C43E692 /* MaaSive.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,6 +612,15 @@
 			);
 			name = SVSegmentedControl;
 			path = SVSegmentedControl/SVSegmentedControl;
+			sourceTree = "<group>";
+		};
+		955DE2EF149FA6A700D08080 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				955DE2F0149FA6C100D08080 /* SBFaqCell.h */,
+				955DE2F1149FA6C100D08080 /* SBFaqCell.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		9563CD3F140D47B800920795 /* Images */ = {
@@ -852,6 +871,7 @@
 		95DD41FD140837B8001FE32F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A6683C04E273F0F5A4029593 /* MaaSive.framework */,
 				95BE14771491679D00FE1301 /* MessageUI.framework */,
 				9563CCCC140D3A1D00920795 /* CoreData.framework */,
 				95515BF5140C3C6C008CA8D5 /* UIKit.framework */,
@@ -962,12 +982,15 @@
 		95F7F61414083D8A00E17F3E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				955DE2EF149FA6A700D08080 /* Views */,
 				9509F1D3140C283D00AFBF2C /* SBSettingsViewController.h */,
 				9509F1D4140C283D00AFBF2C /* SBSettingsViewController.m */,
 				9509F1D6140C2AF100AFBF2C /* SBServerDetailsViewController.h */,
 				9509F1D7140C2AF100AFBF2C /* SBServerDetailsViewController.m */,
 				95934755149BF47600C21971 /* SBCreditsViewController.h */,
 				95934756149BF47600C21971 /* SBCreditsViewController.m */,
+				955DE2EC149FA36D00D08080 /* SBHelpViewController.h */,
+				955DE2ED149FA36D00D08080 /* SBHelpViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1265,7 +1288,6 @@
 				95F6275914195B8700F2DABC /* SBQualityViewController.m in Sources */,
 				95F6275C14195B9600F2DABC /* SBStatusViewController.m in Sources */,
 				95F6275F14195D2A00F2DABC /* SBOptionsViewController.m in Sources */,
-				95F6276B1419AAEC00F2DABC /* JSONKit.m in Sources */,
 				95BDF1901423AF4100A9B7C3 /* SickbeardAPIClient.m in Sources */,
 				95BDF1931423AF5200A9B7C3 /* SBShowDetailsViewController.m in Sources */,
 				9575EBF6146328E100D600E9 /* SDURLCache.m in Sources */,
@@ -1319,6 +1341,8 @@
 				95934710149BB55000C21971 /* SBEmptyView.m in Sources */,
 				95934758149BF47600C21971 /* SBCreditsViewController.m in Sources */,
 				95F009F7149FA0D9009B3BD6 /* SBFaq.m in Sources */,
+				955DE2EE149FA36D00D08080 /* SBHelpViewController.m in Sources */,
+				955DE2F2149FA6C100D08080 /* SBFaqCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

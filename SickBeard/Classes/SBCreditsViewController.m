@@ -22,10 +22,13 @@
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad {
+	self.enableEmptyView = NO;
+	self.enableRefreshHeader = NO;
+	
     [super viewDidLoad];
 	
 	self.title = NSLocalizedString(@"Credits", @"Credits");
-	
+
 	NSString *path = [[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"plist"];
 	self.credits = [NSDictionary dictionaryWithContentsOfFile:path];
 }

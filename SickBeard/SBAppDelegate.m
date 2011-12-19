@@ -12,6 +12,7 @@
 #import "SickbeardAPIClient.h"
 #import "SDURLCache.h"
 #import "SBITunesUrlCache.h"
+#import <MaaSive/MaaSive.h>
 
 @implementation SBAppDelegate
 
@@ -33,6 +34,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	[TestFlight takeOff:@"9677d08cdc79deabbe7610f9edb5b4f9_MzY5MTgyMDExLTEwLTI1IDIyOjUwOjMxLjg0Mjg3OA"];
 
+	MaaSManager *maasManager = [MaaSManager sharedManager];
+	maasManager.appId = @"4c96130105e369267a20b54e";
+	maasManager.secretKey = @"c82fb6f8cc24d58b27f1fd0d4758363ea61fa63d89d195f61a75c39f32ee3ceb4cc4336191";
+	
 	SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024   // 1MB mem cache
 														 diskCapacity:1024*1024*5 // 5MB disk cache
 															 diskPath:[SDURLCache defaultCachePath]];

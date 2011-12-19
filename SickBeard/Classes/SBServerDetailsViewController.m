@@ -14,6 +14,7 @@
 #import "NSUserDefaults+SickBeard.h"
 #import "SBStaticTableViewCell.h"
 #import "SBCreditsViewController.h"
+#import "SBHelpViewController.h"
 
 @interface SBServerDetailsViewController()
 - (void)updateServerValues;
@@ -32,14 +33,6 @@
 @synthesize pathTextField;
 @synthesize apiKeyTextField;
 @synthesize server;
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-	if ([segue.identifier isEqualToString:@"CreditsSegue"]) {
-		SBCreditsViewController *vc = segue.destinationViewController;
-		vc.enableEmptyView = NO;
-		vc.enableRefreshHeader = NO;
-	}
-}
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
 	self = [super initWithCoder:aDecoder];
@@ -63,9 +56,14 @@
 	
 	if (_flags.initialSetup) {
 		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"Done")
-																				   style:UIBarButtonItemStyleDone 
-																				  target:self 
-																				  action:@selector(saveServer)];
+																				  style:UIBarButtonItemStyleDone 
+																				 target:self 
+																				 action:@selector(saveServer)];
+		
+		self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Help", @"Help")
+																				  style:UIBarButtonItemStyleBordered
+																				 target:self 
+																				 action:@selector(showHelp)];
 	}
 	else {
 		self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -112,6 +110,12 @@
 }
 
 #pragma mark - Actions
+- (void)showHelp {
+	SBHelpViewController *helpController = [self.storyboard instantiateViewControllerWithIdentifier:@"SBHelpViewController"];
+	UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:helpController];
+	[self presentViewController:nav animated:YES completion:nil];
+}
+
 - (void)enableFields:(BOOL)enabled {
 	nameTextField.enabled = enabled;
 	hostTextField.enabled = enabled;

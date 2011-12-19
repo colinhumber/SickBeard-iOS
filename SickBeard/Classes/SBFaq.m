@@ -10,4 +10,8 @@
 
 @implementation SBFaq
 
+@synthesize question;
+@synthesize answer;
+@synthesize published;
+
 @end
