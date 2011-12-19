@@ -154,6 +154,7 @@
 		95DD4209140837B8001FE32F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DD4208140837B8001FE32F /* main.m */; };
 		95DD420D140837B8001FE32F /* SBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DD420C140837B8001FE32F /* SBAppDelegate.m */; };
 		95DD4210140837B8001FE32F /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95DD420E140837B8001FE32F /* MainStoryboard.storyboard */; };
+		95F009F7149FA0D9009B3BD6 /* SBFaq.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F009F6149FA0D9009B3BD6 /* SBFaq.m */; };
 		95F6275914195B8700F2DABC /* SBQualityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F6275814195B8700F2DABC /* SBQualityViewController.m */; };
 		95F6275C14195B9600F2DABC /* SBStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F6275B14195B9600F2DABC /* SBStatusViewController.m */; };
 		95F6275F14195D2A00F2DABC /* SBOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F6275E14195D2A00F2DABC /* SBOptionsViewController.m */; };
@@ -406,6 +407,8 @@
 		95DD420B140837B8001FE32F /* SBAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBAppDelegate.h; sourceTree = "<group>"; };
 		95DD420C140837B8001FE32F /* SBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBAppDelegate.m; sourceTree = "<group>"; };
 		95DD420F140837B8001FE32F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		95F009F5149FA0D9009B3BD6 /* SBFaq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBFaq.h; path = Classes/SBFaq.h; sourceTree = "<group>"; };
+		95F009F6149FA0D9009B3BD6 /* SBFaq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBFaq.m; path = Classes/SBFaq.m; sourceTree = "<group>"; };
 		95F6275714195B8700F2DABC /* SBQualityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBQualityViewController.h; path = Classes/SBQualityViewController.h; sourceTree = "<group>"; };
 		95F6275814195B8700F2DABC /* SBQualityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBQualityViewController.m; path = Classes/SBQualityViewController.m; sourceTree = "<group>"; };
 		95F6275A14195B9600F2DABC /* SBStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBStatusViewController.h; path = Classes/SBStatusViewController.h; sourceTree = "<group>"; };
@@ -998,6 +1001,8 @@
 				95A0AB46146A253D009EADA7 /* SBHistory.m */,
 				9527B72614843CD700F173D9 /* SBITunesUrlCache.h */,
 				9527B72714843CD700F173D9 /* SBITunesUrlCache.m */,
+				95F009F5149FA0D9009B3BD6 /* SBFaq.h */,
+				95F009F6149FA0D9009B3BD6 /* SBFaq.m */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -1313,6 +1318,7 @@
 				3BCA9A6A149954CB000E0290 /* SBSectionHeaderView.m in Sources */,
 				95934710149BB55000C21971 /* SBEmptyView.m in Sources */,
 				95934758149BF47600C21971 /* SBCreditsViewController.m in Sources */,
+				95F009F7149FA0D9009B3BD6 /* SBFaq.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

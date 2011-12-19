@@ -7,6 +7,7 @@
 //
 
 #import "SBHistoryCell.h"
+#import "SBCellBackground.h"
 
 @implementation SBHistoryCell
 
@@ -16,20 +17,32 @@
 @synthesize createdDateLabel;
 @synthesize qualityLabel;
 
+- (void)commonInit {
+	[super commonInit];
+	SBCellBackground *backgroundView = (SBCellBackground*)self.backgroundView;
+	SBCellBackground *selectedBackgroundView = (SBCellBackground*)self.selectedBackgroundView;
+	
+	backgroundView.applyShadow = NO;
+	selectedBackgroundView.applyShadow = NO;
+}
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+		[self commonInit];		
     }
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+	
+	if (self) {
+		[self commonInit];
+	}
+	
+	return self;
 }
 
 @end
