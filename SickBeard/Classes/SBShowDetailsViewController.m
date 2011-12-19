@@ -45,6 +45,8 @@
 
 #pragma mark - View lifecycle
 - (void)viewDidLoad {
+	self.enableEmptyView = NO;
+	
     [super viewDidLoad];
 	
 	_menuFlags.menuIsShowing = NO;

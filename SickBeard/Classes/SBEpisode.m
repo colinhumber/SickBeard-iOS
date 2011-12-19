@@ -65,7 +65,7 @@
 }
 
 - (void)setEpisodeDescription:(NSString *)ed {
-	if (episodeDescription.length == 0) {
+	if (ed.length == 0) {
 		episodeDescription = NSLocalizedString(@"No episode description", @"No episode description");
 	}
 	else {
