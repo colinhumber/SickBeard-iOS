@@ -19,29 +19,14 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	self.title = NSLocalizedString(@"FAQ", @"FAQ");
-	self.enableEmptyView = NO;
+	self.enableEmptyView = YES;
 	self.enableRefreshHeader = NO;
-
+	
     [super viewDidLoad];
 
-	[SVProgressHUD showWithStatus:@"Loading questions"];
-	
-	NSDictionary *query = [NSDictionary dictionaryWithObject:@"1" forKey:@"published.eql"];
-	
-	[SBFaq findRemoteWithQuery:query 
-			   completionBlock:^(NSArray *objects, NSError *error) {
-				   dispatch_async(dispatch_get_main_queue(), ^{
-					   if (!error) {
-						   [SVProgressHUD dismiss];
-						   
-						   self.questions = objects;
-						   [self.tableView reloadData];
-					   }
-					   else {
-						   NSLog(@"Error: %@", error);
-					   }
-				   });
-			   }];
+	self.emptyView.emptyLabel.text = NSLocalizedString(@"No FAQs found", @"No FAQs found");
+
+	[self loadData];
 	
 	if (self.navigationController.viewControllers.count == 1) {
 		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"Done")
@@ -58,6 +43,34 @@
 }
 
 #pragma mark - Actions
+- (void)loadData {
+	[super loadData];
+	
+	[SVProgressHUD showWithStatus:@"Loading questions"];
+	
+	NSDictionary *query = [NSDictionary dictionaryWithObject:@"1" forKey:@"published.eql"];
+	
+	[SBFaq findRemoteWithQuery:query 
+			   completionBlock:^(NSArray *objects, NSError *error) {
+				   dispatch_async(dispatch_get_main_queue(), ^{
+					   if (!error) {
+						   [SVProgressHUD dismiss];
+						   
+						   self.questions = objects;
+						   [self.tableView reloadData];
+						   
+						   if (self.questions.count == 0) {
+							   [self showEmptyView:YES animated:YES];
+						   }
+					   }
+					   else {
+						   NSLog(@"Error: %@", error);
+					   }
+				   });
+			   }];
+
+}
+
 - (void)done {
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -71,19 +84,20 @@
 	SBFaqCell *cell = (SBFaqCell*)[tv dequeueReusableCellWithIdentifier:@"FAQCell"];
 	
 	SBFaq *question = [questions objectAtIndex:indexPath.row];
+	NSString *answerText = [question.answer stringByReplacingOccurrencesOfString:@"\\n" withString:@"\n"];
 	cell.questionLabel.text = question.question;	
-	cell.answerLabel.text = question.answer;
+	cell.answerLabel.text = answerText;
 	
 	CGRect questionFrame = cell.questionLabel.frame;
 	CGRect answerFrame = cell.answerLabel.frame;
 	
 	CGSize questionSize = [question.question sizeWithFont:[UIFont boldSystemFontOfSize:13] 
 										constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
-	CGSize answerSize = [question.answer sizeWithFont:[UIFont systemFontOfSize:13] 
-									constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
+	CGSize answerSize = [answerText sizeWithFont:[UIFont systemFontOfSize:13] 
+							   constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
 
 	questionFrame.size = CGSizeMake(300, questionSize.height);
-	answerFrame.size = CGSizeMake(300, answerSize.height);
+	answerFrame = CGRectMake(answerFrame.origin.x, questionFrame.origin.y + questionFrame.size.height + 3, 300, answerSize.height);
 	
 	cell.questionLabel.frame = questionFrame;
 	cell.answerLabel.frame = answerFrame;
@@ -94,11 +108,12 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	SBFaq *question = [self.questions objectAtIndex:indexPath.row];
+	NSString *answerText = [question.answer stringByReplacingOccurrencesOfString:@"\\n" withString:@"\n"];
 	
 	CGSize questionSize = [question.question sizeWithFont:[UIFont boldSystemFontOfSize:13] 
 										constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
-	CGSize answerSize = [question.answer sizeWithFont:[UIFont systemFontOfSize:13] 
-									constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
+	CGSize answerSize = [answerText	sizeWithFont:[UIFont systemFontOfSize:13] 
+							   constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
 	
 	
 	return questionSize.height + answerSize.height + 25;

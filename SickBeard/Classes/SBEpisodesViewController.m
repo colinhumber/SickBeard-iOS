@@ -189,8 +189,9 @@
 	SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:indexPath.row];
 
 	cell.showNameLabel.text = episode.showName;
+	cell.networkLabel.text = episode.network;
 	cell.episodeNameLabel.text = episode.name;
-	cell.airDateLabel.text = [NSString stringWithFormat:@"%@ on %@ (%@)", [episode.airDate displayString], episode.network, episode.quality];
+	cell.airDateLabel.text = [NSString stringWithFormat:@"%@ (%@)", [episode.airDate displayString], episode.quality];
 	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:episode.tvdbID] 
 					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
 

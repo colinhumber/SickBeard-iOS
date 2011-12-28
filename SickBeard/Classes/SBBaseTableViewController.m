@@ -19,12 +19,26 @@
 @synthesize isDataLoading;
 @synthesize loadDate;
 
-- (id)init {
+- (void)commonInit {
+	self.enableRefreshHeader = YES;
+	self.enableEmptyView = YES;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+	
+	if (self) {
+		[self commonInit];
+	}
+	
+	return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
 	self = [super init];
 	
 	if (self) {
-		self.enableRefreshHeader = YES;
-		self.enableEmptyView = YES;
+		[self commonInit];
 	}
 	
 	return self;

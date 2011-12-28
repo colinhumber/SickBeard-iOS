@@ -12,6 +12,7 @@
 @implementation ComingEpisodeCell
 
 @synthesize showNameLabel;
+@synthesize networkLabel;
 @synthesize episodeNameLabel;
 @synthesize airDateLabel;
 @synthesize lastCell;

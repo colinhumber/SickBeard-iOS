@@ -1,0 +1,36 @@
+//
+//  SBLegalViewController.m
+//  SickBeard
+//
+//  Created by Colin Humber on 12/21/11.
+//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//
+
+#import "SBLegalViewController.h"
+
+
+@implementation SBLegalViewController
+
+@synthesize webView;
+
+#pragma mark - View lifecycle
+- (void)viewDidLoad {
+	self.title = NSLocalizedString(@"Legal", @"Legal");
+	
+	NSString *path = [[NSBundle mainBundle] pathForResource:@"legal" ofType:@"html"];
+	[self.webView loadHTMLString:[NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil] baseURL:nil]; 
+    [super viewDidLoad];
+}
+
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+	self.webView = nil;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+@end

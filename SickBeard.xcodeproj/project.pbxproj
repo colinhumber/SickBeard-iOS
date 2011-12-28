@@ -152,6 +152,8 @@
 		95D3A8431492B61C005ED387 /* EpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95D3A8421492B61C005ED387 /* EpisodeCell.m */; };
 		95D858AF1464590800B7DDC7 /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95D858AE1464590800B7DDC7 /* Defaults.plist */; };
 		95D9B3FF1468905200E4CA9D /* navbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D9B3FE1468905200E4CA9D /* navbar_bg@2x.png */; };
+		95DA8C0114A24BAD003FEC8A /* legal.html in Resources */ = {isa = PBXBuildFile; fileRef = 95DA8C0014A24BAD003FEC8A /* legal.html */; };
+		95DA8C0714A24DA4003FEC8A /* SBLegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DA8C0614A24DA4003FEC8A /* SBLegalViewController.m */; };
 		95DD4201140837B8001FE32F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95DD4200140837B8001FE32F /* Foundation.framework */; };
 		95DD4207140837B8001FE32F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 95DD4205140837B8001FE32F /* InfoPlist.strings */; };
 		95DD4209140837B8001FE32F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DD4208140837B8001FE32F /* main.m */; };
@@ -354,6 +356,7 @@
 		95A0ABD6146AEF68009EADA7 /* AFImageRequestOperation+NSURLCredential.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AFImageRequestOperation+NSURLCredential.m"; path = "Classes/AFImageRequestOperation+NSURLCredential.m"; sourceTree = "<group>"; };
 		95A0ABD8146AFD64009EADA7 /* AFHTTPRequestOperation+NSURLCredential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AFHTTPRequestOperation+NSURLCredential.h"; path = "Classes/AFHTTPRequestOperation+NSURLCredential.h"; sourceTree = "<group>"; };
 		95A0ABD9146AFD64009EADA7 /* AFHTTPRequestOperation+NSURLCredential.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AFHTTPRequestOperation+NSURLCredential.m"; path = "Classes/AFHTTPRequestOperation+NSURLCredential.m"; sourceTree = "<group>"; };
+		95BA0FA414A3AADA00924C51 /* FAQs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = FAQs.txt; path = Resources/FAQs.txt; sourceTree = "<group>"; };
 		95BC1325140D5D74009F9FBC /* SBShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBShow.h; path = Classes/SBShow.h; sourceTree = "<group>"; };
 		95BC1326140D5D74009F9FBC /* SBShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBShow.m; path = Classes/SBShow.m; sourceTree = "<group>"; };
 		95BC1329140D5F2E009F9FBC /* DictionaryCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DictionaryCreation.h; path = Classes/DictionaryCreation.h; sourceTree = "<group>"; };
@@ -405,6 +408,9 @@
 		95D3A8421492B61C005ED387 /* EpisodeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EpisodeCell.m; path = Classes/EpisodeCell.m; sourceTree = "<group>"; };
 		95D858AE1464590800B7DDC7 /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Defaults.plist; path = Resources/Defaults.plist; sourceTree = "<group>"; };
 		95D9B3FE1468905200E4CA9D /* navbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_bg@2x.png"; sourceTree = "<group>"; };
+		95DA8C0014A24BAD003FEC8A /* legal.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = legal.html; path = Resources/legal.html; sourceTree = "<group>"; };
+		95DA8C0514A24DA4003FEC8A /* SBLegalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBLegalViewController.h; path = Classes/SBLegalViewController.h; sourceTree = "<group>"; };
+		95DA8C0614A24DA4003FEC8A /* SBLegalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBLegalViewController.m; path = Classes/SBLegalViewController.m; sourceTree = "<group>"; };
 		95DD41FA140837B8001FE32F /* SickBeard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SickBeard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95DD4200140837B8001FE32F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		95DD4204140837B8001FE32F /* SickBeard-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SickBeard-Info.plist"; sourceTree = "<group>"; };
@@ -921,6 +927,8 @@
 				95DD420A140837B8001FE32F /* SickBeard-Prefix.pch */,
 				95D858AE1464590800B7DDC7 /* Defaults.plist */,
 				95394402149BF66E002E4ACE /* Credits.plist */,
+				95DA8C0014A24BAD003FEC8A /* legal.html */,
+				95BA0FA414A3AADA00924C51 /* FAQs.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -991,6 +999,8 @@
 				95934756149BF47600C21971 /* SBCreditsViewController.m */,
 				955DE2EC149FA36D00D08080 /* SBHelpViewController.h */,
 				955DE2ED149FA36D00D08080 /* SBHelpViewController.m */,
+				95DA8C0514A24DA4003FEC8A /* SBLegalViewController.h */,
+				95DA8C0614A24DA4003FEC8A /* SBLegalViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1205,6 +1215,7 @@
 				959346C8149A622700C21971 /* placeholder.png in Resources */,
 				959346C9149A622700C21971 /* placeholder@2x.png in Resources */,
 				95394403149BF66E002E4ACE /* Credits.plist in Resources */,
+				95DA8C0114A24BAD003FEC8A /* legal.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1343,6 +1354,7 @@
 				95F009F7149FA0D9009B3BD6 /* SBFaq.m in Sources */,
 				955DE2EE149FA36D00D08080 /* SBHelpViewController.m in Sources */,
 				955DE2F2149FA6C100D08080 /* SBFaqCell.m in Sources */,
+				95DA8C0714A24DA4003FEC8A /* SBLegalViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1446,13 +1458,18 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/SickBeard/Appboy\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SickBeard/SickBeard-Prefix.pch";
 				INFOPLIST_FILE = "SickBeard/SickBeard-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/SickBeard/TestFlight\"",
+					"\"$(SRCROOT)/SickBeard/Appboy\"",
+					"\"$(SRCROOT)/SickBeard/Appboy/SBJson\"",
 				);
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
@@ -1468,13 +1485,18 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/SickBeard/Appboy\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SickBeard/SickBeard-Prefix.pch";
 				INFOPLIST_FILE = "SickBeard/SickBeard-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/SickBeard/TestFlight\"",
+					"\"$(SRCROOT)/SickBeard/Appboy\"",
+					"\"$(SRCROOT)/SickBeard/Appboy/SBJson\"",
 				);
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";

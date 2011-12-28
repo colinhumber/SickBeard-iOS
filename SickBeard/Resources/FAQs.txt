@@ -1,0 +1,19 @@
+What version of Sick Beard is the app compatible with?
+If you are running the app from source, the app has been tested against commit f87701e9ac. If you are using a Windows binary you should be running build 491.
+
+How do I access my Sick Beard instance from outside my home network?
+You will need to setup port forwarding on your router. The easiest way to do this is to setup a hostname that will link your router's external IP address to domain name. Services like DynDNS (http://dyndns.org) allow you to link a hostname to an IP address. For example, if your router's external (WAN) IP address is 100.50.10.10, you can setup a host like sickbeard.dynamic.com to map to that IP address. On your router, you will need to forward the port Sick Beard is configured to use to the internal IP address of the computer it is running on.
+
+What values should I use when configuring my server?
+If you have properly setup a hostname and forwarded your ports, and are able to access Sick Beard from the internet by going to, for example, http://sickbeard.dynamic.com:8081, use the following values:\n
+- Name: <whatever you like>\n
+- Host: sickbeard.dynamic.com\n
+- Post: 8081\n
+- Path: <leave empty>\n
+- API Key: <value configured in Sick Beard>
+
+When should I set a Path value on the server details?
+The Path value is used for more advanced server setups if you are running Sick Beard at a relative location to the server root. For example, if you access Sick Beard at http://sickbeard.dynamic.com:8081/sickbeard, the Path value would be "sickbeard" (no quotes). See http://code.google.com/p/sickbeard/wiki/AdvancedSettings#Web_Root for more details.
+
+Why are my show's posters and banners not appearing?
+The app uses an API call to retrieve show images from Sick Beard. Make sure you are running, at minimum, a compatible version of Sick Beard, as listed above.

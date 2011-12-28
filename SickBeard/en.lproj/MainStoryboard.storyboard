@@ -380,15 +380,22 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Status" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="PCU-NH-vf5" userLabel="Network">
+                                                    <rect key="frame" x="83" y="47" width="220" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="gB1-Ic-M49">
-                                                    <rect key="frame" x="109" y="58" width="170" height="21"/>
+                                                    <rect key="frame" x="109" y="70" width="170" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="calendar-icon.png" id="4E3-Vg-u6M">
-                                                    <rect key="frame" x="83" y="58" width="23" height="23"/>
+                                                    <rect key="frame" x="83" y="70" width="23" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="chevron.png" id="i5M-t2-eMM">
@@ -404,6 +411,7 @@
                                             <outlet property="nextEpisodeAirdateLabel" destination="gB1-Ic-M49" id="cDb-Mn-jxX"/>
                                             <outlet property="showImageView" destination="ana-8h-sUO" id="Vjd-JK-FhP"/>
                                             <outlet property="showNameLabel" destination="IuD-ID-mnY" id="Yvm-SJ-beb"/>
+                                            <outlet property="statusLabel" destination="PCU-NH-vf5" id="a0e-qw-DrQ"/>
                                             <segue destination="qEb-Lz-g4Z" kind="push" identifier="ShowDetailsSegue" id="uw4-Da-Jqy"/>
                                         </connections>
                                     </tableViewCell>
@@ -447,14 +455,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Name" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="2w0-zS-o5h" userLabel="Show Name">
-                                                    <rect key="frame" x="14" y="6" width="174" height="21"/>
+                                                    <rect key="frame" x="14" y="6" width="218" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="lGO-QF-yWQ">
-                                                    <rect key="frame" x="40" y="27" width="164" height="21"/>
+                                                    <rect key="frame" x="40" y="27" width="192" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -469,7 +477,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" id="8uI-50-pGs" customClass="LKBadgeView">
-                                                    <rect key="frame" x="187" y="18" width="88" height="21"/>
+                                                    <rect key="frame" x="240" y="18" width="35" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                 </view>
@@ -629,7 +637,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="calendar-icon.png" id="rq3-Yr-oa3">
-                                                    <rect key="frame" x="83" y="58" width="23" height="23"/>
+                                                    <rect key="frame" x="83" y="70" width="23" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Nuw-uO-7Cd">
@@ -643,17 +651,24 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Episode Name" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="vY9-Ao-9jG">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Network" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="y0h-KF-k1z" userLabel="Network">
                                                     <rect key="frame" x="83" y="30" width="204" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Episode Name" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="vY9-Ao-9jG">
+                                                    <rect key="frame" x="83" y="47" width="204" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Wednesday, May 1 on ABC" lineBreakMode="tailTruncation" minimumFontSize="10" id="tpr-zx-gN7">
-                                                    <rect key="frame" x="109" y="58" width="151" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Wednesday, May 1 on ABC" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="tpr-zx-gN7">
+                                                    <rect key="frame" x="109" y="70" width="178" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -663,6 +678,7 @@
                                         <connections>
                                             <outlet property="airDateLabel" destination="tpr-zx-gN7" id="RfH-XZ-vyJ"/>
                                             <outlet property="episodeNameLabel" destination="vY9-Ao-9jG" id="YW0-Vn-7MW"/>
+                                            <outlet property="networkLabel" destination="y0h-KF-k1z" id="SpN-Ox-G4i"/>
                                             <outlet property="showImageView" destination="Nuw-uO-7Cd" id="6TH-qo-feh"/>
                                             <outlet property="showNameLabel" destination="A9u-T6-hAA" id="lhh-UO-Mvc"/>
                                         </connections>
@@ -1001,7 +1017,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Server Name" textAlignment="right" minimumFontSize="17" id="7c0-gy-wme">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="server name" textAlignment="right" minimumFontSize="17" id="7c0-gy-wme">
                                                     <rect key="frame" x="113" y="6" width="173" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" red="0.19215686274509802" green="0.33725490196078434" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
@@ -1030,7 +1046,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="www.myserver.com" textAlignment="right" minimumFontSize="17" id="nSD-x0-wdd">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="www.example.com" textAlignment="right" minimumFontSize="17" id="nSD-x0-wdd">
                                                     <rect key="frame" x="113" y="6" width="173" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" red="0.19215686274509802" green="0.33725490196078434" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
@@ -1059,7 +1075,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="8081" textAlignment="right" minimumFontSize="17" id="Wbd-jZ-YuY">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0 - 65535" textAlignment="right" minimumFontSize="17" id="Wbd-jZ-YuY">
                                                     <rect key="frame" x="113" y="6" width="173" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" red="0.19215686274509802" green="0.33725490196078434" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
@@ -1117,7 +1133,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="abc123" textAlignment="right" minimumFontSize="17" id="YpL-QH-EMT">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" id="YpL-QH-EMT">
                                                     <rect key="frame" x="113" y="6" width="173" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" red="0.19215686274509802" green="0.33725490196078434" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
@@ -1189,7 +1205,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FAQCell" rowHeight="100" id="Ngw-ew-Bva" customClass="SBFaqCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FAQCell" rowHeight="100" id="Ngw-ew-Bva" customClass="SBFaqCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -1287,10 +1303,36 @@
                     <navigationItem key="navigationItem" id="evF-Mo-PNW"/>
                     <connections>
                         <outlet property="tableView" destination="px4-Q1-2b6" id="roE-9X-PzH"/>
+                        <segue destination="VB0-kE-xP8" kind="push" identifier="LegalSegue" id="lFh-RQ-606"/>
                     </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="2164" y="1055"/>
+        </scene>
+        <scene sceneID="bbN-nk-P3Y">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ibS-5g-sgo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="VB0-kE-xP8" customClass="SBLegalViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NxZ-kr-GkQ">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" id="qBK-24-Hvj">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <dataDetectorType key="dataDetectorTypes"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="nep-eO-ohe"/>
+                    <connections>
+                        <outlet property="webView" destination="qBK-24-Hvj" id="SWG-CD-JOg"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="2553" y="1056"/>
         </scene>
         <scene sceneID="GUA-3y-IiU">
             <objects>
@@ -1515,6 +1557,7 @@
             <relationships>
                 <relationship kind="outlet" name="airDateLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="episodeNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="networkLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="showNameLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
@@ -1610,6 +1653,12 @@
             <relationships>
                 <relationship kind="action" name="done:"/>
                 <relationship kind="action" name="showHistoryActions:"/>
+            </relationships>
+        </class>
+        <class className="SBLegalViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBLegalViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
             </relationships>
         </class>
         <class className="SBMainViewController" superclassName="UIViewController">

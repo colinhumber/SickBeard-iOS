@@ -82,9 +82,9 @@
 				<key>role</key>
 				<string>AFNetworking</string>
 				<key>name</key>
-				<string>AFNetworking</string>
-				<key>url</key>
 				<string>Gowalla</string>
+				<key>url</key>
+				<string>https://github.com/AFNetworking/AFNetworking</string>
 			</dict>
 		</array>
 		<key>groupName</key>
@@ -113,6 +113,22 @@
 		</array>
 		<key>groupName</key>
 		<string>Special Thanks</string>
+	</dict>
+	<key>Item 2</key>
+	<dict>
+		<key>items</key>
+		<array>
+			<dict>
+				<key>role</key>
+				<string>Legal</string>
+				<key>name</key>
+				<string></string>
+				<key>url</key>
+				<string>sbSegue://LegalSegue</string>
+			</dict>
+		</array>
+		<key>groupName</key>
+		<string></string>
 	</dict>
 </dict>
 </plist>

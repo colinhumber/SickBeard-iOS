@@ -9,7 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <MaaSive/MaaSive.h>
 
-@interface SBFaq : MaaSModel
+@interface SBFaq : MaaSModel {
+	NSString *_question;
+	NSString *_answer;
+	BOOL _published;
+}
 
 @property (nonatomic, strong) NSString *question;
 @property (nonatomic, strong) NSString *answer;

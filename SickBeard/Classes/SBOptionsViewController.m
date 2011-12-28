@@ -207,7 +207,6 @@
 - (void)statusViewController:(SBStatusViewController *)controller didSelectStatus:(NSString *)stat {
 	status = [stat copy];
 	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:kStatusIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
-	//self.statusLabel.text = status;
 }
 
 - (void)qualityViewController:(SBQualityViewController *)controller didSelectQualities:(NSMutableArray *)qualities {
@@ -216,12 +215,10 @@
 	if (controller.qualityType == QualityTypeInitial) {
 		initialQualities = qualities;
 		[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:kInitialQualityIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
-//		self.initialQualityLabel.text = [NSString stringWithFormat:@"%d", initialQualities.count];
 	}
 	else if (controller.qualityType == QualityTypeArchive) {
 		archiveQualities = qualities;
 		[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:kArchiveQualityIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
-//		self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", archiveQualities.count];
 	}
 }
 

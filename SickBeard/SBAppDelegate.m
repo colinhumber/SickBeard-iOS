@@ -11,8 +11,8 @@
 #import "SBServerDetailsViewController.h"
 #import "SickbeardAPIClient.h"
 #import "SDURLCache.h"
-#import "SBITunesUrlCache.h"
 #import <MaaSive/MaaSive.h>
+
 
 @implementation SBAppDelegate
 
@@ -27,7 +27,6 @@
 	[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"menu-bar"] 
 									   forBarMetrics:UIBarMetricsDefault];
 	[[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:RGBCOLOR(127, 92, 59)];
-//	[[UISegmentedControl appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:RGBCOLOR(122, 134, 0)];
 }
 
 
@@ -35,8 +34,8 @@
 	[TestFlight takeOff:@"9677d08cdc79deabbe7610f9edb5b4f9_MzY5MTgyMDExLTEwLTI1IDIyOjUwOjMxLjg0Mjg3OA"];
 
 	MaaSManager *maasManager = [MaaSManager sharedManager];
-	maasManager.appId = @"4c96130105e369267a20b54e";
-	maasManager.secretKey = @"c82fb6f8cc24d58b27f1fd0d4758363ea61fa63d89d195f61a75c39f32ee3ceb4cc4336191";
+	maasManager.appId = @"68df4871fede98e56c2c";
+	maasManager.secretKey = @"b16826cce9657a88d49076d2513902b83e7e5b65b519e5b774de56eb45515fdcf93131996cbf3e";
 	
 	SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024   // 1MB mem cache
 														 diskCapacity:1024*1024*5 // 5MB disk cache
@@ -76,7 +75,7 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-	[[SBITunesUrlCache sharedCache] save];
+
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

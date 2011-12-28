@@ -28,10 +28,4 @@
 @property (nonatomic, strong) SBShow *show;
 @property (nonatomic, weak) id<SBAddShowDelegate> delegate;
 
-//@property (nonatomic, strong) IBOutlet UILabel *initialQualityLabel;
-//@property (nonatomic, strong) IBOutlet UILabel *archiveQualityLabel;
-//@property (nonatomic, strong) IBOutlet UILabel *statusLabel;
-//@property (nonatomic, strong) IBOutlet UISwitch *seasonFolderSwitch;
-
-
 @end

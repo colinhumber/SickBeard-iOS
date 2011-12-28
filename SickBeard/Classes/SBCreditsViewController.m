@@ -46,14 +46,19 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (NSArray*)sortedKeys {
+	return [credits.allKeys sort:^NSComparisonResult(id obj1, id obj2) {
+		return [obj1 compare:obj2 options:NSCaseInsensitiveSearch | NSNumericSearch];
+	}];
+}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView {
 	return credits.allKeys.count;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	NSString *sectionKey = [self.credits.allKeys objectAtIndex:section];
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {	
+	NSString *sectionKey = [[self sortedKeys] objectAtIndex:section];
 	NSDictionary *creditDict = [self.credits objectForKey:sectionKey];
 
 	return [creditDict objectForKey:@"groupName"];
@@ -62,17 +67,27 @@
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	NSString *title = [self tableView:tableView titleForHeaderInSection:section];
 	
+	if (title.length == 0) {
+		return nil;
+	}
+	
 	SBSectionHeaderView *header = [[SBSectionHeaderView alloc] init];
 	header.sectionLabel.text = title;
 	return header;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	NSString *title = [self tableView:tableView titleForHeaderInSection:section];
+	
+	if (title.length == 0) {
+		return 0;
+	}
+	
 	return 50;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	NSString *sectionKey = [self.credits.allKeys objectAtIndex:section];
+	NSString *sectionKey = [[self sortedKeys] objectAtIndex:section];
 	NSDictionary *creditDict = [self.credits objectForKey:sectionKey];
 	
 	return [[creditDict objectForKey:@"items"] count];
@@ -80,7 +95,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	NSString *sectionKey = [self.credits.allKeys objectAtIndex:indexPath.section];
+	NSString *sectionKey = [[self sortedKeys] objectAtIndex:indexPath.section];
 	NSDictionary *creditDict = [self.credits objectForKey:sectionKey];
 	NSArray *creds = [creditDict objectForKey:@"items"];
 	NSDictionary *credit = [creds objectAtIndex:indexPath.row];
@@ -109,6 +124,14 @@
 	cell.textLabel.text = [credit objectForKey:@"role"];
 	cell.detailTextLabel.text = [credit objectForKey:@"name"];
 	
+	NSURL *url = [NSURL URLWithString:[credit objectForKey:@"url"]];
+	if ([[url scheme] isEqualToString:@"sbSegue"]) {
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	}
+	else {
+		cell.accessoryType = UITableViewCellAccessoryNone;
+	}
+	
 	return cell;
 }
 
@@ -116,18 +139,23 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-	NSString *sectionKey = [self.credits.allKeys objectAtIndex:indexPath.section];
+	NSString *sectionKey = [[self sortedKeys] objectAtIndex:indexPath.section];
 	NSDictionary *creditDict = [self.credits objectForKey:sectionKey];
 	NSArray *creds = [creditDict objectForKey:@"items"];
 	NSDictionary *credit = [creds objectAtIndex:indexPath.row];
 	
-	NSString *urlPath = [credit objectForKey:@"url"];
-	if (urlPath.length > 0) {
-		SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:urlPath];
-		webViewController.toolbar.tintColor = nil;
-		webViewController.toolbar.barStyle = UIBarStyleBlack;
-		webViewController.availableActions = SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink | SVWebViewControllerAvailableActionsOpenInSafari;		
-		[self presentViewController:webViewController animated:YES completion:nil];
+	NSURL *url = [NSURL URLWithString:[credit objectForKey:@"url"]];
+	if (url) {
+		if ([[url scheme] rangeOfString:@"http"].location != NSNotFound) {
+			SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithURL:url];
+			webViewController.toolbar.tintColor = nil;
+			webViewController.toolbar.barStyle = UIBarStyleBlack;
+			webViewController.availableActions = SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink | SVWebViewControllerAvailableActionsOpenInSafari;		
+			[self presentViewController:webViewController animated:YES completion:nil];
+		}
+		else if ([[url scheme] isEqualToString:@"sbSegue"]) {
+			[self performSegueWithIdentifier:[url host] sender:nil];
+		}
 	}
 }
 

@@ -12,6 +12,7 @@
 @interface ComingEpisodeCell : SBBaseShowCell
 
 @property (nonatomic, strong) IBOutlet UILabel *showNameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *networkLabel;
 @property (nonatomic, strong) IBOutlet UILabel *episodeNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *airDateLabel;
 @property (nonatomic) BOOL lastCell;

@@ -30,7 +30,7 @@
 	}
 	else if ([identifier isEqualToString:@"ArchiveQualitySegue"]) {
 		SBQualityViewController *vc = segue.destinationViewController;
-		vc.qualityType = QualityTypeInitial;
+		vc.qualityType = QualityTypeArchive;
 		vc.delegate = self;
 		vc.currentQuality = [NSUserDefaults standardUserDefaults].archiveQualities;
 	}
