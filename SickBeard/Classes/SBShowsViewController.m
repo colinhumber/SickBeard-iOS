@@ -173,25 +173,24 @@
 	SBShow *show = [shows objectAtIndex:indexPath.row];
 	cell.showNameLabel.text = show.showName;	
 	cell.networkLabel.text = show.network;
-	
 	cell.statusLabel.text = [SBShow showStatusAsString:show.status];
-	if (show.status == ShowStatusContinuing) {
-		cell.statusLabel.textColor = RGBCOLOR(21, 93, 45);
-	}
-	else if (show.status == ShowStatusEnded) {
-		cell.statusLabel.textColor = RGBCOLOR(202, 50, 56);
-	}
-	else {
-		cell.statusLabel.textColor = [UIColor grayColor];
-	}
+	
 	
 	if (show.status == ShowStatusEnded) {
+		cell.statusLabel.textColor = RGBCOLOR(202, 50, 56);
 		cell.nextEpisodeAirdateLabel.text = NSLocalizedString(@"Ended", @"Ended");
 	}
 	else {
 		cell.nextEpisodeAirdateLabel.text = show.nextEpisodeDate != nil ? [show.nextEpisodeDate displayString] : NSLocalizedString(@"No airdate found", @"No airdate found");
-	}	
 
+		if (show.status == ShowStatusContinuing) {
+			cell.statusLabel.textColor = RGBCOLOR(21, 93, 45);
+		}
+		else {
+			cell.statusLabel.textColor = [UIColor grayColor];			
+		}		
+	}
+	
 	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID] 
 					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
 	

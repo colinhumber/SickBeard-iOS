@@ -150,6 +150,7 @@
 		95D3A8001492AE74005ED387 /* greenArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D3A7FE1492AE74005ED387 /* greenArrow.png */; };
 		95D3A8011492AE74005ED387 /* greenArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D3A7FF1492AE74005ED387 /* greenArrow@2x.png */; };
 		95D3A8431492B61C005ED387 /* EpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95D3A8421492B61C005ED387 /* EpisodeCell.m */; };
+		95D585F514BB57D20000347D /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D585F414BB57D20000347D /* Icon@2x.png */; };
 		95D858AF1464590800B7DDC7 /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95D858AE1464590800B7DDC7 /* Defaults.plist */; };
 		95D9B3FF1468905200E4CA9D /* navbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D9B3FE1468905200E4CA9D /* navbar_bg@2x.png */; };
 		95DA8C0114A24BAD003FEC8A /* legal.html in Resources */ = {isa = PBXBuildFile; fileRef = 95DA8C0014A24BAD003FEC8A /* legal.html */; };
@@ -406,6 +407,7 @@
 		95D3A7FF1492AE74005ED387 /* greenArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenArrow@2x.png"; sourceTree = "<group>"; };
 		95D3A8411492B61C005ED387 /* EpisodeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EpisodeCell.h; path = Classes/EpisodeCell.h; sourceTree = "<group>"; };
 		95D3A8421492B61C005ED387 /* EpisodeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EpisodeCell.m; path = Classes/EpisodeCell.m; sourceTree = "<group>"; };
+		95D585F414BB57D20000347D /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		95D858AE1464590800B7DDC7 /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Defaults.plist; path = Resources/Defaults.plist; sourceTree = "<group>"; };
 		95D9B3FE1468905200E4CA9D /* navbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_bg@2x.png"; sourceTree = "<group>"; };
 		95DA8C0014A24BAD003FEC8A /* legal.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = legal.html; path = Resources/legal.html; sourceTree = "<group>"; };
@@ -660,6 +662,7 @@
 				95C76DE6148E90B9008EDF7A /* gear@2x.png */,
 				95D9B3FE1468905200E4CA9D /* navbar_bg@2x.png */,
 				9563CD91140D4C3800920795 /* Icon.png */,
+				95D585F414BB57D20000347D /* Icon@2x.png */,
 				9563CD40140D47B800920795 /* Default.png */,
 				9563CD41140D47B800920795 /* Default@2x.png */,
 			);
@@ -1216,6 +1219,7 @@
 				959346C9149A622700C21971 /* placeholder@2x.png in Resources */,
 				95394403149BF66E002E4ACE /* Credits.plist in Resources */,
 				95DA8C0114A24BAD003FEC8A /* legal.html in Resources */,
+				95D585F514BB57D20000347D /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1483,8 +1487,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Colin Humber";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Colin Humber";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/SickBeard/Appboy\"",
@@ -1499,8 +1503,8 @@
 					"\"$(SRCROOT)/SickBeard/Appboy/SBJson\"",
 				);
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "51FFE8DD-7BB5-413E-8AF6-0377432772C2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "51FFE8DD-7BB5-413E-8AF6-0377432772C2";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};

@@ -43,7 +43,7 @@
 	
 	serverUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@api/%@/?%@", [serverUrl absoluteString], server.apiKey, [params gtm_httpArgumentsString]]];
 	
-	NSLog(@"URL created: %@", serverUrl);
+	//NSLog(@"URL created: %@", serverUrl);
 	return [serverUrl absoluteString];
 }
 
