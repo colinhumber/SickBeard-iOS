@@ -197,6 +197,7 @@
 														   RunAfterDelay(2, ^{
 															   [NSUserDefaults standardUserDefaults].serverHasBeenSetup = YES;
 															   [NSUserDefaults standardUserDefaults].server = server;
+															   [NSUserDefaults standardUserDefaults].shouldUpdateShowList = YES;
 															   [SickbeardAPIClient sharedClient].currentServer = server;
 															   
 															   [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Server saved", @"Server saved")];

@@ -17,6 +17,8 @@ NSString *const SBServerKey = @"SBServerKey";
 NSString *const SBTemporaryServerKey = @"SBTemporaryServerKey";
 NSString *const SBDefaultDirectoriesKey = @"SBDefaultDirectoriesKey";
 NSString *const SBDefaultDirectoryIndexKey = @"SBDefaultDirectoryIndexKey";
+NSString *const SBShouldUpdateShowList = @"SBShouldUpdateShowList";
+
 
 NSString *const SBInitialQualitiesKey = @"SBInitialQualitiesKey";
 NSString *const SBArchiveQualitiesKey = @"SBArchiveQualitiesKey";
@@ -89,6 +91,14 @@ NSString *const SBStatusKey = @"SBStatusKey";
 	return [self.defaultDirectories find:^BOOL(SBRootDirectory *dir) {
 		return dir.isDefault;
 	}];
+}
+
+- (void)setShouldUpdateShowList:(BOOL)v {
+	[self setBool:v forKey:SBShouldUpdateShowList];
+}
+
+- (BOOL)getShouldUpdateShowList {
+	return [self boolForKey:SBShouldUpdateShowList];
 }
 
 #pragma mark - Settings

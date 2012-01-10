@@ -44,6 +44,18 @@
 	self.emptyView.emptyLabel.text = NSLocalizedString(@"No shows found", @"No shows found");
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	if ([NSUserDefaults standardUserDefaults].shouldUpdateShowList) {
+		[NSUserDefaults standardUserDefaults].shouldUpdateShowList = NO;
+		[shows removeAllObjects];
+		[self.tableView reloadData];
+		
+		[self loadData];
+	}
+}
+
 - (void)viewDidAppear:(BOOL)animated {
 	[TestFlight passCheckpoint:@"Viewed show list"];
 	
