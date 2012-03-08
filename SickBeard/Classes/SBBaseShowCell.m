@@ -52,7 +52,7 @@
 }
 
 - (void)prepareForReuse {
-	[self.showImageView cancelCurrentImageLoad];
+	[self.showImageView cancelImageRequestOperation];
 //	self.showImageView.image = nil;
 	[super prepareForReuse];
 }

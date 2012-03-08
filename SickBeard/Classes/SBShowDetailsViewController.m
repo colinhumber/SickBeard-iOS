@@ -141,7 +141,7 @@
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandSeasons
 									   parameters:[NSDictionary dictionaryWithObject:show.tvdbID forKey:@"tvdbid"]
-										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -217,7 +217,7 @@
 												  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [self finishDataLoad:error];
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving show information", @"Error retrieving show information") 
 																  message:error.localizedDescription 
@@ -479,7 +479,7 @@
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
 									   parameters:params 
-										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -491,7 +491,7 @@
 												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
 																  message:[NSString stringWithFormat:NSLocalizedString(@"Could not retreive shows \n%@",@"Could not retreive shows \n%@" ), 
 																		   error.localizedDescription] 
@@ -548,7 +548,7 @@
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
 									   parameters:params 
-										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -560,7 +560,7 @@
 												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
 																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	

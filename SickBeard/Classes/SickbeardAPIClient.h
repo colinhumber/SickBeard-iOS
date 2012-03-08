@@ -23,8 +23,8 @@ typedef enum {
 	HTTPMethodPOST
 } SBHTTPMethod;
 
-typedef void (^APISuccessBlock)(NSURLRequest *request, NSHTTPURLResponse *response, id JSON);
-typedef void (^APIErrorBlock)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error);
+typedef void (^APISuccessBlock)(NSURLRequest *request, NSURLResponse *response, id JSON);
+typedef void (^APIErrorBlock)(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON);
 
 @interface SickbeardAPIClient : NSObject
 

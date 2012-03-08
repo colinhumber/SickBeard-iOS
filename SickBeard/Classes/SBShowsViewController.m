@@ -99,7 +99,7 @@
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShows 
 									   parameters:params
-										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -132,7 +132,7 @@
 											  [self.tableView reloadData];
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }
-										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
@@ -219,7 +219,7 @@
 		
 		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShowDelete 
 										   parameters:params 
-											  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+											  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 												  NSString *result = [JSON objectForKey:@"result"];
 												  
 												  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -235,7 +235,7 @@
 												  
 												  [SVProgressHUD dismiss];
 											  }
-											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+											  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error deleting show", @"Error deleting show") 
 																	  message:error.localizedDescription 
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];			

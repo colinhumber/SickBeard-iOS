@@ -48,7 +48,7 @@
 		[self.window makeKeyAndVisible];
 
 		UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-		SBServerDetailsViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"SBServerDetailsViewController"];
+		SBServerDetailsViewController *vc = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([SBServerDetailsViewController class])];
 		
 		UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
 		

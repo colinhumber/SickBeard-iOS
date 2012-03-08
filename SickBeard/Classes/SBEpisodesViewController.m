@@ -89,7 +89,7 @@
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandComingEpisodes 
 									   parameters:nil 
-										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -142,7 +142,7 @@
 
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving episodes", @"Error retrieving episodes")
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			

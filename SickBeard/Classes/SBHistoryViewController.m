@@ -98,7 +98,7 @@
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistory 
 									   parameters:params
-										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -130,7 +130,7 @@
 											  [self.tableView reloadData];
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }
-										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving history", @"Error retrieving history") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
@@ -168,11 +168,11 @@
 		[SVProgressHUD showWithStatus:NSLocalizedString(@"Clearing history", @"Clearing history")];
 		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistoryClear 
 										   parameters:nil 
-											  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+											  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 												  [SVProgressHUD dismiss];
 												  [self loadData];
 											  } 
-											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+											  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error clearing history", @"Error clearing history")
 																	  message:error.localizedDescription 
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
@@ -184,11 +184,11 @@
 		[SVProgressHUD showWithStatus:NSLocalizedString(@"Trimming history", @"Trimming history")];
 		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistoryTrim
 										   parameters:nil 
-											  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+											  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 												  [SVProgressHUD dismiss];
 												  [self loadData];
 											  } 
-											  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+											  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error trimming history", @"Error trimming history") 
 																	  message:error.localizedDescription 
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];

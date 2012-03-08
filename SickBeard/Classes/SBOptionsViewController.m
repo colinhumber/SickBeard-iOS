@@ -107,7 +107,7 @@
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShowAddNew 
 									   parameters:params 
-										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -121,7 +121,7 @@
 												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
 																  message:error.localizedDescription
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  
@@ -142,7 +142,7 @@
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandSetDefaults 
 									   parameters:params 
-										  success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {												  
@@ -157,7 +157,7 @@
 												  if (![parentFolder isEqual:defaults.defaultDirectory]) {
 													  [[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandAddRootDirectory
 																						 parameters:[NSDictionary dictionaryWithObjectsAndKeys:parentFolder.path, @"location", @"1", @"default", nil] 
-																							success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+																							success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 																								NSString *result = [JSON objectForKey:@"result"];
 																								
 																								if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -181,7 +181,7 @@
 																									[SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
 																								}
 																							}
-																							failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+																							failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 																								[PRPAlertView showWithTitle:NSLocalizedString(@"Error saving defaults", @"Error saving defaults")
 																													message:error.localizedDescription 
 																												buttonTitle:NSLocalizedString(@"OK", @"OK")];
@@ -195,7 +195,7 @@
 												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error saving defaults", @"Error saving defaults") 
 																  message:error.localizedDescription
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  

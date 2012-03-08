@@ -74,9 +74,9 @@ static SickbeardAPIClient *sharedClient = nil;
 - (void)loadDefaults:(SBServer*)server {
 	NSString *defaultsUrl = [SBCommandBuilder URLForCommand:SickBeardCommandGetDefaults server:server params:nil];
 	NSString *dirsUrl = [SBCommandBuilder URLForCommand:SickBeardCommandGetRootDirectories server:server params:nil];
-	
+
 	AFJSONRequestOperation *defaultsOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:defaultsUrl]] 
-																								success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+																								success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 																									NSString *result = [JSON objectForKey:@"result"];
 																									
 																									if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -96,12 +96,12 @@ static SickbeardAPIClient *sharedClient = nil;
 																										[defaults synchronize];
 																									}
 																								}
-																								failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+																								failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 																									NSLog(@"Error getting defaults: %@", error);
 																								}];
 
 	AFJSONRequestOperation *dirsOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:dirsUrl]] 
-																							success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+																							success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 																								NSString *result = [JSON objectForKey:@"result"];
 																								
 																								if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -120,7 +120,7 @@ static SickbeardAPIClient *sharedClient = nil;
 																									[defaults synchronize];
 																								}
 																							}
-																							failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+																							failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 																								NSLog(@"Error getting root dirs: %@", error);
 																							}];
 	

@@ -187,7 +187,7 @@
 	 
 	 RunAfterDelay(0.5, ^{
 		 [[SickbeardAPIClient sharedClient] pingServer:server
-											   success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+											   success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 												   NSString *result = [JSON objectForKey:@"result"];
 												   
 												   if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -217,7 +217,7 @@
 													   [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"]];
 												   }
 											   }
-											   failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+											   failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 												   [SVProgressHUD dismissWithError:[NSString stringWithFormat:NSLocalizedString(@"Unable to connect to Sick Beard (%@)", @"Unable to connect to Sick Beard (%@)"),
 																					server.serviceEndpointPath] 
 																		afterDelay:1];
