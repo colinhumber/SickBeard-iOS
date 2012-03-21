@@ -538,7 +538,7 @@
                                 <rect key="frame" x="0.0" y="5" width="320" height="142"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="4dg-M5-Cs1">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="4dg-M5-Cs1" customClass="NINetworkImageView">
                                         <rect key="frame" x="10" y="10" width="300" height="55"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -1446,7 +1446,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="58N-VG-ZQh">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="58N-VG-ZQh" customClass="NINetworkImageView">
                                                     <rect key="frame" x="13" y="10" width="61" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -1645,7 +1645,7 @@
                 <relationship kind="outlet" name="headerContainerView" candidateClass="SBCellBackground"/>
                 <relationship kind="outlet" name="headerView" candidateClass="SBSectionHeaderView"/>
                 <relationship kind="outlet" name="nextHeaderView" candidateClass="SBEpisodeDetailsHeaderView"/>
-                <relationship kind="outlet" name="showPosterImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="showPosterImageView" candidateClass="NINetworkImageView"/>
                 <relationship kind="outlet" name="spinner" candidateClass="UIActivityIndicatorView"/>
             </relationships>
         </class>
@@ -1731,7 +1731,7 @@
                 <relationship kind="outlet" name="episodeCountLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="networkLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="progressBar" candidateClass="TDHUDProgressBar"/>
-                <relationship kind="outlet" name="showImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="showImageView" candidateClass="NINetworkImageView"/>
                 <relationship kind="outlet" name="showNameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
             </relationships>

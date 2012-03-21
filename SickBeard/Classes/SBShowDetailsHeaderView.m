@@ -22,7 +22,9 @@
 - (void)awakeFromNib {
 	self.progressBar.borderColor = RGBCOLOR(72, 34, 13);
 	self.progressBar.barColor = RGBCOLOR(72, 34, 13);
-	self.progressBar.backgroundColor = [UIColor clearColor];	
+	self.progressBar.backgroundColor = [UIColor clearColor];
+	
+	self.showImageView.initialImage = [UIImage imageNamed:@"placeholder"];
 }
 
 - (id)initWithFrame:(CGRect)frame

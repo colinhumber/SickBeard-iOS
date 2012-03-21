@@ -45,7 +45,7 @@
 	
 	self.title = NSLocalizedString(@"Details", @"Details");
 
-	[self.showPosterImageView setPathToNetworkImage:[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:episode.show.tvdbID]];
+	[self.showPosterImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:episode.show.tvdbID] absoluteString]];
 //	[self.showPosterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:episode.show.tvdbID]
 //							 placeholderImage:nil];
 
