@@ -23,4 +23,6 @@
 	#import "SVProgressHUD.h"
 	#import "TestFlight.h"
 	#import "SBDrawingHelpers.h"
+	#import "NimbusCore.h"
+	#import "NINetworkImageView.h"
 #endif

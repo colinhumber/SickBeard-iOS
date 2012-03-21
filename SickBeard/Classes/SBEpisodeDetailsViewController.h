@@ -28,7 +28,7 @@
 @property (nonatomic, strong) IBOutlet UIView *containerView;
 
 @property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (strong, nonatomic) IBOutlet UIImageView *showPosterImageView;
+@property (strong, nonatomic) IBOutlet NINetworkImageView *showPosterImageView;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
 @property (nonatomic, strong) SBEpisode *episode;
 @property (nonatomic, strong) IBOutlet SBSectionHeaderView *headerView;

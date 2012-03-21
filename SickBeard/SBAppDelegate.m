@@ -33,6 +33,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	[TestFlight takeOff:@"9677d08cdc79deabbe7610f9edb5b4f9_MzY5MTgyMDExLTEwLTI1IDIyOjUwOjMxLjg0Mjg3OA"];
 
+	[[Nimbus networkOperationQueue] setMaxConcurrentOperationCount:1];
+	
 	MaaSManager *maasManager = [MaaSManager sharedManager];
 	maasManager.appId = @"68df4871fede98e56c2c";
 	maasManager.secretKey = @"b16826cce9657a88d49076d2513902b83e7e5b65b519e5b774de56eb45515fdcf93131996cbf3e";

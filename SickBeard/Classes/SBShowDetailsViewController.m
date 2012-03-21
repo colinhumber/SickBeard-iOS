@@ -60,7 +60,9 @@
 	UINib *headerNib = [UINib nibWithNibName:@"SBShowDetailsHeaderView" bundle:nil];
 	[headerNib instantiateWithOwner:self options:nil];
 	self.detailsHeaderView.showNameLabel.text = show.showName;
-	[self.detailsHeaderView.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID]];
+	
+	[self.detailsHeaderView.showImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID] absoluteString]];
+//	[self.detailsHeaderView.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID]];
 	self.detailsHeaderView.networkLabel.text = show.network;
 	
 	self.detailsHeaderView.statusLabel.text = [SBShow showStatusAsString:show.status];

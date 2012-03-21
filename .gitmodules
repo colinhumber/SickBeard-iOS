@@ -31,3 +31,6 @@
 [submodule "SickBeard/TDHUDProgressBar"]
 	path = SickBeard/TDHUDProgressBar
 	url = https://github.com/tmdvs/TDHUDProgressBar.git
+[submodule "SickBeard/Nimbus"]
+	path = SickBeard/Nimbus
+	url = https://github.com/jverkoey/nimbus.git

@@ -14,7 +14,7 @@
 @interface SBShowDetailsHeaderView : UIView
 
 @property (nonatomic, strong) IBOutlet SBCellBackground *backgroundView;
-@property (nonatomic, strong) IBOutlet UIImageView *showImageView;
+@property (nonatomic, strong) IBOutlet NINetworkImageView *showImageView;
 @property (nonatomic, strong) IBOutlet UILabel *showNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *networkLabel;
 @property (nonatomic, strong) IBOutlet UILabel *statusLabel;

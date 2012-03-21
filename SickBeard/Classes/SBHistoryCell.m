@@ -17,6 +17,10 @@
 @synthesize createdDateLabel;
 @synthesize qualityLabel;
 
+- (void)awakeFromNib {
+	self.showImageView.initialImage = [UIImage imageNamed:@"placeholder"];
+}
+
 - (void)commonInit {
 	[super commonInit];
 	SBCellBackground *backgroundView = (SBCellBackground*)self.backgroundView;

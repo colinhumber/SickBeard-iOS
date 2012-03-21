@@ -212,9 +212,11 @@
 	cell.showNameLabel.text = entry.showName;	
 	cell.createdDateLabel.text = [entry.createdDate displayDateTimeString];
 	cell.seasonEpisodeLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Season %d, episode %d", @"Season %d, episode %d"), entry.season, entry.episode];
-	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:entry.tvdbID] 
-					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
-	
+
+	[cell.showImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] posterURLForTVDBID:entry.tvdbID] absoluteString]];
+	//	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:entry.tvdbID] 
+//					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
+//	
 	return cell;
 }
 

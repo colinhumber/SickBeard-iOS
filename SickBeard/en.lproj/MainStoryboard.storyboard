@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11C74" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Zuk-Bn-c35">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Zuk-Bn-c35">
     <dependencies>
+        <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
     </dependencies>
     <scenes>
+        <!--Add Show View Controller - Find Show-->
         <scene sceneID="4Oz-Fk-Zhf">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Vm-L5-cqg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -25,7 +27,7 @@
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Name" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="CIN-yS-hBw">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Name" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="CIN-yS-hBw">
                                                     <rect key="frame" x="10" y="11" width="104" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
@@ -51,7 +53,7 @@
                                         <rect key="frame" x="0.0" y="91" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Language" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qIL-pN-qHu">
@@ -78,7 +80,7 @@
                                         <rect key="frame" x="0.0" y="135" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="96d-I6-cBU">
@@ -139,6 +141,7 @@
             </objects>
             <point key="canvasLocation" x="1442" y="-979"/>
         </scene>
+        <!--Options View Controller - Options-->
         <scene sceneID="HA2-6B-tCg">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fHz-d2-7gg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -171,7 +174,7 @@
                                 <rect key="frame" x="0.0" y="91" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="10" y="1" width="280" height="43"/>
+                                    <rect key="frame" x="10" y="0.0" width="280" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9sf-XG-a4Z">
@@ -197,7 +200,7 @@
                                 <rect key="frame" x="0.0" y="135" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                    <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Season Folders" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="J3b-UD-urU">
@@ -224,10 +227,10 @@
                                 <rect key="frame" x="0.0" y="179" width="320" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                    <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Save Defaults" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="wPc-3N-KpF">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Save Defaults" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="wPc-3N-KpF">
                                             <rect key="frame" x="75" y="11" width="150" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -263,6 +266,7 @@
             </objects>
             <point key="canvasLocation" x="1918" y="-979"/>
         </scene>
+        <!--Status View Controller - Status-->
         <scene sceneID="MQ4-hB-vau">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z72-Hp-xvk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -302,6 +306,7 @@
             </objects>
             <point key="canvasLocation" x="2341" y="-317"/>
         </scene>
+        <!--Quality View Controller - Download Quality-->
         <scene sceneID="JFx-UX-uzO">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FTQ-y4-6u2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -341,6 +346,7 @@
             </objects>
             <point key="canvasLocation" x="2907" y="-317"/>
         </scene>
+        <!--Shows View Controller - Shows-->
         <scene sceneID="0Ao-1H-BtT">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J3R-98-N0V" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -362,32 +368,32 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="ana-8h-sUO">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="ana-8h-sUO" customClass="NINetworkImageView">
                                                     <rect key="frame" x="13" y="10" width="61" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Name" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="IuD-ID-mnY" userLabel="Show Name">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Name" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="IuD-ID-mnY" userLabel="Show Name">
                                                     <rect key="frame" x="83" y="12" width="203" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Network" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="zrl-Uc-4hL" userLabel="Network">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Network" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="zrl-Uc-4hL" userLabel="Network">
                                                     <rect key="frame" x="83" y="30" width="220" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Status" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="PCU-NH-vf5" userLabel="Network">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Status" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="PCU-NH-vf5" userLabel="Network">
                                                     <rect key="frame" x="83" y="47" width="220" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="gB1-Ic-M49">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="gB1-Ic-M49">
                                                     <rect key="frame" x="109" y="70" width="170" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -434,6 +440,7 @@
             </objects>
             <point key="canvasLocation" x="391" y="-709"/>
         </scene>
+        <!--Show Details View Controller-->
         <scene sceneID="DWF-Vk-0r2">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ajY-gn-H1J" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -454,14 +461,14 @@
                                             <rect key="frame" x="10" y="1" width="300" height="58"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Name" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="2w0-zS-o5h" userLabel="Show Name">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Name" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="2w0-zS-o5h" userLabel="Show Name">
                                                     <rect key="frame" x="14" y="6" width="218" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="lGO-QF-yWQ">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="lGO-QF-yWQ">
                                                     <rect key="frame" x="40" y="27" width="192" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -514,6 +521,7 @@
             </objects>
             <point key="canvasLocation" x="964" y="-317"/>
         </scene>
+        <!--Episode Details View Controller-->
         <scene sceneID="p5B-d2-4In">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ag9-5l-GKV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -616,6 +624,7 @@
             </objects>
             <point key="canvasLocation" x="1401" y="-317"/>
         </scene>
+        <!--Episodes View Controller - Episodes-->
         <scene sceneID="sPH-vc-09T">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C2e-EG-tIF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -640,32 +649,32 @@
                                                     <rect key="frame" x="83" y="70" width="23" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Nuw-uO-7Cd">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Nuw-uO-7Cd" customClass="NINetworkImageView">
                                                     <rect key="frame" x="13" y="10" width="61" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Name" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="A9u-T6-hAA">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Name" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="A9u-T6-hAA">
                                                     <rect key="frame" x="83" y="12" width="204" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Network" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="y0h-KF-k1z" userLabel="Network">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Network" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="y0h-KF-k1z" userLabel="Network">
                                                     <rect key="frame" x="83" y="30" width="204" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Episode Name" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="vY9-Ao-9jG">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Episode Name" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="vY9-Ao-9jG">
                                                     <rect key="frame" x="83" y="47" width="204" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Wednesday, May 1 on ABC" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="tpr-zx-gN7">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Wednesday, May 1 on ABC" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="tpr-zx-gN7">
                                                     <rect key="frame" x="109" y="70" width="178" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -701,6 +710,7 @@
             </objects>
             <point key="canvasLocation" x="-1" y="-709"/>
         </scene>
+        <!--Settings View Controller - Settings-->
         <scene sceneID="aY0-he-up5">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F1i-z6-SqB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -773,7 +783,7 @@
                                         <rect key="frame" x="0.0" y="147" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="280" height="43"/>
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Archive Quality" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gHM-4W-Of9">
@@ -804,7 +814,7 @@
                                         <rect key="frame" x="0.0" y="191" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Season Folders" lineBreakMode="tailTruncation" minimumFontSize="10" id="Jk5-bx-uSQ">
@@ -831,7 +841,7 @@
                                         <rect key="frame" x="0.0" y="235" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="280" height="43"/>
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h6Q-jU-gf2">
@@ -842,7 +852,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="TTTTTTTTTTT" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" minimumFontSize="10" id="1pb-ut-dpU">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="TTTTTTTTTTT" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="1pb-ut-dpU">
                                                     <rect key="frame" x="169" y="13" width="101" height="19"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -893,7 +903,7 @@
                                         <rect key="frame" x="0.0" y="345" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Twitter" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7j7-Uw-ecV">
@@ -992,6 +1002,7 @@
             </objects>
             <point key="canvasLocation" x="1636" y="467"/>
         </scene>
+        <!--Server Details View Controller-->
         <scene sceneID="Mx4-pT-T89">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s8e-OF-GTz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1036,7 +1047,7 @@
                                         <rect key="frame" x="0.0" y="55" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Host" lineBreakMode="tailTruncation" minimumFontSize="10" id="O2b-5G-Bsh">
@@ -1065,7 +1076,7 @@
                                         <rect key="frame" x="0.0" y="99" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Port" lineBreakMode="tailTruncation" minimumFontSize="10" id="Xrf-AA-am2">
@@ -1094,7 +1105,7 @@
                                         <rect key="frame" x="0.0" y="143" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Path" lineBreakMode="tailTruncation" minimumFontSize="10" id="5XO-1d-jo9">
@@ -1123,7 +1134,7 @@
                                         <rect key="frame" x="0.0" y="187" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="API Key" lineBreakMode="tailTruncation" minimumFontSize="10" id="3pW-xm-g0O">
@@ -1192,6 +1203,7 @@
             </objects>
             <point key="canvasLocation" x="2164" y="467"/>
         </scene>
+        <!--Help View Controller-->
         <scene sceneID="psE-aO-akm">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fyv-jF-f3y" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1251,6 +1263,7 @@
             </objects>
             <point key="canvasLocation" x="2164" y="1647"/>
         </scene>
+        <!--Credits View Controller-->
         <scene sceneID="K5L-ox-i6L">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i3k-oL-rRZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1309,6 +1322,7 @@
             </objects>
             <point key="canvasLocation" x="2164" y="1055"/>
         </scene>
+        <!--Legal View Controller-->
         <scene sceneID="bbN-nk-P3Y">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ibS-5g-sgo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1334,6 +1348,7 @@
             </objects>
             <point key="canvasLocation" x="2553" y="1056"/>
         </scene>
+        <!--Main View Controller-->
         <scene sceneID="GUA-3y-IiU">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r6O-9q-W8w" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1370,6 +1385,7 @@
             </objects>
             <point key="canvasLocation" x="228" y="-121"/>
         </scene>
+        <!--Navigation Controller-->
         <scene sceneID="pZ1-vx-KTs">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rCJ-lS-Kca" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1387,6 +1403,7 @@
             </objects>
             <point key="canvasLocation" x="964" y="-979"/>
         </scene>
+        <!--Navigation Controller-->
         <scene sceneID="pcP-dz-QmQ">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MEu-It-0MQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1408,6 +1425,7 @@
             </objects>
             <point key="canvasLocation" x="-298" y="-121"/>
         </scene>
+        <!--History View Controller - History-->
         <scene sceneID="Zo1-of-XHy">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Ii-sf-uJR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1432,7 +1450,7 @@
                                                     <rect key="frame" x="13" y="10" width="61" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Name" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="L2p-Np-kuC">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Name" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="L2p-Np-kuC">
                                                     <rect key="frame" x="83" y="12" width="203" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -1505,6 +1523,7 @@
             </objects>
             <point key="canvasLocation" x="401" y="524"/>
         </scene>
+        <!--Navigation Controller-->
         <scene sceneID="rqy-BJ-Iz1">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7bY-FM-1At" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1522,6 +1541,7 @@
             </objects>
             <point key="canvasLocation" x="1110" y="467"/>
         </scene>
+        <!--Navigation Controller-->
         <scene sceneID="yTq-Pp-PmS">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UnS-7h-sNe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1572,6 +1592,9 @@
         <class className="LKBadgeView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LKBadgeView.h"/>
         </class>
+        <class className="NINetworkImageView" superclassName="UIImageView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NINetworkImageView.h"/>
+        </class>
         <class className="SBAddShowViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBAddShowViewController.h"/>
             <relationships>
@@ -1584,7 +1607,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBBaseShowCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="containerView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="showImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="showImageView" candidateClass="NINetworkImageView"/>
             </relationships>
         </class>
         <class className="SBBaseTableViewController" superclassName="UIViewController">

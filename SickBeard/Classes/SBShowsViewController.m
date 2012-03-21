@@ -203,8 +203,10 @@
 		}		
 	}
 	
-	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID] 
-					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
+
+	[cell.showImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID] absoluteString]];
+//	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID] 
+//					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
 	
 	return cell;
 }

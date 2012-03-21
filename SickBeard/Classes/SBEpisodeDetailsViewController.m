@@ -45,8 +45,9 @@
 	
 	self.title = NSLocalizedString(@"Details", @"Details");
 
-	[self.showPosterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:episode.show.tvdbID]
-							 placeholderImage:nil];
+	[self.showPosterImageView setPathToNetworkImage:[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:episode.show.tvdbID]];
+//	[self.showPosterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:episode.show.tvdbID]
+//							 placeholderImage:nil];
 
 	self.headerView.sectionLabel.text = NSLocalizedString(@"Episode Summary", @"Episode Summary");
 	self.episodeDescriptionBackground.grouped = YES;

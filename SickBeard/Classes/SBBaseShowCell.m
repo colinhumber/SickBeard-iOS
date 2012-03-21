@@ -16,13 +16,17 @@
 @synthesize showImageView;
 @synthesize containerView;
 
+- (void)awakeFromNib {
+	self.showImageView.initialImage = [UIImage imageNamed:@"placeholder"];
+}
+
 - (void)commonInit {
 	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
 	self.backgroundView = backgroundView;
 	
 	SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
 	selectedBackgroundView.selected = YES;
-	self.selectedBackgroundView = selectedBackgroundView;
+	self.selectedBackgroundView = selectedBackgroundView;	
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -52,7 +56,8 @@
 }
 
 - (void)prepareForReuse {
-	[self.showImageView cancelImageRequestOperation];
+	[self.showImageView prepareForReuse];
+	//[self.showImageView cancelImageRequestOperation];
 //	self.showImageView.image = nil;
 	[super prepareForReuse];
 }
