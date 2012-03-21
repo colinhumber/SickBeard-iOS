@@ -6,10 +6,16 @@
 //  Copyright 2011 TestFlight. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#define TESTFLIGHT_SDK_VERSION @"0.8.2beta2"
+#define TESTFLIGHT_SDK_VERSION @"0.8.3"
 #undef TFLog
 
-void TFLog(NSString *format, ...);
+#if __cplusplus
+extern "C" { 
+#endif
+    void TFLog(NSString *format, ...);   
+#if __cplusplus
+}
+#endif
 
 /**
  * TestFlight object
@@ -45,7 +51,9 @@ void TFLog(NSString *format, ...);
  *                                                               library installs crash handlers overtop of the TestFlight Crash Handlers
  *   logToConsole                [ NSNumber numberWithBool:YES ] YES - default, sends log statements to Apple System Log and TestFlight log 
  *                                                               NO  - sends log statements to TestFlight log only
- *   sendLogOnlyOnCrash         [ NSNumber numberWithBool:YES ]  NO  - default, sends logs to TestFlight at the end of every session
+ *   logToSTDERR                 [ NSNumber numberWithBool:YES ] YES - default, sends log statements to STDERR when debugger is attached
+ *                                                               NO  - sends log statements to TestFlight log only
+ *   sendLogOnlyOnCrash          [ NSNumber numberWithBool:YES ] NO  - default, sends logs to TestFlight at the end of every session
  *                                                               YES - sends logs statements to TestFlight only if there was a crash
  */
 + (void)setOptions:(NSDictionary*)options;
@@ -61,5 +69,13 @@ void TFLog(NSString *format, ...);
  * Opens a feedback window that is not attached to a checkpoint
  */
 + (void)openFeedbackView;
+
+/**
+ * Submits custom feedback to the site. Sends the data in feedback to the site. This is to be used as the method to submit
+ * feedback from custom feedback forms.
+ *
+ * @param feedback Your users feedback, method does nothing if feedback is nil
+ */
++ (void)submitFeedback:(NSString*)feedback;
 
 @end
