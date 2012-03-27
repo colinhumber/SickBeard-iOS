@@ -205,7 +205,7 @@
 
 #pragma mark - Quality, Status, and Season Folders
 - (void)statusViewController:(SBStatusViewController *)controller didSelectStatus:(NSString *)stat {
-	status = [stat copy];
+	status = [[stat capitalizedString] copy];
 	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:kStatusIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
 }
 

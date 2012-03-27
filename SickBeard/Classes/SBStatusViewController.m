@@ -117,8 +117,11 @@
 	
 	cell.textLabel.text = status;
 	
-	if ([currentStatus isEqualToString:status]) {
+	if ([currentStatus isEqualToString:[status lowercaseString]]) {
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
+	}
+	else {
+		cell.accessoryType = UITableViewCellAccessoryNone;
 	}
 	
     return cell;
@@ -129,7 +132,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-	int statusIndex = [[[SBGlobal statuses] allKeys] indexOfObject:currentStatus];
+	int statusIndex = [[[SBGlobal statuses] allKeys] indexOfObject:[currentStatus capitalizedString]];
 	if (statusIndex == indexPath.row) {
 		return;
 	}
@@ -139,7 +142,7 @@
     UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
     if (newCell.accessoryType == UITableViewCellAccessoryNone) {
         newCell.accessoryType = UITableViewCellAccessoryCheckmark;
-        self.currentStatus = [[[SBGlobal statuses] allKeys] objectAtIndex:indexPath.row];
+        self.currentStatus = [[[[SBGlobal statuses] allKeys] objectAtIndex:indexPath.row] lowercaseString];
     }
 	
     UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:oldIndexPath];
@@ -147,6 +150,7 @@
         oldCell.accessoryType = UITableViewCellAccessoryNone;
     }
 	
+	[NSUserDefaults standardUserDefaults].status = self.currentStatus;
 	[self.delegate statusViewController:self didSelectStatus:self.currentStatus];
 }
 

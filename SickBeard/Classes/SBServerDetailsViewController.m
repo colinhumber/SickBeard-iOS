@@ -31,6 +31,7 @@
 @synthesize hostTextField;
 @synthesize portTextField;
 @synthesize pathTextField;
+@synthesize sslSwitch;
 @synthesize apiKeyTextField;
 @synthesize server;
 
@@ -80,6 +81,7 @@
 		nameTextField.text = @"Home";
 		hostTextField.text = @"colin.kicks-ass.net";
 		portTextField.text = @"8081";
+		sslSwitch.on = NO;
 		apiKeyTextField.text = @"aefc639b299bbbe8ed0e526ef83d415c";
 #endif		
 	}
@@ -99,6 +101,7 @@
     [self setHostTextField:nil];
     [self setPortTextField:nil];
 	[self setPathTextField:nil];
+	[self setSslSwitch:nil];
     [self setApiKeyTextField:nil];
     [super viewDidUnload];
 }
@@ -121,6 +124,7 @@
 	hostTextField.enabled = enabled;
 	portTextField.enabled = enabled;
 	pathTextField.enabled = enabled;
+	sslSwitch.enabled = enabled;
 	apiKeyTextField.enabled = enabled;
 }
 
@@ -129,14 +133,19 @@
 	hostTextField.text = server.host;
 	portTextField.text = [NSString stringWithFormat:@"%d", server.port];
 	pathTextField.text = server.path;
+	sslSwitch.on = server.useSSL;
 	apiKeyTextField.text = server.apiKey;
 }
 
 - (void)updateServerValues {
+	NSString *host = [hostTextField.text stringByReplacingOccurrencesOfString:@"http://" withString:@""];
+	host = [host stringByReplacingOccurrencesOfString:@"https://" withString:@""];
+	
 	server.name = nameTextField.text;
-	server.host = [hostTextField.text stringByReplacingOccurrencesOfString:@"http://" withString:@""];
+	server.host = host;
 	server.port = [portTextField.text intValue];
 	server.path = [pathTextField.text stringByReplacingOccurrencesOfString:@"/" withString:@""];
+	server.useSSL = sslSwitch.on;
 	server.apiKey = apiKeyTextField.text;
 }
 

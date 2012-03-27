@@ -26,6 +26,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *hostTextField;
 @property (strong, nonatomic) IBOutlet UITextField *portTextField;
 @property (strong, nonatomic) IBOutlet UITextField *pathTextField;
+@property (strong, nonatomic) IBOutlet UISwitch *sslSwitch;
 @property (strong, nonatomic) IBOutlet UITextField *apiKeyTextField;
 
 @end

@@ -15,6 +15,7 @@
 @property (nonatomic, assign) int port;
 @property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) NSString *apiKey;
+@property (nonatomic, assign) BOOL useSSL;
 @property (nonatomic, assign) BOOL isCurrent;
 
 - (BOOL)isValid;

@@ -16,6 +16,7 @@
 @synthesize port;
 @synthesize path;
 @synthesize apiKey;
+@synthesize useSSL;
 @synthesize isCurrent;
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
@@ -23,6 +24,7 @@
 	[encoder encodeObject:host forKey:@"host"];
 	[encoder encodeInt:port forKey:@"port"];
 	[encoder encodeObject:path forKey:@"path"];
+	[encoder encodeBool:useSSL forKey:@"useSSL"];
 	[encoder encodeObject:apiKey forKey:@"apiKey"];
 }
 
@@ -34,6 +36,7 @@
 		self.host = [decoder decodeObjectForKey:@"host"];
 		self.port = [decoder decodeIntForKey:@"port"];
 		self.path = [decoder decodeObjectForKey:@"path"];
+		self.useSSL = [decoder decodeBoolForKey:@"useSSL"];
 		self.apiKey = [decoder decodeObjectForKey:@"apiKey"];
 	}
 	
@@ -63,7 +66,8 @@
 }
 
 - (NSString*)serviceEndpointPath {
-	NSString *endpoint = [NSString stringWithFormat:@"http://%@:%d/", self.host, self.port];
+	NSString *protocol = useSSL ? @"https" : @"http";
+	NSString *endpoint = [NSString stringWithFormat:@"%@://%@:%d/", protocol, self.host, self.port];
 	
 	if (self.path) {
 		endpoint = [endpoint stringByAppendingFormat:@"%@/", self.path];

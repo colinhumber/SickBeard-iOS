@@ -66,7 +66,7 @@
 		
 	self.initialQualityLabel.text = [NSString stringWithFormat:@"%d", defaults.initialQualities.count];
 	self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", defaults.archiveQualities.count];
-	self.statusLabel.text = defaults.status;
+	self.statusLabel.text = [defaults.status capitalizedString];
 	self.seasonFolderSwitch.on = defaults.useSeasonFolders;
 	
 	for (int section = 0; section < [self numberOfSectionsInTableView:self.tableView]; section++) {
@@ -124,8 +124,7 @@
 
 #pragma mark - Quality and Status
 - (void)statusViewController:(SBStatusViewController *)controller didSelectStatus:(NSString *)stat {
-	[NSUserDefaults standardUserDefaults].status = stat;
-	self.statusLabel.text = stat;
+	self.statusLabel.text = [stat capitalizedString];
 }
 
 - (void)qualityViewController:(SBQualityViewController *)controller didSelectQualities:(NSMutableArray *)qualities {
