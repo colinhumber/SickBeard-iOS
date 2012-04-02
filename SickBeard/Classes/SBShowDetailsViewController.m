@@ -494,9 +494,8 @@
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
-											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
-																  message:[NSString stringWithFormat:NSLocalizedString(@"Could not retreive shows \n%@",@"Could not retreive shows \n%@" ), 
-																		   error.localizedDescription] 
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
+																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
 											  [SVProgressHUD dismiss];
 										  }];
@@ -563,8 +562,8 @@
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
-											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
-																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error setting status", @"Error setting status") 
+																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
 											  [SVProgressHUD dismiss];
 										  }];

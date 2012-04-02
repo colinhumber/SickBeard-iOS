@@ -152,7 +152,7 @@
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [self.spinner stopAnimating];
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving episode", @"Error retrieving episode") 
-																  message:[NSString stringWithFormat:NSLocalizedString(@"Could not retreive episode details \n%@", @"Could not retreive episode details \n%@"), error.localizedDescription] 
+																  message:[NSString stringWithFormat:NSLocalizedString(@"Could not retrieve episode details \n%@", @"Could not retrieve episode details \n%@"), error.localizedDescription] 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  
 										  }];
 }
@@ -236,7 +236,7 @@
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
-																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
+																  message:[NSString stringWithFormat:@"Could not retrieve shows \n%@", error.localizedDescription] 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
 											  [SVProgressHUD dismiss];
 										  }];
@@ -280,8 +280,8 @@
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
-											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
-																  message:[NSString stringWithFormat:@"Could not retreive shows \n%@", error.localizedDescription] 
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error setting status", @"Error setting status") 
+																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
 	
 											  [SVProgressHUD dismiss];

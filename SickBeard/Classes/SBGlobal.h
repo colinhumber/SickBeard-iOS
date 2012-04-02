@@ -9,9 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "OrderedDictionary.h"
 
-#define RGBCOLOR(r, g, b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1]
-#define RGBACOLOR(r, g, b, a) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
-
 #define kTVDBLinkFormat @"http://thetvdb.com/?tab=series&id=%@&lid=7"
 #define kTVRageLinkFormat @"http://www.tvrage.com/shows/id-%@"
 
