@@ -12,14 +12,14 @@
 
 @implementation SBEpisode
 
-@synthesize airDate;
-@synthesize episodeDescription;
+//@synthesize airDate;
+//@synthesize episodeDescription;
 @synthesize location;
 @synthesize name;
 @synthesize status;
-@synthesize season;
-@synthesize number;
-@synthesize show;
+//@synthesize season;
+//@synthesize number;
+//@synthesize show;
 
 - (id)initWithDictionary:(NSDictionary*)dict {
 	self = [super init];
@@ -64,47 +64,10 @@
 	return [[self alloc] initWithDictionary:dict];
 }
 
-- (void)setEpisodeDescription:(NSString *)ed {
-	if (ed.length == 0) {
-		episodeDescription = NSLocalizedString(@"No episode description", @"No episode description");
-	}
-	else {
-		episodeDescription = ed;
-	}
-}
-
-
 - (NSString*)description {
-	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | episode = S%dE%d>", [self class], self, name, season, number];
+	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | episode = S%dE%d>", [self class], self, name, self.season, self.number];
 }
 
-+ (NSString*)episodeStatusAsString:(EpisodeStatus)status {
-	switch (status) {
-		case EpisodeStatusArchived:
-			return NSLocalizedString(@"Archived", @"Archived");
-			
-		case EpisodeStatusDownloaded:
-			return NSLocalizedString(@"Downloaded", @"Downloaded");
-			
-		case EpisodeStatusIgnored:
-			return NSLocalizedString(@"Ignored", @"Ignored");
-			
-		case EpisodeStatusSkipped:
-			return NSLocalizedString(@"Skipped", @"Skipped");
-			
-		case EpisodeStatusSnatched:
-			return NSLocalizedString(@"Snatched", @"Snatched");
-			
-		case EpisodeStatusUnaired:
-			return NSLocalizedString(@"Unaired", @"Unaired");
-			
-		case EpisodeStatusWanted:
-			return NSLocalizedString(@"Wanted", @"Wanted");
-			
-		default:
-			return NSLocalizedString(@"Unknown", @"Unknown");
-	}
-}
 
 
 @end

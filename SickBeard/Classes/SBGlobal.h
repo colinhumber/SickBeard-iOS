@@ -60,6 +60,7 @@ typedef enum {
 	SickBeardCommandShowsStats,
 } SickBeardCommand;
 
+
 @interface SBGlobal : NSObject
 
 + (OrderedDictionary*)validLanguages;

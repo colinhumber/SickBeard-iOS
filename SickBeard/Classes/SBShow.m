@@ -36,11 +36,14 @@
 		self.isPaused = [[dict objectForKey:@"paused"] boolValue];
 		
 		NSString *qualityString = [dict objectForKey:@"quality"];
-		if ([qualityString isEqualToString:@"HD"]) {
+		if ([qualityString rangeOfString:@"HD"].location != NSNotFound) {
 			self.quality = ShowQualityHD;
 		}
-		else if ([qualityString isEqualToString:@"SD"]) {
+		else if ([qualityString rangeOfString:@"SD"].location != NSNotFound) {
 			self.quality = ShowQualitySD;
+		}
+		else if ([qualityString rangeOfString:@"Custom"].location != NSNotFound) {
+			self.quality = ShowQualityCustom;
 		}
 		else {
 			self.quality = ShowQualityUnknown;
@@ -104,6 +107,22 @@
 			
 		case ShowStatusEnded:
 			return NSLocalizedString(@"Ended", @"Ended");
+			
+		default:
+			return NSLocalizedString(@"Unknown", @"Unknown");
+	}
+}
+
++ (NSString*)showQualityAsString:(ShowQuality)quality {
+	switch (quality) {
+		case ShowQualityHD:
+			return NSLocalizedString(@"HD", @"HD");
+			
+		case ShowQualitySD:
+			return NSLocalizedString(@"SD", @"SH");
+			
+		case ShowQualityCustom:
+			return NSLocalizedString(@"Custom", @"Custom");
 			
 		default:
 			return NSLocalizedString(@"Unknown", @"Unknown");

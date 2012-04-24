@@ -7,6 +7,7 @@
 //
 
 #import "SBEpisodesViewController.h"
+#import "SBEpisodeDetailsViewController.h"
 #import "SickbeardAPIClient.h"
 #import "NSUserDefaults+SickBeard.h"
 #import "OrderedDictionary.h"
@@ -16,23 +17,43 @@
 #import "ComingEpisodeCell.h"
 #import "SBSectionHeaderView.h"
 
-@interface SBEpisodesViewController ()
+@interface SBEpisodesViewController () {
+	OrderedDictionary *comingEpisodes;
+	
+	struct {
+		int menuIsShowing:1;
+		int menuIsHiding:1;
+	} _menuFlags;
+	NSIndexPath *menuIndexPath;
+}
+
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+
+- (void)changeEpisodeStatus:(EpisodeStatus)status;
+
 @end
+
+
 
 @implementation SBEpisodesViewController
 
 @synthesize selectedIndexPath;
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+	if ([segue.identifier isEqualToString:@"EpisodeDetailsSegue"]) {
+		NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+		
+		[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+		SBEpisodeDetailsViewController *vc = segue.destinationViewController;
+		
+		NSArray *keys = [comingEpisodes allKeys];
+		NSString *sectionKey = [keys objectAtIndex:indexPath.section];
+		
+		SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:indexPath.row];
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use. 
+		vc.episode = episode;
+	}
 }
-
 
 #pragma mark - View lifecycle
 
@@ -41,7 +62,28 @@
 	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
 	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
 	
+	_menuFlags.menuIsShowing = NO;
+	_menuFlags.menuIsHiding = NO;
+	
 	[super viewDidLoad];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self 
+											 selector:@selector(menuControllerWillHide:)
+												 name:UIMenuControllerWillHideMenuNotification
+											   object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(menuControllerDidHide:) 
+												 name:UIMenuControllerDidHideMenuNotification 
+											   object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self 
+											 selector:@selector(menuControllerWillShow:)
+												 name:UIMenuControllerWillShowMenuNotification
+											   object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self 
+											 selector:@selector(menuControllerDidShow:)
+												 name:UIMenuControllerDidShowMenuNotification
+											   object:nil];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -188,14 +230,12 @@
 	NSString *sectionKey = [keys objectAtIndex:indexPath.section];
 	SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:indexPath.row];
 
-	cell.showNameLabel.text = episode.showName;
-	cell.networkLabel.text = episode.network;
+	cell.showNameLabel.text = episode.show.showName;
+	cell.networkLabel.text = episode.show.network;
 	cell.episodeNameLabel.text = episode.name;
-	cell.airDateLabel.text = [NSString stringWithFormat:@"%@ (%@)", [episode.airDate displayString], episode.quality];
+	cell.airDateLabel.text = [NSString stringWithFormat:@"%@ (%@)", [episode.airDate displayString], [SBShow showQualityAsString:episode.show.quality]];
 	
-	[cell.showImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] posterURLForTVDBID:episode.tvdbID] absoluteString]];
-//	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:episode.tvdbID] 
-//					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
+	[cell.showImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] posterURLForTVDBID:episode.show.tvdbID] absoluteString]];
 
 	if (indexPath.row == [self tableView:tv numberOfRowsInSection:indexPath.section] - 1) {
 		cell.lastCell = YES;
@@ -204,7 +244,170 @@
 		cell.lastCell = NO;
 	}
 	
+	UILongPressGestureRecognizer *gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showMenu:)];
+	[cell addGestureRecognizer:gesture];
+	
 	return cell;
+}
+
+#pragma mark - UITableViewDelegate
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (_menuFlags.menuIsShowing || _menuFlags.menuIsHiding) {
+		return nil;
+	}
+	
+	return indexPath;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (_menuFlags.menuIsShowing || _menuFlags.menuIsHiding) {
+		return;
+	}
+	
+	[self performSegueWithIdentifier:@"EpisodeDetailsSegue" sender:nil];
+	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - Notification Handlers
+
+- (void)menuControllerWillHide:(NSNotification *)notification {
+	_menuFlags.menuIsHiding = YES;
+	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+}
+
+- (void)menuControllerDidHide:(NSNotification*)notification {
+	_menuFlags.menuIsShowing = NO;
+	_menuFlags.menuIsHiding = NO;
+}
+
+- (void)menuControllerWillShow:(NSNotification *)notification {
+	self.tableView.scrollEnabled = NO;
+}
+
+- (void)menuControllerDidShow:(NSNotification *)notification {
+	_menuFlags.menuIsShowing = YES;
+	self.tableView.scrollEnabled = YES;
+}
+
+
+#pragma mark - Menu Actions
+- (void)showMenu:(UIGestureRecognizer*)gesture {
+	if (gesture.state == UIGestureRecognizerStateBegan) {
+		[gesture.view becomeFirstResponder];
+		
+		menuIndexPath = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
+		
+		UIMenuItem *item1 = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Search", @"Search") action:@selector(searchForEpisode)];
+		UIMenuItem *item2 = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Set Status", @"Set Status") action:@selector(setEpisodeStatus)];
+		
+		UIMenuController *menu = [UIMenuController sharedMenuController];
+		menu.menuItems = [NSArray arrayWithObjects:item1, item2, nil];
+		[menu setTargetRect:gesture.view.frame inView:gesture.view.superview];
+		[menu setMenuVisible:YES animated:YES];
+		
+		[self.tableView selectRowAtIndexPath:menuIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+	}
+}
+
+- (void)searchForEpisode {
+	NSArray *keys = [comingEpisodes allKeys];
+	NSString *sectionKey = [keys objectAtIndex:menuIndexPath.section];
+	SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:menuIndexPath.row];
+
+	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+							episode.show.tvdbID, @"tvdbid", 
+							[NSNumber numberWithInt:episode.season], @"season",
+							[NSNumber numberWithInt:episode.number], @"episode", nil];
+	
+	[SVProgressHUD showWithStatus:NSLocalizedString(@"Searching for episode", @"Searching for episode")];
+	
+	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
+									   parameters:params 
+										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+											  NSString *result = [JSON objectForKey:@"result"];
+											  
+											  if ([result isEqualToString:RESULT_SUCCESS]) {
+												  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading") 
+																		 afterDelay:2];
+												  [self loadData];
+											  }
+											  else {
+												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
+											  }
+										  }
+										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
+																  message:error.localizedDescription 
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
+											  [SVProgressHUD dismiss];
+										  }];
+}
+
+- (void)setEpisodeStatus {
+	UIMenuController *menu = [UIMenuController sharedMenuController];
+	UIMenuItem *item1 = [[UIMenuItem alloc] initWithTitle:[SBComingEpisode episodeStatusAsString:EpisodeStatusWanted] action:@selector(setEpisodeStatusToWanted)];
+	UIMenuItem *item2 = [[UIMenuItem alloc] initWithTitle:[SBComingEpisode episodeStatusAsString:EpisodeStatusSkipped] action:@selector(setEpisodeStatusToSkipped)];
+	UIMenuItem *item3 = [[UIMenuItem alloc] initWithTitle:[SBComingEpisode episodeStatusAsString:EpisodeStatusArchived] action:@selector(setEpisodeStatusToArchived)];
+	UIMenuItem *item4 = [[UIMenuItem alloc] initWithTitle:[SBComingEpisode episodeStatusAsString:EpisodeStatusIgnored] action:@selector(setEpisodeStatusToIgnored)];
+	
+	menu.menuItems = [NSArray arrayWithObjects:item1, item2, item3, item4, nil];
+	
+	RunAfterDelay(0.3, ^{
+		[menu setMenuVisible:YES animated:YES];
+	});
+}
+
+- (void)setEpisodeStatusToWanted {
+	[self changeEpisodeStatus:EpisodeStatusWanted];
+}
+
+- (void)setEpisodeStatusToSkipped {
+	[self changeEpisodeStatus:EpisodeStatusSkipped];
+}
+
+- (void)setEpisodeStatusToArchived {
+	[self changeEpisodeStatus:EpisodeStatusArchived];
+}
+
+- (void)setEpisodeStatusToIgnored {
+	[self changeEpisodeStatus:EpisodeStatusIgnored];
+}
+
+- (void)changeEpisodeStatus:(EpisodeStatus)status {
+	NSArray *keys = [comingEpisodes allKeys];
+	NSString *sectionKey = [keys objectAtIndex:menuIndexPath.section];
+	SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:menuIndexPath.row];
+	
+	NSString *statusString = [[SBComingEpisode episodeStatusAsString:status] lowercaseString];
+	
+	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+							episode.show.tvdbID, @"tvdbid", 
+							[NSNumber numberWithInt:episode.season], @"season",
+							[NSNumber numberWithInt:episode.number], @"episode",
+							statusString, @"status", nil];
+	
+	[SVProgressHUD showWithStatus:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]];
+	
+	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
+									   parameters:params 
+										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+											  NSString *result = [JSON objectForKey:@"result"];
+											  
+											  if ([result isEqualToString:RESULT_SUCCESS]) {
+												  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Status successfully set!", @"Status successfully set!") 
+																		 afterDelay:2];
+												  [self loadData];
+											  }
+											  else {
+												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
+											  }
+										  }
+										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error setting status", @"Error setting status") 
+																  message:error.localizedDescription 
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
+											  [SVProgressHUD dismiss];
+										  }];
 }
 
 @end

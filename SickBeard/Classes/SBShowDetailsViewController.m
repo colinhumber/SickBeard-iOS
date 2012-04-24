@@ -18,8 +18,18 @@
 #import "SBShowDetailsHeaderView.h"
 #import "SBSectionHeaderView.h"
 
-@interface SBShowDetailsViewController ()
+@interface SBShowDetailsViewController () {
+	OrderedDictionary *seasons;
+	
+	struct {
+		int menuIsShowing:1;
+		int menuIsHiding:1;
+	} _menuFlags;
+	NSIndexPath *menuIndexPath;
+}
+
 - (void)changeEpisodeStatus:(EpisodeStatus)status;
+
 @end
 
 @implementation SBShowDetailsViewController
@@ -62,7 +72,6 @@
 	self.detailsHeaderView.showNameLabel.text = show.showName;
 	
 	[self.detailsHeaderView.showImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID] absoluteString]];
-//	[self.detailsHeaderView.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID]];
 	self.detailsHeaderView.networkLabel.text = show.network;
 	
 	self.detailsHeaderView.statusLabel.text = [SBShow showStatusAsString:show.status];
@@ -116,7 +125,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark Notification Handlers
+#pragma mark - Notification Handlers
 
 - (void)menuControllerWillHide:(NSNotification *)notification {
 	_menuFlags.menuIsHiding = YES;
@@ -360,6 +369,7 @@
 	return title;
 }
 
+
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	NSString *title = [self tableView:tableView titleForHeaderInSection:section];
 
@@ -368,9 +378,11 @@
 	return header;
 }
 
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 	return 50;
 }
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	NSArray *keys = [seasons allKeys];
@@ -379,8 +391,6 @@
 	return [[seasons objectForKey:sectionKey] count];
 }
 
-// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
-// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	EpisodeCell *cell = (EpisodeCell*)[tv dequeueReusableCellWithIdentifier:@"EpisodeCell"];
@@ -423,6 +433,7 @@
 	else {
 		cell.lastCell = NO;
 	}	
+	
 	UILongPressGestureRecognizer *gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showMenu:)];
 	[cell addGestureRecognizer:gesture];
 	

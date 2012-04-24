@@ -11,6 +11,7 @@
 
 typedef enum {
 	ShowQualityUnknown,
+	ShowQualityCustom,
 	ShowQualityHD,
 	ShowQualitySD
 } ShowQuality;
@@ -38,5 +39,6 @@ typedef enum {
 @property (readonly, strong) NSString *sanitizedShowName;
 
 + (NSString*)showStatusAsString:(ShowStatus)status;
++ (NSString*)showQualityAsString:(ShowQuality)quality;
 
 @end

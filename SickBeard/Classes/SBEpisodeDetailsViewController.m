@@ -46,8 +46,6 @@
 	self.title = NSLocalizedString(@"Details", @"Details");
 
 	[self.showPosterImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:episode.show.tvdbID] absoluteString]];
-//	[self.showPosterImageView setImageWithURL:[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:episode.show.tvdbID]
-//							 placeholderImage:nil];
 
 	self.headerView.sectionLabel.text = NSLocalizedString(@"Episode Summary", @"Episode Summary");
 	self.episodeDescriptionBackground.grouped = YES;
@@ -178,24 +176,28 @@
 }
 
 - (IBAction)swipeLeft:(id)sender {
-	SBEpisode *nextEpisode = [self.dataSource nextEpisode];
-	
-	if (!_isTransitioning && nextEpisode) {
-		self.episode = nextEpisode;
-		[self loadData];
-		[self transitionToEpisodeFromDirection:kCATransitionFromRight];
-		[self updateHeaderView];
+	if (self.dataSource) {
+		SBBaseEpisode *nextEpisode = [self.dataSource nextEpisode];
+
+		if (!_isTransitioning && nextEpisode) {
+			self.episode = nextEpisode;
+			[self loadData];
+			[self transitionToEpisodeFromDirection:kCATransitionFromRight];
+			[self updateHeaderView];
+		}
 	}
 }
 
 - (IBAction)swipeRight:(id)sender {
-	SBEpisode *previousEpisode = [self.dataSource previousEpisode];
+	if (self.dataSource) {
+		SBBaseEpisode *previousEpisode = [self.dataSource previousEpisode];
 
-	if (!_isTransitioning && previousEpisode) {
-		self.episode = previousEpisode;
-		[self loadData];
-		[self transitionToEpisodeFromDirection:kCATransitionFromLeft];
-		[self updateHeaderView];
+		if (!_isTransitioning && previousEpisode) {
+			self.episode = previousEpisode;
+			[self loadData];
+			[self transitionToEpisodeFromDirection:kCATransitionFromLeft];
+			[self updateHeaderView];
+		}
 	}
 }
 

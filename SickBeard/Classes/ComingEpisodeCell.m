@@ -68,4 +68,8 @@
 	[selectedBackgroundView setNeedsDisplay];
 }
 
+- (BOOL)canBecomeFirstResponder {
+	return YES;
+}
+
 @end

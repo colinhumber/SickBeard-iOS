@@ -9,10 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "SBBaseTableViewController.h"
 
-@class OrderedDictionary;
-
-@interface SBEpisodesViewController : SBBaseTableViewController {
-	OrderedDictionary *comingEpisodes;
-}
+@interface SBEpisodesViewController : SBBaseTableViewController 
 
 @end

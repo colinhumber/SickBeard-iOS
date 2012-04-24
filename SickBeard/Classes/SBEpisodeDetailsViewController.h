@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SBBaseViewController.h"
 
-@class SBEpisode;
+@class SBBaseEpisode;
 @class SBSectionHeaderView;
 @class SBCellBackground;
 @class SBEpisodeDetailsHeaderView;
@@ -30,7 +30,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (strong, nonatomic) IBOutlet NINetworkImageView *showPosterImageView;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
-@property (nonatomic, strong) SBEpisode *episode;
+@property (nonatomic, strong) SBBaseEpisode *episode;
 @property (nonatomic, strong) IBOutlet SBSectionHeaderView *headerView;
 @property (nonatomic, strong) IBOutlet SBCellBackground *episodeDescriptionBackground;
 
@@ -41,8 +41,8 @@
 
 @protocol SBEpisodeDetailsDataSource <NSObject>
 
-- (SBEpisode*)nextEpisode;
-- (SBEpisode*)previousEpisode;
+- (SBBaseEpisode*)nextEpisode;
+- (SBBaseEpisode*)previousEpisode;
 
 @property (nonatomic, strong) NSIndexPath *currentEpisodeIndexPath;
 

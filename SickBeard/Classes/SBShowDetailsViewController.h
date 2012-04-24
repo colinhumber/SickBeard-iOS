@@ -14,15 +14,7 @@
 @class SBShowDetailsHeaderView;
 @class OrderedDictionary;
 
-@interface SBShowDetailsViewController : SBBaseTableViewController <UIActionSheetDelegate, SBEpisodeDetailsDataSource> {
-	OrderedDictionary *seasons;
-	
-	struct {
-		int menuIsShowing:1;
-		int menuIsHiding:1;
-	} _menuFlags;
-	NSIndexPath *menuIndexPath;
-}
+@interface SBShowDetailsViewController : SBBaseTableViewController <UIActionSheetDelegate, SBEpisodeDetailsDataSource>
 
 - (IBAction)showActions;
 
