@@ -69,7 +69,7 @@
 	NSString *protocol = useSSL ? @"https" : @"http";
 	NSString *endpoint = [NSString stringWithFormat:@"%@://%@:%d/", protocol, self.host, self.port];
 	
-	if (self.path) {
+	if (self.path.length > 0) {
 		endpoint = [endpoint stringByAppendingFormat:@"%@/", self.path];
 	}
 	

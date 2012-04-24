@@ -11,9 +11,7 @@
 #import "EGORefreshTableHeaderView.h"
 #import "SBAddShowDelegate.h"
 
-@interface SBShowsViewController : SBBaseTableViewController <UITableViewDelegate, UITableViewDataSource, SBAddShowDelegate> {
-	NSMutableArray *shows;
-}
+@interface SBShowsViewController : SBBaseTableViewController <UITableViewDelegate, UITableViewDataSource, SBAddShowDelegate> 
 
 - (void)addShow;
 

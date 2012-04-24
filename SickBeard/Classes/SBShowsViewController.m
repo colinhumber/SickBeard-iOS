@@ -16,8 +16,21 @@
 #import "NSUserDefaults+SickBeard.h"
 #import "NSDate+Utilities.h"
 
+@interface SBShowsViewController () 
+
+@property (nonatomic, retain) NSMutableArray *shows;
+@property (nonatomic, retain) NSArray *tableData;
+
+- (NSArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector;
+
+@end
+
+
 
 @implementation SBShowsViewController
+
+@synthesize shows;
+@synthesize tableData;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([segue.identifier isEqualToString:@"ShowDetailsSegue"]) {
@@ -89,6 +102,32 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (NSArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector {
+	UILocalizedIndexedCollation *collation = [UILocalizedIndexedCollation currentCollation];
+	
+	NSInteger sectionCount = [[collation sectionTitles] count]; //section count is take from sectionTitles and not sectionIndexTitles
+	NSMutableArray *unsortedSections = [NSMutableArray arrayWithCapacity:sectionCount];
+	
+	for (int i = 0; i < sectionCount; i++) {
+		[unsortedSections addObject:[NSMutableArray array]];
+	}
+	
+	// put each object into a section
+	for (id object in array) {
+		NSInteger index = [collation sectionForObject:object collationStringSelector:selector];
+		[(NSMutableArray*)[unsortedSections objectAtIndex:index] addObject:object];
+	}
+
+	NSMutableArray *sections = [NSMutableArray arrayWithCapacity:sectionCount];
+	
+	// sort each section
+	for (NSMutableArray *section in unsortedSections) {
+		[sections addObject:[collation sortedArrayFromArray:section collationStringSelector:selector]];
+	}
+	
+	return sections;
+}
+
 #pragma mark - Loading
 - (void)loadData {
 	[super loadData];
@@ -103,7 +142,7 @@
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  shows = [[NSMutableArray alloc] init];
+												  self.shows = [[NSMutableArray alloc] init];
 												  
 												  NSDictionary *dataDict = [JSON objectForKey:@"data"];
 												  
@@ -111,11 +150,11 @@
 													  for (NSString *key in [dataDict allKeys]) {
 														  SBShow *show = [SBShow itemWithDictionary:[dataDict objectForKey:key]];
 														  show.showName = key;
-														  [shows addObject:show];
+														  [self.shows addObject:show];
 													  }
 													  
 													  NSSortDescriptor *sorter = [NSSortDescriptor sortDescriptorWithKey:@"showName" ascending:YES];
-													  [shows sortUsingDescriptors:[NSArray arrayWithObject:sorter]];
+													  [self.shows sortUsingDescriptors:[NSArray arrayWithObject:sorter]];
 												  }
 												  else {
 													  [self showEmptyView:YES animated:YES];
@@ -128,6 +167,8 @@
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
 											  }
 										
+											  self.tableData = [self partitionObjects:self.shows collationStringSelector:@selector(showName)];
+											  
 											  [self finishDataLoad:nil];
 											  [self.tableView reloadData];
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
@@ -174,15 +215,28 @@
 }
 
 #pragma mark - UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	return [[[UILocalizedIndexedCollation currentCollation] sectionIndexTitles] count];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return shows.count;
+	return [[self.tableData objectAtIndex:section] count]; //shows.count;
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+	return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+	return [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	ShowCell *cell = (ShowCell*)[tv dequeueReusableCellWithIdentifier:@"ShowCell"];
 	
-	SBShow *show = [shows objectAtIndex:indexPath.row];
+	SBShow *show = [[self.tableData objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+//	SBShow *show = [shows objectAtIndex:indexPath.row];
 	cell.showNameLabel.text = show.showName;	
 	cell.networkLabel.text = show.network;
 	cell.statusLabel.text = [SBShow showStatusAsString:show.status];
@@ -205,8 +259,6 @@
 	
 
 	[cell.showImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID] absoluteString]];
-//	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID] 
-//					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
 	
 	return cell;
 }

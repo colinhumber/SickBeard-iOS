@@ -405,7 +405,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="chevron.png" id="i5M-t2-eMM">
-                                                    <rect key="frame" x="291" y="47" width="9" height="15"/>
+                                                    <rect key="frame" x="281" y="47" width="9" height="15"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
@@ -525,7 +525,7 @@
         <scene sceneID="p5B-d2-4In">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ag9-5l-GKV" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="gKl-mM-jBe" customClass="SBEpisodeDetailsViewController" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="gKl-mM-jBe" customClass="SBEpisodeDetailsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jyO-YN-zUM">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -668,12 +668,16 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Episode Name" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="vY9-Ao-9jG">
-                                                    <rect key="frame" x="83" y="47" width="204" height="21"/>
+                                                    <rect key="frame" x="83" y="47" width="183" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="chevron.png" id="pIX-8Y-NPe">
+                                                    <rect key="frame" x="281" y="47" width="9" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Wednesday, May 1 on ABC" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="tpr-zx-gN7">
                                                     <rect key="frame" x="109" y="70" width="178" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1797,8 +1801,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="uye-n8-luE"/>
         <segue reference="WEB-uB-B40"/>
-        <segue reference="xoM-hp-y8x"/>
+        <segue reference="uye-n8-luE"/>
+        <segue reference="cuN-Ad-691"/>
     </inferredMetricsTieBreakers>
 </document>

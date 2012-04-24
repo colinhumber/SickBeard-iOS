@@ -297,11 +297,20 @@
 		
 		menuIndexPath = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
 		
+		NSMutableArray *menuItems = [NSMutableArray arrayWithCapacity:2];
+		
 		UIMenuItem *item1 = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Search", @"Search") action:@selector(searchForEpisode)];
-		UIMenuItem *item2 = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Set Status", @"Set Status") action:@selector(setEpisodeStatus)];
+		[menuItems addObject:item1];
+		
+		NSArray *keys = [comingEpisodes allKeys];
+		NSString *sectionKey = [keys objectAtIndex:menuIndexPath.section];
+		SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:menuIndexPath.row];
+		if ([[comingEpisodes objectForKey:@"Past"] containsObject:episode]) {
+			[menuItems addObject:[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Set Status", @"Set Status") action:@selector(setEpisodeStatus)]];
+		}
 		
 		UIMenuController *menu = [UIMenuController sharedMenuController];
-		menu.menuItems = [NSArray arrayWithObjects:item1, item2, nil];
+		menu.menuItems = menuItems;
 		[menu setTargetRect:gesture.view.frame inView:gesture.view.superview];
 		[menu setMenuVisible:YES animated:YES];
 		
