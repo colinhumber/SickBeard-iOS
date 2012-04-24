@@ -18,8 +18,9 @@
 #import "SBShowDetailsHeaderView.h"
 #import "SBSectionHeaderView.h"
 
-@interface SBShowDetailsViewController () {
+@interface SBShowDetailsViewController () <SBSectionHeaderViewDelegate> {
 	OrderedDictionary *seasons;
+	NSMutableArray *sectionHeaders;
 	
 	struct {
 		int menuIsShowing:1;
@@ -65,6 +66,7 @@
 	[TestFlight passCheckpoint:@"Viewed show details"];
 	
 	seasons = [[OrderedDictionary alloc] init];
+	sectionHeaders = [[NSMutableArray alloc] init];
 	self.title = show.showName;
 	
 	UINib *headerNib = [UINib nibWithNibName:@"SBShowDetailsHeaderView" bundle:nil];
@@ -205,7 +207,7 @@
 													  }];
 													  
 													  [seasons setObject:episodes forKey:seasonNumber];
-													  
+													  [sectionHeaders addObject:[NSNull null]];
 												  }
 
 												  self.detailsHeaderView.episodeCountLabel.text = [NSString stringWithFormat:@"%d/%d", totalDownloadedEpisodes, totalEpisodes];
@@ -373,8 +375,17 @@
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	NSString *title = [self tableView:tableView titleForHeaderInSection:section];
 
-	SBSectionHeaderView *header = [[SBSectionHeaderView alloc] init];
-	header.sectionLabel.text = title;
+	id header = [sectionHeaders objectAtIndex:section];
+	
+	if (header == [NSNull null]) {
+		SBSectionHeaderView *sectionHeader = [[SBSectionHeaderView alloc] init];
+		sectionHeader.section = section;
+		sectionHeader.delegate = self;
+		sectionHeader.sectionLabel.text = title;
+
+		[sectionHeaders replaceObjectAtIndex:section withObject:sectionHeader];
+		header = sectionHeader;
+	}
 	return header;
 }
 
@@ -388,7 +399,9 @@
 	NSArray *keys = [seasons allKeys];
 	NSString *sectionKey = [keys objectAtIndex:section];
 	
-	return [[seasons objectForKey:sectionKey] count];
+	SBSectionHeaderView *headerView = (SBSectionHeaderView *)[self tableView:tableView viewForHeaderInSection:section];
+	
+	return headerView.state == SBSectionHeaderStateOpen ? [[seasons objectForKey:sectionKey] count] : 0;
 }
 
 
@@ -578,6 +591,44 @@
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
 											  [SVProgressHUD dismiss];
 										  }];
+}
+
+#pragma mark - SBSectionHeaderViewDelegate
+
+- (void)sectionHeaderView:(SBSectionHeaderView*)sectionHeaderView sectionOpened:(NSInteger)sectionOpened {	
+	sectionHeaderView.state = SBSectionHeaderStateOpen;
+    /*
+     Create an array containing the index paths of the rows to insert: These correspond to the rows for each quotation in the current section.
+     */
+	NSArray *keys = [seasons allKeys];
+	NSString *sectionKey = [keys objectAtIndex:sectionOpened];
+	
+    NSInteger countOfRowsToInsert = [[seasons objectForKey:sectionKey] count];
+    NSMutableArray *indexPathsToInsert = [[NSMutableArray alloc] init];
+    for (NSInteger i = 0; i < countOfRowsToInsert; i++) {
+        [indexPathsToInsert addObject:[NSIndexPath indexPathForRow:i inSection:sectionOpened]];
+    }
+    
+    // Apply the updates.
+    [self.tableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+
+- (void)sectionHeaderView:(SBSectionHeaderView*)sectionHeaderView sectionClosed:(NSInteger)sectionClosed {
+    sectionHeaderView.state = SBSectionHeaderStateClosed;
+	
+    /*
+     Create an array of the index paths of the rows in the section that was closed, then delete those rows from the table view.
+     */
+	NSInteger countOfRowsToDelete = [self.tableView numberOfRowsInSection:sectionClosed];
+    
+    if (countOfRowsToDelete > 0) {
+        NSMutableArray *indexPathsToDelete = [[NSMutableArray alloc] init];
+        for (NSInteger i = 0; i < countOfRowsToDelete; i++) {
+            [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:sectionClosed]];
+        }
+        [self.tableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
 }
 
 @end

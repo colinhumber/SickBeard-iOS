@@ -8,13 +8,24 @@
 
 #import "SBSectionHeaderView.h"
 
+@interface SBSectionHeaderView () {
+	CGRect _coloredBoxRect;
+	CGRect _paperRect;
+}
+
+@end
+
 @implementation SBSectionHeaderView
 
+@synthesize state;
+@synthesize section;
 @synthesize sectionLabel;
 @synthesize lightColor;
 @synthesize darkColor;
+@synthesize delegate;
 
 - (void)commonInit {
+	self.state = SBSectionHeaderStateOpen;
 	self.backgroundColor = [UIColor clearColor];
 	self.opaque = NO;
 	self.sectionLabel = [[UILabel alloc] init];
@@ -29,6 +40,9 @@
 	
 	self.lightColor = RGBCOLOR(189, 121, 86);
 	self.darkColor = RGBCOLOR(71, 36, 12);
+	
+	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOpen:)];
+	[self addGestureRecognizer:tap];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -84,6 +98,19 @@
 	CGContextSetStrokeColorWithColor(ctx, self.darkColor.CGColor);
 	CGContextSetLineWidth(ctx, 1);
 	CGContextStrokeRect(ctx, outlineRect);	
+}
+
+- (void)toggleOpen:(UITapGestureRecognizer *)gesture {
+	if (self.state == SBSectionHeaderStateClosed) {
+		if ([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionOpened:)]) {
+			[self.delegate sectionHeaderView:self sectionOpened:self.section];
+		}
+	}
+	else {
+		if ([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionClosed:)]) {
+			[self.delegate sectionHeaderView:self sectionClosed:self.section];
+		}
+	}
 }
 
 
