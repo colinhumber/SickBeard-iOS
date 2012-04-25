@@ -18,10 +18,9 @@
 
 @interface SBShowsViewController () 
 
-@property (nonatomic, retain) NSMutableArray *shows;
-@property (nonatomic, retain) NSArray *tableData;
+@property (nonatomic, retain) NSMutableArray *tableData;
 
-- (NSArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector;
+- (NSMutableArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector;
 
 @end
 
@@ -29,13 +28,16 @@
 
 @implementation SBShowsViewController
 
-@synthesize shows;
 @synthesize tableData;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([segue.identifier isEqualToString:@"ShowDetailsSegue"]) {
+		NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+		SBShow *show = [[self.tableData objectAtIndex:selectedIndexPath.section] objectAtIndex:selectedIndexPath.row];
+
 		SBShowDetailsViewController *detailsController = [segue destinationViewController];
-		detailsController.show = [shows objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+		detailsController.show = show;
+//		detailsController.show = [shows objectAtIndex:[self.tableView indexPathForSelectedRow].row];
 	}
 	else if ([segue.identifier isEqualToString:@"AddShowSegue"]) {
 		UINavigationController *navController = [segue destinationViewController];
@@ -62,7 +64,7 @@
 	
 	if ([NSUserDefaults standardUserDefaults].shouldUpdateShowList) {
 		[NSUserDefaults standardUserDefaults].shouldUpdateShowList = NO;
-		[shows removeAllObjects];
+		[self.tableData removeAllObjects];
 		[self.tableView reloadData];
 		
 		[self loadData];
@@ -79,8 +81,8 @@
 	}
 	else {
 		if ([NSUserDefaults standardUserDefaults].serverHasBeenSetup) {
-			if (!shows) {
-				[shows removeAllObjects];
+			if (!self.tableData) {
+				[self.tableData removeAllObjects];
 				[self loadData];
 			}
 		}		
@@ -102,7 +104,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (NSArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector {
+- (NSMutableArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector {
 	UILocalizedIndexedCollation *collation = [UILocalizedIndexedCollation currentCollation];
 	
 	NSInteger sectionCount = [[collation sectionTitles] count]; //section count is take from sectionTitles and not sectionIndexTitles
@@ -122,7 +124,7 @@
 	
 	// sort each section
 	for (NSMutableArray *section in unsortedSections) {
-		[sections addObject:[collation sortedArrayFromArray:section collationStringSelector:selector]];
+		[sections addObject:[[collation sortedArrayFromArray:section collationStringSelector:selector] mutableCopy]];
 	}
 	
 	return sections;
@@ -142,7 +144,7 @@
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  self.shows = [[NSMutableArray alloc] init];
+												  NSMutableArray *shows = [[NSMutableArray alloc] init];
 												  
 												  NSDictionary *dataDict = [JSON objectForKey:@"data"];
 												  
@@ -150,11 +152,13 @@
 													  for (NSString *key in [dataDict allKeys]) {
 														  SBShow *show = [SBShow itemWithDictionary:[dataDict objectForKey:key]];
 														  show.showName = key;
-														  [self.shows addObject:show];
+														  [shows addObject:show];
 													  }
 													  
 													  NSSortDescriptor *sorter = [NSSortDescriptor sortDescriptorWithKey:@"showName" ascending:YES];
-													  [self.shows sortUsingDescriptors:[NSArray arrayWithObject:sorter]];
+													  [shows sortUsingDescriptors:[NSArray arrayWithObject:sorter]];
+													  
+													  self.tableData = [self partitionObjects:shows collationStringSelector:@selector(showName)];
 												  }
 												  else {
 													  [self showEmptyView:YES animated:YES];
@@ -167,8 +171,6 @@
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
 											  }
 										
-											  self.tableData = [self partitionObjects:self.shows collationStringSelector:@selector(showName)];
-											  
 											  [self finishDataLoad:nil];
 											  [self.tableView reloadData];
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
@@ -224,7 +226,11 @@
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-	return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
+	if (self.tableData) {
+		return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
+	}
+	
+	return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
@@ -236,7 +242,6 @@
 	ShowCell *cell = (ShowCell*)[tv dequeueReusableCellWithIdentifier:@"ShowCell"];
 	
 	SBShow *show = [[self.tableData objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-//	SBShow *show = [shows objectAtIndex:indexPath.row];
 	cell.showNameLabel.text = show.showName;	
 	cell.networkLabel.text = show.network;
 	cell.statusLabel.text = [SBShow showStatusAsString:show.status];
@@ -266,7 +271,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
-		SBShow *show = [shows objectAtIndex:indexPath.row];
+		SBShow *show = [[self.tableData objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
 		NSDictionary *params = [NSDictionary dictionaryWithObject:show.tvdbID forKey:@"tvdbid"];
 
 		[SVProgressHUD showWithStatus:NSLocalizedString(@"Deleting show", @"Deleting show")];
@@ -277,7 +282,7 @@
 												  NSString *result = [JSON objectForKey:@"result"];
 												  
 												  if ([result isEqualToString:RESULT_SUCCESS]) {
-													  [shows removeObjectAtIndex:indexPath.row];
+													  [[self.tableData objectAtIndex:indexPath.section] removeObjectAtIndex:indexPath.row];
 													  [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] 
 																			withRowAnimation:UITableViewRowAnimationAutomatic];
 												  }
