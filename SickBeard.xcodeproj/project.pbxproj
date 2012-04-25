@@ -346,7 +346,6 @@
 		9575EC121463290900D600E9 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		9575EC2014632DF900D600E9 /* SBMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBMainViewController.h; path = Classes/SBMainViewController.h; sourceTree = "<group>"; };
 		9575EC2114632DF900D600E9 /* SBMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBMainViewController.m; path = Classes/SBMainViewController.m; sourceTree = "<group>"; };
-		9575EC2814632EAA00D600E9 /* SBHudViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBHudViewController.h; path = Classes/SBHudViewController.h; sourceTree = "<group>"; };
 		9575EC2C14632EEF00D600E9 /* SBBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBaseViewController.h; path = Classes/SBBaseViewController.h; sourceTree = "<group>"; };
 		9575EC2D14632EEF00D600E9 /* SBBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBaseViewController.m; path = Classes/SBBaseViewController.m; sourceTree = "<group>"; };
 		9575EC2F14632F2A00D600E9 /* SBBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBaseTableViewController.h; path = Classes/SBBaseTableViewController.h; sourceTree = "<group>"; };
@@ -832,7 +831,6 @@
 		9575EC2714632E9700D600E9 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				9575EC2814632EAA00D600E9 /* SBHudViewController.h */,
 				9527ED3714639742001B3E51 /* SBDataLoader.h */,
 				952D1EF614894739000ABD7C /* SBAddShowDelegate.h */,
 			);
