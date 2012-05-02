@@ -116,7 +116,7 @@
 		95A0AB95146AE7E8009EADA7 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A0AB94146AE7E8009EADA7 /* NSString+Base64.m */; };
 		95A0ABD7146AEF69009EADA7 /* AFImageRequestOperation+NSURLCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A0ABD6146AEF68009EADA7 /* AFImageRequestOperation+NSURLCredential.m */; };
 		95A0ABDA146AFD65009EADA7 /* AFHTTPRequestOperation+NSURLCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A0ABD9146AFD64009EADA7 /* AFHTTPRequestOperation+NSURLCredential.m */; };
-		95B4785A150919AD006F12D6 /* SDURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 95B4784D150919AD006F12D6 /* SDURLCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		95B4785A150919AD006F12D6 /* SDURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 95B4784D150919AD006F12D6 /* SDURLCache.m */; };
 		95BC1327140D5D74009F9FBC /* SBShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BC1326140D5D74009F9FBC /* SBShow.m */; };
 		95BC1328140D5D74009F9FBC /* SBShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BC1326140D5D74009F9FBC /* SBShow.m */; };
 		95BC1330140D779F009F9FBC /* SBEpisode.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BC132F140D779F009F9FBC /* SBEpisode.m */; };
