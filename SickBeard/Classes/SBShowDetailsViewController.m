@@ -416,7 +416,7 @@
 	
 	cell.episodeNameLabel.text = episode.name;
 	cell.airdateLabel.text = episode.airDate ? [episode.airDate displayString] : NSLocalizedString(@"Unknown Air Date", @"Unknown Air Date");
-	cell.badgeView.text = [[SBEpisode episodeStatusAsString:episode.status] substringToIndex:1];
+	cell.badgeView.text = [SBEpisode episodeStatusAsString:episode.status];
 	
 	UIColor *badgeColor = nil;
 	
@@ -426,16 +426,23 @@
 			break;
 			
 		case EpisodeStatusDownloaded:
-		case EpisodeStatusSnatched:
 			badgeColor = RGBCOLOR(21, 93, 45);
+			break;
+			
+		case EpisodeStatusSnatched:
+			badgeColor = RGBCOLOR(138, 88, 0);
 			break;
 			
 		case EpisodeStatusSkipped:
 			badgeColor = RGBCOLOR(202, 50, 56);
 			break;
 			
-		default:
+		case EpisodeStatusUnaired:
 			badgeColor = [UIColor darkGrayColor];
+			break;
+			
+		default:
+			badgeColor = [UIColor blackColor];
 			break;
 	}
 	cell.badgeView.badgeColor = badgeColor;

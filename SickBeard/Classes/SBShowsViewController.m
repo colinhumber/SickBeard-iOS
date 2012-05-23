@@ -37,7 +37,6 @@
 
 		SBShowDetailsViewController *detailsController = [segue destinationViewController];
 		detailsController.show = show;
-//		detailsController.show = [shows objectAtIndex:[self.tableView indexPathForSelectedRow].row];
 	}
 	else if ([segue.identifier isEqualToString:@"AddShowSegue"]) {
 		UINavigationController *navController = [segue destinationViewController];
@@ -222,7 +221,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [[self.tableData objectAtIndex:section] count]; //shows.count;
+	return [[self.tableData objectAtIndex:section] count];
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
