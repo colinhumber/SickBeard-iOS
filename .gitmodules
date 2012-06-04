@@ -1,18 +1,15 @@
 [submodule "SickBeard/AFNetworking"]
 	path = SickBeard/AFNetworking
-	url = git://github.com/gowalla/AFNetworking.git
+	url = https://github.com/AFNetworking/AFNetworking.git
 [submodule "SickBeard/JSONKit"]
 	path = SickBeard/JSONKit
-	url = git://github.com/johnezang/JSONKit.git
+	url = https://github.com/johnezang/JSONKit.git
 [submodule "SickBeard/SDURLCache"]
 	path = SickBeard/SDURLCache
 	url = https://github.com/steipete/SDURLCache.git
 [submodule "SickBeard/EGOTableViewPullRefresh"]
 	path = SickBeard/EGOTableViewPullRefresh
 	url = https://github.com/typeoneerror/EGOTableViewPullRefresh.git
-[submodule "SickBeard/SDWebImage"]
-	path = SickBeard/SDWebImage
-	url = https://github.com/rs/SDWebImage.git
 [submodule "SickBeard/SVProgressHUD"]
 	path = SickBeard/SVProgressHUD
 	url = https://github.com/samvermette/SVProgressHUD.git

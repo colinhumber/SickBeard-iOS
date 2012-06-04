@@ -16,9 +16,14 @@
 @synthesize badgeView;
 @synthesize lastCell;
 
+#ifdef LK_BADGE_VIEW_FONT_SIZE
+#undef LK_BADGE_VIEW_FONT_SIZE
+#endif
+#define LK_BADGE_VIEW_FONT_SIZE 13
+
 - (void)awakeFromNib {
 	self.badgeView.outline = NO;
-	self.badgeView.font = [UIFont boldSystemFontOfSize:13];
+//	self.badgeView.font = [UIFont boldSystemFontOfSize:13];
 	self.badgeView.horizontalAlignment = LKBadgeViewHorizontalAlignmentRight;
 }
 
