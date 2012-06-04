@@ -192,6 +192,15 @@
 			webViewController.availableActions = SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink | SVWebViewControllerAvailableActionsOpenInSafari;
 			[self presentViewController:webViewController animated:YES completion:nil];
 		}
+		else if (indexPath.row == 2) {
+			[TestFlight passCheckpoint:@"Clicked Donate"];
+
+			SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:kDonateLink];
+			webViewController.toolbar.tintColor = nil;
+			webViewController.toolbar.barStyle = UIBarStyleBlack;
+			webViewController.availableActions = SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink | SVWebViewControllerAvailableActionsOpenInSafari;
+			[self presentViewController:webViewController animated:YES completion:nil];
+		}
 	}
 }
 

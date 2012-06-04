@@ -460,6 +460,7 @@
 		952D1EEC148940E2000ABD7C /* SVSegmentedThumb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSegmentedThumb.h; sourceTree = "<group>"; };
 		952D1EED148940E2000ABD7C /* SVSegmentedThumb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSegmentedThumb.m; sourceTree = "<group>"; };
 		952D1EF614894739000ABD7C /* SBAddShowDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBAddShowDelegate.h; path = Classes/SBAddShowDelegate.h; sourceTree = "<group>"; };
+		952F64731579675D00B67D9E /* control */ = {isa = PBXFileReference; lastKnownFileType = text; name = control; path = ../../../Desktop/SickBeard/DEBIAN/control; sourceTree = "<group>"; };
 		95394402149BF66E002E4ACE /* Credits.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Credits.plist; path = Resources/Credits.plist; sourceTree = "<group>"; };
 		95515BF5140C3C6C008CA8D5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		95532B5615470A1C0052893E /* SBBaseEpisode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBaseEpisode.h; path = Classes/SBBaseEpisode.h; sourceTree = "<group>"; };
@@ -907,6 +908,14 @@
 			path = SVSegmentedControl/SVSegmentedControl;
 			sourceTree = "<group>";
 		};
+		952F64711579675500B67D9E /* DEBIAN */ = {
+			isa = PBXGroup;
+			children = (
+				952F64731579675D00B67D9E /* control */,
+			);
+			name = DEBIAN;
+			sourceTree = "<group>";
+		};
 		955DE2EF149FA6A700D08080 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1156,6 +1165,7 @@
 		95DD4203140837B8001FE32F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				952F64711579675500B67D9E /* DEBIAN */,
 				9563CD3F140D47B800920795 /* Images */,
 				95F7F61E1408492700E17F3E /* Libraries */,
 				95DD420E140837B8001FE32F /* MainStoryboard.storyboard */,
@@ -1850,8 +1860,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "Open Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Open Development";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SickBeard/SickBeard-Prefix.pch";
@@ -1861,6 +1871,8 @@
 					"\"$(SRCROOT)/SickBeard/TestFlight\"",
 				);
 				PRODUCT_NAME = SickBeard;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1870,8 +1882,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "Open Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Open Development";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SickBeard/SickBeard-Prefix.pch";
@@ -1881,6 +1893,8 @@
 					"\"$(SRCROOT)/SickBeard/TestFlight\"",
 				);
 				PRODUCT_NAME = SickBeard;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
