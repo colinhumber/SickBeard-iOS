@@ -9,25 +9,27 @@
 #import "SBCommandBuilder.h"
 #import "SBServer.h"
 #import "SBServer+SickBeardAdditions.h"
+
 #import "GTMNSDictionary+URLArguments.h"
 
 @interface SBCommandBuilder ()
 + (NSString*)commandStringForCommand:(SickBeardCommand)command;
++ (NSString *)commandStringForCommands:(NSArray *)commands;
 @end
 
 @implementation SBCommandBuilder
 
-+ (NSString*)URLForCommand:(SickBeardCommand)command server:(SBServer*)server params:(NSMutableDictionary*)params {
++ (NSString *)URLForCommands:(NSArray *)commands server:(SBServer *)server params:(NSDictionary *)params {
 	if (!server) {
 		return nil;
 	}
-
+	
 	NSURL *serverUrl = [NSURL URLWithString:server.serviceEndpointPath];
 	if (!serverUrl) {
 		return nil;
 	}
 	
-	NSString *commandString = [self commandStringForCommand:command];
+	NSString *commandString = [self commandStringForCommands:commands];
 	if (!commandString) {
 		return nil;
 	}
@@ -43,8 +45,25 @@
 	
 	serverUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@api/%@/?%@", [serverUrl absoluteString], server.apiKey, [params gtm_httpArgumentsString]]];
 	
-//	NSLog(@"URL created: %@", serverUrl);
+	//	NSLog(@"URL created: %@", serverUrl);
 	return [serverUrl absoluteString];
+}
+
++ (NSString*)URLForCommand:(SickBeardCommand)command server:(SBServer*)server params:(NSMutableDictionary*)params {
+	NSArray *commandArray = [NSArray arrayWithObject:[NSNumber numberWithInteger:command]];
+	
+	return [self URLForCommands:commandArray server:server params:params];
+}
+
++ (NSString *)commandStringForCommands:(NSArray *)commands {
+	NSMutableArray *components = [NSMutableArray arrayWithCapacity:commands.count];
+	
+	for (NSNumber *commandObj in commands) {
+		NSInteger commandVal = [commandObj integerValue];
+		[components addObject:[self commandStringForCommand:commandVal]];
+	}
+	
+	return [components componentsJoinedByString:@"|"];
 }
 
 + (NSString*)commandStringForCommand:(SickBeardCommand)command {

@@ -12,11 +12,13 @@
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *host;
-@property (nonatomic, assign) int port;
+@property (nonatomic) int port;
 @property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) NSString *apiKey;
-@property (nonatomic, assign) BOOL useSSL;
-@property (nonatomic, assign) BOOL isCurrent;
+@property (nonatomic) BOOL useSSL;
+@property (nonatomic, strong) NSString *proxyUsername;
+@property (nonatomic, strong) NSString *proxyPassword;
+@property (nonatomic) BOOL isCurrent;
 
 - (BOOL)isValid;
 - (NSString*)serviceEndpointPath;

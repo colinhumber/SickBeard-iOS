@@ -17,6 +17,8 @@
 @synthesize path;
 @synthesize apiKey;
 @synthesize useSSL;
+@synthesize proxyUsername;
+@synthesize proxyPassword;
 @synthesize isCurrent;
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
@@ -26,6 +28,8 @@
 	[encoder encodeObject:path forKey:@"path"];
 	[encoder encodeBool:useSSL forKey:@"useSSL"];
 	[encoder encodeObject:apiKey forKey:@"apiKey"];
+	[encoder encodeObject:proxyUsername forKey:@"proxyUsername"];
+	[encoder encodeObject:proxyPassword forKey:@"proxyPassword"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
@@ -38,6 +42,8 @@
 		self.path = [decoder decodeObjectForKey:@"path"];
 		self.useSSL = [decoder decodeBoolForKey:@"useSSL"];
 		self.apiKey = [decoder decodeObjectForKey:@"apiKey"];
+		self.proxyUsername = [decoder decodeObjectForKey:@"proxyUsername"];
+		self.proxyPassword = [decoder decodeObjectForKey:@"proxyPassword"];
 	}
 	
 	return self;

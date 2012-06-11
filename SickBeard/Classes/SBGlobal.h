@@ -16,7 +16,7 @@
 
 typedef enum {
 	// system commands
-	SickBeardCommandCheckScheduler,
+	SickBeardCommandCheckScheduler = 0,
 	SickBeardCommandGetDefaults,
 	SickBeardCommandForceSearch,
 	SickBeardCommandPauseBacklog,

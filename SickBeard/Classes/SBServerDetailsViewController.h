@@ -22,11 +22,13 @@
 
 @property (nonatomic, strong) SBServer *server;
 
-@property (strong, nonatomic) IBOutlet UITextField *nameTextField;
-@property (strong, nonatomic) IBOutlet UITextField *hostTextField;
-@property (strong, nonatomic) IBOutlet UITextField *portTextField;
-@property (strong, nonatomic) IBOutlet UITextField *pathTextField;
-@property (strong, nonatomic) IBOutlet UISwitch *sslSwitch;
-@property (strong, nonatomic) IBOutlet UITextField *apiKeyTextField;
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *hostTextField;
+@property (weak, nonatomic) IBOutlet UITextField *portTextField;
+@property (weak, nonatomic) IBOutlet UITextField *pathTextField;
+@property (weak, nonatomic) IBOutlet UISwitch *sslSwitch;
+@property (weak, nonatomic) IBOutlet UITextField *apiKeyTextField;
+@property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
 @end

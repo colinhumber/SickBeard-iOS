@@ -26,6 +26,7 @@ static SickbeardAPIClient *sharedClient = nil;
 
 @interface SickbeardAPIClient ()
 @property (readwrite, nonatomic, strong) NSOperationQueue *operationQueue;
+- (void)addAuthenticationToRequest:(NSMutableURLRequest *)request username:(NSString *)username password:(NSString *)password;
 @end
 
 
@@ -49,15 +50,12 @@ static SickbeardAPIClient *sharedClient = nil;
 	NSDictionary *parameters = [NSDictionary dictionaryWithObject:tvdbID forKey:@"tvdbid"];
 	NSString *url = [SBCommandBuilder URLForCommand:SickBeardCommandShowGetPoster server:self.currentServer params:parameters];
 	return [NSURL URLWithString:url];
-	//return [self createUrlWithEndpoint:[NSString stringWithFormat:@"showPoster/?show=%@&which=poster", tvdbID]];
 }
 
 - (NSURL*)bannerURLForTVDBID:(NSString*)tvdbID {
 	NSDictionary *parameters = [NSDictionary dictionaryWithObject:tvdbID forKey:@"tvdbid"];
 	NSString *url = [SBCommandBuilder URLForCommand:SickBeardCommandShowGetBanner server:self.currentServer params:parameters];
 	return [NSURL URLWithString:url];
-
-	//	return [self createUrlWithEndpoint:[NSString stringWithFormat:@"showPoster/?show=%@&which=banner", tvdbID]];
 }
 
 - (id)init {
@@ -72,60 +70,60 @@ static SickbeardAPIClient *sharedClient = nil;
 }
 
 - (void)loadDefaults:(SBServer*)server {
-	NSString *defaultsUrl = [SBCommandBuilder URLForCommand:SickBeardCommandGetDefaults server:server params:nil];
-	NSString *dirsUrl = [SBCommandBuilder URLForCommand:SickBeardCommandGetRootDirectories server:server params:nil];
+	NSArray *commands = [NSArray arrayWithObjects:
+						 [NSNumber numberWithInteger:SickBeardCommandGetDefaults],
+						 [NSNumber numberWithInteger:SickBeardCommandGetRootDirectories], 
+						 nil];
+	NSString *defaultsUrl = [SBCommandBuilder URLForCommands:commands server:server params:nil];
+	NSMutableURLRequest *defaultsRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:defaultsUrl]];
 
-	AFJSONRequestOperation *defaultsOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:defaultsUrl]] 
+	if (server.proxyUsername && server.proxyPassword) {
+		[self addAuthenticationToRequest:defaultsRequest username:server.proxyUsername password:server.proxyPassword];
+	}
+	
+	AFJSONRequestOperation *defaultsOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:defaultsRequest
 																								success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
 																									NSString *result = [JSON objectForKey:@"result"];
 																									
 																									if ([result isEqualToString:RESULT_SUCCESS]) {
 																										NSDictionary *data = [JSON objectForKey:@"data"];
-																										
-																										NSArray *archives = [SBGlobal qualitiesFromCodes:[data objectForKey:@"archive"]];
-																										NSArray *initial = [SBGlobal qualitiesFromCodes:[data objectForKey:@"initial"] ];
-																										BOOL useSeasonFolders = [[data objectForKey:@"season_folders"] boolValue];
-																										NSString *status = [data objectForKey:@"status"];
-																										
 																										NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+																										
+																										// DEFAULTS
+																										NSDictionary *defaultsDict = [data objectForKey:@"sb.getdefaults"];
+																										NSDictionary *defaultsData = [defaultsDict objectForKey:@"data"];
+																										NSArray *archives = [SBGlobal qualitiesFromCodes:[defaultsData objectForKey:@"archive"]];
+																										NSArray *initial = [SBGlobal qualitiesFromCodes:[defaultsData objectForKey:@"initial"] ];
+																										BOOL useSeasonFolders = [[defaultsData objectForKey:@"season_folders"] boolValue];
+																										NSString *status = [defaultsData objectForKey:@"status"];
+																										
 																										defaults.archiveQualities = [NSMutableArray arrayWithArray:archives];
 																										defaults.initialQualities = [NSMutableArray arrayWithArray:initial];
 																										defaults.useSeasonFolders = useSeasonFolders;
 																										defaults.status = status;
 																									
+																										// ROOT DIRECTORIES
+																										NSDictionary *dirsDict = [data objectForKey:@"sb.getrootdirs"];
+																										NSArray *dirsData = [dirsDict objectForKey:@"data"];
+
+																										NSMutableArray *directories = [NSMutableArray arrayWithCapacity:dirsData.count];
+																										for (NSDictionary *dir in dirsData) {
+																											SBRootDirectory *directory = [SBRootDirectory itemWithDictionary:dir];
+																											if (directory.isValid) {
+																												[directories addObject:directory];
+																											}
+																										}
+																										
+																										defaults.defaultDirectories = directories;
+																										
 																										[defaults synchronize];
 																									}
 																								}
 																								failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 																									NSLog(@"Error getting defaults: %@", error);
 																								}];
-
-	AFJSONRequestOperation *dirsOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:dirsUrl]] 
-																							success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
-																								NSString *result = [JSON objectForKey:@"result"];
-																								
-																								if ([result isEqualToString:RESULT_SUCCESS]) {
-																									NSArray *data = [JSON objectForKey:@"data"];
-																									
-																									NSMutableArray *directories = [NSMutableArray arrayWithCapacity:data.count];
-																									for (NSDictionary *dir in data) {
-																										SBRootDirectory *directory = [SBRootDirectory itemWithDictionary:dir];
-																										if (directory.isValid) {
-																											[directories addObject:directory];
-																										}
-																									}
-																									NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-																									defaults.defaultDirectories = directories;
-																									
-																									[defaults synchronize];
-																								}
-																							}
-																							failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
-																								NSLog(@"Error getting root dirs: %@", error);
-																							}];
 	
 	[self.operationQueue addOperation:defaultsOperation];
-	[self.operationQueue addOperation:dirsOperation];
 }
 
 
@@ -135,6 +133,10 @@ static SickbeardAPIClient *sharedClient = nil;
 	NSString *url = [SBCommandBuilder URLForCommand:SickBeardCommandPing server:server params:nil];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
 	request.timeoutInterval = 10;
+	
+	if (server.proxyUsername && server.proxyPassword) {
+		[self addAuthenticationToRequest:request username:server.proxyUsername password:server.proxyPassword];
+	}
 
 	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:success failure:failure];
 	[self.operationQueue addOperation:operation];
@@ -145,13 +147,16 @@ static SickbeardAPIClient *sharedClient = nil;
 	[self runCommand:command method:HTTPMethodGET parameters:parameters success:success failure:failure];
 }
 
-
 - (void)runCommand:(SickBeardCommand)command method:(SBHTTPMethod)method parameters:(NSDictionary*)parameters success:(APISuccessBlock)success failure:(APIErrorBlock)failure {
 	// create custom request for POST. We just work with GET right now
 	
 	NSString *url = [SBCommandBuilder URLForCommand:command server:self.currentServer params:parameters];
 	
-	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+
+	if (self.currentServer.proxyUsername && self.currentServer.proxyPassword) {
+		[self addAuthenticationToRequest:request username:self.currentServer.proxyUsername password:self.currentServer.proxyPassword];
+	}
 	
 	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:success failure:failure];
 	
@@ -161,6 +166,17 @@ static SickbeardAPIClient *sharedClient = nil;
 
 - (NSURL*)createUrlWithEndpoint:(NSString*)endpoint {
 	return [NSURL URLWithString:[self.currentServer.serviceEndpointPath stringByAppendingPathComponent:endpoint]];
+}
+
+- (void)addAuthenticationToRequest:(NSMutableURLRequest *)request username:(NSString *)username password:(NSString *)password {
+	// create a plaintext string in the format username:password
+	NSString *loginString = [NSString stringWithFormat:@"%@:%@", username, password];
+		
+	// create the contents of the header 
+	NSString *authHeader = [@"Basic " stringByAppendingFormat:@"%@", [loginString base64Encode]];
+		
+	// add the header to the request.  Here's the $$$!!!
+	[request addValue:authHeader forHTTPHeaderField:@"Authorization"];
 }
 
 @end

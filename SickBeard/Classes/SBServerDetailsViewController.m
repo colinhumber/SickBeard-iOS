@@ -33,6 +33,8 @@
 @synthesize pathTextField;
 @synthesize sslSwitch;
 @synthesize apiKeyTextField;
+@synthesize usernameTextField;
+@synthesize passwordTextField;
 @synthesize server;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -97,12 +99,6 @@
 
 - (void)viewDidUnload
 {
-    [self setNameTextField:nil];
-    [self setHostTextField:nil];
-    [self setPortTextField:nil];
-	[self setPathTextField:nil];
-	[self setSslSwitch:nil];
-    [self setApiKeyTextField:nil];
     [super viewDidUnload];
 }
 
@@ -126,6 +122,8 @@
 	pathTextField.enabled = enabled;
 	sslSwitch.enabled = enabled;
 	apiKeyTextField.enabled = enabled;
+	usernameTextField.enabled = enabled;
+	passwordTextField.enabled = enabled;
 }
 
 - (void)setInitialServerValues {
@@ -135,6 +133,8 @@
 	pathTextField.text = server.path;
 	sslSwitch.on = server.useSSL;
 	apiKeyTextField.text = server.apiKey;
+	usernameTextField.text = server.proxyUsername;
+	passwordTextField.text = server.proxyPassword;
 }
 
 - (void)updateServerValues {
@@ -147,6 +147,8 @@
 	server.path = [pathTextField.text stringByReplacingOccurrencesOfString:@"/" withString:@""];
 	server.useSSL = sslSwitch.on;
 	server.apiKey = apiKeyTextField.text;
+	server.proxyUsername = usernameTextField.text;
+	server.proxyPassword = passwordTextField.text;
 }
 
 - (void)cancelEdit {
