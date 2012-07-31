@@ -78,15 +78,6 @@
 	if (server) {
 		[self setInitialServerValues];
 	}
-	else {
-#if DEBUG
-		nameTextField.text = @"Home";
-		hostTextField.text = @"colin.kicks-ass.net";
-		portTextField.text = @"8081";
-		sslSwitch.on = NO;
-		apiKeyTextField.text = @"aefc639b299bbbe8ed0e526ef83d415c";
-#endif		
-	}
 	
 	for (int section = 0; section < [self numberOfSectionsInTableView:self.tableView]; section++) {
 		int numberOfRows = [self tableView:self.tableView numberOfRowsInSection:section];
