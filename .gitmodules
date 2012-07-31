@@ -21,10 +21,10 @@
 	url = https://github.com/samvermette/SVWebViewController.git
 [submodule "SickBeard/LKBadgeView"]
 	path = SickBeard/LKBadgeView
-	url = https://github.com/lakesoft/LKbadgeView.git
+	url = https://github.com/colinhumber/LKbadgeView.git
 [submodule "SickBeard/TDHUDProgressBar"]
 	path = SickBeard/TDHUDProgressBar
-	url = https://github.com/tmdvs/TDHUDProgressBar.git
+	url = https://github.com/colinhumber/TDHUDProgressBar.git
 	ignore = untracked
 [submodule "SickBeard/Nimbus"]
 	path = SickBeard/Nimbus

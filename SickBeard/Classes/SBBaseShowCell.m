@@ -7,8 +7,6 @@
 //
 
 #import "SBBaseShowCell.h"
-#import "JSONKit.h"
-#import "GTMNSString+URLArguments.h"
 #import "SBCellBackground.h"
 
 @implementation SBBaseShowCell
@@ -57,8 +55,6 @@
 
 - (void)prepareForReuse {
 	[self.showImageView prepareForReuse];
-	//[self.showImageView cancelImageRequestOperation];
-//	self.showImageView.image = nil;
 	[super prepareForReuse];
 }
 
