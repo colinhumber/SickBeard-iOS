@@ -22,3 +22,6 @@
 [submodule "SickBeard/Nimbus"]
 	path = SickBeard/Nimbus
 	url = https://github.com/jverkoey/nimbus.git
+[submodule "SickBeard/LKBadgeView"]
+	path = SickBeard/LKBadgeView
+	url = git@github.com:colinhumber/LKbadgeView.git
