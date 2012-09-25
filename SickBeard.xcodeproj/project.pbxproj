@@ -10,7 +10,6 @@
 		3B5D5B2A1499277E00B77613 /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B261499277E00B77613 /* SVModalWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3B5D5B2B1499277E00B77613 /* SVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3B5D5B271499277E00B77613 /* SVWebViewController.bundle */; };
 		3B5D5B2C1499277E00B77613 /* SVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B291499277E00B77613 /* SVWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3B5D5B421499278800B77613 /* TDHUDProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B351499278800B77613 /* TDHUDProgressBar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3B5D5B8B1499492D00B77613 /* SBStaticTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B8A1499492C00B77613 /* SBStaticTableViewCell.m */; };
 		3BCA9A6A149954CB000E0290 /* SBSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCA9A69149954CB000E0290 /* SBSectionHeaderView.m */; };
 		95068BCA14102AED00847FC4 /* SBEpisodeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95068BC914102AED00847FC4 /* SBEpisodeDetailsViewController.m */; };
@@ -82,14 +81,12 @@
 		9519D0AC156C38780077BF8C /* SBBaseShowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C76CE0148E8433008EDF7A /* SBBaseShowCell.m */; };
 		9519D0AD156C38780077BF8C /* SBGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C76DED148E92EC008EDF7A /* SBGradientView.m */; };
 		9519D0AE156C38780077BF8C /* EpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95D3A8421492B61C005ED387 /* EpisodeCell.m */; };
-		9519D0AF156C38780077BF8C /* LKBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C54B1D1494217600111B96 /* LKBadgeView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9519D0B0156C38780077BF8C /* SBShowDetailsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C54BC714969E3B00111B96 /* SBShowDetailsHeaderView.m */; };
 		9519D0B1156C38780077BF8C /* SBEpisodeDetailsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C54CDB1497CDDD00111B96 /* SBEpisodeDetailsHeaderView.m */; };
 		9519D0B2156C38780077BF8C /* SBDrawingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9529C8FB14981253007614A5 /* SBDrawingHelpers.m */; };
 		9519D0B3156C38780077BF8C /* SBCellBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 9529C8FE1498131C007614A5 /* SBCellBackground.m */; };
 		9519D0B4156C38780077BF8C /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B261499277E00B77613 /* SVModalWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9519D0B5156C38780077BF8C /* SVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B291499277E00B77613 /* SVWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		9519D0B6156C38780077BF8C /* TDHUDProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B351499278800B77613 /* TDHUDProgressBar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9519D0B7156C38780077BF8C /* SBStaticTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B8A1499492C00B77613 /* SBStaticTableViewCell.m */; };
 		9519D0B8156C38780077BF8C /* SBSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCA9A69149954CB000E0290 /* SBSectionHeaderView.m */; };
 		9519D0B9156C38780077BF8C /* SBEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9593470F149BB55000C21971 /* SBEmptyView.m */; };
@@ -281,7 +278,6 @@
 		95BDF1901423AF4100A9B7C3 /* SickbeardAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDF18F1423AF4100A9B7C3 /* SickbeardAPIClient.m */; };
 		95BDF1931423AF5200A9B7C3 /* SBShowDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDF1921423AF5200A9B7C3 /* SBShowDetailsViewController.m */; };
 		95BE14781491679D00FE1301 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95BE14771491679D00FE1301 /* MessageUI.framework */; };
-		95C54B1E1494217600111B96 /* LKBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C54B1D1494217600111B96 /* LKBadgeView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		95C54BC814969E3C00111B96 /* SBShowDetailsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C54BC714969E3B00111B96 /* SBShowDetailsHeaderView.m */; };
 		95C54BCA14969E9F00111B96 /* SBShowDetailsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 95C54BC914969E9F00111B96 /* SBShowDetailsHeaderView.xib */; };
 		95C54BD41496A82800111B96 /* texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C54BD21496A82700111B96 /* texture.png */; };
@@ -341,8 +337,6 @@
 		3B5D5B271499277E00B77613 /* SVWebViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVWebViewController.bundle; sourceTree = "<group>"; };
 		3B5D5B281499277E00B77613 /* SVWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewController.h; sourceTree = "<group>"; };
 		3B5D5B291499277E00B77613 /* SVWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewController.m; sourceTree = "<group>"; };
-		3B5D5B341499278800B77613 /* TDHUDProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDHUDProgressBar.h; sourceTree = "<group>"; };
-		3B5D5B351499278800B77613 /* TDHUDProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDHUDProgressBar.m; sourceTree = "<group>"; };
 		3B5D5B891499492C00B77613 /* SBStaticTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBStaticTableViewCell.h; path = Classes/SBStaticTableViewCell.h; sourceTree = "<group>"; };
 		3B5D5B8A1499492C00B77613 /* SBStaticTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBStaticTableViewCell.m; path = Classes/SBStaticTableViewCell.m; sourceTree = "<group>"; };
 		3BCA9A68149954CB000E0290 /* SBSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSectionHeaderView.h; path = Classes/SBSectionHeaderView.h; sourceTree = "<group>"; };
@@ -544,8 +538,6 @@
 		95BDF1911423AF5200A9B7C3 /* SBShowDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBShowDetailsViewController.h; path = Classes/SBShowDetailsViewController.h; sourceTree = "<group>"; };
 		95BDF1921423AF5200A9B7C3 /* SBShowDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBShowDetailsViewController.m; path = Classes/SBShowDetailsViewController.m; sourceTree = "<group>"; };
 		95BE14771491679D00FE1301 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		95C54B1C1494217600111B96 /* LKBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKBadgeView.h; path = LKBadgeView/LKBadgeView.h; sourceTree = "<group>"; };
-		95C54B1D1494217600111B96 /* LKBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKBadgeView.m; path = LKBadgeView/LKBadgeView.m; sourceTree = "<group>"; };
 		95C54BC614969E3B00111B96 /* SBShowDetailsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBShowDetailsHeaderView.h; path = Classes/SBShowDetailsHeaderView.h; sourceTree = "<group>"; };
 		95C54BC714969E3B00111B96 /* SBShowDetailsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBShowDetailsHeaderView.m; path = Classes/SBShowDetailsHeaderView.m; sourceTree = "<group>"; };
 		95C54BC914969E9F00111B96 /* SBShowDetailsHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SBShowDetailsHeaderView.xib; path = Classes/SBShowDetailsHeaderView.xib; sourceTree = "<group>"; };
@@ -683,16 +675,6 @@
 			);
 			name = SVWebViewController;
 			path = SVWebViewController/SVWebViewController;
-			sourceTree = "<group>";
-		};
-		3B5D5B2D1499278800B77613 /* TDHUDProgressBar */ = {
-			isa = PBXGroup;
-			children = (
-				3B5D5B341499278800B77613 /* TDHUDProgressBar.h */,
-				3B5D5B351499278800B77613 /* TDHUDProgressBar.m */,
-			);
-			name = TDHUDProgressBar;
-			path = TDHUDProgressBar/TDHUDProgressBar;
 			sourceTree = "<group>";
 		};
 		95068BD11411643000847FC4 /* Views */ = {
@@ -1030,15 +1012,6 @@
 			path = SDURLCache;
 			sourceTree = "<group>";
 		};
-		95C54B1B1494216900111B96 /* LKBadgeView */ = {
-			isa = PBXGroup;
-			children = (
-				95C54B1C1494217600111B96 /* LKBadgeView.h */,
-				95C54B1D1494217600111B96 /* LKBadgeView.m */,
-			);
-			name = LKBadgeView;
-			sourceTree = "<group>";
-		};
 		95C76DEB148E92C7008EDF7A /* Global */ = {
 			isa = PBXGroup;
 			children = (
@@ -1255,9 +1228,7 @@
 			isa = PBXGroup;
 			children = (
 				9521B1661517E7970079D4D8 /* Nimbus */,
-				3B5D5B2D1499278800B77613 /* TDHUDProgressBar */,
 				3B5D5B241499277E00B77613 /* SVWebViewController */,
-				95C54B1B1494216900111B96 /* LKBadgeView */,
 				952D1EE8148940E1000ABD7C /* SVSegmentedControl */,
 				952D1EA61487FF02000ABD7C /* SVProgressHUD */,
 				9527ED1F1463952D001B3E51 /* EGOTableViewPullRefresh */,
@@ -1558,14 +1529,12 @@
 				9519D0AC156C38780077BF8C /* SBBaseShowCell.m in Sources */,
 				9519D0AD156C38780077BF8C /* SBGradientView.m in Sources */,
 				9519D0AE156C38780077BF8C /* EpisodeCell.m in Sources */,
-				9519D0AF156C38780077BF8C /* LKBadgeView.m in Sources */,
 				9519D0B0156C38780077BF8C /* SBShowDetailsHeaderView.m in Sources */,
 				9519D0B1156C38780077BF8C /* SBEpisodeDetailsHeaderView.m in Sources */,
 				9519D0B2156C38780077BF8C /* SBDrawingHelpers.m in Sources */,
 				9519D0B3156C38780077BF8C /* SBCellBackground.m in Sources */,
 				9519D0B4156C38780077BF8C /* SVModalWebViewController.m in Sources */,
 				9519D0B5156C38780077BF8C /* SVWebViewController.m in Sources */,
-				9519D0B6156C38780077BF8C /* TDHUDProgressBar.m in Sources */,
 				9519D0B7156C38780077BF8C /* SBStaticTableViewCell.m in Sources */,
 				9519D0B8156C38780077BF8C /* SBSectionHeaderView.m in Sources */,
 				9519D0B9156C38780077BF8C /* SBEmptyView.m in Sources */,
@@ -1666,14 +1635,12 @@
 				95C76CE1148E8433008EDF7A /* SBBaseShowCell.m in Sources */,
 				95C76DEE148E92EC008EDF7A /* SBGradientView.m in Sources */,
 				95D3A8431492B61C005ED387 /* EpisodeCell.m in Sources */,
-				95C54B1E1494217600111B96 /* LKBadgeView.m in Sources */,
 				95C54BC814969E3C00111B96 /* SBShowDetailsHeaderView.m in Sources */,
 				95C54CDC1497CDDF00111B96 /* SBEpisodeDetailsHeaderView.m in Sources */,
 				9529C8FC14981253007614A5 /* SBDrawingHelpers.m in Sources */,
 				9529C8FF1498131C007614A5 /* SBCellBackground.m in Sources */,
 				3B5D5B2A1499277E00B77613 /* SVModalWebViewController.m in Sources */,
 				3B5D5B2C1499277E00B77613 /* SVWebViewController.m in Sources */,
-				3B5D5B421499278800B77613 /* TDHUDProgressBar.m in Sources */,
 				3B5D5B8B1499492D00B77613 /* SBStaticTableViewCell.m in Sources */,
 				3BCA9A6A149954CB000E0290 /* SBSectionHeaderView.m in Sources */,
 				95934710149BB55000C21971 /* SBEmptyView.m in Sources */,

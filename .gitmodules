@@ -19,13 +19,6 @@
 [submodule "SickBeard/SVWebViewController"]
 	path = SickBeard/SVWebViewController
 	url = https://github.com/samvermette/SVWebViewController.git
-[submodule "SickBeard/LKBadgeView"]
-	path = SickBeard/LKBadgeView
-	url = https://github.com/colinhumber/LKbadgeView.git
-[submodule "SickBeard/TDHUDProgressBar"]
-	path = SickBeard/TDHUDProgressBar
-	url = https://github.com/colinhumber/TDHUDProgressBar.git
-	ignore = untracked
 [submodule "SickBeard/Nimbus"]
 	path = SickBeard/Nimbus
 	url = https://github.com/jverkoey/nimbus.git
