@@ -25,3 +25,6 @@
 [submodule "SickBeard/LKBadgeView"]
 	path = SickBeard/LKBadgeView
 	url = git@github.com:colinhumber/LKbadgeView.git
+[submodule "SickBeard/TDHUDProgressBar"]
+	path = SickBeard/TDHUDProgressBar
+	url = git@github.com:colinhumber/TDHUDProgressBar.git

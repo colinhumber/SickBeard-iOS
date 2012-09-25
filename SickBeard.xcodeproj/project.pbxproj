@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B3CB47A161205F90039830C /* TDHUDProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB469161205F90039830C /* TDHUDProgressBar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3B3CB47B161205F90039830C /* TDHUDProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB469161205F90039830C /* TDHUDProgressBar.m */; };
+		3B3CB4C6161206020039830C /* LKBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB48F161206020039830C /* LKBadgeView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3B3CB4C7161206020039830C /* LKBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB48F161206020039830C /* LKBadgeView.m */; };
 		3B5D5B2A1499277E00B77613 /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B261499277E00B77613 /* SVModalWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3B5D5B2B1499277E00B77613 /* SVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3B5D5B271499277E00B77613 /* SVWebViewController.bundle */; };
 		3B5D5B2C1499277E00B77613 /* SVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B291499277E00B77613 /* SVWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -332,6 +336,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B3CB468161205F90039830C /* TDHUDProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDHUDProgressBar.h; sourceTree = "<group>"; };
+		3B3CB469161205F90039830C /* TDHUDProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDHUDProgressBar.m; sourceTree = "<group>"; };
+		3B3CB48E161206020039830C /* LKBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKBadgeView.h; sourceTree = "<group>"; };
+		3B3CB48F161206020039830C /* LKBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKBadgeView.m; sourceTree = "<group>"; };
 		3B5D5B251499277E00B77613 /* SVModalWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVModalWebViewController.h; sourceTree = "<group>"; };
 		3B5D5B261499277E00B77613 /* SVModalWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVModalWebViewController.m; sourceTree = "<group>"; };
 		3B5D5B271499277E00B77613 /* SVWebViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVWebViewController.bundle; sourceTree = "<group>"; };
@@ -664,6 +672,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B3CB461161205F90039830C /* TDHUDProgressBar */ = {
+			isa = PBXGroup;
+			children = (
+				3B3CB468161205F90039830C /* TDHUDProgressBar.h */,
+				3B3CB469161205F90039830C /* TDHUDProgressBar.m */,
+			);
+			name = TDHUDProgressBar;
+			path = TDHUDProgressBar/TDHUDProgressBar;
+			sourceTree = "<group>";
+		};
+		3B3CB47F161206020039830C /* LKBadgeView */ = {
+			isa = PBXGroup;
+			children = (
+				3B3CB48E161206020039830C /* LKBadgeView.h */,
+				3B3CB48F161206020039830C /* LKBadgeView.m */,
+			);
+			path = LKBadgeView;
+			sourceTree = "<group>";
+		};
 		3B5D5B241499277E00B77613 /* SVWebViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1227,6 +1254,8 @@
 		95F7F61E1408492700E17F3E /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				3B3CB47F161206020039830C /* LKBadgeView */,
+				3B3CB461161205F90039830C /* TDHUDProgressBar */,
 				9521B1661517E7970079D4D8 /* Nimbus */,
 				3B5D5B241499277E00B77613 /* SVWebViewController */,
 				952D1EE8148940E1000ABD7C /* SVSegmentedControl */,
@@ -1567,6 +1596,8 @@
 				9519D0D4156C38780077BF8C /* NINetworkImageRequest.m in Sources */,
 				9519D0D5156C38780077BF8C /* NINetworkImageView.m in Sources */,
 				9519D0D6156C38780077BF8C /* SBBaseEpisode.m in Sources */,
+				3B3CB47B161205F90039830C /* TDHUDProgressBar.m in Sources */,
+				3B3CB4C7161206020039830C /* LKBadgeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1673,6 +1704,8 @@
 				9521B1B21517E7E10079D4D8 /* NINetworkImageRequest.m in Sources */,
 				9521B1B31517E7E10079D4D8 /* NINetworkImageView.m in Sources */,
 				95532B5815470A1D0052893E /* SBBaseEpisode.m in Sources */,
+				3B3CB47A161205F90039830C /* TDHUDProgressBar.m in Sources */,
+				3B3CB4C6161206020039830C /* LKBadgeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
