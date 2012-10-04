@@ -23,4 +23,5 @@
 	#import "SBDrawingHelpers.h"
 	#import "NimbusCore.h"
 	#import "NINetworkImageView.h"
+	#import "UIView+Layout.h"
 #endif

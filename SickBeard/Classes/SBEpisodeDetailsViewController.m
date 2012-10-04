@@ -53,6 +53,11 @@
 	[self updateHeaderView];
 	[self loadData];
 	
+	if ([UIScreen mainScreen].bounds.size.height == 568) {
+		self.episodeDescriptionBackground.height += 88;
+		self.descriptionLabel.height += 88;
+	}
+	
     [super viewDidLoad];
 }
 

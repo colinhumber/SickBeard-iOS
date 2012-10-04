@@ -58,15 +58,15 @@
 #pragma mark - View lifecycle
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {		
+- (void)viewDidLoad {
 	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
 	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
+
+	[super viewDidLoad];
 	
 	_menuFlags.menuIsShowing = NO;
 	_menuFlags.menuIsHiding = NO;
-	
-	[super viewDidLoad];
-	
+		
 	[[NSNotificationCenter defaultCenter] addObserver:self 
 											 selector:@selector(menuControllerWillHide:)
 												 name:UIMenuControllerWillHideMenuNotification
@@ -102,14 +102,6 @@
 			}
 		}		
 	}
-}
-
-- (void)viewDidUnload
-{
-    [self setTableView:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

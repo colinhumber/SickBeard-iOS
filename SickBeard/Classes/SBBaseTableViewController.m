@@ -47,6 +47,9 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
+	self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	
 	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
 	self.tableView.tableFooterView = [[UIView alloc] init];
@@ -70,6 +73,10 @@
 		}
 		else {
 			emptyViewHeight = 416;
+			
+			if ([UIScreen mainScreen].bounds.size.height == 568) {
+				emptyViewHeight += 88;
+			}
 		}
 
 		self.emptyView = [[SBEmptyView alloc] initWithFrame:CGRectMake(0, 0, 320, emptyViewHeight)];

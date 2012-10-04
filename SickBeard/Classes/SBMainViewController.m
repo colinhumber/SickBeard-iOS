@@ -21,7 +21,7 @@
 	
 	SBShowsViewController *showVc = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([SBShowsViewController class])];
 	SBEpisodesViewController *episodesVc = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([SBEpisodesViewController class])];
-
+	
 	[self addChildViewController:showVc];
 	[showVc didMoveToParentViewController:self];
 	
@@ -62,7 +62,9 @@
 	if (self.currentController == destinationController){
 		return;
 	}
-		
+	
+	destinationController.view.frame = self.view.bounds;
+	
 	[self transitionFromViewController:self.currentController 
 					  toViewController:destinationController 
 							  duration:0
