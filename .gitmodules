@@ -24,7 +24,7 @@
 	url = https://github.com/jverkoey/nimbus.git
 [submodule "SickBeard/LKBadgeView"]
 	path = SickBeard/LKBadgeView
-	url = https://github.com/LKbadgeView.git
+	url = https://github.com/colinhumber/LKbadgeView.git
 [submodule "SickBeard/TDHUDProgressBar"]
 	path = SickBeard/TDHUDProgressBar
-	url = https://github.com/TDHUDProgressBar.git
+	url = https://github.com/colinhumber/TDHUDProgressBar.git
