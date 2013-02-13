@@ -45,6 +45,8 @@
 	currentLanguage = @"English";
 	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
 
+	self.languagePickerView.top = self.view.height - self.navigationController.navigationBar.height;
+	
     [super viewDidLoad];
 }
 
