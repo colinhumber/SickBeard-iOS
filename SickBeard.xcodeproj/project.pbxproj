@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3B3CB47A161205F90039830C /* TDHUDProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB469161205F90039830C /* TDHUDProgressBar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3B3CB47B161205F90039830C /* TDHUDProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB469161205F90039830C /* TDHUDProgressBar.m */; };
+		3B3CB47B161205F90039830C /* TDHUDProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB469161205F90039830C /* TDHUDProgressBar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3B3CB4C6161206020039830C /* LKBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB48F161206020039830C /* LKBadgeView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3B3CB4C7161206020039830C /* LKBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB48F161206020039830C /* LKBadgeView.m */; };
+		3B3CB4C7161206020039830C /* LKBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB48F161206020039830C /* LKBadgeView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3B3CB520161A2E970039830C /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB51F161A2E960039830C /* UIView+Layout.m */; };
 		3B3CB521161A2E970039830C /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB51F161A2E960039830C /* UIView+Layout.m */; };
 		3B3CB525161A35510039830C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B3CB524161A35510039830C /* Default-568h@2x.png */; };
@@ -1765,6 +1765,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1787,6 +1788,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
