@@ -15,6 +15,8 @@
 #import "NSUserDefaults+SickBeard.h"
 #import "SBRootDirectory.h"
 
+#define _AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES_
+
 NSString *const RESULT_SUCCESS = @"success";
 NSString *const RESULT_FAILURE = @"failure";
 NSString *const RESULT_TIMEOUT = @"timeout";

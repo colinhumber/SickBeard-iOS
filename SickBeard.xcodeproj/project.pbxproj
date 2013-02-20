@@ -19,6 +19,8 @@
 		3B5D5B2B1499277E00B77613 /* SVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3B5D5B271499277E00B77613 /* SVWebViewController.bundle */; };
 		3B5D5B2C1499277E00B77613 /* SVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B291499277E00B77613 /* SVWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3B5D5B8B1499492D00B77613 /* SBStaticTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5B8A1499492C00B77613 /* SBStaticTableViewCell.m */; };
+		3BA5BBE416D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA5BBE316D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m */; };
+		3BA5BBE516D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA5BBE316D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m */; };
 		3BCA9A6A149954CB000E0290 /* SBSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCA9A69149954CB000E0290 /* SBSectionHeaderView.m */; };
 		95068BCA14102AED00847FC4 /* SBEpisodeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95068BC914102AED00847FC4 /* SBEpisodeDetailsViewController.m */; };
 		95068BD41411644D00847FC4 /* ShowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95068BD31411644D00847FC4 /* ShowCell.m */; };
@@ -352,6 +354,8 @@
 		3B5D5B291499277E00B77613 /* SVWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewController.m; sourceTree = "<group>"; };
 		3B5D5B891499492C00B77613 /* SBStaticTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBStaticTableViewCell.h; path = Classes/SBStaticTableViewCell.h; sourceTree = "<group>"; };
 		3B5D5B8A1499492C00B77613 /* SBStaticTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBStaticTableViewCell.m; path = Classes/SBStaticTableViewCell.m; sourceTree = "<group>"; };
+		3BA5BBE216D580C000BB3A68 /* AFURLConnectionOperation+Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFURLConnectionOperation+Credentials.h"; sourceTree = "<group>"; };
+		3BA5BBE316D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFURLConnectionOperation+Credentials.m"; sourceTree = "<group>"; };
 		3BCA9A68149954CB000E0290 /* SBSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSectionHeaderView.h; path = Classes/SBSectionHeaderView.h; sourceTree = "<group>"; };
 		3BCA9A69149954CB000E0290 /* SBSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSectionHeaderView.m; path = Classes/SBSectionHeaderView.m; sourceTree = "<group>"; };
 		6B1405EBBB093810F5A8D2F5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -966,6 +970,8 @@
 				95A0ABD6146AEF68009EADA7 /* AFImageRequestOperation+NSURLCredential.m */,
 				95A0ABD8146AFD64009EADA7 /* AFHTTPRequestOperation+NSURLCredential.h */,
 				95A0ABD9146AFD64009EADA7 /* AFHTTPRequestOperation+NSURLCredential.m */,
+				3BA5BBE216D580C000BB3A68 /* AFURLConnectionOperation+Credentials.h */,
+				3BA5BBE316D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m */,
 			);
 			name = Additions;
 			sourceTree = "<group>";
@@ -1605,6 +1611,7 @@
 				3B3CB47B161205F90039830C /* TDHUDProgressBar.m in Sources */,
 				3B3CB4C7161206020039830C /* LKBadgeView.m in Sources */,
 				3B3CB521161A2E970039830C /* UIView+Layout.m in Sources */,
+				3BA5BBE516D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1714,6 +1721,7 @@
 				3B3CB47A161205F90039830C /* TDHUDProgressBar.m in Sources */,
 				3B3CB4C6161206020039830C /* LKBadgeView.m in Sources */,
 				3B3CB520161A2E970039830C /* UIView+Layout.m in Sources */,
+				3BA5BBE416D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

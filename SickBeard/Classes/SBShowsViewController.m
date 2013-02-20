@@ -216,7 +216,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [[self.tableData objectAtIndex:section] count];
+	if (self.tableData.count) {
+		return [[self.tableData objectAtIndex:section] count];
+	}
+	
+	return 0;
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {

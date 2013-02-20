@@ -220,6 +220,7 @@
 												   }
 											   }
 											   failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+												   TFLog(@"Unable to connect to server (%@).\nError: %@\nJSON: %@", server.serviceEndpointPath, error, JSON);
 												   [SVProgressHUD dismissWithError:[NSString stringWithFormat:NSLocalizedString(@"Unable to connect to Sick Beard (%@)", @"Unable to connect to Sick Beard (%@)"),
 																					server.serviceEndpointPath] 
 																		afterDelay:1];
