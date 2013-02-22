@@ -1,6 +1,3 @@
-[submodule "SickBeard/SVProgressHUD"]
-	path = SickBeard/SVProgressHUD
-	url = https://github.com/samvermette/SVProgressHUD.git
 [submodule "SickBeard/SVSegmentedControl"]
 	path = SickBeard/SVSegmentedControl
 	url = https://github.com/samvermette/SVSegmentedControl.git
@@ -25,3 +22,6 @@
 [submodule "Vendor/EGOTableViewPullRefresh"]
 	path = Vendor/EGOTableViewPullRefresh
 	url = https://github.com/typeoneerror/EGOTableViewPullRefresh.git
+[submodule "Vendor/SVProgressHUD"]
+	path = Vendor/SVProgressHUD
+	url = https://github.com/samvermette/SVProgressHUD.git
