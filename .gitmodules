@@ -1,6 +1,3 @@
-[submodule "SickBeard/SVSegmentedControl"]
-	path = SickBeard/SVSegmentedControl
-	url = https://github.com/samvermette/SVSegmentedControl.git
 [submodule "SickBeard/SVWebViewController"]
 	path = SickBeard/SVWebViewController
 	url = https://github.com/samvermette/SVWebViewController.git
@@ -25,3 +22,6 @@
 [submodule "Vendor/SVProgressHUD"]
 	path = Vendor/SVProgressHUD
 	url = https://github.com/samvermette/SVProgressHUD.git
+[submodule "Vendor/SVSegmentedControl"]
+	path = Vendor/SVSegmentedControl
+	url = https://github.com/samvermette/SVSegmentedControl.git
