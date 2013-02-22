@@ -1,6 +1,3 @@
-[submodule "SickBeard/LKBadgeView"]
-	path = SickBeard/LKBadgeView
-	url = https://github.com/colinhumber/LKbadgeView.git
 [submodule "SickBeard/TDHUDProgressBar"]
 	path = SickBeard/TDHUDProgressBar
 	url = https://github.com/colinhumber/TDHUDProgressBar.git
@@ -25,3 +22,6 @@
 [submodule "Vendor/Nimbus"]
 	path = Vendor/Nimbus
 	url = https://github.com/jverkoey/nimbus.git
+[submodule "Vendor/LKBadgeView"]
+	path = Vendor/LKBadgeView
+	url = https://github.com/colinhumber/LKbadgeView.git
