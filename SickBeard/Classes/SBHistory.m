@@ -38,7 +38,7 @@
 }
 
 - (NSString*)description {
-	return [NSString stringWithFormat:@"<%@ = %08X | show = %d | tvdbID = %@ | created date = %@>", [self class], self, showName, tvdbID, createdDate];
+	return [NSString stringWithFormat:@"<%@ = %8@ | show = %@ | tvdbID = %@ | created date = %@>", [self class], self, showName, tvdbID, createdDate];
 }
 
 @end

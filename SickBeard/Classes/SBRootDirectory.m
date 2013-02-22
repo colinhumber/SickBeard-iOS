@@ -49,7 +49,7 @@
 }
 
 - (NSString*)description {
-	return [NSString stringWithFormat:@"<%@ = %08X | isDefault = %d | path = %@ | isValid = %d>", [self class], self, isDefault, path, isValid];
+	return [NSString stringWithFormat:@"<%@ = %8@ | isDefault = %d | path = %@ | isValid = %d>", [self class], self, isDefault, path, isValid];
 }
 
 @end

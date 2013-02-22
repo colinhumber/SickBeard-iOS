@@ -65,7 +65,7 @@
 }
 
 - (NSString*)description {
-	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | episode = S%dE%d>", [self class], self, name, self.season, self.number];
+	return [NSString stringWithFormat:@"<%@ = %8@ | name = %@ | episode = S%dE%d>", [self class], self, name, self.season, self.number];
 }
 
 

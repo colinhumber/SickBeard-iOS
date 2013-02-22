@@ -80,7 +80,7 @@
 }
 
 - (NSString*)description {
-	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | show = %@>", [self class], self, name, self.show];
+	return [NSString stringWithFormat:@"<%@ = %8@ | name = %@ | show = %@>", [self class], self, name, self.show];
 }
 
 

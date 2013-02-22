@@ -76,7 +76,7 @@
 }
 
 - (NSString*)description {
-	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | network = %@ | status = %d>", [self class], self, showName, network, status];
+	return [NSString stringWithFormat:@"<%@ = %8@ | name = %@ | network = %@ | status = %d>", [self class], self, showName, network, status];
 }
 
 - (NSString*)sanitizedShowName {

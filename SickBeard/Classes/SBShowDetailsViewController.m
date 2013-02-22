@@ -485,11 +485,21 @@
 		
 		menuIndexPath = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
 		
-		UIMenuItem *item1 = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Search", @"Search") action:@selector(searchForEpisode)];
-		UIMenuItem *item2 = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Set Status", @"Set Status") action:@selector(setEpisodeStatus)];
+		NSArray *keys = [seasons allKeys];
+		NSString *sectionKey = [keys objectAtIndex:menuIndexPath.section];
+		NSArray *episodes = [seasons objectForKey:sectionKey];
+		SBEpisode *episode = [episodes objectAtIndex:menuIndexPath.row];
+		
+		NSMutableArray *menuItems = [NSMutableArray array];
+		
+		[menuItems addObject:[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Search", @"Search") action:@selector(searchForEpisode)]];
+		
+		if (episode.status != EpisodeStatusUnaired && episode.status != EpisodeStatusDownloaded) {
+			[menuItems addObject:[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Set Status", @"Set Status") action:@selector(setEpisodeStatus)]];
+		}
 		
 		UIMenuController *menu = [UIMenuController sharedMenuController];
-		menu.menuItems = [NSArray arrayWithObjects:item1, item2, nil];
+		menu.menuItems = menuItems;
 		[menu setTargetRect:gesture.view.frame inView:gesture.view.superview];
 		[menu setMenuVisible:YES animated:YES];
 	

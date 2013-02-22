@@ -12,7 +12,7 @@
 #import "SickbeardAPIClient.h"
 #import "SDURLCache.h"
 #import <MaaSive/MaaSive.h>
-
+#import <Crashlytics/Crashlytics.h>
 
 @implementation SBAppDelegate
 
@@ -31,8 +31,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	[TestFlight takeOff:@"9677d08cdc79deabbe7610f9edb5b4f9_MzY5MTgyMDExLTEwLTI1IDIyOjUwOjMxLjg0Mjg3OA"];
-
+	[TestFlight takeOff:@"ba7e0bec-92a4-4478-b663-660225c13db1"];
+	[Crashlytics startWithAPIKey:@"4655dffb4c992a3abe7570a951f039cfa316de39"];
+	
 	[[Nimbus networkOperationQueue] setMaxConcurrentOperationCount:1];
 	
 	MaaSManager *maasManager = [MaaSManager sharedManager];

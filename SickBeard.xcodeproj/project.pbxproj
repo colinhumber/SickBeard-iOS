@@ -22,6 +22,8 @@
 		3BA5BBE416D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA5BBE316D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m */; };
 		3BA5BBE516D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA5BBE316D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m */; };
 		3BCA9A6A149954CB000E0290 /* SBSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCA9A69149954CB000E0290 /* SBSectionHeaderView.m */; };
+		3BE0305A16D6D9FA00422514 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BE0305916D6D9FA00422514 /* Crashlytics.framework */; };
+		3BE0305B16D6D9FA00422514 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BE0305916D6D9FA00422514 /* Crashlytics.framework */; };
 		95068BCA14102AED00847FC4 /* SBEpisodeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95068BC914102AED00847FC4 /* SBEpisodeDetailsViewController.m */; };
 		95068BD41411644D00847FC4 /* ShowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95068BD31411644D00847FC4 /* ShowCell.m */; };
 		9509F1D5140C283D00AFBF2C /* SBSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9509F1D4140C283D00AFBF2C /* SBSettingsViewController.m */; };
@@ -358,6 +360,7 @@
 		3BA5BBE316D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFURLConnectionOperation+Credentials.m"; sourceTree = "<group>"; };
 		3BCA9A68149954CB000E0290 /* SBSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSectionHeaderView.h; path = Classes/SBSectionHeaderView.h; sourceTree = "<group>"; };
 		3BCA9A69149954CB000E0290 /* SBSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSectionHeaderView.m; path = Classes/SBSectionHeaderView.m; sourceTree = "<group>"; };
+		3BE0305916D6D9FA00422514 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		6B1405EBBB093810F5A8D2F5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		8A706C8E4BFF8502C453BD44 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		95068BC814102AED00847FC4 /* SBEpisodeDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBEpisodeDetailsViewController.h; path = Classes/SBEpisodeDetailsViewController.h; sourceTree = "<group>"; };
@@ -653,6 +656,7 @@
 				9519D0E3156C38780077BF8C /* Foundation.framework in Frameworks */,
 				9519D0E4156C38780077BF8C /* libTestFlight.a in Frameworks */,
 				9519D0E5156C38780077BF8C /* MaaSive.framework in Frameworks */,
+				3BE0305B16D6D9FA00422514 /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,6 +678,7 @@
 				95DD4201140837B8001FE32F /* Foundation.framework in Frameworks */,
 				959439461423032F0069E008 /* libTestFlight.a in Frameworks */,
 				A4EBAFCEDF9A6DE81C43E692 /* MaaSive.framework in Frameworks */,
+				3BE0305A16D6D9FA00422514 /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1097,6 +1102,7 @@
 		95DD41FD140837B8001FE32F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3BE0305916D6D9FA00422514 /* Crashlytics.framework */,
 				A6683C04E273F0F5A4029593 /* MaaSive.framework */,
 				95BE14771491679D00FE1301 /* MessageUI.framework */,
 				9563CCCC140D3A1D00920795 /* CoreData.framework */,
@@ -1326,6 +1332,7 @@
 				95DD41F7140837B8001FE32F /* Frameworks */,
 				95DD41F8140837B8001FE32F /* Resources */,
 				95151CAB14579EAD00E504DC /* ShellScript */,
+				3BE0305816D6D8E600422514 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1476,6 +1483,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3BE0305816D6D8E600422514 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 4655dffb4c992a3abe7570a951f039cfa316de39";
+		};
 		95151CAB14579EAD00E504DC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
