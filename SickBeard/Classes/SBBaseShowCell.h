@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NINetworkImageView.h"
 
 @interface SBBaseShowCell : UITableViewCell
 

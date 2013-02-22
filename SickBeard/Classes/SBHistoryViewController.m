@@ -14,6 +14,7 @@
 #import "SBHistoryCell.h"
 #import "NSDate+Utilities.h"
 #import "SVSegmentedControl.h"
+#import "SVProgressHUD.h"
 
 @implementation SBHistoryViewController
 
@@ -32,10 +33,10 @@
 										  [NSArray arrayWithObjects:NSLocalizedString(@"Snatched", @"Snatched"), NSLocalizedString(@"Downloaded", @"Downloaded"), nil]];
 
 	historyControl.thumb.tintColor = RGBCOLOR(127, 92, 59);
-	historyControl.selectedSegmentChangedHandler = ^(id sender) {
+	historyControl.changeHandler = ^(NSUInteger newIndex) {
 		[TestFlight passCheckpoint:@"Changed history type"];
 		
-		historyType = [(SVSegmentedControl*)sender selectedIndex];
+		historyType = newIndex;
 		[self loadData];
 	};
 	

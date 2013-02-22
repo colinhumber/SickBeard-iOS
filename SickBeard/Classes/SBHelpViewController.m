@@ -7,9 +7,9 @@
 //
 
 #import "SBHelpViewController.h"
-#import <MaaSive/MaaSive.h>
 #import "SBFaq.h"
 #import "SBFaqCell.h"
+#import "SVProgressHUD.h"
 
 @implementation SBHelpViewController
 
@@ -49,26 +49,26 @@
 	[SVProgressHUD showWithStatus:@"Loading questions"];
 	
 	NSDictionary *query = [NSDictionary dictionaryWithObject:@"1" forKey:@"published.eql"];
-	
-	[SBFaq findRemoteWithQuery:query 
-			   completionBlock:^(NSArray *objects, NSError *error) {
-				   dispatch_async(dispatch_get_main_queue(), ^{
-					   if (!error) {
-						   [SVProgressHUD dismiss];
-						   
-						   self.questions = objects;
-						   [self.tableView reloadData];
-						   
-						   if (self.questions.count == 0) {
-							   [self showEmptyView:YES animated:YES];
-						   }
-					   }
-					   else {
-						   NSLog(@"Error: %@", error);
-					   }
-				   });
-			   }];
+	[self showEmptyView:YES animated:YES];
 
+//	[SBFaq findRemoteWithQuery:query
+//			   completionBlock:^(NSArray *objects, NSError *error) {
+//				   dispatch_async(dispatch_get_main_queue(), ^{
+//					   if (!error) {
+//						   [SVProgressHUD dismiss];
+//						   
+//						   self.questions = objects;
+//						   [self.tableView reloadData];
+//						   
+//						   if (self.questions.count == 0) {
+//							   [self showEmptyView:YES animated:YES];
+//						   }
+//					   }
+//					   else {
+//						   NSLog(@"Error: %@", error);
+//					   }
+//				   });
+//			   }];
 }
 
 - (void)done {

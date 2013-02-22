@@ -14,6 +14,7 @@
 #import "SBOptionsViewController.h"
 #import "SBCellBackground.h"
 #import "SBSectionHeaderView.h"
+#import "SVProgressHUD.h"
 
 @implementation SBAddShowViewController
 

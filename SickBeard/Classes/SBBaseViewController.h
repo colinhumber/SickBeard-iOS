@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SBDataLoader.h"
+#import "SBNotificationManager.h"
+#import "SVProgressHUD.h"
 
 @interface SBBaseViewController : UIViewController <SBDataLoader>
 

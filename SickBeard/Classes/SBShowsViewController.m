@@ -84,8 +84,8 @@
 				[self.tableData removeAllObjects];
 				[self loadData];
 			}
-		}		
-	}
+		}
+	}	
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -170,7 +170,8 @@
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
-											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
+
+											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows")
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
 											  

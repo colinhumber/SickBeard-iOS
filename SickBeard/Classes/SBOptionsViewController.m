@@ -13,6 +13,8 @@
 #import "PRPAlertView.h"
 #import "SBCellBackground.h"
 #import "SBSectionHeaderView.h"
+#import "SVProgressHUD.h"
+#import "SBNotificationManager.h"
 
 #define kInitialQualityIndex 0
 #define kArchiveQualityIndex 1
@@ -93,7 +95,9 @@
 
 #pragma mark - Actions
 - (IBAction)addShow {
-	[SVProgressHUD showWithStatus:NSLocalizedString(@"Adding show", @"Adding show") maskType:SVProgressHUDMaskTypeGradient];
+	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Adding show", @"Adding show")
+																type:SBNotificationTypeInfo
+															  inView:self.view];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
 							show.tvdbID, @"tvdbid",
@@ -111,14 +115,18 @@
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Show has been added", @"Show has been added") afterDelay:1.5];
+												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Show has been added", @"Show has been added")
+																											  type:SBNotificationTypeSuccess
+																											inView:self.view];
 												  
 												  RunAfterDelay(1.5, ^{
 													  [self.delegate didAddShow];
 												  });
 											  }
 											  else {
-												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
+												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
+																											  type:SBNotificationTypeError
+																											inView:self.view];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
@@ -131,7 +139,9 @@
 
 - (void)saveDefaults {
 	[TestFlight passCheckpoint:@"Saved server defaults"];
-	[SVProgressHUD showWithStatus:NSLocalizedString(@"Saving defaults", @"Saving defaults")];
+	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Saving defaults", @"Saving defaults")
+																type:SBNotificationTypeInfo
+															  inView:self.view];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
 							[NSString stringWithFormat:@"%d", useSeasonFolders], @"season_folder",
@@ -175,10 +185,14 @@
 																									
 																									[defaults synchronize];
 																									
-																									[SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Defaults saved", @"Defaults saved") afterDelay:2];
+																									[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Defaults saved", @"Defaults saved")
+																																								type:SBNotificationTypeSuccess
+																																							  inView:self.view];
 																								}
 																								else {
-																									[SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
+																									[[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
+																																								type:SBNotificationTypeError
+																																							  inView:self.view];
 																								}
 																							}
 																							failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
@@ -188,11 +202,15 @@
 																							}];
 												  }
 												  else {
-													  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Defaults saved", @"Defaults saved") afterDelay:2];
+													  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Defaults saved", @"Defaults saved")
+																												  type:SBNotificationTypeSuccess
+																												inView:self.view];
 												  }
 											  }
 											  else {
-												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
+												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
+																											  type:SBNotificationTypeError
+																											inView:self.view];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {

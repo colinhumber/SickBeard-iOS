@@ -149,8 +149,10 @@
 }
 
 #pragma mark - Loading
-- (void)loadData {
-	[SVProgressHUD showWithStatus:NSLocalizedString(@"Loading show details", @"Loading show details")];
+- (void)loadData:(BOOL)showHUD {
+	if (showHUD) {
+		[SVProgressHUD showWithStatus:NSLocalizedString(@"Loading show details", @"Loading show details")];
+	}
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandSeasons
 									   parameters:[NSDictionary dictionaryWithObject:show.tvdbID forKey:@"tvdbid"]
@@ -518,7 +520,9 @@
 							[NSNumber numberWithInt:episode.season], @"season",
 							[NSNumber numberWithInt:episode.number], @"episode", nil];
 	
-	[SVProgressHUD showWithStatus:NSLocalizedString(@"Searching for episode", @"Searching for episode")];
+	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Searching for episode", @"Searching for episode")
+																type:SBNotificationTypeInfo
+															  inView:self.view];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
 									   parameters:params 
@@ -526,19 +530,21 @@
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading") 
-																		 afterDelay:2];
-												  [self loadData];
+												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading")
+																											  type:SBNotificationTypeSuccess
+																											inView:self.view];
+												  [self loadData:NO];
 											  }
 											  else {
-												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
+												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"mesage"]
+																											  type:SBNotificationTypeError
+																											inView:self.view];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
-											  [SVProgressHUD dismiss];
 										  }];
 }
 
@@ -586,7 +592,9 @@
 							[NSNumber numberWithInt:episode.number], @"episode",
 							statusString, @"status", nil];
 	
-	[SVProgressHUD showWithStatus:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]];
+	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
+																type:SBNotificationTypeInfo
+															  inView:self.view];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
 									   parameters:params 
@@ -594,19 +602,21 @@
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Status successfully set!", @"Status successfully set!") 
-																		 afterDelay:2];
-												  [self loadData];
+												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Status successfully set!", @"Status successfully set!")
+																											  type:SBNotificationTypeSuccess
+																											inView:self.view];
+												  [self loadData:NO];
 											  }
 											  else {
-												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
+												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
+																											  type:SBNotificationTypeError
+																											inView:self.view];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error setting status", @"Error setting status") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
-											  [SVProgressHUD dismiss];
 										  }];
 }
 

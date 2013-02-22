@@ -18,7 +18,6 @@
 	#import "NSUserDefaults+SickBeard.h"
 	#import "NSData+Base64.h"
 	#import "NSString+Base64.h"
-	#import "SVProgressHUD.h"
 	#import "TestFlight.h"
 	#import "SBDrawingHelpers.h"
 	#import "NimbusCore.h"

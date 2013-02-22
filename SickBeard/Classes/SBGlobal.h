@@ -12,7 +12,7 @@
 #define kTVDBLinkFormat @"http://thetvdb.com/?tab=series&id=%@&lid=7"
 #define kTVRageLinkFormat @"http://www.tvrage.com/shows/id-%@"
 #define kDonateLink @"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2QFWVTWEMQRSN"
-
+#define XDELEGATE (SBAppDelegate*)[UIApplication sharedApplication].delegate
 
 typedef enum {
 	// system commands

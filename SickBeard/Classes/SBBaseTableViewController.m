@@ -89,13 +89,17 @@
 }
 
 - (void)loadData {
+	[self loadData:YES];
+}
+
+- (void)loadData:(BOOL)showHUD {
 	[self showEmptyView:NO animated:NO];
 	self.isDataLoading = YES;
 }
 
+
 - (void)finishDataLoad:(NSError*)error {
 	self.isDataLoading = NO;
-	
 	[SVProgressHUD dismiss];
 	
 	if (!error) {

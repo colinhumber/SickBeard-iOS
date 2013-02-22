@@ -10,8 +10,6 @@
 #import "SBServer.h"
 #import "SBServerDetailsViewController.h"
 #import "SickbeardAPIClient.h"
-#import "SDURLCache.h"
-#import <MaaSive/MaaSive.h>
 #import <Crashlytics/Crashlytics.h>
 
 @implementation SBAppDelegate
@@ -36,13 +34,10 @@
 	
 	[[Nimbus networkOperationQueue] setMaxConcurrentOperationCount:1];
 	
-	MaaSManager *maasManager = [MaaSManager sharedManager];
-	maasManager.appId = @"68df4871fede98e56c2c";
-	maasManager.secretKey = @"b16826cce9657a88d49076d2513902b83e7e5b65b519e5b774de56eb45515fdcf93131996cbf3e";
 	
-	SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024   // 1MB mem cache
+	NSURLCache *urlCache = [[NSURLCache alloc] initWithMemoryCapacity:1024*1024   // 1MB mem cache
 														 diskCapacity:1024*1024*5 // 5MB disk cache
-															 diskPath:[SDURLCache defaultCachePath]];
+															 diskPath:nil];
 	[NSURLCache setSharedURLCache:urlCache];
 	
 	SBServer *server = [NSUserDefaults standardUserDefaults].server;

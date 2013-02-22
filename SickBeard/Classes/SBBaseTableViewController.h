@@ -10,10 +10,12 @@
 #import "SBDataLoader.h"
 #import "EGORefreshTableHeaderView.h"
 #import "SBEmptyView.h"
+#import "SBNotificationManager.h"
 
 @interface SBBaseTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, SBDataLoader>
 
 - (void)loadData;
+- (void)loadData:(BOOL)showHUD;
 - (void)showEmptyView:(BOOL)show animated:(BOOL)animated;
 
 @property (nonatomic) BOOL enableRefreshHeader;
