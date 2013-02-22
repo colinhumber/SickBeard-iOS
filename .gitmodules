@@ -1,6 +1,3 @@
-[submodule "SickBeard/AFNetworking"]
-	path = SickBeard/AFNetworking
-	url = https://github.com/AFNetworking/AFNetworking.git
 [submodule "SickBeard/EGOTableViewPullRefresh"]
 	path = SickBeard/EGOTableViewPullRefresh
 	url = https://github.com/typeoneerror/EGOTableViewPullRefresh.git
@@ -25,3 +22,6 @@
 [submodule "Vendor/JSONKit"]
 	path = Vendor/JSONKit
 	url = https://github.com/johnezang/JSONKit.git
+[submodule "Vendor/AFNetworking"]
+	path = Vendor/AFNetworking
+	url = https://github.com/AFNetworking/AFNetworking.git
