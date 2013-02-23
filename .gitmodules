@@ -25,3 +25,6 @@
 [submodule "Vendor/TDHUDProgressBar"]
 	path = Vendor/TDHUDProgressBar
 	url = https://github.com/colinhumber/TDHUDProgressBar.git
+[submodule "Vendor/MTInfoPanel"]
+	path = Vendor/MTInfoPanel
+	url = git@github.com:myell0w/MTInfoPanel.git
