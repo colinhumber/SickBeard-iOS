@@ -3,7 +3,7 @@
 //  SickBeard
 //
 //  Created by Colin Humber on 11/8/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2011 Colin Humber. All rights reserved.
 //
 
 #import "SBHistoryViewController.h"
@@ -46,6 +46,8 @@
 	self.toolbarItems = items;
 		
 	self.emptyView.emptyLabel.text = NSLocalizedString(@"No history found", @"No history found");
+	
+	[self loadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -69,11 +71,6 @@
 	[SVProgressHUD dismiss];
 }
 
-- (void)viewDidUnload
-{
-    [self setTableView:nil];
-    [super viewDidUnload];
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

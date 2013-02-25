@@ -13,7 +13,7 @@
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, assign) SBNotificationType type;
 @property (nonatomic, weak) SBNotificationManager *manager;
-@property (nonatomic, weak) UIView *hostView;
+//@property (nonatomic, weak) UIView *hostView;
 
 - (void)show;
 
@@ -21,20 +21,34 @@
 
 @implementation SBNotification
 
-- (id)initWithText:(NSString *)text type:(SBNotificationType)type hostView:(UIView *)hostView {
+- (id)initWithText:(NSString *)text type:(SBNotificationType)type {
 	self = [super init];
 	
 	if (self) {
 		self.text = text;
 		self.type = type;
-		self.hostView = hostView;
+//		self.hostView = hostView;
 	}
 	
 	return self;
 }
 
 - (void)show {
-	MTInfoPanel *infoPanel = [MTInfoPanel showPanelInView:self.hostView
+	UIWindow *window = [UIApplication sharedApplication].keyWindow;
+	UINavigationController *nav = (UINavigationController*)window.rootViewController;
+	UIViewController *controller = nav.topViewController;
+	UIViewController *presentedViewController = controller.presentedViewController;
+	
+	if (presentedViewController) {
+		if ([presentedViewController isKindOfClass:[UINavigationController class]]) {
+			controller = ((UINavigationController *)presentedViewController).topViewController;
+		}
+		else {
+			controller = presentedViewController;
+		}
+	}
+	
+	MTInfoPanel *infoPanel = [MTInfoPanel showPanelInView:controller.view
 													 type:(MTInfoPanelType)self.type
 													title:self.text
 												 subtitle:nil
@@ -78,12 +92,12 @@
 	return self;
 }
 
-- (void)queueNotificationWithText:(NSString *)text type:(SBNotificationType)type inView:(UIView *)hostView {
+- (void)queueNotificationWithText:(NSString *)text type:(SBNotificationType)type {
 	if (!text || text.length == 0) {
 		return;
 	}
 	
-	SBNotification *notification = [[SBNotification alloc] initWithText:text type:type hostView:hostView];
+	SBNotification *notification = [[SBNotification alloc] initWithText:text type:type];
 	notification.manager = self;
 	
 	[_queue addObject:notification];

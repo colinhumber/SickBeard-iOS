@@ -3,7 +3,7 @@
 //  SickBeard
 //
 //  Created by Colin Humber on 9/8/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2011 Colin Humber. All rights reserved.
 //
 
 #import "SBOptionsViewController.h"
@@ -96,8 +96,7 @@
 #pragma mark - Actions
 - (IBAction)addShow {
 	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Adding show", @"Adding show")
-																type:SBNotificationTypeInfo
-															  inView:self.view];
+																type:SBNotificationTypeInfo];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
 							show.tvdbID, @"tvdbid",
@@ -116,8 +115,7 @@
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Show has been added", @"Show has been added")
-																											  type:SBNotificationTypeSuccess
-																											inView:self.view];
+																											  type:SBNotificationTypeSuccess];
 												  
 												  RunAfterDelay(1.5, ^{
 													  [self.delegate didAddShow];
@@ -125,8 +123,7 @@
 											  }
 											  else {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeError
-																											inView:self.view];
+																											  type:SBNotificationTypeError];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
@@ -140,8 +137,7 @@
 - (void)saveDefaults {
 	[TestFlight passCheckpoint:@"Saved server defaults"];
 	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Saving defaults", @"Saving defaults")
-																type:SBNotificationTypeInfo
-															  inView:self.view];
+																type:SBNotificationTypeInfo];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
 							[NSString stringWithFormat:@"%d", useSeasonFolders], @"season_folder",
@@ -186,13 +182,11 @@
 																									[defaults synchronize];
 																									
 																									[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Defaults saved", @"Defaults saved")
-																																								type:SBNotificationTypeSuccess
-																																							  inView:self.view];
+																																								type:SBNotificationTypeSuccess];
 																								}
 																								else {
 																									[[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																																								type:SBNotificationTypeError
-																																							  inView:self.view];
+																																								type:SBNotificationTypeError];
 																								}
 																							}
 																							failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
@@ -203,14 +197,12 @@
 												  }
 												  else {
 													  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Defaults saved", @"Defaults saved")
-																												  type:SBNotificationTypeSuccess
-																												inView:self.view];
+																												  type:SBNotificationTypeSuccess];
 												  }
 											  }
 											  else {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeError
-																											inView:self.view];
+																											  type:SBNotificationTypeError];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {

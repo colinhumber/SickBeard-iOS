@@ -3,7 +3,7 @@
 //  SickBeard
 //
 //  Created by Colin Humber on 9/1/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2011 Colin Humber. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -15,26 +15,10 @@
 @class SBEpisodeDetailsHeaderView;
 @protocol SBEpisodeDetailsDataSource;
 
-@interface SBEpisodeDetailsViewController : SBBaseViewController <UIActionSheetDelegate> {
-	BOOL _isTransitioning;
-}
-
-- (IBAction)swipeLeft:(id)sender;
-- (IBAction)swipeRight:(id)sender;
-
-@property (nonatomic, strong) IBOutlet SBEpisodeDetailsHeaderView *currentHeaderView;
-@property (nonatomic, strong) IBOutlet SBEpisodeDetailsHeaderView *nextHeaderView;
-@property (nonatomic, strong) IBOutlet SBCellBackground *headerContainerView;
-@property (nonatomic, strong) IBOutlet UIView *containerView;
-
-@property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (strong, nonatomic) IBOutlet NINetworkImageView *showPosterImageView;
-@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
-@property (nonatomic, strong) SBBaseEpisode *episode;
-@property (nonatomic, strong) IBOutlet SBSectionHeaderView *headerView;
-@property (nonatomic, strong) IBOutlet SBCellBackground *episodeDescriptionBackground;
+@interface SBEpisodeDetailsViewController : SBBaseViewController
 
 @property (nonatomic, weak) id<SBEpisodeDetailsDataSource> dataSource;
+@property (nonatomic, strong) SBBaseEpisode *episode;
 
 @end
 

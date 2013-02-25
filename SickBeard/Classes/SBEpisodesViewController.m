@@ -3,7 +3,7 @@
 //  SickBeard
 //
 //  Created by Colin Humber on 8/26/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2011 Colin Humber. All rights reserved.
 //
 
 #import "SBEpisodesViewController.h"
@@ -322,10 +322,7 @@
 							[NSNumber numberWithInt:episode.number], @"episode", nil];
 	
 	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Searching for episode", @"Searching for episode")
-																type:SBNotificationTypeInfo
-															  inView:self.view];
-
-//	[SVProgressHUD showWithStatus:NSLocalizedString(@"Searching for episode", @"Searching for episode")];
+																type:SBNotificationTypeInfo];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
 									   parameters:params 
@@ -334,21 +331,18 @@
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading")
-																											  type:SBNotificationTypeInfo
-																											inView:self.view];
+																											  type:SBNotificationTypeInfo];
 												  [self loadData];
 											  }
 											  else {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeError
-																											inView:self.view];
+																											  type:SBNotificationTypeError];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
-//											  [SVProgressHUD dismiss];
 										  }];
 }
 
@@ -396,9 +390,7 @@
 							statusString, @"status", nil];
 	
 	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
-																type:SBNotificationTypeInfo
-															  inView:self.view];
-//	[SVProgressHUD showWithStatus:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]];
+																type:SBNotificationTypeInfo];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
 									   parameters:params 
@@ -407,25 +399,18 @@
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Status successfully set!", @"Status successfully set!")
-																											  type:SBNotificationTypeSuccess
-																											inView:self.view];
-												  
-//												  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Status successfully set!", @"Status successfully set!") 
-//																		 afterDelay:2];
+																											  type:SBNotificationTypeSuccess];
 												  [self loadData];
 											  }
 											  else {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeError
-																											inView:self.view];
-//												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
+																											  type:SBNotificationTypeError];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error setting status", @"Error setting status") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
-//											  [SVProgressHUD dismiss];
 										  }];
 }
 

@@ -3,7 +3,7 @@
 //  SickBeard
 //
 //  Created by Colin Humber on 9/1/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2011 Colin Humber. All rights reserved.
 //
 
 #import <QuartzCore/QuartzCore.h>
@@ -20,23 +20,28 @@
 #define kDefaultDescriptionFontSize 13;
 #define kDefaultDescriptionFrame CGRectMake(20, 9, 280, 162)
 
-@interface SBEpisodeDetailsViewController ()
+@interface SBEpisodeDetailsViewController () <UIActionSheetDelegate> {
+	BOOL _isTransitioning;
+}
+
+- (IBAction)swipeLeft:(id)sender;
+- (IBAction)swipeRight:(id)sender;
 - (void)updateHeaderView;
+
+@property (nonatomic, strong) IBOutlet SBEpisodeDetailsHeaderView *currentHeaderView;
+@property (nonatomic, strong) IBOutlet SBEpisodeDetailsHeaderView *nextHeaderView;
+@property (nonatomic, strong) IBOutlet SBCellBackground *headerContainerView;
+@property (nonatomic, strong) IBOutlet UIView *containerView;
+
+@property (nonatomic, strong) IBOutlet UITextView *descriptionTextView;
+@property (nonatomic, strong) IBOutlet NINetworkImageView *showPosterImageView;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic, strong) IBOutlet SBSectionHeaderView *headerView;
+@property (nonatomic, strong) IBOutlet SBCellBackground *episodeDescriptionBackground;
+
 @end
 
 @implementation SBEpisodeDetailsViewController
-
-@synthesize currentHeaderView;
-@synthesize nextHeaderView;
-@synthesize headerContainerView;
-@synthesize containerView;
-@synthesize descriptionLabel;
-@synthesize showPosterImageView;
-@synthesize spinner;
-@synthesize episode;
-@synthesize dataSource;
-@synthesize headerView;
-@synthesize episodeDescriptionBackground;
 
 #pragma mark - View lifecycle
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -45,7 +50,7 @@
 	
 	self.title = NSLocalizedString(@"Details", @"Details");
 
-	[self.showPosterImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:episode.show.tvdbID] absoluteString]];
+	[self.showPosterImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:self.episode.show.tvdbID] absoluteString]];
 
 	self.headerView.sectionLabel.text = NSLocalizedString(@"Episode Summary", @"Episode Summary");
 	self.episodeDescriptionBackground.grouped = YES;
@@ -55,24 +60,10 @@
 	
 	if ([UIScreen mainScreen].bounds.size.height == 568) {
 		self.episodeDescriptionBackground.height += 88;
-		self.descriptionLabel.height += 88;
+		self.descriptionTextView.height += 88;
 	}
 	
     [super viewDidLoad];
-}
-
-
-- (void)viewDidUnload {
-	self.containerView = nil;
-	self.currentHeaderView = nil;
-	self.nextHeaderView = nil;
-	self.descriptionLabel = nil;
-	self.spinner = nil;
-	self.showPosterImageView = nil;
-	self.headerContainerView = nil;
-	self.episodeDescriptionBackground = nil;
-	self.headerView = nil;
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -83,18 +74,18 @@
 
 #pragma mark - Loading
 - (void)updateHeaderView {	
-	self.currentHeaderView.titleLabel.text = episode.name;
-	self.currentHeaderView.seasonLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Season %d, episode %d", @"Season %d, episode %d"), episode.season, episode.number];
+	self.currentHeaderView.titleLabel.text = self.episode.name;
+	self.currentHeaderView.seasonLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Season %d, episode %d", @"Season %d, episode %d"), self.episode.season, self.episode.number];
 		
-	if (episode.airDate) {
-		if ([episode.airDate isToday]) {
+	if (self.episode.airDate) {
+		if ([self.episode.airDate isToday]) {
 			self.currentHeaderView.airDateLabel.text = NSLocalizedString(@"Airing today", @"Airing today");
 		}
-		else if ([episode.airDate isLaterThanDate:[NSDate date]]) {
-			self.currentHeaderView.airDateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Airing on %@", @"Airing on %@"), [episode.airDate displayString]];
+		else if ([self.episode.airDate isLaterThanDate:[NSDate date]]) {
+			self.currentHeaderView.airDateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Airing on %@", @"Airing on %@"), [self.episode.airDate displayString]];
 		}
 		else {
-			self.currentHeaderView.airDateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Aired on %@", @"Aired on %@"), [episode.airDate displayString]];
+			self.currentHeaderView.airDateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Aired on %@", @"Aired on %@"), [self.episode.airDate displayString]];
 		}												  
 	}
 	else {
@@ -105,13 +96,13 @@
 - (void)loadData {
 	[UIView animateWithDuration:0.3 
 					 animations:^{
-						 self.descriptionLabel.alpha = 0;
+						 self.descriptionTextView.alpha = 0;
 					 }];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-							episode.show.tvdbID, @"tvdbid", 
-							[NSNumber numberWithInt:episode.season], @"season",
-							[NSNumber numberWithInt:episode.number], @"episode", nil];
+							self.episode.show.tvdbID, @"tvdbid",
+							[NSNumber numberWithInt:self.episode.season], @"season",
+							[NSNumber numberWithInt:self.episode.number], @"episode", nil];
 
 	[self.spinner startAnimating];
 	
@@ -121,33 +112,35 @@
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  episode.episodeDescription = [[JSON objectForKey:@"data"] objectForKey:@"description"];												  
+												  self.episode.episodeDescription = [[JSON objectForKey:@"data"] objectForKey:@"description"];												  
 											  }
 											  else {
-												  episode.episodeDescription = NSLocalizedString(@"Unable to retrieve episode description", @"Unable to retrieve episode description");
+												  self.episode.episodeDescription = NSLocalizedString(@"Unable to retrieve episode description", @"Unable to retrieve episode description");
 											  }
 											  
-											  CGFloat currentFontSize = kDefaultDescriptionFontSize;
-											  CGRect frame = kDefaultDescriptionFrame;
-											  self.descriptionLabel.text = episode.episodeDescription;
-											  CGSize size = [episode.episodeDescription sizeWithFont:[self.descriptionLabel.font fontWithSize:currentFontSize] 
-																				   constrainedToSize:CGSizeMake(frame.size.width, CGFLOAT_MAX)
-																					   lineBreakMode:UILineBreakModeWordWrap];
+											  [self.descriptionTextView flashScrollIndicators];
 											  
-											  while (size.height > frame.size.height) {
-												  currentFontSize--;
-												  size = [episode.episodeDescription sizeWithFont:[self.descriptionLabel.font fontWithSize:currentFontSize] 
-																				constrainedToSize:CGSizeMake(frame.size.width, CGFLOAT_MAX)
-																					lineBreakMode:UILineBreakModeWordWrap];
-											  }
-											  
-											  self.descriptionLabel.font = [self.descriptionLabel.font fontWithSize:currentFontSize];
-											  frame.size = size;
-											  self.descriptionLabel.frame = frame;
+//											  CGFloat currentFontSize = kDefaultDescriptionFontSize;
+//											  CGRect frame = kDefaultDescriptionFrame;
+											  self.descriptionTextView.text = self.episode.episodeDescription;
+//											  CGSize size = [self.episode.episodeDescription sizeWithFont:[self.descriptionLabel.font fontWithSize:currentFontSize]
+//																				   constrainedToSize:CGSizeMake(frame.size.width, CGFLOAT_MAX)
+//																					   lineBreakMode:UILineBreakModeWordWrap];
+//											  
+//											  while (size.height > frame.size.height) {
+//												  currentFontSize--;
+//												  size = [self.episode.episodeDescription sizeWithFont:[self.descriptionLabel.font fontWithSize:currentFontSize] 
+//																				constrainedToSize:CGSizeMake(frame.size.width, CGFLOAT_MAX)
+//																					lineBreakMode:UILineBreakModeWordWrap];
+//											  }
+//											  
+//											  self.descriptionLabel.font = [self.descriptionLabel.font fontWithSize:currentFontSize];
+//											  frame.size = size;
+//											  self.descriptionLabel.frame = frame;
 											  
 											  [UIView animateWithDuration:0.3 
 															   animations:^{
-																   self.descriptionLabel.alpha = 1;
+																   self.descriptionTextView.alpha = 1;
 															   }];
 											  
 											  [self.spinner stopAnimating];
@@ -175,7 +168,7 @@
 	self.currentHeaderView.hidden = YES;
 	self.nextHeaderView.hidden = NO;
 	
-	id tmp = nextHeaderView;
+	id tmp = self.nextHeaderView;
 	self.nextHeaderView = self.currentHeaderView;
 	self.currentHeaderView = tmp;	
 }
@@ -223,14 +216,12 @@
 
 - (void)searchForEpisode {
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-							episode.show.tvdbID, @"tvdbid", 
-							[NSNumber numberWithInt:episode.season], @"season",
-							[NSNumber numberWithInt:episode.number], @"episode", nil];
+							self.episode.show.tvdbID, @"tvdbid", 
+							[NSNumber numberWithInt:self.episode.season], @"season",
+							[NSNumber numberWithInt:self.episode.number], @"episode", nil];
 
 	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Searching for episode", @"Searching for episode")
-																type:SBNotificationTypeInfo
-															  inView:self.view];
-//	[SVProgressHUD showWithStatus:NSLocalizedString(@"Searching for episode", @"Searching for episode")];
+																type:SBNotificationTypeInfo];
 
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
 									   parameters:params 
@@ -239,23 +230,17 @@
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading")
-																											  type:SBNotificationTypeSuccess
-																											inView:self.view];
-//												  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading") afterDelay:2];
+																											  type:SBNotificationTypeSuccess];
 											  }
 											  else {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeSuccess
-																											inView:self.view];
-												
-//												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
+																											  type:SBNotificationTypeSuccess];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
 																  message:[NSString stringWithFormat:@"Could not retrieve shows \n%@", error.localizedDescription] 
-															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
-//											  [SVProgressHUD dismiss];
+															  buttonTitle:NSLocalizedString(@"OK", @"OK")];
 										  }];
 }
 
@@ -277,17 +262,14 @@
 	NSString *statusString = [[SBEpisode episodeStatusAsString:status] lowercaseString];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-							episode.show.tvdbID, @"tvdbid", 
-							[NSNumber numberWithInt:episode.season], @"season",
-							[NSNumber numberWithInt:episode.number], @"episode",
+							self.episode.show.tvdbID, @"tvdbid", 
+							[NSNumber numberWithInt:self.episode.season], @"season",
+							[NSNumber numberWithInt:self.episode.number], @"episode",
 							statusString, @"status", nil];
 	
 	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
-																type:SBNotificationTypeInfo
-															  inView:self.view];
+																type:SBNotificationTypeInfo];
 	
-//	[SVProgressHUD showWithStatus:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]];
-
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
 									   parameters:params 
 										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
@@ -295,24 +277,17 @@
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Status successfully set!", @"Status successfully set!")
-																											  type:SBNotificationTypeSuccess
-																											inView:self.view];
-
-//												  [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Status successfully set!", @"Status successfully set!") afterDelay:2];
+																											  type:SBNotificationTypeSuccess];
 											  }
 											  else {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeError
-																											inView:self.view];
-//												  [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"] afterDelay:2];
+																											  type:SBNotificationTypeError];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error setting status", @"Error setting status") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
-	
-//											  [SVProgressHUD dismiss];
 										  }];
 }
 

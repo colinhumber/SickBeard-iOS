@@ -3,7 +3,7 @@
 //  SickBeard
 //
 //  Created by Colin Humber on 8/29/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2011 Colin Humber. All rights reserved.
 //
 
 #import "SBServerDetailsViewController.h"
@@ -204,10 +204,7 @@
 															   [SickbeardAPIClient sharedClient].currentServer = server;
 															   
 															   [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Server saved", @"Server saved")
-																														   type:SBNotificationTypeSuccess
-																														 inView:self.view];
-
-//															   [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Server saved", @"Server saved")];
+																														   type:SBNotificationTypeSuccess];
 															   
 															   if (_flags.initialSetup) {
 																   RunAfterDelay(1.5, ^{
@@ -218,28 +215,18 @@
 													   }
 													   else {
 														   [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Server validated", @"Server validated")
-																													   type:SBNotificationTypeSuccess
-																													 inView:self.view];
-
-//														   [SVProgressHUD dismissWithSuccess:NSLocalizedString(@"Server validated", @"Server validated")];
+																													   type:SBNotificationTypeSuccess];
 													   }
 												   }
 												   else if ([result isEqualToString:RESULT_DENIED]) {
 													   [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																												   type:SBNotificationTypeError
-																												 inView:self.view];
-
-//													   [SVProgressHUD dismissWithError:[JSON objectForKey:@"message"]];
+																												   type:SBNotificationTypeError];
 												   }
 											   }
 											   failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
 												   TFLog(@"Unable to connect to server (%@).\nError: %@\nJSON: %@", server.serviceEndpointPath, error, JSON);
 												   [[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Unable to connect to Sick Beard (%@)", @"Unable to connect to Sick Beard (%@)"), server.serviceEndpointPath]
-																											   type:SBNotificationTypeError
-																											 inView:self.view];
-//												   [SVProgressHUD dismissWithError:[NSString stringWithFormat:NSLocalizedString(@"Unable to connect to Sick Beard (%@)", @"Unable to connect to Sick Beard (%@)"),
-//																					server.serviceEndpointPath] 
-//																		afterDelay:1];
+																											   type:SBNotificationTypeError];
 											   }];
 	 });
 }

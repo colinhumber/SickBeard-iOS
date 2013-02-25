@@ -3,7 +3,7 @@
 //  SickBeard
 //
 //  Created by Colin Humber on 8/30/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2011 Colin Humber. All rights reserved.
 //
 
 #import "SBShowDetailsViewController.h"
@@ -105,15 +105,6 @@
 											 selector:@selector(menuControllerDidShow:)
 												 name:UIMenuControllerDidShowMenuNotification
 											   object:nil];
-	
-}
-
-- (void)viewDidUnload
-{
-    [self setTableView:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -521,8 +512,7 @@
 							[NSNumber numberWithInt:episode.number], @"episode", nil];
 	
 	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Searching for episode", @"Searching for episode")
-																type:SBNotificationTypeInfo
-															  inView:self.view];
+																type:SBNotificationTypeInfo];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
 									   parameters:params 
@@ -531,14 +521,12 @@
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading")
-																											  type:SBNotificationTypeSuccess
-																											inView:self.view];
+																											  type:SBNotificationTypeSuccess];
 												  [self loadData:NO];
 											  }
 											  else {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"mesage"]
-																											  type:SBNotificationTypeError
-																											inView:self.view];
+																											  type:SBNotificationTypeError];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
@@ -593,8 +581,7 @@
 							statusString, @"status", nil];
 	
 	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
-																type:SBNotificationTypeInfo
-															  inView:self.view];
+																type:SBNotificationTypeInfo];
 	
 	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
 									   parameters:params 
@@ -603,14 +590,12 @@
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Status successfully set!", @"Status successfully set!")
-																											  type:SBNotificationTypeSuccess
-																											inView:self.view];
+																											  type:SBNotificationTypeSuccess];
 												  [self loadData:NO];
 											  }
 											  else {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeError
-																											inView:self.view];
+																											  type:SBNotificationTypeError];
 											  }
 										  }
 										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {

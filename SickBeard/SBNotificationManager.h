@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, SBNotificationType) {
 @interface SBNotificationManager : NSObject
 
 + (SBNotificationManager *)sharedManager;
-- (void)queueNotificationWithText:(NSString *)text type:(SBNotificationType)type inView:(UIView *)hostView;
+- (void)queueNotificationWithText:(NSString *)text type:(SBNotificationType)type;
 
 - (void)notificationDidHide:(SBNotification *)notification;
 
