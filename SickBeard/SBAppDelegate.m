@@ -24,6 +24,9 @@
 - (void)applyStylesheet {
 	[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"menu-bar"] 
 									   forBarMetrics:UIBarMetricsDefault];
+	[[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"toolbar-bar"]
+							forToolbarPosition:UIToolbarPositionBottom
+									barMetrics:UIBarMetricsDefault];
 	[[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:RGBCOLOR(127, 92, 59)];
 }
 

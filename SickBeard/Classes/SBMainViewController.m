@@ -16,6 +16,10 @@
 
 @synthesize currentController;
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+	[self.currentController prepareForSegue:segue sender:sender];
+}
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	

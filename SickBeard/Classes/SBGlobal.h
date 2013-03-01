@@ -77,4 +77,6 @@ typedef enum {
 
 + (NSString*)itunesLinkForShow:(NSString*)showName;
 
++ (NSMutableArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector;
+
 @end

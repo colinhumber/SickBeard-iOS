@@ -9,6 +9,7 @@
 #import "SBShowsViewController.h"
 #import "SBShowDetailsViewController.h"
 #import "SBAddShowViewController.h"
+#import "SBBacklogViewController.h"
 #import "SickbeardAPIClient.h"
 #import "SBShow.h"
 #import "PRPAlertView.h"
@@ -17,18 +18,12 @@
 #import "NSDate+Utilities.h"
 
 @interface SBShowsViewController () 
-
 @property (nonatomic, retain) NSMutableArray *tableData;
-
-- (NSMutableArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector;
-
 @end
 
 
 
 @implementation SBShowsViewController
-
-@synthesize tableData;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([segue.identifier isEqualToString:@"ShowDetailsSegue"]) {
@@ -43,15 +38,24 @@
 		SBAddShowViewController *addShowController = (SBAddShowViewController*)navController.topViewController;
 		addShowController.delegate = self;
 	}
+	else if ([segue.identifier isEqualToString:@"BacklogSegue"]) {
+		UINavigationController *navController = segue.destinationViewController;
+		SBBacklogViewController *backlogController = (SBBacklogViewController *)navController.topViewController;
+		
+		NSMutableArray *shows = [NSMutableArray array];
+		
+		for (NSArray *collatedShows in self.tableData) {
+			[shows addObjectsFromArray:collatedShows];
+		}
+		
+		backlogController.shows = shows;
+	}
 }
 
 #pragma mark - View lifecycle
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
-	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
-
 	[super viewDidLoad];
 
 	[self showEmptyView:NO animated:NO];
@@ -98,31 +102,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (NSMutableArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector {
-	UILocalizedIndexedCollation *collation = [UILocalizedIndexedCollation currentCollation];
-	
-	NSInteger sectionCount = [[collation sectionTitles] count]; //section count is take from sectionTitles and not sectionIndexTitles
-	NSMutableArray *unsortedSections = [NSMutableArray arrayWithCapacity:sectionCount];
-	
-	for (int i = 0; i < sectionCount; i++) {
-		[unsortedSections addObject:[NSMutableArray array]];
-	}
-	
-	// put each object into a section
-	for (id object in array) {
-		NSInteger index = [collation sectionForObject:object collationStringSelector:selector];
-		[(NSMutableArray*)[unsortedSections objectAtIndex:index] addObject:object];
-	}
-
-	NSMutableArray *sections = [NSMutableArray arrayWithCapacity:sectionCount];
-	
-	// sort each section
-	for (NSMutableArray *section in unsortedSections) {
-		[sections addObject:[[collation sortedArrayFromArray:section collationStringSelector:selector] mutableCopy]];
-	}
-	
-	return sections;
-}
 
 #pragma mark - Loading
 - (void)loadData {
@@ -152,7 +131,7 @@
 													  NSSortDescriptor *sorter = [NSSortDescriptor sortDescriptorWithKey:@"showName" ascending:YES];
 													  [shows sortUsingDescriptors:[NSArray arrayWithObject:sorter]];
 													  
-													  self.tableData = [self partitionObjects:shows collationStringSelector:@selector(showName)];
+													  self.tableData = [SBGlobal partitionObjects:shows collationStringSelector:@selector(showName)];
 												  }
 												  else {
 													  [self showEmptyView:YES animated:YES];

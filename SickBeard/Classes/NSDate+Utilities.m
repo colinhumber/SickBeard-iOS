@@ -363,7 +363,7 @@
 	
 	if (!formatter) {
 		formatter = [[NSDateFormatter alloc] init];
-		[formatter setDateFormat:@"EEEE, LLL d"];
+		[formatter setDateFormat:@"EEEE, LLL d, yyyy"];
 	}
 	
 	return [formatter stringFromDate:self];

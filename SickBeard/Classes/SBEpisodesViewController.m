@@ -60,9 +60,6 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
-	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
-
 	[super viewDidLoad];
 	
 	_menuFlags.menuIsShowing = NO;

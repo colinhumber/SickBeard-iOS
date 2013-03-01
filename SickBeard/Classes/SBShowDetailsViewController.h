@@ -14,9 +14,7 @@
 @class SBShowDetailsHeaderView;
 @class OrderedDictionary;
 
-@interface SBShowDetailsViewController : SBBaseTableViewController <UIActionSheetDelegate, SBEpisodeDetailsDataSource>
-
-- (IBAction)showActions;
+@interface SBShowDetailsViewController : SBBaseTableViewController <SBEpisodeDetailsDataSource>
 
 @property (nonatomic, strong) SBShow *show;
 @property (nonatomic, strong) IBOutlet SBShowDetailsHeaderView *detailsHeaderView;

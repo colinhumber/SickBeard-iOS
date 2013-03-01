@@ -18,15 +18,19 @@
 #import "SBShowDetailsHeaderView.h"
 #import "SBSectionHeaderView.h"
 
+#import "AFHTTPClient.h"
+#import "SBServer.h"
+#import "SBCommandBuilder.h"
+
 @interface SBShowDetailsViewController () <SBSectionHeaderViewDelegate> {
-	OrderedDictionary *seasons;
-	NSMutableArray *sectionHeaders;
+	OrderedDictionary *_seasons;
+	NSMutableArray *_sectionHeaders;
 	
 	struct {
 		int menuIsShowing:1;
 		int menuIsHiding:1;
 	} _menuFlags;
-	NSIndexPath *menuIndexPath;
+	NSIndexPath *_menuIndexPath;
 }
 
 - (void)changeEpisodeStatus:(EpisodeStatus)status;
@@ -47,8 +51,8 @@
 		SBEpisodeDetailsViewController *vc = segue.destinationViewController;
 		vc.dataSource = self;
 		
-		NSArray *seasonKeys = [seasons allKeys];
-		SBEpisode *episode = [[seasons objectForKey:[seasonKeys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+		NSArray *seasonKeys = [_seasons allKeys];
+		SBEpisode *episode = [[_seasons objectForKey:[seasonKeys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
 		vc.episode = episode;
 		self.currentEpisodeIndexPath = indexPath;
 	}
@@ -65,8 +69,8 @@
 	
 	[TestFlight passCheckpoint:@"Viewed show details"];
 	
-	seasons = [[OrderedDictionary alloc] init];
-	sectionHeaders = [[NSMutableArray alloc] init];
+	_seasons = [[OrderedDictionary alloc] init];
+	_sectionHeaders = [[NSMutableArray alloc] init];
 	self.title = show.showName;
 	
 	UINib *headerNib = [UINib nibWithNibName:@"SBShowDetailsHeaderView" bundle:nil];
@@ -88,38 +92,79 @@
 	}
 	
 	self.tableView.tableHeaderView = self.detailsHeaderView;
+	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self 
-											 selector:@selector(menuControllerWillHide:)
-												 name:UIMenuControllerWillHideMenuNotification
-											   object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(menuControllerDidHide:) 
-												 name:UIMenuControllerDidHideMenuNotification 
-											   object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self 
-											 selector:@selector(menuControllerWillShow:)
-												 name:UIMenuControllerWillShowMenuNotification
-											   object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self 
-											 selector:@selector(menuControllerDidShow:)
-												 name:UIMenuControllerDidShowMenuNotification
-											   object:nil];
+	[self setupNotifications];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
 	[self loadData];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	[self setupToolbarItems];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Notification Handlers
+- (BOOL)canBecomeFirstResponder {
+	return YES;
+}
 
+#pragma mark - Setup
+- (void)setupNotifications {
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(menuControllerWillHide:)
+												 name:UIMenuControllerWillHideMenuNotification
+											   object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(menuControllerDidHide:)
+												 name:UIMenuControllerDidHideMenuNotification
+											   object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(menuControllerWillShow:)
+												 name:UIMenuControllerWillShowMenuNotification
+											   object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(menuControllerDidShow:)
+												 name:UIMenuControllerDidShowMenuNotification
+											   object:nil];
+
+}
+
+- (void)setupToolbarItems {
+	UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[searchButton setBackgroundImage:[[UIImage imageNamed:@"toolbar-button-mask"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4, 0, 4)] forState:UIControlStateNormal];
+	[searchButton setTitle:@"Search" forState:UIControlStateNormal];
+	searchButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+	searchButton.titleEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 15);
+	[searchButton sizeToFit];
+	searchButton.width = 100;
+	[searchButton addTarget:self action:@selector(searchForMultipleEpisodes:) forControlEvents:UIControlEventTouchUpInside];
+	
+	UIButton *setStatusButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[setStatusButton setBackgroundImage:[[UIImage imageNamed:@"toolbar-button-mask"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4, 0, 4)] forState:UIControlStateNormal];
+	[setStatusButton setTitle:@"Set Status" forState:UIControlStateNormal];
+	setStatusButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+	setStatusButton.titleEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 15);
+	[setStatusButton sizeToFit];
+	setStatusButton.width = 100;
+	[setStatusButton addTarget:self action:@selector(setStatusForMultipleEpisodes:) forControlEvents:UIControlEventTouchUpInside];
+	
+	UIBarButtonItem *searchBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
+	UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+	UIBarButtonItem *setStatusBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:setStatusButton];
+	
+	self.toolbarItems = @[ searchBarButtonItem, flexibleItem, setStatusBarButtonItem ];
+}
+
+#pragma mark - Notification Handlers
 - (void)menuControllerWillHide:(NSNotification *)notification {
 	_menuFlags.menuIsHiding = YES;
 	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
@@ -199,8 +244,8 @@
 														  }
 													  }];
 													  
-													  [seasons setObject:episodes forKey:seasonNumber];
-													  [sectionHeaders addObject:[NSNull null]];
+													  [_seasons setObject:episodes forKey:seasonNumber];
+													  [_sectionHeaders addObject:[NSNull null]];
 												  }
 
 												  self.detailsHeaderView.episodeCountLabel.text = [NSString stringWithFormat:@"%d/%d", totalDownloadedEpisodes, totalEpisodes];
@@ -232,64 +277,129 @@
 										  }];
 }
 
-#pragma mark - Actions
-- (IBAction)showActions {
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" 
-															 delegate:self 
-													cancelButtonTitle:nil 
-											   destructiveButtonTitle:nil 
-													otherButtonTitles:NSLocalizedString(@"Search iTunes", @"Search iTunes"), NSLocalizedString(@"View on TheTVDB", @"View on TheTVDB"), nil];
+#pragma mark - Batch Actions
+- (void)searchForMultipleEpisodes:(UIButton *)sender {
+	SBServer *currentServer = [NSUserDefaults standardUserDefaults].server;
+	AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:currentServer.serviceEndpointPath]];
+	NSMutableArray *requests = [NSMutableArray arrayWithCapacity:self.tableView.indexPathsForSelectedRows.count];
 	
-	if (show.tvRageID.length > 0) {
-		[actionSheet addButtonWithTitle:NSLocalizedString(@"View on TVRage", @"View on TVRage")];
+	for (NSIndexPath *indexPath in self.tableView.indexPathsForSelectedRows) {
+		NSArray *keys = [_seasons allKeys];
+		NSString *sectionKey = [keys objectAtIndex:indexPath.section];
+		NSArray *episodes = [_seasons objectForKey:sectionKey];
+		
+		SBEpisode *episode = [episodes objectAtIndex:indexPath.row];
+
+		NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+								show.tvdbID, @"tvdbid",
+								[NSNumber numberWithInt:episode.season], @"season",
+								[NSNumber numberWithInt:episode.number], @"episode", nil];
+		
+		NSString *urlPath = [SBCommandBuilder URLForCommand:SickBeardCommandEpisodeSearch
+											  server:currentServer
+											  params:params];
+
+		[requests addObject:[NSURLRequest requestWithURL:[NSURL URLWithString:urlPath]]];
 	}
 	
-	[actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", @"Cancel")];
-	actionSheet.cancelButtonIndex = actionSheet.numberOfButtons - 1;
+	[self setEditing:NO animated:YES];
+
+	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:@"Searching for %d episodes", requests.count]
+																type:SBNotificationTypeInfo];
 	
-	[actionSheet showInView:self.view];
+	[client enqueueBatchOfHTTPRequestOperationsWithRequests:requests
+											  progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
+												  
+											  }
+											completionBlock:^(NSArray *operations) {
+												[[SBNotificationManager sharedManager] queueNotificationWithText:@"Finished searching for episodes."
+																											type:SBNotificationTypeInfo];
+											}];
 }
 
-#pragma mark - UIActionSheetDelegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-	if (buttonIndex != actionSheet.cancelButtonIndex) {
-		NSString *urlPath = @"";
+- (void)setStatusForMultipleEpisodes:(UIButton *)sender {
+	UIMenuController *menu = [UIMenuController sharedMenuController];
+	UIMenuItem *item1 = [[UIMenuItem alloc] initWithTitle:[SBEpisode episodeStatusAsString:EpisodeStatusWanted] action:@selector(setEpisodeStatusToWantedBatch)];
+	UIMenuItem *item2 = [[UIMenuItem alloc] initWithTitle:[SBEpisode episodeStatusAsString:EpisodeStatusSkipped] action:@selector(setEpisodeStatusToSkippedBatch)];
+	UIMenuItem *item3 = [[UIMenuItem alloc] initWithTitle:[SBEpisode episodeStatusAsString:EpisodeStatusArchived] action:@selector(setEpisodeStatusToArchivedBatch)];
+	UIMenuItem *item4 = [[UIMenuItem alloc] initWithTitle:[SBEpisode episodeStatusAsString:EpisodeStatusIgnored] action:@selector(setEpisodeStatusToIgnoredBatch)];
+	
+	menu.menuItems = [NSArray arrayWithObjects:item1, item2, item3, item4, nil];
+
+    CGRect buttonFrame = [sender convertRect:sender.frame toView:self.view];
+	
+	[menu setTargetRect:buttonFrame inView:self.view];
+	[menu setMenuVisible:YES animated:YES];
+}
+
+- (void)setEpisodeStatusToWantedBatch {
+	[self changeEpisodeStatusBatch:EpisodeStatusWanted];
+}
+
+- (void)setEpisodeStatusToSkippedBatch {
+	[self changeEpisodeStatusBatch:EpisodeStatusSkipped];
+}
+
+- (void)setEpisodeStatusToArchivedBatch {
+	[self changeEpisodeStatusBatch:EpisodeStatusArchived];
+}
+
+- (void)setEpisodeStatusToIgnoredBatch {
+	[self changeEpisodeStatusBatch:EpisodeStatusIgnored];
+}
+
+- (void)changeEpisodeStatusBatch:(EpisodeStatus)status {
+	SBServer *currentServer = [NSUserDefaults standardUserDefaults].server;
+	AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:currentServer.serviceEndpointPath]];
+	NSMutableArray *requests = [NSMutableArray arrayWithCapacity:self.tableView.indexPathsForSelectedRows.count];
+	NSString *statusString = [[SBEpisode episodeStatusAsString:status] lowercaseString];
+
+	for (NSIndexPath *indexPath in self.tableView.indexPathsForSelectedRows) {
+		NSArray *keys = [_seasons allKeys];
+		NSString *sectionKey = [keys objectAtIndex:indexPath.section];
+		NSArray *episodes = [_seasons objectForKey:sectionKey];
+		SBEpisode *episode = [episodes objectAtIndex:indexPath.row];
+				
+		NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+								episode.show.tvdbID, @"tvdbid",
+								[NSNumber numberWithInt:episode.season], @"season",
+								[NSNumber numberWithInt:episode.number], @"episode",
+								statusString, @"status", nil];
 		
-		if (buttonIndex == 0) {
-			urlPath = [SBGlobal itunesLinkForShow:show.showName];
-		}
-		else if (buttonIndex == 1) {
-			urlPath = [NSString stringWithFormat:kTVDBLinkFormat, show.tvdbID];
-		}
-		else if (buttonIndex == 2) {
-			urlPath = [NSString stringWithFormat:kTVRageLinkFormat, show.tvRageID];		
-		}
+		NSString *urlPath = [SBCommandBuilder URLForCommand:SickBeardCommandEpisodeSetStatus
+													 server:currentServer
+													 params:params];
 		
-		if ([urlPath rangeOfString:@"itms://"].location == NSNotFound) {
-			SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:urlPath];
-			webViewController.toolbar.tintColor = nil;
-			webViewController.toolbar.barStyle = UIBarStyleBlack;
-			webViewController.availableActions = SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink | SVWebViewControllerAvailableActionsOpenInSafari;
-			[self presentViewController:webViewController animated:YES completion:nil];
-		}
-		else {
-			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlPath]];
-		}
+		[requests addObject:[NSURLRequest requestWithURL:[NSURL URLWithString:urlPath]]];
 	}
-}
+	
+	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:@"Setting %d episodes to %@", requests.count, statusString]
+																type:SBNotificationTypeInfo];
 
+	[self setEditing:NO animated:YES];
+
+	[client enqueueBatchOfHTTPRequestOperationsWithRequests:requests
+											  progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
+												  
+											  }
+											completionBlock:^(NSArray *operations) {
+												[self loadData];
+												[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:@"Episode statuses set to %@.", statusString]
+																											type:SBNotificationTypeInfo];
+											}];
+}
 
 #pragma mark - SBEpisodeDetailsDataSource
 - (SBEpisode*)nextEpisode {
 	SBEpisode *episode = nil;
 
-	NSArray *seasonKeys = [seasons allKeys];
+	NSArray *seasonKeys = [_seasons allKeys];
 
 	if (self.currentEpisodeIndexPath.section == seasonKeys.count) {
 		return nil;
 	}
 
-	NSArray *seasonEpisodes = [seasons objectForKey:[seasonKeys objectAtIndex:self.currentEpisodeIndexPath.section]];
+	NSArray *seasonEpisodes = [_seasons objectForKey:[seasonKeys objectAtIndex:self.currentEpisodeIndexPath.section]];
 	
 	NSIndexPath *nextEpisodeIndexPath = [NSIndexPath indexPathForRow:self.currentEpisodeIndexPath.row - 1 inSection:self.currentEpisodeIndexPath.section];
 	
@@ -298,7 +408,7 @@
 	}
 	else {	// move the previous season		
 		if (nextEpisodeIndexPath.section - 1 >= 0) {	// check if the next season lies within the bounds of the number of seasons
-			seasonEpisodes = [seasons objectForKey:[seasonKeys objectAtIndex:self.currentEpisodeIndexPath.section - 1]];
+			seasonEpisodes = [_seasons objectForKey:[seasonKeys objectAtIndex:self.currentEpisodeIndexPath.section - 1]];
 			nextEpisodeIndexPath = [NSIndexPath indexPathForRow:seasonEpisodes.count - 1 inSection:self.currentEpisodeIndexPath.section - 1];
 			episode = [seasonEpisodes objectAtIndex:nextEpisodeIndexPath.row];
 		}
@@ -314,13 +424,13 @@
 - (SBEpisode*)previousEpisode {
 	SBEpisode *episode = nil;
 	
-	NSArray *seasonKeys = [seasons allKeys];
+	NSArray *seasonKeys = [_seasons allKeys];
 	
 	if (self.currentEpisodeIndexPath.section == seasonKeys.count) {
 		return nil;
 	}
 	
-	NSArray *seasonEpisodes = [seasons objectForKey:[seasonKeys objectAtIndex:self.currentEpisodeIndexPath.section]];
+	NSArray *seasonEpisodes = [_seasons objectForKey:[seasonKeys objectAtIndex:self.currentEpisodeIndexPath.section]];
 	
 	NSIndexPath *previousEpisodeIndexPath = [NSIndexPath indexPathForRow:self.currentEpisodeIndexPath.row + 1 inSection:self.currentEpisodeIndexPath.section];
 
@@ -331,7 +441,7 @@
 		previousEpisodeIndexPath = [NSIndexPath indexPathForRow:0 inSection:self.currentEpisodeIndexPath.section + 1];
 		
 		if (previousEpisodeIndexPath.section < seasonKeys.count) {	// check if the previous season lies within the bounds of the number of seasons
-			seasonEpisodes = [seasons objectForKey:[seasonKeys objectAtIndex:previousEpisodeIndexPath.section]];
+			seasonEpisodes = [_seasons objectForKey:[seasonKeys objectAtIndex:previousEpisodeIndexPath.section]];
 			episode = [seasonEpisodes objectAtIndex:previousEpisodeIndexPath.row];
 		}
 	}
@@ -343,15 +453,32 @@
 	return episode;
 }
 
+#pragma mark - Editing
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+	[super setEditing:editing animated:animated];
+	[self.tableView setEditing:editing animated:animated];
+	
+	[self.navigationController setToolbarHidden:!editing animated:animated];
+	
+//	if (editing) {
+//		self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
+//	}
+//	else {
+//		self.tableView.contentInset = UIEdgeInsetsZero;
+//	}
+//	
+//	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
+}
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView {
-	return [[seasons allKeys] count];
+	return [[_seasons allKeys] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	NSString *title = @"";
 	
-	NSArray *keys = [seasons allKeys];
+	NSArray *keys = [_seasons allKeys];
 	NSString *sectionKey = [keys objectAtIndex:section];
 	
 	if ([sectionKey isEqualToString:@"0"]) {
@@ -368,7 +495,7 @@
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	NSString *title = [self tableView:tableView titleForHeaderInSection:section];
 
-	id header = [sectionHeaders objectAtIndex:section];
+	id header = [_sectionHeaders objectAtIndex:section];
 	
 	if (header == [NSNull null]) {
 		SBSectionHeaderView *sectionHeader = [[SBSectionHeaderView alloc] init];
@@ -376,7 +503,7 @@
 		sectionHeader.delegate = self;
 		sectionHeader.sectionLabel.text = title;
 
-		[sectionHeaders replaceObjectAtIndex:section withObject:sectionHeader];
+		[_sectionHeaders replaceObjectAtIndex:section withObject:sectionHeader];
 		header = sectionHeader;
 	}
 	return header;
@@ -389,21 +516,21 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	NSArray *keys = [seasons allKeys];
+	NSArray *keys = [_seasons allKeys];
 	NSString *sectionKey = [keys objectAtIndex:section];
 	
 	SBSectionHeaderView *headerView = (SBSectionHeaderView *)[self tableView:tableView viewForHeaderInSection:section];
 	
-	return headerView.state == SBSectionHeaderStateOpen ? [[seasons objectForKey:sectionKey] count] : 0;
+	return headerView.state == SBSectionHeaderStateOpen ? [[_seasons objectForKey:sectionKey] count] : 0;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	EpisodeCell *cell = (EpisodeCell*)[tv dequeueReusableCellWithIdentifier:@"EpisodeCell"];
 	
-	NSArray *keys = [seasons allKeys];
+	NSArray *keys = [_seasons allKeys];
 	NSString *sectionKey = [keys objectAtIndex:indexPath.section];
-	NSArray *episodes = [seasons objectForKey:sectionKey];
+	NSArray *episodes = [_seasons objectForKey:sectionKey];
 	
 	SBEpisode *episode = [episodes objectAtIndex:indexPath.row];
 	
@@ -467,8 +594,9 @@
 		return;
 	}
 	
-	[self performSegueWithIdentifier:@"EpisodeDetailsSegue" sender:nil];
-	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+	if (!self.tableView.editing) {
+		[self performSegueWithIdentifier:@"EpisodeDetailsSegue" sender:nil];
+	}
 }
 
 #pragma mark - Menu Actions
@@ -476,12 +604,12 @@
 	if (gesture.state == UIGestureRecognizerStateBegan) {
 		[gesture.view becomeFirstResponder];
 		
-		menuIndexPath = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
+		_menuIndexPath = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
 		
-		NSArray *keys = [seasons allKeys];
-		NSString *sectionKey = [keys objectAtIndex:menuIndexPath.section];
-		NSArray *episodes = [seasons objectForKey:sectionKey];
-		SBEpisode *episode = [episodes objectAtIndex:menuIndexPath.row];
+		NSArray *keys = [_seasons allKeys];
+		NSString *sectionKey = [keys objectAtIndex:_menuIndexPath.section];
+		NSArray *episodes = [_seasons objectForKey:sectionKey];
+		SBEpisode *episode = [episodes objectAtIndex:_menuIndexPath.row];
 		
 		NSMutableArray *menuItems = [NSMutableArray array];
 		
@@ -496,15 +624,15 @@
 		[menu setTargetRect:gesture.view.frame inView:gesture.view.superview];
 		[menu setMenuVisible:YES animated:YES];
 	
-		[self.tableView selectRowAtIndexPath:menuIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+		[self.tableView selectRowAtIndexPath:_menuIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
 	}
 }
 
 - (void)searchForEpisode {
-	NSArray *keys = [seasons allKeys];
-	NSString *sectionKey = [keys objectAtIndex:menuIndexPath.section];
-	NSArray *episodes = [seasons objectForKey:sectionKey];
-	SBEpisode *episode = [episodes objectAtIndex:menuIndexPath.row];
+	NSArray *keys = [_seasons allKeys];
+	NSString *sectionKey = [keys objectAtIndex:_menuIndexPath.section];
+	NSArray *episodes = [_seasons objectForKey:sectionKey];
+	SBEpisode *episode = [episodes objectAtIndex:_menuIndexPath.row];
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
 							show.tvdbID, @"tvdbid", 
@@ -567,10 +695,10 @@
 }
 
 - (void)changeEpisodeStatus:(EpisodeStatus)status {
-	NSArray *keys = [seasons allKeys];
-	NSString *sectionKey = [keys objectAtIndex:menuIndexPath.section];
-	NSArray *episodes = [seasons objectForKey:sectionKey];
-	SBEpisode *episode = [episodes objectAtIndex:menuIndexPath.row];
+	NSArray *keys = [_seasons allKeys];
+	NSString *sectionKey = [keys objectAtIndex:_menuIndexPath.section];
+	NSArray *episodes = [_seasons objectForKey:sectionKey];
+	SBEpisode *episode = [episodes objectAtIndex:_menuIndexPath.row];
 
 	NSString *statusString = [[SBEpisode episodeStatusAsString:status] lowercaseString];
 	
@@ -606,16 +734,15 @@
 }
 
 #pragma mark - SBSectionHeaderViewDelegate
-
 - (void)sectionHeaderView:(SBSectionHeaderView*)sectionHeaderView sectionOpened:(NSInteger)sectionOpened {	
 	sectionHeaderView.state = SBSectionHeaderStateOpen;
     /*
      Create an array containing the index paths of the rows to insert: These correspond to the rows for each quotation in the current section.
      */
-	NSArray *keys = [seasons allKeys];
+	NSArray *keys = [_seasons allKeys];
 	NSString *sectionKey = [keys objectAtIndex:sectionOpened];
 	
-    NSInteger countOfRowsToInsert = [[seasons objectForKey:sectionKey] count];
+    NSInteger countOfRowsToInsert = [[_seasons objectForKey:sectionKey] count];
     NSMutableArray *indexPathsToInsert = [[NSMutableArray alloc] init];
     for (NSInteger i = 0; i < countOfRowsToInsert; i++) {
         [indexPathsToInsert addObject:[NSIndexPath indexPathForRow:i inSection:sectionOpened]];

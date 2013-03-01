@@ -13,7 +13,7 @@
 #import "GTMNSDictionary+URLArguments.h"
 
 @interface SBCommandBuilder ()
-+ (NSString*)commandStringForCommand:(SickBeardCommand)command;
++ (NSString *)commandStringForCommand:(SickBeardCommand)command;
 + (NSString *)commandStringForCommands:(NSArray *)commands;
 @end
 

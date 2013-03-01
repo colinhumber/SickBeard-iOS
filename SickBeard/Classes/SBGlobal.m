@@ -139,5 +139,31 @@
 	return [NSString stringWithFormat:@"itms://phobos.apple.com/WebObjects/MZSearch.woa/wa/search?term=%@", [showName gtm_stringByEscapingForURLArgument]];
 }
 
++ (NSMutableArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector {
+	UILocalizedIndexedCollation *collation = [UILocalizedIndexedCollation currentCollation];
+	
+	NSInteger sectionCount = [[collation sectionTitles] count]; //section count is take from sectionTitles and not sectionIndexTitles
+	NSMutableArray *unsortedSections = [NSMutableArray arrayWithCapacity:sectionCount];
+	
+	for (int i = 0; i < sectionCount; i++) {
+		[unsortedSections addObject:[NSMutableArray array]];
+	}
+	
+	// put each object into a section
+	for (id object in array) {
+		NSInteger index = [collation sectionForObject:object collationStringSelector:selector];
+		[(NSMutableArray*)[unsortedSections objectAtIndex:index] addObject:object];
+	}
+	
+	NSMutableArray *sections = [NSMutableArray arrayWithCapacity:sectionCount];
+	
+	// sort each section
+	for (NSMutableArray *section in unsortedSections) {
+		[sections addObject:[[collation sortedArrayFromArray:section collationStringSelector:selector] mutableCopy]];
+	}
+	
+	return sections;
+}
+
 
 @end

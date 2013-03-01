@@ -27,15 +27,12 @@ NSString *const RESULT_DENIED = @"denied";
 static SickbeardAPIClient *sharedClient = nil;
 
 @interface SickbeardAPIClient ()
-@property (readwrite, nonatomic, strong) NSOperationQueue *operationQueue;
+@property (nonatomic, strong) NSOperationQueue *operationQueue;
 - (void)addAuthenticationToRequest:(NSMutableURLRequest *)request username:(NSString *)username password:(NSString *)password;
 @end
 
 
 @implementation SickbeardAPIClient
-
-@synthesize operationQueue;
-@synthesize currentServer;
 
 + (SickbeardAPIClient*)sharedClient {
 	static dispatch_once_t onceToken;

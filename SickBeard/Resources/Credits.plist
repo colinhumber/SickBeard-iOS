@@ -48,22 +48,6 @@
 			</dict>
 			<dict>
 				<key>role</key>
-				<string>SDWebImage</string>
-				<key>name</key>
-				<string>Olivier Poitrey</string>
-				<key>url</key>
-				<string>https://github.com/rs/SDWebImage</string>
-			</dict>
-			<dict>
-				<key>role</key>
-				<string>SDURLCache</string>
-				<key>name</key>
-				<string>Olivier Poitrey</string>
-				<key>url</key>
-				<string>https://github.com/rs/SDURLCache</string>
-			</dict>
-			<dict>
-				<key>role</key>
 				<string>EGOTableViewPullRefresh</string>
 				<key>name</key>
 				<string>Enormego</string>

@@ -349,11 +349,11 @@
             <objects>
                 <viewController storyboardIdentifier="SBShowsViewController" autoresizesArchivedViewToFullSize="NO" title="Shows" id="Xk8-78-Yja" customClass="SBShowsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HAj-XQ-EU8">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="110" sectionHeaderHeight="22" sectionFooterHeight="22" id="QYh-V4-Bfe">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -444,11 +444,11 @@
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="qEb-Lz-g4Z" customClass="SBShowDetailsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dFL-A4-Sfx">
-                        <rect key="frame" x="0.0" y="64" width="320" height="352"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="308"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="59" sectionHeaderHeight="10" sectionFooterHeight="10" id="pN1-C5-Cjm">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="352"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="59" sectionHeaderHeight="10" sectionFooterHeight="10" id="pN1-C5-Cjm">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="308"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
@@ -492,6 +492,7 @@
                                         <connections>
                                             <outlet property="airdateLabel" destination="lGO-QF-yWQ" id="GVP-Ur-qHo"/>
                                             <outlet property="badgeView" destination="8uI-50-pGs" id="w5i-wQ-TWk"/>
+                                            <outlet property="chevronImageView" destination="1JU-ee-FVz" id="gWw-Pt-bsS"/>
                                             <outlet property="episodeNameLabel" destination="2w0-zS-o5h" id="5Ho-lY-HnM"/>
                                         </connections>
                                     </tableViewCell>
@@ -504,13 +505,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="TO4-Gh-RUm">
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="aHq-8R-Lef">
-                            <connections>
-                                <action selector="showActions" destination="qEb-Lz-g4Z" id="OnD-Gg-MSA"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="TO4-Gh-RUm"/>
                     <connections>
                         <outlet property="tableView" destination="pN1-C5-Cjm" id="p6h-Lv-SuZ"/>
                         <segue destination="gKl-mM-jBe" kind="push" identifier="EpisodeDetailsSegue" id="cuN-Ad-691"/>
@@ -525,11 +520,11 @@
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="gKl-mM-jBe" customClass="SBEpisodeDetailsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jyO-YN-zUM">
-                        <rect key="frame" x="0.0" y="64" width="320" height="352"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="episode-details-bg.png" id="wkR-Y2-55c">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <view contentMode="scaleToFill" id="f4x-Qe-Q8L" userLabel="Header Container View" customClass="SBCellBackground">
@@ -629,11 +624,11 @@
             <objects>
                 <viewController storyboardIdentifier="SBEpisodesViewController" title="Episodes" id="M9d-qy-c1D" customClass="SBEpisodesViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ern-lM-LiD">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="110" sectionHeaderHeight="10" sectionFooterHeight="10" id="hwD-no-Fyi">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
@@ -1483,6 +1478,18 @@
                                 <segue destination="n53-4M-XZ9" kind="modal" identifier="HistorySegue" id="rXf-1t-drq"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="zPP-KS-jmX"/>
+                        <barButtonItem image="backlog.png" style="plain" id="yDu-QW-u5Q">
+                            <connections>
+                                <segue destination="Gj2-OV-1bZ" kind="modal" identifier="BacklogSegue" id="Q3F-0h-QSk"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="7V1-Xa-beh"/>
+                        <barButtonItem image="list.png" style="plain" id="3CY-j2-uD6">
+                            <connections>
+                                <segue destination="Jxj-xa-C7u" kind="modal" identifier="LogsSegue" id="vpG-30-Vp0"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="QRF-Ld-Eze"/>
                         <barButtonItem image="gear.png" style="plain" id="pJS-2S-S1N">
                             <connections>
@@ -1528,7 +1535,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" barStyle="blackTranslucent" id="cvh-Tj-UWz">
+                    <toolbar key="toolbar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="cvh-Tj-UWz">
                         <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
@@ -1678,13 +1685,203 @@
             </objects>
             <point key="canvasLocation" x="-21" y="524"/>
         </scene>
+        <!--Logs View Controller - Logs-->
+        <scene sceneID="ZVK-ZR-C7V">
+            <objects>
+                <viewController id="n0n-K6-gtv" customClass="SBLogsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0xt-rI-b93">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" id="Pyw-Ll-yJy">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SBLogCell" rowHeight="90" id="5nX-Tb-bvH" customClass="SBLogCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="90"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="89"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dh6-ok-eM2">
+                                                    <rect key="frame" x="20" y="0.0" width="280" height="89"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="logLabel" destination="dh6-ok-eM2" id="Fg4-gg-RIY"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="n0n-K6-gtv" id="fYw-4Q-Xfj"/>
+                                    <outlet property="delegate" destination="n0n-K6-gtv" id="6Lg-3l-4hW"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Logs" id="uCa-3v-rqK">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="hSb-Nw-wGi">
+                            <connections>
+                                <action selector="done:" destination="n0n-K6-gtv" id="g3u-kd-lq8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="blackTranslucent"/>
+                    <connections>
+                        <outlet property="tableView" destination="Pyw-Ll-yJy" id="yUw-LT-s2N"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jLi-FH-dRJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="401" y="1122"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="LrF-2v-HHE">
+            <objects>
+                <navigationController toolbarHidden="NO" id="Jxj-xa-C7u" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="SUD-l1-Guk">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" barStyle="blackTranslucent" id="0QB-FS-EU0">
+                        <rect key="frame" x="0.0" y="436" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="n0n-K6-gtv" kind="relationship" relationship="rootViewController" id="VXo-Jj-eMe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z5U-IK-5o1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-21" y="1122"/>
+        </scene>
+        <!--Backlog View Controller - Backlog-->
+        <scene sceneID="Izs-Ff-9QE">
+            <objects>
+                <viewController id="xib-AE-L9T" customClass="SBBacklogViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cRK-sk-ZKq">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="59" sectionHeaderHeight="10" sectionFooterHeight="10" id="HKe-PI-zKm">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EpisodeCell" rowHeight="59" id="CtP-fh-ksp" customClass="EpisodeCell">
+                                        <rect key="frame" x="0.0" y="46" width="320" height="61"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="280" height="58"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Name" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="uBQ-6P-McF" userLabel="Show Name">
+                                                    <rect key="frame" x="14" y="6" width="198" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="xMY-HU-7HL">
+                                                    <rect key="frame" x="40" y="27" width="172" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="calendar-icon.png" id="U32-LA-IiY">
+                                                    <rect key="frame" x="14" y="26" width="23" height="23"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="chevron.png" id="FV5-Bt-7V7">
+                                                    <rect key="frame" x="281" y="21" width="9" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <view contentMode="scaleToFill" id="sMD-40-ZKM" customClass="LKBadgeView">
+                                                    <rect key="frame" x="183" y="27" width="92" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="airdateLabel" destination="xMY-HU-7HL" id="3EI-bh-wHL"/>
+                                            <outlet property="badgeView" destination="sMD-40-ZKM" id="hPM-HL-gYB"/>
+                                            <outlet property="chevronImageView" destination="FV5-Bt-7V7" id="lfD-ag-Ebw"/>
+                                            <outlet property="episodeNameLabel" destination="uBQ-6P-McF" id="oiV-TK-zSe"/>
+                                            <segue destination="gKl-mM-jBe" kind="push" identifier="EpisodeDetailsSegue" id="49G-tJ-Cj9"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="xib-AE-L9T" id="fMw-px-cbE"/>
+                                    <outlet property="delegate" destination="xib-AE-L9T" id="YaL-cf-gKa"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Backlog" id="tTR-Et-xKG">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="O87-iH-w6a">
+                            <connections>
+                                <action selector="done:" destination="xib-AE-L9T" id="oVZ-BG-cxF"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="blackTranslucent"/>
+                    <connections>
+                        <outlet property="tableView" destination="HKe-PI-zKm" id="KFh-40-uz3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mUT-tY-L65" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="401" y="1710"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="D4J-kl-UQJ">
+            <objects>
+                <navigationController id="Gj2-OV-1bZ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="qvN-7I-JXh">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" barStyle="blackTranslucent" id="f2F-Zw-7jv">
+                        <rect key="frame" x="0.0" y="436" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="xib-AE-L9T" kind="relationship" relationship="rootViewController" id="S76-aK-ShA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O5x-u3-yUb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-21" y="1710"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="backlog.png" width="24" height="22"/>
         <image name="calendar-icon.png" width="23" height="23"/>
         <image name="chevron.png" width="9" height="15"/>
         <image name="clock.png" width="20" height="20"/>
         <image name="episode-details-bg.png" width="320" height="416"/>
         <image name="gear.png" width="20" height="20"/>
+        <image name="list.png" width="20" height="14"/>
     </resources>
     <classes>
         <class className="ComingEpisodeCell" superclassName="SBBaseShowCell">
@@ -1701,6 +1898,7 @@
             <relationships>
                 <relationship kind="outlet" name="airdateLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="badgeView" candidateClass="LKBadgeView"/>
+                <relationship kind="outlet" name="chevronImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="episodeNameLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
@@ -1716,6 +1914,12 @@
                 <relationship kind="outlet" name="languagePickerView" candidateClass="UIPickerView"/>
                 <relationship kind="outlet" name="showNameTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="SBBacklogViewController" superclassName="SBBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBBacklogViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="done:"/>
             </relationships>
         </class>
         <class className="SBBaseShowCell" superclassName="UITableViewCell">
@@ -1751,7 +1955,6 @@
         <class className="SBEpisodeDetailsViewController" superclassName="SBBaseViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBEpisodeDetailsViewController.h"/>
             <relationships>
-                <relationship kind="action" name="episodeAction:"/>
                 <relationship kind="action" name="swipeLeft:"/>
                 <relationship kind="action" name="swipeRight:"/>
                 <relationship kind="outlet" name="containerView" candidateClass="UIView"/>
@@ -1798,6 +2001,18 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBLegalViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="SBLogCell" superclassName="SBBaseShowCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBLogCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="logLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="SBLogsViewController" superclassName="SBBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBLogsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="done:"/>
             </relationships>
         </class>
         <class className="SBMainViewController" superclassName="UIViewController">
@@ -1858,7 +2073,6 @@
         <class className="SBShowDetailsViewController" superclassName="SBBaseTableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SBShowDetailsViewController.h"/>
             <relationships>
-                <relationship kind="action" name="showActions"/>
                 <relationship kind="outlet" name="detailsHeaderView" candidateClass="SBShowDetailsHeaderView"/>
             </relationships>
         </class>
@@ -1890,8 +2104,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="49G-tJ-Cj9"/>
         <segue reference="uye-n8-luE"/>
         <segue reference="WEB-uB-B40"/>
-        <segue reference="xoM-hp-y8x"/>
     </inferredMetricsTieBreakers>
 </document>
