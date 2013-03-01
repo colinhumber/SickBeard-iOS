@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SBBaseTableViewController.h"
 #import "SBQualityViewController.h"
 #import "SBStatusViewController.h"
 #import "SBAddShowDelegate.h"
@@ -14,7 +15,7 @@
 @class SBShow;
 @class SBRootDirectory;
 
-@interface SBOptionsViewController : UITableViewController <SBQualityViewControllerDelegate, SBStatusViewControllerDelegate, UITextFieldDelegate> {
+@interface SBOptionsViewController : SBBaseTableViewController <SBQualityViewControllerDelegate, SBStatusViewControllerDelegate, UITextFieldDelegate> {
 	NSMutableArray *initialQualities;
 	NSMutableArray *archiveQualities;
 	NSMutableArray *defaultDirectories;

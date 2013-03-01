@@ -9,7 +9,6 @@
 #import "SBServerDetailsViewController.h"
 #import "SickbeardAPIClient.h"
 #import "SBServer.h"
-#import "SBServer+SickBeardAdditions.h"
 #import "PRPAlertView.h"
 #import "NSUserDefaults+SickBeard.h"
 #import "SBStaticTableViewCell.h"
@@ -189,45 +188,49 @@
 						  maskType:SVProgressHUDMaskTypeGradient];
 	 
 	 RunAfterDelay(0.5, ^{
-		 [[SickbeardAPIClient sharedClient] pingServer:server
-											   success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
-												   NSString *result = [JSON objectForKey:@"result"];
-												   
-												   if ([result isEqualToString:RESULT_SUCCESS]) {
-													   if (saveOnSuccess) {
-														   [[SickbeardAPIClient sharedClient] loadDefaults:server];
-														   
-														   RunAfterDelay(2, ^{
-															   [NSUserDefaults standardUserDefaults].serverHasBeenSetup = YES;
-															   [NSUserDefaults standardUserDefaults].server = server;
-															   [NSUserDefaults standardUserDefaults].shouldUpdateShowList = YES;
-															   [SickbeardAPIClient sharedClient].currentServer = server;
-															   
-															   [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Server saved", @"Server saved")
-																														   type:SBNotificationTypeSuccess];
-															   
-															   if (_flags.initialSetup) {
-																   RunAfterDelay(1.5, ^{
-																	   [self close];
-																   });
-															   }
-														   });
-													   }
-													   else {
-														   [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Server validated", @"Server validated")
-																													   type:SBNotificationTypeSuccess];
-													   }
-												   }
-												   else if ([result isEqualToString:RESULT_DENIED]) {
-													   [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																												   type:SBNotificationTypeError];
-												   }
-											   }
-											   failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
-												   TFLog(@"Unable to connect to server (%@).\nError: %@\nJSON: %@", server.serviceEndpointPath, error, JSON);
-												   [[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Unable to connect to Sick Beard (%@)", @"Unable to connect to Sick Beard (%@)"), server.serviceEndpointPath]
-																											   type:SBNotificationTypeError];
-											   }];
+		 SickbeardAPIClient *client = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:server.serviceEndpointPath]];
+		 [client runCommand:SickBeardCommandPing
+				 parameters:nil
+					success:^(AFHTTPRequestOperation *operation, id JSON) {
+						[SVProgressHUD dismiss];
+						
+						NSString *result = [JSON objectForKey:@"result"];
+						
+						if ([result isEqualToString:RESULT_SUCCESS]) {
+							if (saveOnSuccess) {
+								SickbeardAPIClient *client = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:server.serviceEndpointPath]];
+								[client loadDefaults];
+								
+								RunAfterDelay(2, ^{
+									[NSUserDefaults standardUserDefaults].serverHasBeenSetup = YES;
+									[NSUserDefaults standardUserDefaults].server = server;
+									[NSUserDefaults standardUserDefaults].shouldUpdateShowList = YES;
+									
+									[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Server saved", @"Server saved")
+																								type:SBNotificationTypeSuccess];
+									
+									if (_flags.initialSetup) {
+										RunAfterDelay(1.5, ^{
+											[self close];
+										});
+									}
+								});
+							}
+							else {
+								[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Server validated", @"Server validated")
+																							type:SBNotificationTypeSuccess];
+							}
+						}
+						else if ([result isEqualToString:RESULT_DENIED]) {
+							[[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
+																						type:SBNotificationTypeError];
+						}
+					}
+					failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+						TFLog(@"Unable to connect to server (%@).\nError: %@\nJSON: %@", server.serviceEndpointPath, error);
+						[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Unable to connect to Sick Beard (%@)", @"Unable to connect to Sick Beard (%@)"), server.serviceEndpointPath]
+																					type:SBNotificationTypeError];
+					}];
 	 });
 }
 
@@ -274,12 +277,7 @@
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
 	if (indexPath.section == 0) {
-		return;
-	}
-	else {
-		if (indexPath.row == 0) {
-			[self validateServer:NO];
-		}
+		[self validateServer:NO];
 	}
 }
 

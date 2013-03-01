@@ -37,10 +37,7 @@ typedef NS_ENUM(NSInteger, SBLogType) {
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	_logType = SBLogTypeDebug;
-	
-//	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
-//	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
-//	
+		
 	[super viewDidLoad];
 
 	SVSegmentedControl *logControl = [[SVSegmentedControl alloc] initWithSectionTitles:@[
@@ -110,14 +107,12 @@ typedef NS_ENUM(NSInteger, SBLogType) {
 			break;
 	}
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandViewLogs 
+	[self.apiClient runCommand:SickBeardCommandViewLogs
 									   parameters:@{ @"min_level" : logType }
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
-											  if ([result isEqualToString:RESULT_SUCCESS]) {
-//												  _logs = [[NSMutableArray alloc] init];
-												  
+											  if ([result isEqualToString:RESULT_SUCCESS]) {												  
 												  _logs = JSON[@"data"];
 												  
 												  if (_logs.count == 0) {
@@ -135,7 +130,7 @@ typedef NS_ENUM(NSInteger, SBLogType) {
 											  [self.tableView reloadData];
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving logs", @"Error retrieving logs") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
@@ -146,19 +141,9 @@ typedef NS_ENUM(NSInteger, SBLogType) {
 }
 
 #pragma mark - Actions
-//- (IBAction)showHistoryActions:(id)sender {
-//	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" 
-//															 delegate:self 
-//													cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel") 
-//											   destructiveButtonTitle:NSLocalizedString(@"Clear History", @"Clear History") 
-//													otherButtonTitles:NSLocalizedString(@"Trim History", @"Trim History"), nil];
-//	[actionSheet showFromToolbar:self.navigationController.toolbar];
-//}
-
 - (IBAction)done:(id)sender {
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 - (IBAction)refresh:(id)sender {
 	[TestFlight passCheckpoint:@"Refreshed logs"];
@@ -166,63 +151,15 @@ typedef NS_ENUM(NSInteger, SBLogType) {
 	[self loadData];
 }
 
-//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-//	if (buttonIndex == actionSheet.destructiveButtonIndex) {
-//		[TestFlight passCheckpoint:@"Cleared history"];
-//		
-//		[SVProgressHUD showWithStatus:NSLocalizedString(@"Clearing history", @"Clearing history")];
-//		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistoryClear 
-//										   parameters:nil 
-//											  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
-//												  [SVProgressHUD dismiss];
-//												  [self loadData];
-//											  } 
-//											  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
-//												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error clearing history", @"Error clearing history")
-//																	  message:error.localizedDescription 
-//																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
-//											  }];
-//	}
-//	else if (buttonIndex == 1) {
-//		[TestFlight passCheckpoint:@"Trimmed history"];
-//		
-//		[SVProgressHUD showWithStatus:NSLocalizedString(@"Trimming history", @"Trimming history")];
-//		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistoryTrim
-//										   parameters:nil 
-//											  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
-//												  [SVProgressHUD dismiss];
-//												  [self loadData];
-//											  } 
-//											  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
-//												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error trimming history", @"Error trimming history") 
-//																	  message:error.localizedDescription 
-//																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
-//											  }];
-//	}
-//}
-
-
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	return _logs.count;
 }
 
-// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
-// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
-
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	SBLogCell *cell = (SBLogCell *)[tv dequeueReusableCellWithIdentifier:@"SBLogCell"];
 
 	cell.logLabel.text = _logs[indexPath.row];
-//	SBHistory *entry = [history objectAtIndex:indexPath.row];
-//	cell.showNameLabel.text = entry.showName;	
-//	cell.createdDateLabel.text = [entry.createdDate displayDateTimeString];
-//	cell.seasonEpisodeLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Season %d, episode %d", @"Season %d, episode %d"), entry.season, entry.episode];
-//
-//	[cell.showImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] posterURLForTVDBID:entry.tvdbID] absoluteString]];
-	//	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:entry.tvdbID]
-//					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
-//	
 	return cell;
 }
 

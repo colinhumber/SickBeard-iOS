@@ -50,7 +50,7 @@
 	
 	self.title = NSLocalizedString(@"Details", @"Details");
 
-	[self.showPosterImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] bannerURLForTVDBID:self.episode.show.tvdbID] absoluteString]];
+	[self.showPosterImageView setPathToNetworkImage:[[self.apiClient bannerURLForTVDBID:self.episode.show.tvdbID] absoluteString]];
 
 	self.headerView.sectionLabel.text = NSLocalizedString(@"Episode Summary", @"Episode Summary");
 	self.episodeDescriptionBackground.grouped = YES;
@@ -106,9 +106,9 @@
 
 	[self.spinner startAnimating];
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisode 
+	[self.apiClient runCommand:SickBeardCommandEpisode
 									   parameters:params
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -120,32 +120,16 @@
 											  
 											  [self.descriptionTextView flashScrollIndicators];
 											  
-//											  CGFloat currentFontSize = kDefaultDescriptionFontSize;
-//											  CGRect frame = kDefaultDescriptionFrame;
 											  self.descriptionTextView.text = self.episode.episodeDescription;
-//											  CGSize size = [self.episode.episodeDescription sizeWithFont:[self.descriptionLabel.font fontWithSize:currentFontSize]
-//																				   constrainedToSize:CGSizeMake(frame.size.width, CGFLOAT_MAX)
-//																					   lineBreakMode:UILineBreakModeWordWrap];
-//											  
-//											  while (size.height > frame.size.height) {
-//												  currentFontSize--;
-//												  size = [self.episode.episodeDescription sizeWithFont:[self.descriptionLabel.font fontWithSize:currentFontSize] 
-//																				constrainedToSize:CGSizeMake(frame.size.width, CGFLOAT_MAX)
-//																					lineBreakMode:UILineBreakModeWordWrap];
-//											  }
-//											  
-//											  self.descriptionLabel.font = [self.descriptionLabel.font fontWithSize:currentFontSize];
-//											  frame.size = size;
-//											  self.descriptionLabel.frame = frame;
-											  
-											  [UIView animateWithDuration:0.3 
+
+											  [UIView animateWithDuration:0.3
 															   animations:^{
 																   self.descriptionTextView.alpha = 1;
 															   }];
 											  
 											  [self.spinner stopAnimating];
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 											  [self.spinner stopAnimating];
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving episode", @"Error retrieving episode") 
 																  message:[NSString stringWithFormat:NSLocalizedString(@"Could not retrieve episode details \n%@", @"Could not retrieve episode details \n%@"), error.localizedDescription] 
@@ -223,9 +207,9 @@
 	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Searching for episode", @"Searching for episode")
 																type:SBNotificationTypeInfo];
 
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
+	[self.apiClient runCommand:SickBeardCommandEpisodeSearch
 									   parameters:params 
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -237,7 +221,7 @@
 																											  type:SBNotificationTypeSuccess];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
 																  message:[NSString stringWithFormat:@"Could not retrieve shows \n%@", error.localizedDescription] 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];
@@ -270,9 +254,9 @@
 	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
 																type:SBNotificationTypeInfo];
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
+	[self.apiClient runCommand:SickBeardCommandEpisodeSetStatus
 									   parameters:params 
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -284,7 +268,7 @@
 																											  type:SBNotificationTypeError];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error setting status", @"Error setting status") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	

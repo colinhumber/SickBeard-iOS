@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "AFHTTPClient.h"
 
 @class SBServer;
 
@@ -23,32 +23,19 @@ typedef enum {
 	HTTPMethodPOST
 } SBHTTPMethod;
 
-typedef void (^APISuccessBlock)(NSURLRequest *request, NSURLResponse *response, id JSON);
-typedef void (^APIErrorBlock)(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON);
+typedef void (^APISuccessBlock)(AFHTTPRequestOperation *operation, id JSON);
+typedef void (^APIErrorBlock)(AFHTTPRequestOperation *operation, NSError *error);
 
-@interface SickbeardAPIClient : NSObject
+@interface SickbeardAPIClient : AFHTTPClient
 
-+ (SickbeardAPIClient*)sharedClient;
 - (NSURL*)posterURLForTVDBID:(NSString*)tvdbID;
 - (NSURL*)bannerURLForTVDBID:(NSString*)tvdbID;
 
 // loads defaults and root directories for the specified server
-- (void)loadDefaults:(SBServer*)server;
-
-// tests an undefined server to see if it is valid or not
-- (void)pingServer:(SBServer*)server success:(APISuccessBlock)success failure:(APIErrorBlock)failure;
-//- (void)validateServerCredentials:(SBServer*)server success:(void (^)(id object))success failure:(void (^)(NSHTTPURLResponse *response, NSError *error))failure;
+- (void)loadDefaults;
 
 // runs API commands against a pre-defined server
 - (void)runCommand:(SickBeardCommand)command parameters:(NSDictionary *)params success:(APISuccessBlock)success failure:(APIErrorBlock)failure;
-- (void)runCommand:(SickBeardCommand)command method:(SBHTTPMethod)method parameters:(NSDictionary*)params success:(APISuccessBlock)success failure:(APIErrorBlock)failure;
 
-- (void)runBatchCommand:(SickBeardCommand)command parameters:(NSDictionary *)params success:(APISuccessBlock)success failure:(APIErrorBlock)failure;
-
-// create URL endpoint directly against the server
-- (NSURL*)createUrlWithEndpoint:(NSString*)endpoint;
-//- (NSURLRequest*)authenticatedURLRequestForEndpoint:(NSString*)endpoint;
-
-@property (nonatomic, strong) SBServer *currentServer;
 
 @end

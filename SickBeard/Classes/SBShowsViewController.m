@@ -111,9 +111,9 @@
 	
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"name", @"sort", nil];
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShows 
+	[self.apiClient runCommand:SickBeardCommandShows 
 									   parameters:params
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -148,7 +148,7 @@
 											  [self.tableView reloadData];
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows")
 																  message:error.localizedDescription 
@@ -241,7 +241,7 @@
 	}
 	
 
-	[cell.showImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID] absoluteString]];
+	[cell.showImageView setPathToNetworkImage:[[self.apiClient posterURLForTVDBID:show.tvdbID] absoluteString]];
 	
 	return cell;
 }
@@ -254,9 +254,9 @@
 
 		[SVProgressHUD showWithStatus:NSLocalizedString(@"Deleting show", @"Deleting show")];
 		
-		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShowDelete 
+		[self.apiClient runCommand:SickBeardCommandShowDelete
 										   parameters:params 
-											  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+											  success:^(AFHTTPRequestOperation *operation, id JSON) {
 												  NSString *result = [JSON objectForKey:@"result"];
 												  
 												  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -272,7 +272,7 @@
 												  
 												  [SVProgressHUD dismiss];
 											  }
-											  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+											  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error deleting show", @"Error deleting show") 
 																	  message:error.localizedDescription 
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];			

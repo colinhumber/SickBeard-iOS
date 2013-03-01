@@ -15,6 +15,8 @@
 
 + (NSString *)URLForCommands:(NSArray *)commands server:(SBServer *)server params:(NSDictionary *)params;
 + (NSString *)URLForCommand:(SickBeardCommand)command server:(SBServer *)server params:(NSDictionary *)params;
++ (NSString *)commandStringForCommand:(SickBeardCommand)command;
++ (NSString *)commandStringForCommands:(NSArray *)commands;
 
 @end
 

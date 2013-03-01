@@ -119,9 +119,9 @@
 	
 	isSearching = YES;
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandSearchTVDB 
+	[self.apiClient runCommand:SickBeardCommandSearchTVDB
 									   parameters:params 
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -134,7 +134,7 @@
 												  [self.tableView reloadData];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
 																  message:[NSString stringWithFormat:NSLocalizedString(@"Could not perform search \n%@", @"Could not perform search \n%@"), error.localizedDescription] 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  

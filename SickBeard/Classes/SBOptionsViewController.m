@@ -108,9 +108,9 @@
 							[status lowercaseString], @"status",
 							nil];
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandShowAddNew 
+	[self.apiClient runCommand:SickBeardCommandShowAddNew
 									   parameters:params 
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -126,7 +126,7 @@
 																											  type:SBNotificationTypeError];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
 																  message:error.localizedDescription
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  
@@ -146,9 +146,9 @@
 							[status lowercaseString], @"status",
 							nil];
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandSetDefaults 
+	[self.apiClient runCommand:SickBeardCommandSetDefaults
 									   parameters:params 
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {												  
@@ -161,9 +161,9 @@
 												  [defaults synchronize];
 												  
 												  if (![parentFolder isEqual:defaults.defaultDirectory]) {
-													  [[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandAddRootDirectory
+													  [self.apiClient runCommand:SickBeardCommandAddRootDirectory
 																						 parameters:[NSDictionary dictionaryWithObjectsAndKeys:parentFolder.path, @"location", @"1", @"default", nil] 
-																							success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+																							success:^(AFHTTPRequestOperation *operation, id JSON) {
 																								NSString *result = [JSON objectForKey:@"result"];
 																								
 																								if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -189,7 +189,7 @@
 																																								type:SBNotificationTypeError];
 																								}
 																							}
-																							failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+																							failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 																								[PRPAlertView showWithTitle:NSLocalizedString(@"Error saving defaults", @"Error saving defaults")
 																													message:error.localizedDescription 
 																												buttonTitle:NSLocalizedString(@"OK", @"OK")];
@@ -205,7 +205,7 @@
 																											  type:SBNotificationTypeError];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error saving defaults", @"Error saving defaults") 
 																  message:error.localizedDescription
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  

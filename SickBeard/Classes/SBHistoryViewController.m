@@ -94,9 +94,9 @@
 
 	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:filter, @"type", nil];
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistory 
+	[self.apiClient runCommand:SickBeardCommandHistory
 									   parameters:params
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -128,7 +128,7 @@
 											  [self.tableView reloadData];
 											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving history", @"Error retrieving history") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
@@ -164,13 +164,13 @@
 		[TestFlight passCheckpoint:@"Cleared history"];
 		
 		[SVProgressHUD showWithStatus:NSLocalizedString(@"Clearing history", @"Clearing history")];
-		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistoryClear 
+		[self.apiClient runCommand:SickBeardCommandHistoryClear
 										   parameters:nil 
-											  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+											  success:^(AFHTTPRequestOperation *operation, id JSON) {
 												  [SVProgressHUD dismiss];
 												  [self loadData];
 											  } 
-											  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+											  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error clearing history", @"Error clearing history")
 																	  message:error.localizedDescription 
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
@@ -180,13 +180,13 @@
 		[TestFlight passCheckpoint:@"Trimmed history"];
 		
 		[SVProgressHUD showWithStatus:NSLocalizedString(@"Trimming history", @"Trimming history")];
-		[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandHistoryTrim
+		[self.apiClient runCommand:SickBeardCommandHistoryTrim
 										   parameters:nil 
-											  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+											  success:^(AFHTTPRequestOperation *operation, id JSON) {
 												  [SVProgressHUD dismiss];
 												  [self loadData];
 											  } 
-											  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+											  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error trimming history", @"Error trimming history") 
 																	  message:error.localizedDescription 
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
@@ -211,7 +211,7 @@
 	cell.createdDateLabel.text = [entry.createdDate displayDateTimeString];
 	cell.seasonEpisodeLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Season %d, episode %d", @"Season %d, episode %d"), entry.season, entry.episode];
 
-	[cell.showImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] posterURLForTVDBID:entry.tvdbID] absoluteString]];
+	[cell.showImageView setPathToNetworkImage:[[self.apiClient posterURLForTVDBID:entry.tvdbID] absoluteString]];
 	//	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:entry.tvdbID] 
 //					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
 //	

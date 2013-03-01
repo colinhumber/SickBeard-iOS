@@ -56,8 +56,11 @@
 		[self.window.rootViewController presentViewController:nav animated:NO completion:nil];
 	}
 	else {
-		[[SickbeardAPIClient sharedClient] loadDefaults:server];
-		[SickbeardAPIClient sharedClient].currentServer = server;
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		
+		SickbeardAPIClient *client = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:defaults.server.serviceEndpointPath]];
+		[client loadDefaults];
+//		[SickbeardAPIClient sharedClient].currentServer = server;
 		[self.window makeKeyAndVisible];
 	}
 	

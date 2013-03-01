@@ -8,6 +8,7 @@
 
 #import "SBBaseTableViewController.h"
 #import "SVProgressHUD.h"
+#import "SBServer.h"
 
 @implementation SBBaseTableViewController
 
@@ -22,6 +23,14 @@
 - (void)commonInit {
 	self.enableRefreshHeader = YES;
 	self.enableEmptyView = YES;
+		
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	self.apiClient = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:defaults.server.serviceEndpointPath]];
+
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(serverBaseURLDidChange:)
+												 name:SBServerURLDidChangeNotification
+											   object:nil];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -43,6 +52,13 @@
 	
 	return self;
 }
+
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:SBServerURLDidChangeNotification
+												  object:nil];
+}
+
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -153,5 +169,19 @@
 	return nil;
 }
 
+#pragma mark - Server Client
+- (void)serverBaseURLDidChange:(NSNotification *)notification {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	self.apiClient = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:defaults.server.serviceEndpointPath]];
+}
+
+- (SickbeardAPIClient *)apiClient {
+	if (!_apiClient) {
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		self.apiClient = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:defaults.server.serviceEndpointPath]];
+	}
+	
+	return _apiClient;
+}
 
 @end

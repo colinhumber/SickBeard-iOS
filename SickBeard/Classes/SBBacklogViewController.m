@@ -77,9 +77,7 @@
 	
 	[SVProgressHUD showWithStatus:NSLocalizedString(@"Loading backlog", @"Loading backlog")];
 
-	//
 	SBServer *currentServer = [NSUserDefaults standardUserDefaults].server;
-	AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:currentServer.serviceEndpointPath]];
 	NSMutableArray *operations = [NSMutableArray arrayWithCapacity:self.shows.count];
 	
 	for (SBShow *show in self.shows) {
@@ -136,7 +134,7 @@
 																												return NSOrderedAscending;
 																											}
 																											else {
-																											 return NSOrderedSame;
+																												return NSOrderedSame;
 																											}
 																										}];
 																										
@@ -152,7 +150,7 @@
 		[operations addObject:operation];
 	}
 	
-	[client enqueueBatchOfHTTPRequestOperations:operations
+	[self.apiClient enqueueBatchOfHTTPRequestOperations:operations
 								  progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
 								  }
 								completionBlock:^(NSArray *operations) {

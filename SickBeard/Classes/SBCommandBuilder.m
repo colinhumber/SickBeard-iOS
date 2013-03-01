@@ -8,14 +8,7 @@
 
 #import "SBCommandBuilder.h"
 #import "SBServer.h"
-#import "SBServer+SickBeardAdditions.h"
-
 #import "GTMNSDictionary+URLArguments.h"
-
-@interface SBCommandBuilder ()
-+ (NSString *)commandStringForCommand:(SickBeardCommand)command;
-+ (NSString *)commandStringForCommands:(NSArray *)commands;
-@end
 
 @implementation SBCommandBuilder
 
@@ -43,9 +36,8 @@
 	
 	[params setValue:commandString forKey:@"cmd"];
 	
-	serverUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@api/%@/?%@", [serverUrl absoluteString], server.apiKey, [params gtm_httpArgumentsString]]];
+	serverUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", [serverUrl absoluteString], [params gtm_httpArgumentsString]]];
 	
-	//	NSLog(@"URL created: %@", serverUrl);
 	return [serverUrl absoluteString];
 }
 

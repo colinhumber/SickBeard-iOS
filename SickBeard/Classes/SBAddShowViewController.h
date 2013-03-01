@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "SBAddShowDelegate.h"
+#import "SBBaseViewController.h"
 
-@interface SBAddShowViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate> {
+@interface SBAddShowViewController : SBBaseViewController <UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate> {
 	NSArray *results;
 	NSString *currentLanguage;
 	BOOL isSearching;

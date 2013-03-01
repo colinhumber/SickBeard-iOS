@@ -13,10 +13,8 @@
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, assign) SBNotificationType type;
 @property (nonatomic, weak) SBNotificationManager *manager;
-//@property (nonatomic, weak) UIView *hostView;
 
 - (void)show;
-
 @end
 
 @implementation SBNotification
@@ -27,7 +25,6 @@
 	if (self) {
 		self.text = text;
 		self.type = type;
-//		self.hostView = hostView;
 	}
 	
 	return self;

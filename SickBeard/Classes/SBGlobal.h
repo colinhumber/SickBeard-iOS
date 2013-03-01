@@ -14,6 +14,8 @@
 #define kDonateLink @"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2QFWVTWEMQRSN"
 #define XDELEGATE (SBAppDelegate*)[UIApplication sharedApplication].delegate
 
+extern NSString *const SBServerURLDidChangeNotification;
+
 typedef enum {
 	// system commands
 	SickBeardCommandCheckScheduler = 0,

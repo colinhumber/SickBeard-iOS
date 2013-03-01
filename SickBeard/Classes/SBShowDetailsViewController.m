@@ -77,7 +77,7 @@
 	[headerNib instantiateWithOwner:self options:nil];
 	self.detailsHeaderView.showNameLabel.text = show.showName;
 	
-	[self.detailsHeaderView.showImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] posterURLForTVDBID:show.tvdbID] absoluteString]];
+	[self.detailsHeaderView.showImageView setPathToNetworkImage:[[self.apiClient posterURLForTVDBID:show.tvdbID] absoluteString]];
 	self.detailsHeaderView.networkLabel.text = show.network;
 	
 	self.detailsHeaderView.statusLabel.text = [SBShow showStatusAsString:show.status];
@@ -190,9 +190,9 @@
 		[SVProgressHUD showWithStatus:NSLocalizedString(@"Loading show details", @"Loading show details")];
 	}
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandSeasons
+	[self.apiClient runCommand:SickBeardCommandSeasons
 									   parameters:[NSDictionary dictionaryWithObject:show.tvdbID forKey:@"tvdbid"]
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -268,7 +268,7 @@
 												  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 											  [self finishDataLoad:error];
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving show information", @"Error retrieving show information") 
 																  message:error.localizedDescription 
@@ -280,7 +280,6 @@
 #pragma mark - Batch Actions
 - (void)searchForMultipleEpisodes:(UIButton *)sender {
 	SBServer *currentServer = [NSUserDefaults standardUserDefaults].server;
-	AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:currentServer.serviceEndpointPath]];
 	NSMutableArray *requests = [NSMutableArray arrayWithCapacity:self.tableView.indexPathsForSelectedRows.count];
 	
 	for (NSIndexPath *indexPath in self.tableView.indexPathsForSelectedRows) {
@@ -307,7 +306,7 @@
 	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:@"Searching for %d episodes", requests.count]
 																type:SBNotificationTypeInfo];
 	
-	[client enqueueBatchOfHTTPRequestOperationsWithRequests:requests
+	[self.apiClient enqueueBatchOfHTTPRequestOperationsWithRequests:requests
 											  progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
 												  
 											  }
@@ -350,7 +349,6 @@
 
 - (void)changeEpisodeStatusBatch:(EpisodeStatus)status {
 	SBServer *currentServer = [NSUserDefaults standardUserDefaults].server;
-	AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:currentServer.serviceEndpointPath]];
 	NSMutableArray *requests = [NSMutableArray arrayWithCapacity:self.tableView.indexPathsForSelectedRows.count];
 	NSString *statusString = [[SBEpisode episodeStatusAsString:status] lowercaseString];
 
@@ -378,15 +376,15 @@
 
 	[self setEditing:NO animated:YES];
 
-	[client enqueueBatchOfHTTPRequestOperationsWithRequests:requests
-											  progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
+	[self.apiClient enqueueBatchOfHTTPRequestOperationsWithRequests:requests
+													  progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
 												  
-											  }
-											completionBlock:^(NSArray *operations) {
-												[self loadData];
-												[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:@"Episode statuses set to %@.", statusString]
-																											type:SBNotificationTypeInfo];
-											}];
+													  }
+													completionBlock:^(NSArray *operations) {
+														[self loadData];
+														[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:@"Episode statuses set to %@.", statusString]
+																													type:SBNotificationTypeInfo];
+													}];
 }
 
 #pragma mark - SBEpisodeDetailsDataSource
@@ -642,9 +640,9 @@
 	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Searching for episode", @"Searching for episode")
 																type:SBNotificationTypeInfo];
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
+	[self.apiClient runCommand:SickBeardCommandEpisodeSearch
 									   parameters:params 
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -657,7 +655,7 @@
 																											  type:SBNotificationTypeError];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
@@ -711,9 +709,9 @@
 	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
 																type:SBNotificationTypeInfo];
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
+	[self.apiClient runCommand:SickBeardCommandEpisodeSetStatus
 									   parameters:params 
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -726,7 +724,7 @@
 																											  type:SBNotificationTypeError];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error setting status", @"Error setting status") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	

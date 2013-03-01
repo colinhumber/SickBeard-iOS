@@ -1032,10 +1032,34 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
+                            <tableViewSection id="EnS-N4-P6T">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="kCW-kA-wdb" customClass="SBStaticTableViewCell">
+                                        <rect key="frame" x="0.0" y="10" width="320" height="46"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Test Connection" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="Mbf-Tc-so2">
+                                                    <rect key="frame" x="20" y="11" width="260" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" red="0.19215686269999999" green="0.33725490200000002" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="0.19215686269999999" green="0.33725490200000002" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection id="RHX-H7-9F7">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="WYd-2v-wOy" customClass="SBStaticTableViewCell">
-                                        <rect key="frame" x="0.0" y="10" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="76" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -1064,7 +1088,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="4Ar-M8-y7V" customClass="SBStaticTableViewCell">
-                                        <rect key="frame" x="0.0" y="55" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="121" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -1093,7 +1117,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="kIv-rl-2nN" customClass="SBStaticTableViewCell">
-                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="165" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -1122,7 +1146,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="1Oq-yL-NeI" customClass="SBStaticTableViewCell">
-                                        <rect key="frame" x="0.0" y="143" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="209" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -1151,7 +1175,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="grJ-a5-7TI" customClass="SBStaticTableViewCell">
-                                        <rect key="frame" x="0.0" y="187" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="253" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -1174,7 +1198,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="iFz-dQ-0Ox" customClass="SBStaticTableViewCell">
-                                        <rect key="frame" x="0.0" y="231" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="297" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -1207,7 +1231,7 @@
                             <tableViewSection headerTitle="Web Server Credentials" footerTitle="Set the username and password only if your web server (eg. Apache) requires it." id="30m-OZ-atx">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="bAM-it-Nfj" customClass="SBStaticTableViewCell">
-                                        <rect key="frame" x="0.0" y="322" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="388" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -1236,7 +1260,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="RdM-Aq-Bhr" customClass="SBStaticTableViewCell">
-                                        <rect key="frame" x="0.0" y="367" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="433" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -1259,30 +1283,6 @@
                                                         <outlet property="delegate" destination="Me1-Xf-mxJ" id="mI0-BB-UVT"/>
                                                     </connections>
                                                 </textField>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="EnS-N4-P6T">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="kCW-kA-wdb" customClass="SBStaticTableViewCell">
-                                        <rect key="frame" x="0.0" y="482" width="320" height="46"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Test Connection" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="Mbf-Tc-so2">
-                                                    <rect key="frame" x="20" y="11" width="260" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" red="0.19215686269999999" green="0.33725490200000002" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" red="0.19215686269999999" green="0.33725490200000002" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -1883,221 +1883,6 @@
         <image name="gear.png" width="20" height="20"/>
         <image name="list.png" width="20" height="14"/>
     </resources>
-    <classes>
-        <class className="ComingEpisodeCell" superclassName="SBBaseShowCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ComingEpisodeCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="airDateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="episodeNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="networkLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="showNameLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="EpisodeCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EpisodeCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="airdateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="badgeView" candidateClass="LKBadgeView"/>
-                <relationship kind="outlet" name="chevronImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="episodeNameLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="LKBadgeView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LKBadgeView.h"/>
-        </class>
-        <class className="NINetworkImageView" superclassName="UIImageView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NINetworkImageView.h"/>
-        </class>
-        <class className="SBAddShowViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBAddShowViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="languagePickerView" candidateClass="UIPickerView"/>
-                <relationship kind="outlet" name="showNameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="SBBacklogViewController" superclassName="SBBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBBacklogViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="done:"/>
-            </relationships>
-        </class>
-        <class className="SBBaseShowCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBBaseShowCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="containerView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="showImageView" candidateClass="NINetworkImageView"/>
-            </relationships>
-        </class>
-        <class className="SBBaseTableViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBBaseTableViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="SBBaseViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBBaseViewController.h"/>
-        </class>
-        <class className="SBCellBackground" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBCellBackground.h"/>
-        </class>
-        <class className="SBCreditsViewController" superclassName="SBBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBCreditsViewController.h"/>
-        </class>
-        <class className="SBEpisodeDetailsHeaderView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBEpisodeDetailsHeaderView.h"/>
-            <relationships>
-                <relationship kind="outlet" name="airDateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="seasonLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SBEpisodeDetailsViewController" superclassName="SBBaseViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBEpisodeDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="swipeLeft:"/>
-                <relationship kind="action" name="swipeRight:"/>
-                <relationship kind="outlet" name="containerView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="currentHeaderView" candidateClass="SBEpisodeDetailsHeaderView"/>
-                <relationship kind="outlet" name="descriptionTextView" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="episodeDescriptionBackground" candidateClass="SBCellBackground"/>
-                <relationship kind="outlet" name="headerContainerView" candidateClass="SBCellBackground"/>
-                <relationship kind="outlet" name="headerView" candidateClass="SBSectionHeaderView"/>
-                <relationship kind="outlet" name="nextHeaderView" candidateClass="SBEpisodeDetailsHeaderView"/>
-                <relationship kind="outlet" name="showPosterImageView" candidateClass="NINetworkImageView"/>
-                <relationship kind="outlet" name="spinner" candidateClass="UIActivityIndicatorView"/>
-            </relationships>
-        </class>
-        <class className="SBEpisodesViewController" superclassName="SBBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBEpisodesViewController.h"/>
-        </class>
-        <class className="SBFaqCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBFaqCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="answerLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="questionLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SBHelpViewController" superclassName="SBBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBHelpViewController.h"/>
-        </class>
-        <class className="SBHistoryCell" superclassName="SBBaseShowCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBHistoryCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="createdDateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="qualityLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="seasonEpisodeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="showNameLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SBHistoryViewController" superclassName="SBBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBHistoryViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="action" name="showHistoryActions:"/>
-            </relationships>
-        </class>
-        <class className="SBLegalViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBLegalViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="SBLogCell" superclassName="SBBaseShowCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBLogCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="logLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SBLogsViewController" superclassName="SBBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBLogsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="done:"/>
-            </relationships>
-        </class>
-        <class className="SBMainViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBMainViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="refresh:"/>
-                <relationship kind="action" name="viewModeChanged:"/>
-            </relationships>
-        </class>
-        <class className="SBOptionsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBOptionsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="useSeasonFoldersChanged:"/>
-            </relationships>
-        </class>
-        <class className="SBQualityViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBQualityViewController.h"/>
-        </class>
-        <class className="SBSectionHeaderView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBSectionHeaderView.h"/>
-        </class>
-        <class className="SBServerDetailsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBServerDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="apiKeyTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="hostTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="nameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="pathTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="portTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="sslSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="usernameTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="SBSettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBSettingsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="action" name="seasonFolderSwitched:"/>
-                <relationship kind="outlet" name="archiveQualityLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="initialQualityLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="seasonFolderSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SBShowDetailsHeaderView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBShowDetailsHeaderView.h"/>
-            <relationships>
-                <relationship kind="outlet" name="backgroundView" candidateClass="SBCellBackground"/>
-                <relationship kind="outlet" name="episodeCountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="networkLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="progressBar" candidateClass="TDHUDProgressBar"/>
-                <relationship kind="outlet" name="showImageView" candidateClass="NINetworkImageView"/>
-                <relationship kind="outlet" name="showNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SBShowDetailsViewController" superclassName="SBBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBShowDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="detailsHeaderView" candidateClass="SBShowDetailsHeaderView"/>
-            </relationships>
-        </class>
-        <class className="SBShowsViewController" superclassName="SBBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBShowsViewController.h"/>
-        </class>
-        <class className="SBStaticTableViewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBStaticTableViewCell.h"/>
-        </class>
-        <class className="SBStatusViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SBStatusViewController.h"/>
-        </class>
-        <class className="ShowCell" superclassName="SBBaseShowCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShowCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="networkLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nextEpisodeAirdateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="showNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="TDHUDProgressBar" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TDHUDProgressBar.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

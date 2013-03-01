@@ -11,6 +11,7 @@
 #import "EGORefreshTableHeaderView.h"
 #import "SBEmptyView.h"
 #import "SBNotificationManager.h"
+#import "SickbeardAPIClient.h"
 
 @interface SBBaseTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, SBDataLoader>
 
@@ -23,5 +24,6 @@
 @property (nonatomic, strong) SBEmptyView *emptyView;
 @property (nonatomic, strong) EGORefreshTableHeaderView *refreshHeader;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) SickbeardAPIClient *apiClient;
 
 @end

@@ -10,8 +10,11 @@
 #import "SBDataLoader.h"
 #import "SBNotificationManager.h"
 #import "SVProgressHUD.h"
+#import "SickbeardAPIClient.h"
 
 @interface SBBaseViewController : UIViewController <SBDataLoader>
+
+@property (nonatomic, strong) SickbeardAPIClient *apiClient;
 
 - (void)refresh:(id)sender;
 

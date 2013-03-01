@@ -79,6 +79,8 @@
 		endpoint = [endpoint stringByAppendingFormat:@"%@/", self.path];
 	}
 	
+	endpoint = [endpoint stringByAppendingFormat:@"api/%@/", self.apiKey];
+	
 	return endpoint;
 }
 

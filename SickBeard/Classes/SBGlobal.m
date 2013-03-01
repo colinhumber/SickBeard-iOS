@@ -7,9 +7,9 @@
 //
 
 #import "SBGlobal.h"
-#import "SickbeardAPIClient.h"
 #import "GTMNSString+URLArguments.h"
-#import "AFJSONRequestOperation.h"
+
+NSString *const SBServerURLDidChangeNotification = @"SBServerURLDidChangeNotification";
 
 @implementation SBGlobal
 

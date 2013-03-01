@@ -119,9 +119,9 @@
 	
 	[SVProgressHUD showWithStatus:NSLocalizedString(@"Loading upcoming episodes", @"Loading upcoming episodes")];
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandComingEpisodes 
+	[self.apiClient runCommand:SickBeardCommandComingEpisodes
 									   parameters:nil 
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -174,7 +174,7 @@
 
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving episodes", @"Error retrieving episodes")
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
@@ -225,7 +225,7 @@
 	cell.episodeNameLabel.text = episode.name;
 	cell.airDateLabel.text = [NSString stringWithFormat:@"%@ (%@)", [episode.airDate displayString], [SBShow showQualityAsString:episode.show.quality]];
 	
-	[cell.showImageView setPathToNetworkImage:[[[SickbeardAPIClient sharedClient] posterURLForTVDBID:episode.show.tvdbID] absoluteString]];
+	[cell.showImageView setPathToNetworkImage:[[self.apiClient posterURLForTVDBID:episode.show.tvdbID] absoluteString]];
 
 	if (indexPath.row == [self tableView:tv numberOfRowsInSection:indexPath.section] - 1) {
 		cell.lastCell = YES;
@@ -321,9 +321,9 @@
 	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Searching for episode", @"Searching for episode")
 																type:SBNotificationTypeInfo];
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSearch 
+	[self.apiClient runCommand:SickBeardCommandEpisodeSearch
 									   parameters:params 
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -336,7 +336,7 @@
 																											  type:SBNotificationTypeError];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
@@ -389,9 +389,9 @@
 	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
 																type:SBNotificationTypeInfo];
 	
-	[[SickbeardAPIClient sharedClient] runCommand:SickBeardCommandEpisodeSetStatus 
+	[self.apiClient runCommand:SickBeardCommandEpisodeSetStatus
 									   parameters:params 
-										  success:^(NSURLRequest *request, NSURLResponse *response, id JSON) {
+										  success:^(AFHTTPRequestOperation *operation, id JSON) {
 											  NSString *result = [JSON objectForKey:@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
@@ -404,7 +404,7 @@
 																											  type:SBNotificationTypeError];
 											  }
 										  }
-										  failure:^(NSURLRequest *request, NSURLResponse *response, NSError *error, id JSON) {
+										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error setting status", @"Error setting status") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
