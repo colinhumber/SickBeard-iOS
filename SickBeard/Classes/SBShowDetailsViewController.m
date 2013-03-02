@@ -355,7 +355,7 @@
 
 - (void)changeEpisodeStatusBatch:(EpisodeStatus)status {
 	if (self.tableView.indexPathsForSelectedRows.count == 0) {
-		[PRPAlertView showWithTitle:@"Cannot perform search"
+		[PRPAlertView showWithTitle:@"Cannot change episode status"
 							message:@"Please select at least one episode."
 						buttonTitle:@"OK"];
 		return;
