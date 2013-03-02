@@ -14,20 +14,18 @@
 #import "SVSegmentedControl.h"
 #import "SVProgressHUD.h"
 
-typedef NS_ENUM(NSInteger, SBLogType) {
+typedef enum {
 	SBLogTypeDebug,
 	SBLogTypeInfo,
 	SBLogTypeWarning,
 	SBLogTypeError
-};
+} SBLogType;
 
-@interface SBLogsViewController ()  {
-	NSMutableArray *_logs;
-	SBLogType _logType;
-}
+@interface SBLogsViewController ()
+@property (nonatomic, strong) NSMutableArray *logs;
+@property (nonatomic, assign) SBLogType logType;
 
 - (IBAction)done:(id)sender;
-
 @end
 
 @implementation SBLogsViewController
@@ -36,7 +34,7 @@ typedef NS_ENUM(NSInteger, SBLogType) {
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-	_logType = SBLogTypeDebug;
+	self.logType = SBLogTypeDebug;
 		
 	[super viewDidLoad];
 
@@ -52,7 +50,7 @@ typedef NS_ENUM(NSInteger, SBLogType) {
 	logControl.changeHandler = ^(NSUInteger newIndex) {
 		[TestFlight passCheckpoint:@"Changed history type"];
 		
-		_logType = newIndex;
+		self.logType = newIndex;
 		[self loadData];
 	};
 	
@@ -153,14 +151,21 @@ typedef NS_ENUM(NSInteger, SBLogType) {
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return _logs.count;
+	return self.logs.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	SBLogCell *cell = (SBLogCell *)[tv dequeueReusableCellWithIdentifier:@"SBLogCell"];
+	cell.logLabel.text = self.logs[indexPath.row];
 
-	cell.logLabel.text = _logs[indexPath.row];
 	return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	NSString *log = self.logs[indexPath.row];
+	CGSize logSize = [log sizeWithFont:[UIFont systemFontOfSize:12]
+					 constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)];
+    return logSize.height + 25;
 }
 
 @end

@@ -135,7 +135,6 @@
 											 selector:@selector(menuControllerDidShow:)
 												 name:UIMenuControllerDidShowMenuNotification
 											   object:nil];
-
 }
 
 - (void)setupToolbarItems {
@@ -279,6 +278,13 @@
 
 #pragma mark - Batch Actions
 - (void)searchForMultipleEpisodes:(UIButton *)sender {
+	if (self.tableView.indexPathsForSelectedRows.count == 0) {
+		[PRPAlertView showWithTitle:@"Cannot perform search"
+							message:@"Please select at least one episode."
+						buttonTitle:@"OK"];
+		return;
+	}
+	
 	SBServer *currentServer = [NSUserDefaults standardUserDefaults].server;
 	NSMutableArray *requests = [NSMutableArray arrayWithCapacity:self.tableView.indexPathsForSelectedRows.count];
 	
@@ -348,6 +354,13 @@
 }
 
 - (void)changeEpisodeStatusBatch:(EpisodeStatus)status {
+	if (self.tableView.indexPathsForSelectedRows.count == 0) {
+		[PRPAlertView showWithTitle:@"Cannot perform search"
+							message:@"Please select at least one episode."
+						buttonTitle:@"OK"];
+		return;
+	}
+	
 	SBServer *currentServer = [NSUserDefaults standardUserDefaults].server;
 	NSMutableArray *requests = [NSMutableArray arrayWithCapacity:self.tableView.indexPathsForSelectedRows.count];
 	NSString *statusString = [[SBEpisode episodeStatusAsString:status] lowercaseString];
@@ -371,7 +384,7 @@
 		[requests addObject:[NSURLRequest requestWithURL:[NSURL URLWithString:urlPath]]];
 	}
 	
-	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:@"Setting %d episodes to %@", requests.count, statusString]
+	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:@"Attempting to set %d episodes to %@", requests.count, statusString]
 																type:SBNotificationTypeInfo];
 
 	[self setEditing:NO animated:YES];

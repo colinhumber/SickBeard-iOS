@@ -22,7 +22,6 @@
 - (void)enableFields:(BOOL)enabled;
 - (void)validateServer:(BOOL)saveOnSuccess;
 - (void)_validateServer:(BOOL)saveOnSuccess;
-
 @end
 
 @implementation SBServerDetailsViewController
@@ -88,23 +87,18 @@
 	}
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-}
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Actions
-- (void)showHelp {
-	SBHelpViewController *helpController = [self.storyboard instantiateViewControllerWithIdentifier:@"SBHelpViewController"];
-	UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:helpController];
-	[self presentViewController:nav animated:YES completion:nil];
-}
+//- (void)showHelp {
+//	SBHelpViewController *helpController = [self.storyboard instantiateViewControllerWithIdentifier:@"SBHelpViewController"];
+//	UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:helpController];
+//	[self presentViewController:nav animated:YES completion:nil];
+//}
 
 - (void)enableFields:(BOOL)enabled {
 	nameTextField.enabled = enabled;
@@ -198,6 +192,8 @@
 						
 						if ([result isEqualToString:RESULT_SUCCESS]) {
 							if (saveOnSuccess) {
+								[[NSNotificationCenter defaultCenter] postNotificationName:SBServerURLDidChangeNotification object:server];
+								
 								SickbeardAPIClient *client = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:server.serviceEndpointPath]];
 								[client loadDefaults];
 								

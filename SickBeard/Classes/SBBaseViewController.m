@@ -74,8 +74,8 @@
 
 #pragma mark - Server Client
 - (void)serverBaseURLDidChange:(NSNotification *)notification {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	self.apiClient = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:defaults.server.serviceEndpointPath]];
+	SBServer *updatedServer = notification.object;
+	self.apiClient = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:updatedServer.serviceEndpointPath]];
 }
 
 - (SickbeardAPIClient *)apiClient {

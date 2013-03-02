@@ -10,13 +10,13 @@
 
 @class SBNotification;
 
-typedef NS_ENUM(NSInteger, SBNotificationType) {
+typedef enum {
 	SBNotificationTypeInfo,
 	SBNotificationTypeNotice,
 	SBNotificationTypeSuccess,
 	SBNotificationTypeWarning,
 	SBNotificationTypeError
-};
+} SBNotificationType;
 
 @interface SBNotificationManager : NSObject
 

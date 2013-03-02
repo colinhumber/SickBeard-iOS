@@ -11,25 +11,15 @@
 
 @implementation SBServer
 
-@synthesize name;
-@synthesize host;
-@synthesize port;
-@synthesize path;
-@synthesize apiKey;
-@synthesize useSSL;
-@synthesize proxyUsername;
-@synthesize proxyPassword;
-@synthesize isCurrent;
-
 - (void)encodeWithCoder:(NSCoder *)encoder {
-	[encoder encodeObject:name forKey:@"name"];
-	[encoder encodeObject:host forKey:@"host"];
-	[encoder encodeInt:port forKey:@"port"];
-	[encoder encodeObject:path forKey:@"path"];
-	[encoder encodeBool:useSSL forKey:@"useSSL"];
-	[encoder encodeObject:apiKey forKey:@"apiKey"];
-	[encoder encodeObject:proxyUsername forKey:@"proxyUsername"];
-	[encoder encodeObject:proxyPassword forKey:@"proxyPassword"];
+	[encoder encodeObject:self.name forKey:@"name"];
+	[encoder encodeObject:self.host forKey:@"host"];
+	[encoder encodeInt:self.port forKey:@"port"];
+	[encoder encodeObject:self.path forKey:@"path"];
+	[encoder encodeBool:self.useSSL forKey:@"useSSL"];
+	[encoder encodeObject:self.apiKey forKey:@"apiKey"];
+	[encoder encodeObject:self.proxyUsername forKey:@"proxyUsername"];
+	[encoder encodeObject:self.proxyPassword forKey:@"proxyPassword"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
@@ -72,7 +62,7 @@
 }
 
 - (NSString*)serviceEndpointPath {
-	NSString *protocol = useSSL ? @"https" : @"http";
+	NSString *protocol = self.useSSL ? @"https" : @"http";
 	NSString *endpoint = [NSString stringWithFormat:@"%@://%@:%d/", protocol, self.host, self.port];
 	
 	if (self.path.length > 0) {

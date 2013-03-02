@@ -14,6 +14,7 @@
 #define kDonateLink @"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2QFWVTWEMQRSN"
 #define XDELEGATE (SBAppDelegate*)[UIApplication sharedApplication].delegate
 
+// posted when the user changes any information about the server. The notification.object sent will be the updates SBServer instance
 extern NSString *const SBServerURLDidChangeNotification;
 
 typedef enum {
