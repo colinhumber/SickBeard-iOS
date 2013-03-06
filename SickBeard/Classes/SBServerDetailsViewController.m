@@ -62,10 +62,10 @@
 																				 target:self 
 																				 action:@selector(saveServer)];
 		
-		self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Help", @"Help")
-																				  style:UIBarButtonItemStyleBordered
-																				 target:self 
-																				 action:@selector(showHelp)];
+//		self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Help", @"Help")
+//																				  style:UIBarButtonItemStyleBordered
+//																				 target:self 
+//																				 action:@selector(showHelp)];
 	}
 	else {
 		self.navigationItem.rightBarButtonItem = self.editButtonItem;

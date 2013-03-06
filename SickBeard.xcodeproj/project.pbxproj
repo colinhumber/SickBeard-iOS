@@ -186,7 +186,7 @@
 		956BC0FD16D82B6A003716B3 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 956BC0EC16D82B6A003716B3 /* UIImageView+AFNetworking.m */; };
 		956BC0FE16D82B6A003716B3 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 956BC0EC16D82B6A003716B3 /* UIImageView+AFNetworking.m */; };
 		956BC10D16D82B7A003716B3 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 956BC10316D82B7A003716B3 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		956BC10E16D82B7A003716B3 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 956BC10316D82B7A003716B3 /* EGORefreshTableHeaderView.m */; };
+		956BC10E16D82B7A003716B3 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 956BC10316D82B7A003716B3 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		956BC10F16D82B7A003716B3 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 956BC10516D82B7A003716B3 /* blackArrow.png */; };
 		956BC11016D82B7A003716B3 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 956BC10516D82B7A003716B3 /* blackArrow.png */; };
 		956BC11116D82B7A003716B3 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 956BC10616D82B7A003716B3 /* blackArrow@2x.png */; };
