@@ -63,14 +63,6 @@
 	[SVProgressHUD dismiss];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-	self.tableView = nil;
-	self.languagePickerView = nil;
-	self.showNameTextField = nil;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations

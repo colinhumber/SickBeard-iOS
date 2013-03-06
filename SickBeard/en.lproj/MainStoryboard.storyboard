@@ -255,6 +255,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="tableView" destination="A7w-yU-jNA" id="60e-si-HBO"/>
                         <segue destination="Ldx-8w-YRi" kind="push" identifier="StatusSegue" id="7BU-Bx-eWw"/>
                         <segue destination="uAq-Xz-xBA" kind="push" identifier="InitialQualitySegue" id="f0c-09-hnO"/>
                         <segue destination="uAq-Xz-xBA" kind="push" identifier="ArchiveQualitySegue" id="ILH-3D-7lz"/>
@@ -1867,7 +1868,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="49G-tJ-Cj9"/>
-        <segue reference="uye-n8-luE"/>
-        <segue reference="WEB-uB-B40"/>
+        <segue reference="f0c-09-hnO"/>
+        <segue reference="7BU-Bx-eWw"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -11,8 +11,6 @@
 #import "EGORefreshTableHeaderView.h"
 #import "SBAddShowDelegate.h"
 
-@interface SBShowsViewController : SBBaseTableViewController <UITableViewDelegate, UITableViewDataSource, SBAddShowDelegate> 
-
-- (void)addShow;
+@interface SBShowsViewController : SBBaseTableViewController 
 
 @end

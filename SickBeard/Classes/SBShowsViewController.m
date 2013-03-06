@@ -17,8 +17,10 @@
 #import "NSUserDefaults+SickBeard.h"
 #import "NSDate+Utilities.h"
 
-@interface SBShowsViewController () 
+@interface SBShowsViewController () <SBAddShowDelegate>
 @property (nonatomic, retain) NSMutableArray *tableData;
+
+- (void)addShow;
 @end
 
 

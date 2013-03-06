@@ -37,10 +37,6 @@
 @synthesize parentFolderIndexPath;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//	if ([locationTextField isFirstResponder]){
-//		[locationTextField resignFirstResponder];
-//	}
-	
 	if ([segue.identifier isEqualToString:kInitialQualitySegue]) {
 		SBQualityViewController *vc = segue.destinationViewController;
 		vc.title = @"Initial Quality";
@@ -64,8 +60,11 @@
 
 #pragma mark - View lifecycle
 - (void)viewDidLoad {
-	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
+	self.enableRefreshHeader = NO;
+	self.enableEmptyView = NO;
 
+	[super viewDidLoad];
+	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
 	defaultDirectories = defaults.defaultDirectories;
@@ -74,16 +73,17 @@
 	status = defaults.status;
 	useSeasonFolders = defaults.useSeasonFolders;
 	parentFolder = defaults.defaultDirectory;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
 	
-    [super viewDidLoad];
+	if ([self tableView:self.tableView numberOfRowsInSection:0] > 0) {
+		[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
+	}
 }
 
-- (void)viewDidUnload {
-    [super viewDidUnload];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
@@ -297,6 +297,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	if (section == 2) {
+		return 0;
+	}
+	
 	return 50;
 }
 
@@ -375,7 +379,7 @@
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+//	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
 	if (indexPath.section == 0) {
 		if ([indexPath compare:self.parentFolderIndexPath] == NSOrderedSame) {
