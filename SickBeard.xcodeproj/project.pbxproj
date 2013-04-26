@@ -15,6 +15,12 @@
 		3BA5BBE416D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA5BBE316D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m */; };
 		3BA5BBE516D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA5BBE316D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m */; };
 		3BCA9A6A149954CB000E0290 /* SBSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCA9A69149954CB000E0290 /* SBSectionHeaderView.m */; };
+		3BF5FCCD16F2786E007541D0 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF5FCCC16F2786E007541D0 /* NewRelicAgent.framework */; };
+		3BF5FCCE16F2786E007541D0 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF5FCCC16F2786E007541D0 /* NewRelicAgent.framework */; };
+		3BF5FCD116F27886007541D0 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF5FCCF16F27886007541D0 /* CoreTelephony.framework */; };
+		3BF5FCD216F27886007541D0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF5FCD016F27886007541D0 /* libz.dylib */; };
+		3BF5FCD316F27892007541D0 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF5FCCF16F27886007541D0 /* CoreTelephony.framework */; };
+		3BF5FCD416F27892007541D0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF5FCD016F27886007541D0 /* libz.dylib */; };
 		95068BCA14102AED00847FC4 /* SBEpisodeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95068BC914102AED00847FC4 /* SBEpisodeDetailsViewController.m */; };
 		95068BD41411644D00847FC4 /* ShowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95068BD31411644D00847FC4 /* ShowCell.m */; };
 		9509F1D5140C283D00AFBF2C /* SBSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9509F1D4140C283D00AFBF2C /* SBSettingsViewController.m */; };
@@ -387,6 +393,9 @@
 		3BA5BBE316D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFURLConnectionOperation+Credentials.m"; sourceTree = "<group>"; };
 		3BCA9A68149954CB000E0290 /* SBSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSectionHeaderView.h; path = Classes/SBSectionHeaderView.h; sourceTree = "<group>"; };
 		3BCA9A69149954CB000E0290 /* SBSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSectionHeaderView.m; path = Classes/SBSectionHeaderView.m; sourceTree = "<group>"; };
+		3BF5FCCC16F2786E007541D0 /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
+		3BF5FCCF16F27886007541D0 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		3BF5FCD016F27886007541D0 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		6B1405EBBB093810F5A8D2F5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		8A706C8E4BFF8502C453BD44 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		95068BC814102AED00847FC4 /* SBEpisodeDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBEpisodeDetailsViewController.h; path = Classes/SBEpisodeDetailsViewController.h; sourceTree = "<group>"; };
@@ -702,6 +711,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BF5FCD316F27892007541D0 /* CoreTelephony.framework in Frameworks */,
+				3BF5FCD416F27892007541D0 /* libz.dylib in Frameworks */,
 				9519D0D8156C38780077BF8C /* libsqlite3.0.dylib in Frameworks */,
 				9519D0D9156C38780077BF8C /* MessageUI.framework in Frameworks */,
 				9519D0DA156C38780077BF8C /* UIKit.framework in Frameworks */,
@@ -716,6 +727,7 @@
 				9519D0E3156C38780077BF8C /* Foundation.framework in Frameworks */,
 				956BC26F16D83405003716B3 /* libTestFlight.a in Frameworks */,
 				956BC27216D835E0003716B3 /* Crashlytics.framework in Frameworks */,
+				3BF5FCCE16F2786E007541D0 /* NewRelicAgent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,6 +735,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BF5FCD116F27886007541D0 /* CoreTelephony.framework in Frameworks */,
+				3BF5FCD216F27886007541D0 /* libz.dylib in Frameworks */,
 				955DE2F3149FA8E400D08080 /* libsqlite3.0.dylib in Frameworks */,
 				95BE14781491679D00FE1301 /* MessageUI.framework in Frameworks */,
 				95515BF6140C3C6C008CA8D5 /* UIKit.framework in Frameworks */,
@@ -737,6 +751,7 @@
 				95DD4201140837B8001FE32F /* Foundation.framework in Frameworks */,
 				956BC26E16D83405003716B3 /* libTestFlight.a in Frameworks */,
 				956BC27116D835E0003716B3 /* Crashlytics.framework in Frameworks */,
+				3BF5FCCD16F2786E007541D0 /* NewRelicAgent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1223,6 +1238,9 @@
 		95DD41FD140837B8001FE32F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3BF5FCCF16F27886007541D0 /* CoreTelephony.framework */,
+				3BF5FCD016F27886007541D0 /* libz.dylib */,
+				3BF5FCCC16F2786E007541D0 /* NewRelicAgent.framework */,
 				956BC27016D835E0003716B3 /* Crashlytics.framework */,
 				95BE14771491679D00FE1301 /* MessageUI.framework */,
 				9563CCCC140D3A1D00920795 /* CoreData.framework */,

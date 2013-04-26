@@ -11,6 +11,7 @@
 #import "SBServerDetailsViewController.h"
 #import "SickbeardAPIClient.h"
 #import <Crashlytics/Crashlytics.h>
+#import <NewRelicAgent/NewRelicAgent.h>
 
 @implementation SBAppDelegate
 
@@ -32,6 +33,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	[NewRelicAgent startWithApplicationToken:@"AA3c0201349a741d0dd302eae8b5b84aad8c240f4c"];
 	[TestFlight takeOff:@"ba7e0bec-92a4-4478-b663-660225c13db1"];
 	[Crashlytics startWithAPIKey:@"4655dffb4c992a3abe7570a951f039cfa316de39"];
 	

@@ -6,12 +6,16 @@
 //  Copyright 2011 TestFlight. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#define TESTFLIGHT_SDK_VERSION @"1.2"
+#define TESTFLIGHT_SDK_VERSION @"1.3.0-beta"
 #undef TFLog
 
 #if __cplusplus
 extern "C" { 
 #endif
+    /*
+     * Remote Logging
+     * Note: All Logging is synchronous, see the README for more information.
+     */
     void TFLog(NSString *format, ...);
     void TFLogv(NSString *format, va_list arg_list);
 #if __cplusplus
@@ -22,9 +26,7 @@ extern "C" {
  * TestFlight object
  * All methods are class level
  */
-@interface TestFlight : NSObject {
-
-}
+@interface TestFlight : NSObject
 
 /**
  * Add custom environment information
@@ -43,41 +45,30 @@ extern "C" {
  *                         The token for this application can be retrieved by going to https://testflightapp.com/dashboard/applications/
  *                         selecting this application from the list then selecting SDK.
  */
-
 + (void)takeOff:(NSString *)applicationToken;
 
 /**
  * Sets custom options
  *
- * @param options NSDictionary containing the options you want to set available options are described below
+ * @param options NSDictionary containing the options you want to set. Available options are described below at "TestFlight Option Keys"
  *
- *   Option                      Accepted Values                 Description
- *   reinstallCrashHandlers      [ NSNumber numberWithBool:YES ] Reinstalls crash handlers, to be used if a third party 
- *                                                               library installs crash handlers overtop of the TestFlight Crash Handlers
- *   logToConsole                [ NSNumber numberWithBool:YES ] YES - default, sends log statements to Apple System Log and TestFlight log 
- *                                                               NO  - sends log statements to TestFlight log only
- *   logToSTDERR                 [ NSNumber numberWithBool:YES ] YES - default, sends log statements to STDERR when debugger is attached
- *                                                               NO  - sends log statements to TestFlight log only
- *   sendLogOnlyOnCrash          [ NSNumber numberWithBool:YES ] NO  - default, sends logs to TestFlight at the end of every session
- *                                                               YES - sends logs statements to TestFlight only if there was a crash
- *   attachBacktraceToFeedback   [ NSNumber numberWithBool:YES ] NO  - default, feedback is sent exactly as the user enters it
- *                                                               YES - attaches the current backtrace, with symbols, to the feedback.
- *   disableInAppUpdates         [ NSNumber numberWithBool:YES ] NO  - default, in application updates are allowed
- *                                                               YES - the in application update screen will not be displayed
  */
 + (void)setOptions:(NSDictionary*)options;
 
 /**
- * Track when a user has passed a checkpoint after the flight has taken off. Eg. passed level 1, posted high score
+ * Track when a user has passed a checkpoint after the flight has taken off. Eg. passed level 1, posted high score.
+ * Checkpoints are sent in the background.
+ * Note: The checkpoint is logged synchronously (See TFLog and TFOptionLogOnCheckpoint for more information).
  *
  * @param checkpointName The name of the checkpoint, this should be a static string
  */
 + (void)passCheckpoint:(NSString *)checkpointName;
 
 /**
- * Opens a feedback window that is not attached to a checkpoint
+ * Use to manually flush data to TestFlight.
+ * TestFlight automatically flushes at the end of a session and every `TFOptionFlushSecondsInterval`.
  */
-+ (void)openFeedbackView;
++ (void)flush;
 
 /**
  * Submits custom feedback to the site. Sends the data in feedback to the site. This is to be used as the method to submit
@@ -88,18 +79,41 @@ extern "C" {
 + (void)submitFeedback:(NSString*)feedback;
 
 /**
- * Sets the Device Identifier. (* Must be called before takeOff: *)
- * The SDK no longer obtains the device unique identifier. This method should only be used during testing so that you can 
- * identify a testers test data with them. If you do not provide the identifier you will still see all session data, with checkpoints 
+ * Sets the Device Identifier.
+ *
+ * !! DO NOT CALL IN SUBMITTED APP STORE APP.
+ *
+ * !! MUST BE CALLED BEFORE +takeOff:
+ *
+ * This method should only be used during testing so that you can identify a testers test data with them.
+ * If you do not provide the identifier you will still see all session data, with checkpoints
  * and logs, but the data will be anonymized.
- * It is recommended that you only use this method during testing. We also recommended that you wrap this method with a pre-processor
- * directive that is only active for non-app store builds. 
- * #ifndef RELEASE 
+ * 
+ * It is recommended that you only use this method during testing.
+ * Apple may reject your app if left in a submitted app.
+ *
+ * Use:
+ * Only use this with the Apple device UDID. DO NOT use Open ID or your own identifier.
  * [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
- * #endif
  *
  * @param deviceIdentifer The current devices device identifier
  */
 + (void)setDeviceIdentifier:(NSString*)deviceIdentifer;
 
 @end
+
+
+/**
+ * TestFlight Option Keys
+ *
+ * Pass these as keys to the dictionary you pass to +`[TestFlight setOptions:]`.
+ * The values should be NSNumber BOOLs (`[NSNumber numberWithBool:YES]` or `@YES`)
+ */
+extern NSString *const TFOptionDisableInAppUpdates; // Defaults to @NO. Setting to @YES, disables the in app update screen shown in BETA apps when there is a new version available on TestFlight.
+extern NSString *const TFOptionFlushSecondsInterval; // Defaults to @60. Set to a number. @0 turns off the flush timer.
+extern NSString *const TFOptionLogOnCheckpoint; // Defaults to @YES. Because logging is synchronous, if you have a high preformance app, you might want to turn this off.
+extern NSString *const TFOptionLogToConsole; // Defaults to @YES. Prints remote logs to Apple System Log.
+extern NSString *const TFOptionLogToSTDERR; // Defaults to @YES. Sends remote logs to STDERR when debugger is attached.
+extern NSString *const TFOptionReinstallCrashHandlers; // If set to @YES: Reinstalls crash handlers, to be used if a third party library installs crash handlers overtop of the TestFlight Crash Handlers.
+extern NSString *const TFOptionSendLogOnlyOnCrash; // Defaults to @NO. Setting to @YES stops remote logs from being sent when sessions end. They would only be sent in the event of a crash.
+
