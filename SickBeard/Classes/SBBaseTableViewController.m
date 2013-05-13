@@ -25,8 +25,9 @@
 	self.enableEmptyView = YES;
 		
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	self.apiClient = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:defaults.server.serviceEndpointPath]];
-
+	if (defaults.server) {
+		self.apiClient = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:defaults.server.serviceEndpointPath]];
+	}
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(serverBaseURLDidChange:)
 												 name:SBServerURLDidChangeNotification

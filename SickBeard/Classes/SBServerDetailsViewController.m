@@ -221,9 +221,12 @@
 							[[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
 																						type:SBNotificationTypeError];
 						}
+						
+						[SVProgressHUD dismiss];
 					}
 					failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-						TFLog(@"Unable to connect to server (%@).\nError: %@\nJSON: %@", server.serviceEndpointPath, error);
+						[SVProgressHUD dismiss];
+
 						[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Unable to connect to Sick Beard (%@)", @"Unable to connect to Sick Beard (%@)"), server.serviceEndpointPath]
 																					type:SBNotificationTypeError];
 					}];
