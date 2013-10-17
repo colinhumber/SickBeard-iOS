@@ -293,12 +293,12 @@
 	cell.badgeView.textLabel.text = [SBEpisode episodeStatusAsString:episode.status];
 	cell.badgeView.badgeColor = RGBCOLOR(231, 147, 0);
 	
-	if (indexPath.row == episodes.count - 1) {
-		cell.lastCell = YES;
-	}
-	else {
-		cell.lastCell = NO;
-	}
+//	if (indexPath.row == episodes.count - 1) {
+//		cell.lastCell = YES;
+//	}
+//	else {
+//		cell.lastCell = NO;
+//	}
 	
 	return cell;
 }

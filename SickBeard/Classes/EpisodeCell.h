@@ -16,6 +16,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *episodeNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *airdateLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *chevronImageView;
-@property (nonatomic) BOOL lastCell;
+//@property (nonatomic) BOOL lastCell;
 
 @end

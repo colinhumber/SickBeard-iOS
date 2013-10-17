@@ -25,16 +25,6 @@
 
 @implementation SBServerDetailsViewController
 
-@synthesize nameTextField;
-@synthesize hostTextField;
-@synthesize portTextField;
-@synthesize pathTextField;
-@synthesize sslSwitch;
-@synthesize apiKeyTextField;
-@synthesize usernameTextField;
-@synthesize passwordTextField;
-@synthesize server;
-
 - (id)initWithCoder:(NSCoder *)aDecoder {
 	self = [super initWithCoder:aDecoder];
 	
@@ -53,7 +43,7 @@
     [super viewDidLoad];
 
 	self.title = NSLocalizedString(@"Server", @"Server");
-	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
+//	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
 	
 	if (_flags.initialSetup) {
 		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"Done")
@@ -68,17 +58,17 @@
 	
 	self.server = [NSUserDefaults standardUserDefaults].server;
 	
-	if (server) {
+	if (self.server) {
 		[self setInitialServerValues];
 	}
 	
-	for (int section = 0; section < [self numberOfSectionsInTableView:self.tableView]; section++) {
-		int numberOfRows = [self tableView:self.tableView numberOfRowsInSection:section];
-		
-		NSIndexPath *indexPath = [NSIndexPath indexPathForRow:numberOfRows - 1 inSection:section];
-		SBStaticTableViewCell *cell = (SBStaticTableViewCell*)[self tableView:self.tableView cellForRowAtIndexPath:indexPath];
-		cell.lastCell = YES;
-	}
+//	for (int section = 0; section < [self numberOfSectionsInTableView:self.tableView]; section++) {
+//		int numberOfRows = [self tableView:self.tableView numberOfRowsInSection:section];
+//		
+//		NSIndexPath *indexPath = [NSIndexPath indexPathForRow:numberOfRows - 1 inSection:section];
+//		SBStaticTableViewCell *cell = (SBStaticTableViewCell*)[self tableView:self.tableView cellForRowAtIndexPath:indexPath];
+//		cell.lastCell = YES;
+//	}
 }
 
 
@@ -88,46 +78,40 @@
 }
 
 #pragma mark - Actions
-//- (void)showHelp {
-//	SBHelpViewController *helpController = [self.storyboard instantiateViewControllerWithIdentifier:@"SBHelpViewController"];
-//	UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:helpController];
-//	[self presentViewController:nav animated:YES completion:nil];
-//}
-
 - (void)enableFields:(BOOL)enabled {
-	nameTextField.enabled = enabled;
-	hostTextField.enabled = enabled;
-	portTextField.enabled = enabled;
-	pathTextField.enabled = enabled;
-	sslSwitch.enabled = enabled;
-	apiKeyTextField.enabled = enabled;
-	usernameTextField.enabled = enabled;
-	passwordTextField.enabled = enabled;
+	self.nameTextField.enabled = enabled;
+	self.hostTextField.enabled = enabled;
+	self.portTextField.enabled = enabled;
+	self.pathTextField.enabled = enabled;
+	self.sslSwitch.enabled = enabled;
+	self.apiKeyTextField.enabled = enabled;
+	self.usernameTextField.enabled = enabled;
+	self.passwordTextField.enabled = enabled;
 }
 
 - (void)setInitialServerValues {
-	nameTextField.text = server.name;
-	hostTextField.text = server.host;
-	portTextField.text = [NSString stringWithFormat:@"%d", server.port];
-	pathTextField.text = server.path;
-	sslSwitch.on = server.useSSL;
-	apiKeyTextField.text = server.apiKey;
-	usernameTextField.text = server.proxyUsername;
-	passwordTextField.text = server.proxyPassword;
+	self.nameTextField.text = self.server.name;
+	self.hostTextField.text = self.server.host;
+	self.portTextField.text = [NSString stringWithFormat:@"%d", self.server.port];
+	self.pathTextField.text = self.server.path;
+	self.sslSwitch.on = self.server.useSSL;
+	self.apiKeyTextField.text = self.server.apiKey;
+	self.usernameTextField.text = self.server.proxyUsername;
+	self.passwordTextField.text = self.server.proxyPassword;
 }
 
 - (void)updateServerValues {
-	NSString *host = [hostTextField.text stringByReplacingOccurrencesOfString:@"http://" withString:@""];
+	NSString *host = [self.hostTextField.text stringByReplacingOccurrencesOfString:@"http://" withString:@""];
 	host = [host stringByReplacingOccurrencesOfString:@"https://" withString:@""];
 	
-	server.name = nameTextField.text;
-	server.host = host;
-	server.port = [portTextField.text intValue];
-	server.path = [pathTextField.text stringByReplacingOccurrencesOfString:@"/" withString:@""];
-	server.useSSL = sslSwitch.on;
-	server.apiKey = apiKeyTextField.text;
-	server.proxyUsername = usernameTextField.text;
-	server.proxyPassword = passwordTextField.text;
+	self.server.name = self.nameTextField.text;
+	self.server.host = host;
+	self.server.port = [self.portTextField.text intValue];
+	self.server.path = [self.pathTextField.text stringByReplacingOccurrencesOfString:@"/" withString:@""];
+	self.server.useSSL = self.sslSwitch.on;
+	self.server.apiKey = self.apiKeyTextField.text;
+	self.server.proxyUsername = self.usernameTextField.text;
+	self.server.proxyPassword = self.passwordTextField.text;
 }
 
 - (void)cancelEdit {
@@ -143,7 +127,7 @@
 }
 
 - (void)validateServer:(BOOL)saveOnSuccess {
-	if (!server) {
+	if (!self.server) {
 		self.server = [[SBServer alloc] init];
 	}
 	
@@ -151,7 +135,7 @@
 	
 	[self updateServerValues];
 	
-	if (![server isValid]) {
+	if (![self.server isValid]) {
 		[PRPAlertView showWithTitle:NSLocalizedString(@"Invalid server", @"Invalid server")
 							message:NSLocalizedString(@"Some information you have provided is invalid. Please check again.", @"Some information you have provided is invalid. Please check again.") 
 						buttonTitle:NSLocalizedString(@"OK", @"OK")];
@@ -176,7 +160,7 @@
 						  maskType:SVProgressHUDMaskTypeGradient];
 	 
 	 RunAfterDelay(0.5, ^{
-		 SickbeardAPIClient *client = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:server.serviceEndpointPath]];
+		 SickbeardAPIClient *client = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:self.server.serviceEndpointPath]];
 		 [client runCommand:SickBeardCommandPing
 				 parameters:nil
 					success:^(NSURLSessionDataTask *task, id JSON) {
@@ -186,14 +170,14 @@
 						
 						if ([result isEqualToString:RESULT_SUCCESS]) {
 							if (saveOnSuccess) {
-								[[NSNotificationCenter defaultCenter] postNotificationName:SBServerURLDidChangeNotification object:server];
+								[[NSNotificationCenter defaultCenter] postNotificationName:SBServerURLDidChangeNotification object:self.server];
 								
-								SickbeardAPIClient *client = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:server.serviceEndpointPath]];
+								SickbeardAPIClient *client = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:self.server.serviceEndpointPath]];
 								[client loadDefaults];
 								
 								RunAfterDelay(2, ^{
 									[NSUserDefaults standardUserDefaults].serverHasBeenSetup = YES;
-									[NSUserDefaults standardUserDefaults].server = server;
+									[NSUserDefaults standardUserDefaults].server = self.server;
 									[NSUserDefaults standardUserDefaults].shouldUpdateShowList = YES;
 									
 									[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Server saved", @"Server saved")
@@ -221,7 +205,7 @@
 					failure:^(NSURLSessionDataTask *task, NSError *error) {
 						[SVProgressHUD dismiss];
 
-						[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Unable to connect to Sick Beard (%@)", @"Unable to connect to Sick Beard (%@)"), server.serviceEndpointPath]
+						[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Unable to connect to Sick Beard (%@)", @"Unable to connect to Sick Beard (%@)"), self.server.serviceEndpointPath]
 																					type:SBNotificationTypeError];
 					}];
 	 });
@@ -237,7 +221,7 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	if (textField == apiKeyTextField) {
+	if (textField == self.apiKeyTextField) {
 		[textField resignFirstResponder];
 	}
 	

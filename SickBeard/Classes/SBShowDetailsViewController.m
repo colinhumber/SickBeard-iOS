@@ -529,9 +529,8 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return 50;
+	return 25.0f;
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	NSArray *keys = [_seasons allKeys];
@@ -583,14 +582,8 @@
 			badgeColor = [UIColor blackColor];
 			break;
 	}
-	cell.badgeView.badgeColor = badgeColor;
 	
-	if (indexPath.row == episodes.count - 1) {
-		cell.lastCell = YES;
-	}
-	else {
-		cell.lastCell = NO;
-	}	
+	cell.badgeView.badgeColor = badgeColor;
 	
 	UILongPressGestureRecognizer *gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showMenu:)];
 	[cell addGestureRecognizer:gesture];
@@ -765,7 +758,7 @@
     }
     
     // Apply the updates.
-    [self.tableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:UITableViewRowAnimationFade];
 }
 
 
@@ -782,7 +775,7 @@
         for (NSInteger i = 0; i < countOfRowsToDelete; i++) {
             [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:sectionClosed]];
         }
-        [self.tableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 

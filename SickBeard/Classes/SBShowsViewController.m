@@ -20,11 +20,7 @@
 
 @interface SBShowsViewController () <SBAddShowDelegate>
 @property (nonatomic, retain) NSMutableArray *tableData;
-
-- (void)addShow;
 @end
-
-
 
 @implementation SBShowsViewController
 
@@ -189,6 +185,27 @@
 	[super setEditing:editing animated:animated];
 	[self.parentViewController setEditing:editing animated:animated];
 	[self.tableView setEditing:editing animated:YES];
+	
+	[self inEditMode:editing];
+}
+
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+	[self inEditMode:NO];
+}
+
+- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+	[self inEditMode:YES];
+}
+
+- (void)inEditMode:(BOOL)inEditMode{
+    if (inEditMode) { //hide index while in edit mode
+        self.tableView.sectionIndexMinimumDisplayRowCount = NSIntegerMax;
+    }
+	else{
+		self.tableView.sectionIndexMinimumDisplayRowCount = NSIntegerMin;
+    }
+	
+    [self.tableView reloadSectionIndexTitles];
 }
 
 #pragma mark - UITableViewDataSource
@@ -243,7 +260,6 @@
 	
 	[cell.showImageView setImageWithURL:[self.apiClient posterURLForTVDBID:show.tvdbID]
 					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
-//	[cell.showImageView setPathToNetworkImage:[[self.apiClient posterURLForTVDBID:show.tvdbID] absoluteString]];
 	
 	return cell;
 }

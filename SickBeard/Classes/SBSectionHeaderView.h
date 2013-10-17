@@ -19,9 +19,7 @@ typedef enum {
 
 @property (nonatomic) SBSectionHeaderState state;
 @property (nonatomic) NSUInteger section;
-@property (nonatomic, strong) UILabel *sectionLabel;
-@property (nonatomic, strong) UIColor *lightColor;
-@property (nonatomic, strong) UIColor *darkColor;
+@property (nonatomic, readonly) UILabel *sectionLabel;
 @property (nonatomic, weak) id<SBSectionHeaderViewDelegate> delegate;
 
 @end
@@ -30,7 +28,7 @@ typedef enum {
 @protocol SBSectionHeaderViewDelegate <NSObject>
 
 @optional
--(void)sectionHeaderView:(SBSectionHeaderView*)sectionHeaderView sectionOpened:(NSInteger)section;
--(void)sectionHeaderView:(SBSectionHeaderView*)sectionHeaderView sectionClosed:(NSInteger)section;
+- (void)sectionHeaderView:(SBSectionHeaderView*)sectionHeaderView sectionOpened:(NSInteger)section;
+- (void)sectionHeaderView:(SBSectionHeaderView*)sectionHeaderView sectionClosed:(NSInteger)section;
 
 @end

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0C0739BD09B8474E8246F73C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35FDBDAA2B8F4D6FA6F8596B /* libPods.a */; };
+		3B04D6251810890A001A7843 /* CRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04D6221810890A001A7843 /* CRNavigationBar.m */; };
+		3B04D6261810890A001A7843 /* CRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04D6221810890A001A7843 /* CRNavigationBar.m */; };
+		3B04D6271810890A001A7843 /* CRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04D6241810890A001A7843 /* CRNavigationController.m */; };
+		3B04D6281810890A001A7843 /* CRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04D6241810890A001A7843 /* CRNavigationController.m */; };
 		3B3CB520161A2E970039830C /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB51F161A2E960039830C /* UIView+Layout.m */; };
 		3B3CB521161A2E970039830C /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB51F161A2E960039830C /* UIView+Layout.m */; };
 		3B3CB525161A35510039830C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B3CB524161A35510039830C /* Default-568h@2x.png */; };
@@ -285,6 +289,10 @@
 /* Begin PBXFileReference section */
 		0BF343EBC1D84F55B58AAC08 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		35FDBDAA2B8F4D6FA6F8596B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B04D6211810890A001A7843 /* CRNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRNavigationBar.h; sourceTree = "<group>"; };
+		3B04D6221810890A001A7843 /* CRNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRNavigationBar.m; sourceTree = "<group>"; };
+		3B04D6231810890A001A7843 /* CRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRNavigationController.h; sourceTree = "<group>"; };
+		3B04D6241810890A001A7843 /* CRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRNavigationController.m; sourceTree = "<group>"; };
 		3B3CB51E161A2E960039830C /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
 		3B3CB51F161A2E960039830C /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
 		3B3CB524161A35510039830C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -559,6 +567,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B04D6201810890A001A7843 /* CRNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				3B04D6211810890A001A7843 /* CRNavigationBar.h */,
+				3B04D6221810890A001A7843 /* CRNavigationBar.m */,
+				3B04D6231810890A001A7843 /* CRNavigationController.h */,
+				3B04D6241810890A001A7843 /* CRNavigationController.m */,
+			);
+			path = CRNavigationController;
+			sourceTree = "<group>";
+		};
 		95068BD11411643000847FC4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1030,6 +1049,7 @@
 		95F7F61E1408492700E17F3E /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				3B04D6201810890A001A7843 /* CRNavigationController */,
 				956BC25216D82C4F003716B3 /* TDHUDProgressBar */,
 				956BC23416D82C3D003716B3 /* SVSegmentedControl */,
 				956BC23916D82C3D003716B3 /* SVWebViewController */,
@@ -1300,6 +1320,7 @@
 			files = (
 				9519D072156C38780077BF8C /* main.m in Sources */,
 				9519D073156C38780077BF8C /* SBAppDelegate.m in Sources */,
+				3B04D6281810890A001A7843 /* CRNavigationController.m in Sources */,
 				9519D074156C38780077BF8C /* SBShowsViewController.m in Sources */,
 				9519D075156C38780077BF8C /* SBEpisodesViewController.m in Sources */,
 				9519D076156C38780077BF8C /* SBCommandBuilder.m in Sources */,
@@ -1346,6 +1367,7 @@
 				9519D0B7156C38780077BF8C /* SBStaticTableViewCell.m in Sources */,
 				9519D0B8156C38780077BF8C /* SBSectionHeaderView.m in Sources */,
 				9519D0B9156C38780077BF8C /* SBEmptyView.m in Sources */,
+				3B04D6261810890A001A7843 /* CRNavigationBar.m in Sources */,
 				9519D0BA156C38780077BF8C /* SBCreditsViewController.m in Sources */,
 				9519D0BB156C38780077BF8C /* SBFaq.m in Sources */,
 				9519D0BD156C38780077BF8C /* SBFaqCell.m in Sources */,
@@ -1376,6 +1398,7 @@
 			files = (
 				95DD4209140837B8001FE32F /* main.m in Sources */,
 				95DD420D140837B8001FE32F /* SBAppDelegate.m in Sources */,
+				3B04D6271810890A001A7843 /* CRNavigationController.m in Sources */,
 				95F7F60C14083A6B00E17F3E /* SBShowsViewController.m in Sources */,
 				95F7F61014083ABC00E17F3E /* SBEpisodesViewController.m in Sources */,
 				95F7F6191408436200E17F3E /* SBCommandBuilder.m in Sources */,
@@ -1422,6 +1445,7 @@
 				3B5D5B8B1499492D00B77613 /* SBStaticTableViewCell.m in Sources */,
 				3BCA9A6A149954CB000E0290 /* SBSectionHeaderView.m in Sources */,
 				95934710149BB55000C21971 /* SBEmptyView.m in Sources */,
+				3B04D6251810890A001A7843 /* CRNavigationBar.m in Sources */,
 				95934758149BF47600C21971 /* SBCreditsViewController.m in Sources */,
 				95F009F7149FA0D9009B3BD6 /* SBFaq.m in Sources */,
 				955DE2F2149FA6C100D08080 /* SBFaqCell.m in Sources */,

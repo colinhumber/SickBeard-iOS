@@ -227,12 +227,12 @@
 					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
 //	[cell.showImageView setPathToNetworkImage:[[self.apiClient posterURLForTVDBID:episode.show.tvdbID] absoluteString]];
 
-	if (indexPath.row == [self tableView:tv numberOfRowsInSection:indexPath.section] - 1) {
-		cell.lastCell = YES;
-	}
-	else {
-		cell.lastCell = NO;
-	}
+//	if (indexPath.row == [self tableView:tv numberOfRowsInSection:indexPath.section] - 1) {
+//		cell.lastCell = YES;
+//	}
+//	else {
+//		cell.lastCell = NO;
+//	}
 	
 	UILongPressGestureRecognizer *gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showMenu:)];
 	[cell addGestureRecognizer:gesture];

@@ -14,12 +14,12 @@
 #import "SVSegmentedControl.h"
 #import "SVProgressHUD.h"
 
-typedef enum {
-	SBLogTypeDebug,
+typedef NS_ENUM(NSUInteger, SBLogType) {
+	SBLogTypeDebug = 0,
 	SBLogTypeInfo,
 	SBLogTypeWarning,
 	SBLogTypeError
-} SBLogType;
+};
 
 @interface SBLogsViewController ()
 @property (nonatomic, strong) NSMutableArray *logs;
@@ -38,26 +38,22 @@ typedef enum {
 		
 	[super viewDidLoad];
 
-	SVSegmentedControl *logControl = [[SVSegmentedControl alloc] initWithSectionTitles:@[
-										  NSLocalizedString(@"Debug", @"Debug"),
-										  NSLocalizedString(@"Info", @"Info"),
-										  NSLocalizedString(@"Warning", @"Warning"),
-										  NSLocalizedString(@"Error", @"Error")]];
+	UISegmentedControl *logControl = [[UISegmentedControl alloc] initWithItems:@[
+																				 NSLocalizedString(@"Debug", @"Debug"),
+																				 NSLocalizedString(@"Info", @"Info"),
+																				 NSLocalizedString(@"Warning", @"Warning"),
+																				 NSLocalizedString(@"Error", @"Error")]];
 	
-	logControl.font = [UIFont boldSystemFontOfSize:12];
+	logControl.tintColor = RGBCOLOR(97, 77, 52);
+	logControl.selectedSegmentIndex = self.logType;
 
-	logControl.thumb.tintColor = RGBCOLOR(127, 92, 59);
-	logControl.changeHandler = ^(NSUInteger newIndex) {
-		[TestFlight passCheckpoint:@"Changed history type"];
-		
-		self.logType = newIndex;
-		[self loadData];
-	};
+	[logControl addTarget:self action:@selector(logTypeChanged:) forControlEvents:UIControlEventValueChanged];
 	
+	UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 	UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:logControl];
 	NSMutableArray *items = [self.toolbarItems mutableCopy];
 	[items insertObject:barItem atIndex:0];
-	self.toolbarItems = @[barItem];
+	self.toolbarItems = @[flex, barItem, flex];
 		
 	self.emptyView.emptyLabel.text = NSLocalizedString(@"No logs found", @"No logs found");
 	
@@ -137,6 +133,13 @@ typedef enum {
 }
 
 #pragma mark - Actions
+- (void)logTypeChanged:(UISegmentedControl *)sender {
+	[TestFlight passCheckpoint:@"Changed log type"];
+	
+	self.logType = sender.selectedSegmentIndex;
+	[self loadData];
+}
+
 - (IBAction)done:(id)sender {
 	[self dismissViewControllerAnimated:YES completion:nil];
 }

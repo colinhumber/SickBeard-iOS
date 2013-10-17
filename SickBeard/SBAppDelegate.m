@@ -13,20 +13,25 @@
 
 @implementation SBAppDelegate
 
-@synthesize window = _window;
-
 + (void)initialize {
 	NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Defaults" ofType:@"plist"]];
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
 
 - (void)applyStylesheet {
-	[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"menu-bar"] 
-									   forBarMetrics:UIBarMetricsDefault];
-	[[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"toolbar-bar"]
-							forToolbarPosition:UIToolbarPositionBottom
-									barMetrics:UIBarMetricsDefault];
-	[[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:RGBCOLOR(127, 92, 59)];
+	self.window.tintColor = RGBCOLOR(32, 95, 46);
+	
+	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+	
+	NSDictionary *titleAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
+
+	[UINavigationBar appearance].barTintColor = [UIColor colorWithHue:35.0f / 360.0f saturation:1.0f brightness:0.37f alpha:1.0f];
+	[UINavigationBar appearance].titleTextAttributes = titleAttributes;
+	[UINavigationBar appearance].tintColor = [UIColor whiteColor];
+	
+	[UITableView appearance].sectionIndexColor = RGBCOLOR(32, 95, 46);
+	[UITableView appearance].sectionIndexBackgroundColor = [UIColor clearColor];
+	[UITableView appearance].sectionIndexTrackingBackgroundColor = RGBACOLOR(199, 217, 54, 0.3);
 }
 
 

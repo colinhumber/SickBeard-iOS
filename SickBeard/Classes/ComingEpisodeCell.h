@@ -15,6 +15,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *networkLabel;
 @property (nonatomic, strong) IBOutlet UILabel *episodeNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *airDateLabel;
-@property (nonatomic) BOOL lastCell;
+//@property (nonatomic) BOOL lastCell;
 
 @end

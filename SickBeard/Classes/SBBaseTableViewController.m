@@ -61,9 +61,10 @@
 	
 	self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 	self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 	
-	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
+//	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
 	self.tableView.tableFooterView = [[UIView alloc] init];
 
 	if (self.enableRefreshHeader) {
@@ -110,6 +111,8 @@
 	if (!error) {
 		self.loadDate = [NSDate date];
 	}
+	
+	[self.refreshControl endRefreshing];
 }
 
 - (void)showEmptyView:(BOOL)show animated:(BOOL)animated {

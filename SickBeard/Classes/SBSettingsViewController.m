@@ -59,7 +59,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
 	[TestFlight passCheckpoint:@"Viewed settings"];
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -68,14 +67,6 @@
 	self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", defaults.archiveQualities.count];
 	self.statusLabel.text = [defaults.status capitalizedString];
 	self.seasonFolderSwitch.on = defaults.useSeasonFolders;
-	
-	for (int section = 0; section < [self numberOfSectionsInTableView:self.tableView]; section++) {
-		int numberOfRows = [self tableView:self.tableView numberOfRowsInSection:section];
-		
-		NSIndexPath *indexPath = [NSIndexPath indexPathForRow:numberOfRows - 1 inSection:section];
-		SBStaticTableViewCell *cell = (SBStaticTableViewCell*)[self tableView:self.tableView cellForRowAtIndexPath:indexPath];
-		cell.lastCell = YES;
-	}
 }
 
 - (void)viewDidUnload {
@@ -87,28 +78,7 @@
     [super viewDidUnload];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
@@ -141,28 +111,6 @@
 }
 
 #pragma mark - UITableViewDelegate
-- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-	NSString *title = [self tableView:tableView titleForHeaderInSection:section];
-	
-	if (!title || title.length == 0) {
-		return nil;
-	}
-	
-	SBSectionHeaderView *header = [[SBSectionHeaderView alloc] init];
-	header.sectionLabel.text = title;
-	return header;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	NSString *title = [self tableView:tableView titleForHeaderInSection:section];
-	
-	if (!title || title.length == 0) {
-		return 0;
-	}
-	
-	return 50;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	

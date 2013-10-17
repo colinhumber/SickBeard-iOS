@@ -10,3 +10,6 @@
 [submodule "Vendor/MTInfoPanel"]
 	path = Vendor/MTInfoPanel
 	url = git@github.com:myell0w/MTInfoPanel.git
+[submodule "Vendor/CRNavigationController"]
+	path = Vendor/CRNavigationController
+	url = git@github.com:croberts22/CRNavigationController.git

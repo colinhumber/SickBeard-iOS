@@ -297,7 +297,7 @@
 		return 0;
 	}
 	
-	return 50;
+	return 25;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -351,32 +351,11 @@
 		cell = [tableView dequeueReusableCellWithIdentifier:@"SaveDefaultsCell"];
 	}
 	
-	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
-	backgroundView.grouped = YES;
-	backgroundView.applyShadow = NO;
-	
-	SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
-	selectedBackgroundView.grouped = YES;
-	selectedBackgroundView.applyShadow = NO;
-	selectedBackgroundView.selected = YES;
-	
-	if (indexPath.row == [self tableView:tableView numberOfRowsInSection:indexPath.section] - 1) {
-		backgroundView.lastCell = YES;
-		backgroundView.applyShadow = YES;
-		selectedBackgroundView.lastCell = YES;
-		selectedBackgroundView.applyShadow = YES;
-	}
-	
-	cell.backgroundView = backgroundView;
-	cell.selectedBackgroundView = selectedBackgroundView;
-	
 	return cell;
 }
 
 #pragma mark - UITableViewDelegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-	
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {	
 	if (indexPath.section == 0) {
 		if ([indexPath compare:self.parentFolderIndexPath] == NSOrderedSame) {
 			return;

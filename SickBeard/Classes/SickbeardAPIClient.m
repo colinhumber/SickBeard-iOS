@@ -50,7 +50,7 @@ NSString *const RESULT_DENIED = @"denied";
 		[self.requestSerializer setAuthorizationHeaderFieldWithUsername:currentServer.proxyUsername password:currentServer.proxyPassword];
 	}
 	
-	[self GET:nil
+	[self GET:@""
 	   parameters:@{ @"cmd" : [SBCommandBuilder commandStringForCommands:commands] }
 		  success:^(NSURLSessionDataTask *task, id JSON) {
 			  NSString *result = JSON[@"result"];
@@ -113,7 +113,7 @@ NSString *const RESULT_DENIED = @"denied";
 		[self.requestSerializer setAuthorizationHeaderFieldWithUsername:currentServer.proxyUsername password:currentServer.proxyPassword];
 	}
 	
-	[self GET:nil parameters:parametersCopy success:success failure:failure];
+	[self GET:@"" parameters:parametersCopy success:success failure:failure];
 }
 
 @end

@@ -25,26 +25,20 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-//	self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.navigationController.toolbar.frame.size.height, 0);
-//	self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
-//	
 	[super viewDidLoad];
 
-	SVSegmentedControl *historyControl = [[SVSegmentedControl alloc] initWithSectionTitles:
-										  @[NSLocalizedString(@"Snatched", @"Snatched"), NSLocalizedString(@"Downloaded", @"Downloaded")]];
-
-	historyControl.thumb.tintColor = RGBCOLOR(127, 92, 59);
-	historyControl.changeHandler = ^(NSUInteger newIndex) {
-		[TestFlight passCheckpoint:@"Changed history type"];
-		
-		historyType = newIndex;
-		[self loadData];
-	};
+	UISegmentedControl *historyControl = [[UISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"Snatched", @"Snatched"), NSLocalizedString(@"Downloaded", @"Downloaded")]];
 	
+	historyControl.tintColor = RGBCOLOR(97, 77, 52);
+	historyControl.selectedSegmentIndex = 0;
+	
+	[historyControl addTarget:self action:@selector(historyTypeChanged:) forControlEvents:UIControlEventValueChanged];
+	
+	UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 	UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:historyControl];
 	NSMutableArray *items = [self.toolbarItems mutableCopy];
-	[items insertObject:barItem atIndex:2];
-	self.toolbarItems = items;
+	[items insertObject:barItem atIndex:0];
+	self.toolbarItems = @[flex, barItem, flex];
 		
 	self.emptyView.emptyLabel.text = NSLocalizedString(@"No history found", @"No history found");
 	
@@ -57,14 +51,6 @@
 	if ([self tableView:self.tableView numberOfRowsInSection:0] > 0) {
 		[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
 	}
-//	else {
-//		if ([NSUserDefaults standardUserDefaults].serverHasBeenSetup) {
-//			if (!history) {
-//				[history removeAllObjects];
-//				[self loadData];
-//			}
-//		}		
-//	}
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -138,6 +124,13 @@
 }
 
 #pragma mark - Actions
+- (void)historyTypeChanged:(UISegmentedControl *)sender {
+	[TestFlight passCheckpoint:@"Changed history type"];
+	
+	historyType = sender.selectedSegmentIndex;
+	[self loadData];
+}
+
 - (IBAction)showHistoryActions:(id)sender {
 	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" 
 															 delegate:self 

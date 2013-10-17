@@ -44,8 +44,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	currentLanguage = @"English";
-	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
-
+	
 	self.languagePickerView.top = self.view.height - self.navigationController.navigationBar.height;
 	
     [super viewDidLoad];
@@ -171,7 +170,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return 50;
+	return section == 0 ? 0 : 25;
 }
 
 
@@ -234,25 +233,6 @@
 			cell.detailTextLabel.text = airDate;
 		}
 	}
-	
-	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
-	backgroundView.grouped = YES;
-	backgroundView.applyShadow = NO;
-	
-	SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
-	selectedBackgroundView.grouped = YES;
-	selectedBackgroundView.applyShadow = NO;
-	selectedBackgroundView.selected = YES;
-	
-	if (indexPath.row == [self tableView:tableView numberOfRowsInSection:indexPath.section] - 1) {
-		backgroundView.lastCell = YES;
-		backgroundView.applyShadow = YES;
-		selectedBackgroundView.lastCell = YES;
-		selectedBackgroundView.applyShadow = YES;
-	}
-	
-	cell.backgroundView = backgroundView;
-	cell.selectedBackgroundView = selectedBackgroundView;
 	
 	return cell;
 }

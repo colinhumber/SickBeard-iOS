@@ -20,14 +20,14 @@
 }
 
 - (void)commonInit {
-	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
-	backgroundView.grouped = YES;
-	self.backgroundView = backgroundView;
-	
-	SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
-	selectedBackgroundView.selected = YES;
-	selectedBackgroundView.grouped = YES;
-	self.selectedBackgroundView = selectedBackgroundView;
+//	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
+//	backgroundView.grouped = YES;
+//	self.backgroundView = backgroundView;
+//	
+//	SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
+//	selectedBackgroundView.selected = YES;
+//	selectedBackgroundView.grouped = YES;
+//	self.selectedBackgroundView = selectedBackgroundView;
 
 	self.selectionImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"multi-not-checked"]];
 	self.selectionImageView.left = 13;
@@ -67,21 +67,21 @@
     // Configure the view for the selected state
 }
 
-- (void)setLastCell:(BOOL)last {
-	_lastCell = last;
-	
-	SBCellBackground *backgroundView = (SBCellBackground*)self.backgroundView;
-	SBCellBackground *selectedBackgroundView = (SBCellBackground*)self.selectedBackgroundView;
-	
-	backgroundView.lastCell = last;
-	selectedBackgroundView.lastCell = last;
-	
-	backgroundView.applyShadow = last;
-	selectedBackgroundView.applyShadow = last;
-	
-	[backgroundView setNeedsDisplay];
-	[selectedBackgroundView setNeedsDisplay];
-}
+//- (void)setLastCell:(BOOL)last {
+//	_lastCell = last;
+//	
+//	SBCellBackground *backgroundView = (SBCellBackground*)self.backgroundView;
+//	SBCellBackground *selectedBackgroundView = (SBCellBackground*)self.selectedBackgroundView;
+//	
+//	backgroundView.lastCell = last;
+//	selectedBackgroundView.lastCell = last;
+//	
+//	backgroundView.applyShadow = last;
+//	selectedBackgroundView.applyShadow = last;
+//	
+//	[backgroundView setNeedsDisplay];
+//	[selectedBackgroundView setNeedsDisplay];
+//}
 
 - (BOOL)canBecomeFirstResponder {
 	return YES;

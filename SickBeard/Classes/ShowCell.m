@@ -11,18 +11,13 @@
 
 @implementation ShowCell
 
-@synthesize showNameLabel;
-@synthesize networkLabel;
-@synthesize statusLabel;
-@synthesize nextEpisodeAirdateLabel;
-
 - (void)commonInit {
 	[super commonInit];
-	SBCellBackground *backgroundView = (SBCellBackground*)self.backgroundView;
-	SBCellBackground *selectedBackgroundView = (SBCellBackground*)self.selectedBackgroundView;
-	
-	backgroundView.applyShadow = NO;
-	selectedBackgroundView.applyShadow = NO;
+//	SBCellBackground *backgroundView = (SBCellBackground*)self.backgroundView;
+//	SBCellBackground *selectedBackgroundView = (SBCellBackground*)self.selectedBackgroundView;
+//	
+//	backgroundView.applyShadow = NO;
+//	selectedBackgroundView.applyShadow = NO;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
