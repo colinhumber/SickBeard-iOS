@@ -10,9 +10,7 @@
 
 @class SBBaseViewController;
 
-@interface SBMainViewController : UIViewController {
-	UIBarButtonItem *addItem;
-}
+@interface SBMainViewController : UIViewController
 
 - (IBAction)viewModeChanged:(id)sender;
 - (IBAction)refresh:(id)sender;

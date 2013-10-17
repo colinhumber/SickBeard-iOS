@@ -179,7 +179,7 @@
 			mailer.mailComposeDelegate = self;
 			[mailer setSubject:@"Sick Beard for iOS Feedback"];
 			[mailer setMessageBody:[SBGlobal feedbackBody] isHTML:NO];
-			[mailer setToRecipients:[NSArray arrayWithObject:@"sickbeardios@gmail.com"]];
+			[mailer setToRecipients:@[@"sickbeardios@gmail.com"]];
 			[self presentViewController:mailer animated:YES completion:^{
 				[TestFlight passCheckpoint:@"Send feedback"];
 			}];

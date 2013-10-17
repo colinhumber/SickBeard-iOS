@@ -36,9 +36,9 @@
 	self = [super init];
 	
 	if (self) {
-		self.isDefault = [[dict objectForKey:@"default"] boolValue];
-		self.path = [dict objectForKey:@"location"];
-		self.isValid = [[dict objectForKey:@"valid"] boolValue];
+		self.isDefault = [dict[@"default"] boolValue];
+		self.path = dict[@"location"];
+		self.isValid = [dict[@"valid"] boolValue];
 	}
 	
 	return self;

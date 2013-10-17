@@ -98,20 +98,18 @@
 	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Adding show", @"Adding show")
 																type:SBNotificationTypeInfo];
 	
-	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-							show.tvdbID, @"tvdbid",
-							parentFolder.path, @"location",
-							show.languageCode, @"lang",
-							[NSString stringWithFormat:@"%d", useSeasonFolders], @"season_folder",
-							[[SBGlobal qualitiesAsCodes:initialQualities] componentsJoinedByString:@"|"], @"initial",
-							[[SBGlobal qualitiesAsCodes:archiveQualities] componentsJoinedByString:@"|"], @"archive",
-							[status lowercaseString], @"status",
-							nil];
+	NSDictionary *params = @{@"tvdbid": show.tvdbID,
+							@"location": parentFolder.path,
+							@"lang": show.languageCode,
+							@"season_folder": [NSString stringWithFormat:@"%d", useSeasonFolders],
+							@"initial": [[SBGlobal qualitiesAsCodes:initialQualities] componentsJoinedByString:@"|"],
+							@"archive": [[SBGlobal qualitiesAsCodes:archiveQualities] componentsJoinedByString:@"|"],
+							@"status": [status lowercaseString]};
 	
 	[self.apiClient runCommand:SickBeardCommandShowAddNew
 									   parameters:params 
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Show has been added", @"Show has been added")
@@ -126,7 +124,7 @@
 																											  type:SBNotificationTypeError];
 											  }
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
 																  message:error.localizedDescription
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  
@@ -139,17 +137,15 @@
 	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Saving defaults", @"Saving defaults")
 																type:SBNotificationTypeInfo];
 	
-	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-							[NSString stringWithFormat:@"%d", useSeasonFolders], @"season_folder",
-							[[SBGlobal qualitiesAsCodes:initialQualities] componentsJoinedByString:@"|"], @"initial",
-							[[SBGlobal qualitiesAsCodes:archiveQualities] componentsJoinedByString:@"|"], @"archive",
-							[status lowercaseString], @"status",
-							nil];
+	NSDictionary *params = @{@"season_folder": [NSString stringWithFormat:@"%d", useSeasonFolders],
+							@"initial": [[SBGlobal qualitiesAsCodes:initialQualities] componentsJoinedByString:@"|"],
+							@"archive": [[SBGlobal qualitiesAsCodes:archiveQualities] componentsJoinedByString:@"|"],
+							@"status": [status lowercaseString]};
 	
 	[self.apiClient runCommand:SickBeardCommandSetDefaults
 									   parameters:params 
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {												  
 												  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -162,12 +158,12 @@
 												  
 												  if (![parentFolder isEqual:defaults.defaultDirectory]) {
 													  [self.apiClient runCommand:SickBeardCommandAddRootDirectory
-																						 parameters:[NSDictionary dictionaryWithObjectsAndKeys:parentFolder.path, @"location", @"1", @"default", nil] 
-																							success:^(AFHTTPRequestOperation *operation, id JSON) {
-																								NSString *result = [JSON objectForKey:@"result"];
+																						 parameters:@{@"location": parentFolder.path, @"default": @"1"} 
+																							success:^(NSURLSessionDataTask *task, id JSON) {
+																								NSString *result = JSON[@"result"];
 																								
 																								if ([result isEqualToString:RESULT_SUCCESS]) {
-																									NSArray *data = [JSON objectForKey:@"data"];
+																									NSArray *data = JSON[@"data"];
 																									
 																									NSMutableArray *directories = [NSMutableArray arrayWithCapacity:data.count];
 																									for (NSDictionary *dir in data) {
@@ -189,7 +185,7 @@
 																																								type:SBNotificationTypeError];
 																								}
 																							}
-																							failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+																							failure:^(NSURLSessionDataTask *task, NSError *error) {
 																								[PRPAlertView showWithTitle:NSLocalizedString(@"Error saving defaults", @"Error saving defaults")
 																													message:error.localizedDescription 
 																												buttonTitle:NSLocalizedString(@"OK", @"OK")];
@@ -205,7 +201,7 @@
 																											  type:SBNotificationTypeError];
 											  }
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error saving defaults", @"Error saving defaults") 
 																  message:error.localizedDescription
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  
@@ -216,7 +212,7 @@
 #pragma mark - Quality, Status, and Season Folders
 - (void)statusViewController:(SBStatusViewController *)controller didSelectStatus:(NSString *)stat {
 	status = [[stat capitalizedString] copy];
-	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:kStatusIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+	[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:kStatusIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)qualityViewController:(SBQualityViewController *)controller didSelectQualities:(NSMutableArray *)qualities {
@@ -224,11 +220,11 @@
 	
 	if (controller.qualityType == QualityTypeInitial) {
 		initialQualities = qualities;
-		[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:kInitialQualityIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+		[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:kInitialQualityIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
 	}
 	else if (controller.qualityType == QualityTypeArchive) {
 		archiveQualities = qualities;
-		[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:kArchiveQualityIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+		[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:kArchiveQualityIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
 	}
 }
 
@@ -308,7 +304,7 @@
 	UITableViewCell *cell = nil;
 	
 	if (indexPath.section == 0) {
-		SBRootDirectory *directory = [defaultDirectories objectAtIndex:indexPath.row];
+		SBRootDirectory *directory = defaultDirectories[indexPath.row];
 		cell = [tableView dequeueReusableCellWithIdentifier:@"FolderCell"];
 		cell.textLabel.text = directory.path;
 		
@@ -389,7 +385,7 @@
 		UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
 		if (newCell.accessoryType == UITableViewCellAccessoryNone) {
 			newCell.accessoryType = UITableViewCellAccessoryCheckmark;
-			parentFolder = [defaultDirectories objectAtIndex:indexPath.row];
+			parentFolder = defaultDirectories[indexPath.row];
 		}
 		
 		UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:self.parentFolderIndexPath];

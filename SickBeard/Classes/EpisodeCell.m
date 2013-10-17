@@ -12,9 +12,11 @@
 @implementation EpisodeCell
 
 - (void)awakeFromNib {
-	self.badgeView.outline = NO;
-	self.badgeView.font = [UIFont boldSystemFontOfSize:13];
-	self.badgeView.horizontalAlignment = LKBadgeViewHorizontalAlignmentRight;
+	self.badgeView.textLabel.font = [UIFont boldSystemFontOfSize:13];
+	self.badgeView.badgeAlignment = SAMBadgeViewAlignmentRight;
+//	self.badgeView.outline = NO;
+//	self.badgeView.font = [UIFont boldSystemFontOfSize:13];
+//	self.badgeView.horizontalAlignment = LKBadgeViewHorizontalAlignmentRight;
 }
 
 - (void)commonInit {
@@ -86,27 +88,6 @@
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-//	if (editing) {
-//		SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
-//		backgroundView.grouped = NO;
-//		self.backgroundView = backgroundView;
-//		
-//		SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
-//		selectedBackgroundView.selected = NO;
-//		selectedBackgroundView.grouped = NO;
-//		self.selectedBackgroundView = selectedBackgroundView;
-//
-//	}
-//	else {
-//		SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
-//		backgroundView.grouped = YES;
-//		self.backgroundView = backgroundView;
-//		
-//		SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
-//		selectedBackgroundView.selected = YES;
-//		selectedBackgroundView.grouped = YES;
-//		self.selectedBackgroundView = selectedBackgroundView;	
-//	}
     [self setNeedsLayout];
 }
 

@@ -15,7 +15,7 @@
 @synthesize containerView;
 
 - (void)awakeFromNib {
-	self.showImageView.initialImage = [UIImage imageNamed:@"placeholder"];
+	self.showImageView.image = [UIImage imageNamed:@"placeholder"];
 }
 
 - (void)commonInit {
@@ -54,7 +54,6 @@
 }
 
 - (void)prepareForReuse {
-	[self.showImageView prepareForReuse];
 	[super prepareForReuse];
 }
 

@@ -27,7 +27,7 @@
 - (id)init {
 	if (self = [super init]) {
 		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-		_diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:kSBImageURLCache];
+		_diskCachePath = [paths[0] stringByAppendingPathComponent:kSBImageURLCache];
 	
 		NSFileManager *fm = [NSFileManager defaultManager];
 		if (![fm fileExistsAtPath:_diskCachePath]) {
@@ -53,12 +53,12 @@
 	NSArray *keys = [internal allKeys];
 	
 	if (![keys containsObject:key]) {
-		[internal setObject:urlPath forKey:key];
+		internal[key] = urlPath;
 	}
 }
 
 - (NSString*)imageUrlPathForKey:(NSString*)key {
-	return [internal objectForKey:key];
+	return internal[key];
 }
 
 - (void)save {

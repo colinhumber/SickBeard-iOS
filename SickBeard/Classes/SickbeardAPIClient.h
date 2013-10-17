@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFHTTPClient.h"
+#import "AFHTTPSessionManager.h"
 
 @class SBServer;
 
@@ -23,10 +23,10 @@ typedef enum {
 	HTTPMethodPOST
 } SBHTTPMethod;
 
-typedef void (^APISuccessBlock)(AFHTTPRequestOperation *operation, id JSON);
-typedef void (^APIErrorBlock)(AFHTTPRequestOperation *operation, NSError *error);
+typedef void (^APISuccessBlock)(NSURLSessionDataTask *task, id JSON);
+typedef void (^APIErrorBlock)(NSURLSessionDataTask *task, NSError *error);
 
-@interface SickbeardAPIClient : AFHTTPClient
+@interface SickbeardAPIClient : AFHTTPSessionManager
 
 - (NSURL*)posterURLForTVDBID:(NSString*)tvdbID;
 - (NSURL*)bannerURLForTVDBID:(NSString*)tvdbID;

@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NINetworkImageView.h"
 
 @interface SBBaseShowCell : UITableViewCell
 
 - (void)commonInit;
 
-@property (nonatomic, strong) IBOutlet NINetworkImageView *showImageView;
+@property (nonatomic, strong) IBOutlet UIImageView *showImageView;
 @property (nonatomic, strong) IBOutlet UIImageView *containerView;
 
 @end

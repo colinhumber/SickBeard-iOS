@@ -89,7 +89,7 @@
             [noes addObject:obj];
         }
     }
-    return [NSArray arrayWithObjects:ayes, noes, nil];
+    return @[ayes, noes];
 }
 
 - (NSArray *) map:(id (^)(id obj))block {

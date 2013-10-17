@@ -29,17 +29,17 @@
 	self = [super init];
 	
 	if (self) {		
-		self.airDate = [NSDate dateWithString:[dict objectForKey:@"airdate"]];		
-		self.airs = [dict objectForKey:@"airs"];
-		self.name = [dict objectForKey:@"ep_name"];
-		self.episodeDescription = [[dict objectForKey:@"ep_plot"] length] > 0 ? [dict objectForKey:@"ep_plot"] : @"No plot summary available"; 
-		self.season = [[dict objectForKey:@"season"] intValue];
-		self.number = [[dict objectForKey:@"episode"] intValue];
-		self.weekday = [dict objectForKey:@"weekday"];
+		self.airDate = [NSDate dateWithString:dict[@"airdate"]];		
+		self.airs = dict[@"airs"];
+		self.name = dict[@"ep_name"];
+		self.episodeDescription = [dict[@"ep_plot"] length] > 0 ? dict[@"ep_plot"] : @"No plot summary available"; 
+		self.season = [dict[@"season"] intValue];
+		self.number = [dict[@"episode"] intValue];
+		self.weekday = dict[@"weekday"];
 		
 		SBShow *show = [[SBShow alloc] init];
 
-		NSString *qualityString = [dict objectForKey:@"quality"];
+		NSString *qualityString = dict[@"quality"];
 		if ([qualityString rangeOfString:@"HD"].location != NSNotFound) {
 			show.quality = ShowQualityHD;
 		}
@@ -53,7 +53,7 @@
 			show.quality = ShowQualityUnknown;
 		}
 		
-		NSString *stat = [[dict objectForKey:@"show_status"] lowercaseString];
+		NSString *stat = [dict[@"show_status"] lowercaseString];
 		
 		if ([stat isEqualToString:@"continuing"]) {
 			show.status = ShowStatusContinuing;
@@ -65,9 +65,9 @@
 			show.status = ShowStatusUnknown;
 		}
 		
-		show.network = [dict objectForKey:@"network"];
-		show.showName = [dict objectForKey:@"show_name"];
-		show.tvdbID = [dict objectForKey:@"tvdbid"];
+		show.network = dict[@"network"];
+		show.showName = dict[@"show_name"];
+		show.tvdbID = dict[@"tvdbid"];
 		
 		self.show = show;
 	}

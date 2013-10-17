@@ -113,7 +113,7 @@
 	
 	cell.backgroundView = backgroundView;
 	cell.selectedBackgroundView = selectedBackgroundView;
-	NSString *status = [[[SBGlobal statuses] allKeys] objectAtIndex:indexPath.row];
+	NSString *status = [[SBGlobal statuses] allKeys][indexPath.row];
 	
 	cell.textLabel.text = status;
 	
@@ -142,7 +142,7 @@
     UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
     if (newCell.accessoryType == UITableViewCellAccessoryNone) {
         newCell.accessoryType = UITableViewCellAccessoryCheckmark;
-        self.currentStatus = [[[[SBGlobal statuses] allKeys] objectAtIndex:indexPath.row] lowercaseString];
+        self.currentStatus = [[[SBGlobal statuses] allKeys][indexPath.row] lowercaseString];
     }
 	
     UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:oldIndexPath];

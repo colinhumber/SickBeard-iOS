@@ -15,6 +15,7 @@
 #import "NSDate+Utilities.h"
 #import "SVSegmentedControl.h"
 #import "SVProgressHUD.h"
+#import <AFNetworking/UIImageView+AFNetworking.h>
 
 @implementation SBHistoryViewController
 
@@ -30,7 +31,7 @@
 	[super viewDidLoad];
 
 	SVSegmentedControl *historyControl = [[SVSegmentedControl alloc] initWithSectionTitles:
-										  [NSArray arrayWithObjects:NSLocalizedString(@"Snatched", @"Snatched"), NSLocalizedString(@"Downloaded", @"Downloaded"), nil]];
+										  @[NSLocalizedString(@"Snatched", @"Snatched"), NSLocalizedString(@"Downloaded", @"Downloaded")]];
 
 	historyControl.thumb.tintColor = RGBCOLOR(127, 92, 59);
 	historyControl.changeHandler = ^(NSUInteger newIndex) {
@@ -92,17 +93,17 @@
 		filter = @"downloaded";
 	}
 
-	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:filter, @"type", nil];
+	NSDictionary *params = @{@"type": filter};
 	
 	[self.apiClient runCommand:SickBeardCommandHistory
 									   parameters:params
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  history = [[NSMutableArray alloc] init];
 												  
-												  NSArray *data = [JSON objectForKey:@"data"];
+												  NSArray *data = JSON[@"data"];
 												  
 												  if (data.count > 0) {
 													  for (NSDictionary *entry in data) {
@@ -111,7 +112,7 @@
 													  }
 													  
 													  NSSortDescriptor *sorter = [NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:NO];
-													  [history sortUsingDescriptors:[NSArray arrayWithObject:sorter]];
+													  [history sortUsingDescriptors:@[sorter]];
 												  }
 												  else {
 													  [self showEmptyView:YES animated:YES];
@@ -120,21 +121,19 @@
 											  }
 											  else {
 												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving history", @"Error retrieving history")
-																	  message:[JSON objectForKey:@"message"] 
+																	  message:JSON[@"message"] 
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
 											  }
 											  
 											  [self finishDataLoad:nil];
 											  [self.tableView reloadData];
-											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving history", @"Error retrieving history") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
 											  
 											  [self finishDataLoad:error];
-											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }];
 }
 
@@ -166,11 +165,11 @@
 		[SVProgressHUD showWithStatus:NSLocalizedString(@"Clearing history", @"Clearing history")];
 		[self.apiClient runCommand:SickBeardCommandHistoryClear
 										   parameters:nil 
-											  success:^(AFHTTPRequestOperation *operation, id JSON) {
+											  success:^(NSURLSessionDataTask *task, id JSON) {
 												  [SVProgressHUD dismiss];
 												  [self loadData];
 											  } 
-											  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+											  failure:^(NSURLSessionDataTask *task, NSError *error) {
 												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error clearing history", @"Error clearing history")
 																	  message:error.localizedDescription 
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
@@ -182,11 +181,11 @@
 		[SVProgressHUD showWithStatus:NSLocalizedString(@"Trimming history", @"Trimming history")];
 		[self.apiClient runCommand:SickBeardCommandHistoryTrim
 										   parameters:nil 
-											  success:^(AFHTTPRequestOperation *operation, id JSON) {
+											  success:^(NSURLSessionDataTask *task, id JSON) {
 												  [SVProgressHUD dismiss];
 												  [self loadData];
 											  } 
-											  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+											  failure:^(NSURLSessionDataTask *task, NSError *error) {
 												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error trimming history", @"Error trimming history") 
 																	  message:error.localizedDescription 
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
@@ -206,15 +205,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	SBHistoryCell *cell = (SBHistoryCell*)[tv dequeueReusableCellWithIdentifier:@"SBHistoryCell"];
 	
-	SBHistory *entry = [history objectAtIndex:indexPath.row];
+	SBHistory *entry = history[indexPath.row];
 	cell.showNameLabel.text = entry.showName;	
 	cell.createdDateLabel.text = [entry.createdDate displayDateTimeString];
 	cell.seasonEpisodeLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Season %d, episode %d", @"Season %d, episode %d"), entry.season, entry.episode];
 
-	[cell.showImageView setPathToNetworkImage:[[self.apiClient posterURLForTVDBID:entry.tvdbID] absoluteString]];
-	//	[cell.showImageView setImageWithURL:[[SickbeardAPIClient sharedClient] posterURLForTVDBID:entry.tvdbID] 
-//					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
-//	
+//	[cell.showImageView setPathToNetworkImage:[[self.apiClient posterURLForTVDBID:entry.tvdbID] absoluteString]];
+	[cell.showImageView setImageWithURL:[self.apiClient posterURLForTVDBID:entry.tvdbID]
+					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
+	
 	return cell;
 }
 

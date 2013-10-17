@@ -16,6 +16,7 @@
 #import "ShowCell.h"
 #import "NSUserDefaults+SickBeard.h"
 #import "NSDate+Utilities.h"
+#import <AFNetworking/UIImageView+AFNetworking.h>
 
 @interface SBShowsViewController () <SBAddShowDelegate>
 @property (nonatomic, retain) NSMutableArray *tableData;
@@ -30,7 +31,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([segue.identifier isEqualToString:@"ShowDetailsSegue"]) {
 		NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-		SBShow *show = [[self.tableData objectAtIndex:selectedIndexPath.section] objectAtIndex:selectedIndexPath.row];
+		SBShow *show = (self.tableData)[selectedIndexPath.section][selectedIndexPath.row];
 
 		SBShowDetailsViewController *detailsController = [segue destinationViewController];
 		detailsController.show = show;
@@ -111,27 +112,27 @@
 
 	[SVProgressHUD showWithStatus:NSLocalizedString(@"Loading shows", @"Loading shows")];
 	
-	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"name", @"sort", nil];
+	NSDictionary *params = @{@"sort": @"name"};
 	
 	[self.apiClient runCommand:SickBeardCommandShows 
 									   parameters:params
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  NSMutableArray *shows = [[NSMutableArray alloc] init];
 												  
-												  NSDictionary *dataDict = [JSON objectForKey:@"data"];
+												  NSDictionary *dataDict = JSON[@"data"];
 												  
 												  if (dataDict.allKeys.count > 0) {
 													  for (NSString *key in [dataDict allKeys]) {
-														  SBShow *show = [SBShow itemWithDictionary:[dataDict objectForKey:key]];
+														  SBShow *show = [SBShow itemWithDictionary:dataDict[key]];
 														  show.showName = key;
 														  [shows addObject:show];
 													  }
 													  
 													  NSSortDescriptor *sorter = [NSSortDescriptor sortDescriptorWithKey:@"showName" ascending:YES];
-													  [shows sortUsingDescriptors:[NSArray arrayWithObject:sorter]];
+													  [shows sortUsingDescriptors:@[sorter]];
 													  
 													  self.tableData = [SBGlobal partitionObjects:shows collationStringSelector:@selector(showName)];
 												  }
@@ -142,22 +143,20 @@
 											  }
 											  else {
 												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
-																	  message:[JSON objectForKey:@"message"] 
+																	  message:JSON[@"message"] 
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
 											  }
 										
 											  [self finishDataLoad:nil];
 											  [self.tableView reloadData];
-											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows")
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
 											  
 											  [self finishDataLoad:error];
-											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }];
 }
 
@@ -199,7 +198,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	if (self.tableData.count) {
-		return [[self.tableData objectAtIndex:section] count];
+		return [(self.tableData)[section] count];
 	}
 	
 	return 0;
@@ -221,7 +220,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	ShowCell *cell = (ShowCell*)[tv dequeueReusableCellWithIdentifier:@"ShowCell"];
 	
-	SBShow *show = [[self.tableData objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+	SBShow *show = (self.tableData)[indexPath.section][indexPath.row];
 	cell.showNameLabel.text = show.showName;	
 	cell.networkLabel.text = show.network;
 	cell.statusLabel.text = [SBShow showStatusAsString:show.status];
@@ -242,8 +241,9 @@
 		}		
 	}
 	
-
-	[cell.showImageView setPathToNetworkImage:[[self.apiClient posterURLForTVDBID:show.tvdbID] absoluteString]];
+	[cell.showImageView setImageWithURL:[self.apiClient posterURLForTVDBID:show.tvdbID]
+					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
+//	[cell.showImageView setPathToNetworkImage:[[self.apiClient posterURLForTVDBID:show.tvdbID] absoluteString]];
 	
 	return cell;
 }
@@ -251,30 +251,30 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
-		SBShow *show = [[self.tableData objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-		NSDictionary *params = [NSDictionary dictionaryWithObject:show.tvdbID forKey:@"tvdbid"];
+		SBShow *show = (self.tableData)[indexPath.section][indexPath.row];
+		NSDictionary *params = @{@"tvdbid": show.tvdbID};
 
 		[SVProgressHUD showWithStatus:NSLocalizedString(@"Deleting show", @"Deleting show")];
 		
 		[self.apiClient runCommand:SickBeardCommandShowDelete
 										   parameters:params 
-											  success:^(AFHTTPRequestOperation *operation, id JSON) {
-												  NSString *result = [JSON objectForKey:@"result"];
+											  success:^(NSURLSessionDataTask *task, id JSON) {
+												  NSString *result = JSON[@"result"];
 												  
 												  if ([result isEqualToString:RESULT_SUCCESS]) {
-													  [[self.tableData objectAtIndex:indexPath.section] removeObjectAtIndex:indexPath.row];
-													  [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] 
+													  [(self.tableData)[indexPath.section] removeObjectAtIndex:indexPath.row];
+													  [self.tableView deleteRowsAtIndexPaths:@[indexPath] 
 																			withRowAnimation:UITableViewRowAnimationAutomatic];
 												  }
 												  else {
 													  [PRPAlertView showWithTitle:NSLocalizedString(@"Could not delete show", @"Could not delete show") 
-																		  message:[JSON objectForKey:@"message"] 
+																		  message:JSON[@"message"] 
 																	  buttonTitle:NSLocalizedString(@"OK", @"OK")];
 												  }				
 												  
 												  [SVProgressHUD dismiss];
 											  }
-											  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+											  failure:^(NSURLSessionDataTask *task, NSError *error) {
 												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error deleting show", @"Error deleting show") 
 																	  message:error.localizedDescription 
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];			

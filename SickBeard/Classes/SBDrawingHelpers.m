@@ -22,7 +22,7 @@ void drawLinearGradient(CGContextRef context, CGRect rect, UIColor *startColor, 
 	CGFloat locations[] = { 0.0, 1.0 };
 	
 	// colors in the gradient
-	NSArray *colors = [NSArray arrayWithObjects:(id)[startColor CGColor], (id)[endColor CGColor], nil];
+	NSArray *colors = @[(id)[startColor CGColor], (id)[endColor CGColor]];
 	
 	// create the gradient
 	CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)colors, locations);

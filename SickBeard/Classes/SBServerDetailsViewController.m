@@ -13,7 +13,6 @@
 #import "NSUserDefaults+SickBeard.h"
 #import "SBStaticTableViewCell.h"
 #import "SBCreditsViewController.h"
-#import "SBHelpViewController.h"
 #import "SVProgressHUD.h"
 
 @interface SBServerDetailsViewController()
@@ -61,11 +60,6 @@
 																				  style:UIBarButtonItemStyleDone 
 																				 target:self 
 																				 action:@selector(saveServer)];
-		
-//		self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Help", @"Help")
-//																				  style:UIBarButtonItemStyleBordered
-//																				 target:self 
-//																				 action:@selector(showHelp)];
 	}
 	else {
 		self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -185,10 +179,10 @@
 		 SickbeardAPIClient *client = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:server.serviceEndpointPath]];
 		 [client runCommand:SickBeardCommandPing
 				 parameters:nil
-					success:^(AFHTTPRequestOperation *operation, id JSON) {
+					success:^(NSURLSessionDataTask *task, id JSON) {
 						[SVProgressHUD dismiss];
 						
-						NSString *result = [JSON objectForKey:@"result"];
+						NSString *result = JSON[@"result"];
 						
 						if ([result isEqualToString:RESULT_SUCCESS]) {
 							if (saveOnSuccess) {
@@ -224,7 +218,7 @@
 						
 						[SVProgressHUD dismiss];
 					}
-					failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+					failure:^(NSURLSessionDataTask *task, NSError *error) {
 						[SVProgressHUD dismiss];
 
 						[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Unable to connect to Sick Beard (%@)", @"Unable to connect to Sick Beard (%@)"), server.serviceEndpointPath]

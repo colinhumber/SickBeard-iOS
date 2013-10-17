@@ -22,12 +22,12 @@
 	self = [super init];
 	
 	if (self) {
-		self.createdDate = [NSDate dateTimeWithString:[dict objectForKey:@"date"]];
-		self.quality = [dict objectForKey:@"quality"];
-		self.showName = [dict objectForKey:@"show_name"];
-		self.season = [[dict objectForKey:@"season"] intValue];
-		self.episode = [[dict objectForKey:@"episode"] intValue];
-		self.tvdbID = [dict objectForKey:@"tvdbid"];
+		self.createdDate = [NSDate dateTimeWithString:dict[@"date"]];
+		self.quality = dict[@"quality"];
+		self.showName = dict[@"show_name"];
+		self.season = [dict[@"season"] intValue];
+		self.episode = [dict[@"episode"] intValue];
+		self.tvdbID = dict[@"tvdbid"];
 	}
 	
 	return self;

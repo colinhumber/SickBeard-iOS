@@ -29,7 +29,7 @@
 	self.backgroundColor = [UIColor clearColor];
 	self.opaque = NO;
 	self.sectionLabel = [[UILabel alloc] init];
-	sectionLabel.textAlignment = UITextAlignmentCenter;
+	sectionLabel.textAlignment = NSTextAlignmentCenter;
 	sectionLabel.opaque = NO;
 	sectionLabel.backgroundColor = [UIColor clearColor];
 	sectionLabel.font = [UIFont boldSystemFontOfSize:20.0];

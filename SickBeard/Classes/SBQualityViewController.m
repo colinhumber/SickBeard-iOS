@@ -121,7 +121,7 @@
 	cell.backgroundView = backgroundView;
 	cell.selectedBackgroundView = selectedBackgroundView;
 	
-	NSString *quality = [qualities objectAtIndex:indexPath.row];
+	NSString *quality = qualities[indexPath.row];
 	
 	cell.textLabel.text = quality;
 	
@@ -137,7 +137,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 		
-	NSString *quality = [qualities objectAtIndex:indexPath.row];
+	NSString *quality = qualities[indexPath.row];
 	
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (cell.accessoryType == UITableViewCellAccessoryNone) {

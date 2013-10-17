@@ -107,8 +107,8 @@ typedef enum {
 	
 	[self.apiClient runCommand:SickBeardCommandViewLogs
 									   parameters:@{ @"min_level" : logType }
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {												  
 												  _logs = JSON[@"data"];
@@ -120,21 +120,19 @@ typedef enum {
 											  }
 											  else {
 												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving logs", @"Error retrieving logs")
-																	  message:[JSON objectForKey:@"message"] 
+																	  message:JSON[@"message"] 
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
 											  }
 											  
 											  [self finishDataLoad:nil];
 											  [self.tableView reloadData];
-											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving logs", @"Error retrieving logs") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
 											  
 											  [self finishDataLoad:error];
-											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }];
 }
 
@@ -163,9 +161,13 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSString *log = self.logs[indexPath.row];
-	CGSize logSize = [log sizeWithFont:[UIFont systemFontOfSize:12]
-					 constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)];
-    return logSize.height + 25;
+	CGRect logSize = [log boundingRectWithSize:CGSizeMake(280, CGFLOAT_MAX)
+									   options:NSStringDrawingUsesLineFragmentOrigin
+									attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12]}
+									   context:nil];
+//	CGSize logSize = [log sizeWithFont:[UIFont systemFontOfSize:12]
+//					 constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)];
+    return logSize.size.height + 25;
 }
 
 @end
