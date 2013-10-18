@@ -7,7 +7,6 @@
 //
 
 #import "ComingEpisodeCell.h"
-#import "SBCellBackground.h"
 
 @implementation ComingEpisodeCell
 

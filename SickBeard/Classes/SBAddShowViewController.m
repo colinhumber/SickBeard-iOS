@@ -12,9 +12,8 @@
 #import "UIImageView+AFNetworking.h"
 #import "SBShow.h"
 #import "SBOptionsViewController.h"
-#import "SBCellBackground.h"
 #import "SBSectionHeaderView.h"
-#import "SVProgressHUD.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @implementation SBAddShowViewController
 
@@ -62,10 +61,8 @@
 	[SVProgressHUD dismiss];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 #pragma mark - Actions

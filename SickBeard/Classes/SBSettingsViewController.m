@@ -8,9 +8,9 @@
 
 #import "SBSettingsViewController.h"
 #import "PRPAlertView.h"
-#import "SVModalWebViewController.h"
 #import "SBSectionHeaderView.h"
-#import "SBStaticTableViewCell.h"
+#import "CRNavigationController.h"
+#import "SBWebViewController.h"
 
 @implementation SBSettingsViewController
 
@@ -78,9 +78,8 @@
     [super viewDidUnload];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 #pragma mark - Actions
@@ -134,19 +133,16 @@
 		}
 		else if (indexPath.row == 1) {
 			[TestFlight passCheckpoint:@"Clicked Twitter"];
-			SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:@"http://twitter.com/sickbeardios"];
-			webViewController.toolbar.tintColor = nil;
-			webViewController.toolbar.barStyle = UIBarStyleBlack;
-			webViewController.availableActions = SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink | SVWebViewControllerAvailableActionsOpenInSafari;
+			
+			SBWebViewController *webViewController = [[SBWebViewController alloc] initWithAddress:@"http://twitter.com/sickbeardios"];
+			
 			[self presentViewController:webViewController animated:YES completion:nil];
 		}
 		else if (indexPath.row == 2) {
 			[TestFlight passCheckpoint:@"Clicked Donate"];
 
-			SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:kDonateLink];
-			webViewController.toolbar.tintColor = nil;
-			webViewController.toolbar.barStyle = UIBarStyleBlack;
-			webViewController.availableActions = SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink | SVWebViewControllerAvailableActionsOpenInSafari;
+			SBWebViewController *webViewController = [[SBWebViewController alloc] initWithAddress:kDonateLink];
+			
 			[self presentViewController:webViewController animated:YES completion:nil];
 		}
 	}

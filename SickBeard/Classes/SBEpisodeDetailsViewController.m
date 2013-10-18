@@ -15,7 +15,6 @@
 #import "NSDate+Utilities.h"
 #import "SBEpisodeDetailsHeaderView.h"
 #import "SBSectionHeaderView.h"
-#import "SBCellBackground.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 
 #define kDefaultDescriptionFontSize 13;
@@ -31,14 +30,12 @@
 
 @property (nonatomic, strong) IBOutlet SBEpisodeDetailsHeaderView *currentHeaderView;
 @property (nonatomic, strong) IBOutlet SBEpisodeDetailsHeaderView *nextHeaderView;
-@property (nonatomic, strong) IBOutlet SBCellBackground *headerContainerView;
 @property (nonatomic, strong) IBOutlet UIView *containerView;
 
 @property (nonatomic, strong) IBOutlet UITextView *descriptionTextView;
 @property (nonatomic, strong) IBOutlet UIImageView *showPosterImageView;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
 @property (nonatomic, strong) IBOutlet SBSectionHeaderView *headerView;
-@property (nonatomic, strong) IBOutlet SBCellBackground *episodeDescriptionBackground;
 
 @end
 
@@ -55,23 +52,19 @@
 							 placeholderImage:nil];
 
 	self.headerView.sectionLabel.text = NSLocalizedString(@"Episode Summary", @"Episode Summary");
-	self.episodeDescriptionBackground.grouped = YES;
 	
 	[self updateHeaderView];
 	[self loadData];
 	
 	if ([UIScreen mainScreen].bounds.size.height == 568) {
-		self.episodeDescriptionBackground.height += 88;
 		self.descriptionTextView.height += 88;
 	}
 	
     [super viewDidLoad];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 #pragma mark - Loading
@@ -204,8 +197,8 @@
 							@"season": @(self.episode.season),
 							@"episode": @(self.episode.number)};
 
-	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Searching for episode", @"Searching for episode")
-																type:SBNotificationTypeInfo];
+	[TSMessage showNotificationWithTitle:NSLocalizedString(@"Searching for episode", @"Searching for episode")
+									type:TSMessageNotificationTypeMessage];
 
 	[self.apiClient runCommand:SickBeardCommandEpisodeSearch
 									   parameters:params 
@@ -213,12 +206,12 @@
 											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading")
-																											  type:SBNotificationTypeSuccess];
+												  [TSMessage showNotificationWithTitle:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading")
+																				  type:TSMessageNotificationTypeSuccess];
 											  }
 											  else {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeSuccess];
+												  [TSMessage showNotificationWithTitle:JSON[@"message"]
+																				  type:TSMessageNotificationTypeSuccess];
 											  }
 										  }
 										  failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -250,8 +243,8 @@
 							@"episode": @(self.episode.number),
 							@"status": statusString};
 	
-	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
-																type:SBNotificationTypeInfo];
+	[TSMessage showNotificationWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
+																type:TSMessageNotificationTypeMessage];
 	
 	[self.apiClient runCommand:SickBeardCommandEpisodeSetStatus
 									   parameters:params 
@@ -259,12 +252,12 @@
 											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Status successfully set!", @"Status successfully set!")
-																											  type:SBNotificationTypeSuccess];
+												  [TSMessage showNotificationWithTitle:NSLocalizedString(@"Status successfully set!", @"Status successfully set!")
+																				  type:TSMessageNotificationTypeSuccess];
 											  }
 											  else {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeError];
+												  [TSMessage showNotificationWithTitle:JSON[@"message"]
+																				  type:TSMessageNotificationTypeError];
 											  }
 										  }
 										  failure:^(NSURLSessionDataTask *task, NSError *error) {

@@ -7,7 +7,6 @@
 //
 
 #import "SBBaseShowCell.h"
-#import "SBCellBackground.h"
 
 @implementation SBBaseShowCell
 
@@ -17,12 +16,6 @@
 
 - (void)commonInit {
 	self.backgroundColor = [UIColor whiteColor];
-//	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
-//	self.backgroundView = backgroundView;
-//	
-//	SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
-//	selectedBackgroundView.selected = YES;
-//	self.selectedBackgroundView = selectedBackgroundView;	
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

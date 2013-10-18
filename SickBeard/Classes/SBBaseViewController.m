@@ -49,6 +49,11 @@
 	[super viewDidLoad];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	[TSMessage setDefaultViewController:self.navigationController];
+}
+
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 													name:SBServerURLDidChangeNotification

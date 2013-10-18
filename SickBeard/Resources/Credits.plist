@@ -40,33 +40,9 @@
 			</dict>
 			<dict>
 				<key>role</key>
-				<string>LKBadgeView</string>
-				<key>name</key>
-				<string>lakesoft</string>
-				<key>url</key>
-				<string>https://github.com/lakesoft/LKbadgeView</string>
-			</dict>
-			<dict>
-				<key>role</key>
-				<string>EGOTableViewPullRefresh</string>
-				<key>name</key>
-				<string>Enormego</string>
-				<key>url</key>
-				<string>https://github.com/enormego/EGOTableViewPullRefresh</string>
-			</dict>
-			<dict>
-				<key>role</key>
-				<string>JSONKit</string>
-				<key>name</key>
-				<string>John Engelhart</string>
-				<key>url</key>
-				<string>https://github.com/johnezang/JSONKit</string>
-			</dict>
-			<dict>
-				<key>role</key>
 				<string>AFNetworking</string>
 				<key>name</key>
-				<string>Gowalla</string>
+				<string>AFNetworking</string>
 				<key>url</key>
 				<string>https://github.com/AFNetworking/AFNetworking</string>
 			</dict>

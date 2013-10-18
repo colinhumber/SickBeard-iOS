@@ -48,6 +48,7 @@
 	SVSegmentedControl *navControl = [[SVSegmentedControl alloc] initWithSectionTitles:
 									  @[NSLocalizedString(@"Shows", @"Shows"), NSLocalizedString(@"Episodes", @"Episodes")]];
 	navControl.thumb.tintColor = RGBCOLOR(127, 92, 59);
+	navControl.thumb.gradientIntensity = 0.0f;
 	[navControl addTarget:self action:@selector(viewModeChanged:) forControlEvents:UIControlEventValueChanged];
 	self.navigationItem.titleView = navControl;
 }
@@ -64,8 +65,8 @@
 - (IBAction)viewModeChanged:(id)sender {
 	SVSegmentedControl *segment = sender;
 	
-	SBBaseViewController *destinationController = (self.childViewControllers)[segment.selectedIndex];
-	if (self.currentController == destinationController){
+	SBBaseViewController *destinationController = (self.childViewControllers)[segment.selectedSegmentIndex];
+	if (self.currentController == destinationController) {
 		return;
 	}
 	
@@ -74,14 +75,14 @@
 	[self transitionFromViewController:self.currentController 
 					  toViewController:destinationController 
 							  duration:0
-							   options:UIViewAnimationOptionLayoutSubviews | UIViewAnimationOptionTransitionNone
+							   options:UIViewAnimationOptionTransitionNone
 							animations:nil 
 							completion:nil];
 
 	self.currentController = destinationController;
 	self.title = self.currentController.title;
 
-	switch (segment.selectedIndex) {
+	switch (segment.selectedSegmentIndex) {
 		case 0:
 			[self.navigationItem setLeftBarButtonItem:self.currentController.editButtonItem animated:YES];
 			[self.navigationItem setRightBarButtonItem:self.addItem animated:YES];

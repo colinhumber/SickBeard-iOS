@@ -7,8 +7,6 @@
 //
 
 #import "SBLogCell.h"
-#import "SBCellBackground.h"
-#import <QuartzCore/QuartzCore.h>
 
 @implementation SBLogCell
 

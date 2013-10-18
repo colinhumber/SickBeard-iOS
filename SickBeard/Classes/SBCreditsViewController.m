@@ -8,8 +8,8 @@
 
 #import "SBCreditsViewController.h"
 #import "SBSectionHeaderView.h"
-#import "SBCellBackground.h"
-#import "SVModalWebViewController.h"
+#import "CRNavigationController.h"
+#import "SBWebViewController.h"
 
 @interface SBCreditsViewController ()
 @property (nonatomic, strong) NSDictionary *credits;
@@ -33,17 +33,8 @@
 	self.credits = [NSDictionary dictionaryWithContentsOfFile:path];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 - (NSArray*)sortedKeys {
@@ -83,7 +74,7 @@
 		return 0;
 	}
 	
-	return 50;
+	return 25;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -101,25 +92,6 @@
 	NSDictionary *credit = creds[indexPath.row];
 	
 	UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"CreditCell"];
-	
-	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
-	backgroundView.grouped = YES;
-	backgroundView.applyShadow = NO;
-	
-	SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
-	selectedBackgroundView.grouped = YES;
-	selectedBackgroundView.applyShadow = NO;
-	selectedBackgroundView.selected = YES;
-	
-	if (indexPath.row == [self tableView:tv numberOfRowsInSection:indexPath.section] - 1) {
-		backgroundView.lastCell = YES;
-		backgroundView.applyShadow = YES;
-		selectedBackgroundView.lastCell = YES;
-		selectedBackgroundView.applyShadow = YES;
-	}
-	
-	cell.backgroundView = backgroundView;
-	cell.selectedBackgroundView = selectedBackgroundView;
 
 	cell.textLabel.text = credit[@"role"];
 	cell.detailTextLabel.text = credit[@"name"];
@@ -147,10 +119,8 @@
 	NSURL *url = [NSURL URLWithString:credit[@"url"]];
 	if (url) {
 		if ([[url scheme] rangeOfString:@"http"].location != NSNotFound) {
-			SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithURL:url];
-			webViewController.toolbar.tintColor = nil;
-			webViewController.toolbar.barStyle = UIBarStyleBlack;
-			webViewController.availableActions = SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink | SVWebViewControllerAvailableActionsOpenInSafari;		
+			SBWebViewController *webViewController = [[SBWebViewController alloc] initWithURL:url];
+			
 			[self presentViewController:webViewController animated:YES completion:nil];
 		}
 		else if ([[url scheme] isEqualToString:@"sbSegue"]) {

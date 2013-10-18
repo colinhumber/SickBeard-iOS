@@ -7,7 +7,6 @@
 //
 
 #import "SBQualityViewController.h"
-#import "SBCellBackground.h"
 
 @implementation SBQualityViewController
 
@@ -45,10 +44,8 @@
 	}
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 #pragma mark - Table view data source

@@ -7,7 +7,6 @@
 //
 
 #import "SBStatusViewController.h"
-#import "SBCellBackground.h"
 
 @implementation SBStatusViewController
 
@@ -38,9 +37,8 @@
     [super viewDidLoad];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 #pragma mark - Table view data source

@@ -7,15 +7,8 @@
 //
 
 #import "SBHistoryCell.h"
-#import "SBCellBackground.h"
 
 @implementation SBHistoryCell
-
-@synthesize showImageView;
-@synthesize showNameLabel;
-@synthesize seasonEpisodeLabel;
-@synthesize createdDateLabel;
-@synthesize qualityLabel;
 
 - (void)awakeFromNib {
 	self.showImageView.image = [UIImage imageNamed:@"placeholder"];
@@ -23,11 +16,6 @@
 
 - (void)commonInit {
 	[super commonInit];
-	SBCellBackground *backgroundView = (SBCellBackground*)self.backgroundView;
-	SBCellBackground *selectedBackgroundView = (SBCellBackground*)self.selectedBackgroundView;
-	
-	backgroundView.applyShadow = NO;
-	selectedBackgroundView.applyShadow = NO;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

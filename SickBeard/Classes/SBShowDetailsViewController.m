@@ -13,7 +13,6 @@
 #import "SBEpisode.h"
 #import "OrderedDictionary.h"
 #import "NSDate+Utilities.h"
-#import "SVModalWebViewController.h"
 #import "EpisodeCell.h"
 #import "SBShowDetailsHeaderView.h"
 #import "SBSectionHeaderView.h"
@@ -23,10 +22,7 @@
 #import "SBServer.h"
 #import "SBCommandBuilder.h"
 
-@interface SBShowDetailsViewController () <SBSectionHeaderViewDelegate> {
-	OrderedDictionary *_seasons;
-	NSMutableArray *_sectionHeaders;
-	
+@interface SBShowDetailsViewController () <SBSectionHeaderViewDelegate, UIGestureRecognizerDelegate> {
 	struct {
 		int menuIsShowing:1;
 		int menuIsHiding:1;
@@ -35,14 +31,15 @@
 }
 
 - (void)changeEpisodeStatus:(EpisodeStatus)status;
+@property (nonatomic, strong) OrderedDictionary *seasons;
+@property (nonatomic, strong) NSMutableArray *sectionHeaders;
+@property (nonatomic, strong) NSOperationQueue *batchQueue;
 
 @end
 
 @implementation SBShowDetailsViewController
 
-@synthesize show;
-@synthesize detailsHeaderView;
-@synthesize currentEpisodeIndexPath;
+@synthesize currentEpisodeIndexPath = _currentEpisodeIndexPath;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([segue.identifier isEqualToString:@"EpisodeDetailsSegue"]) {
@@ -72,21 +69,21 @@
 	
 	_seasons = [[OrderedDictionary alloc] init];
 	_sectionHeaders = [[NSMutableArray alloc] init];
-	self.title = show.showName;
+	self.title = self.show.showName;
 	
 	UINib *headerNib = [UINib nibWithNibName:@"SBShowDetailsHeaderView" bundle:nil];
 	[headerNib instantiateWithOwner:self options:nil];
-	self.detailsHeaderView.showNameLabel.text = show.showName;
+	self.detailsHeaderView.showNameLabel.text = self.show.showName;
 	
-	[self.detailsHeaderView.showImageView setImageWithURL:[self.apiClient posterURLForTVDBID:show.tvdbID]
+	[self.detailsHeaderView.showImageView setImageWithURL:[self.apiClient posterURLForTVDBID:self.show.tvdbID]
 										 placeholderImage:nil];
-	self.detailsHeaderView.networkLabel.text = show.network;
+	self.detailsHeaderView.networkLabel.text = self.show.network;
 	
-	self.detailsHeaderView.statusLabel.text = [SBShow showStatusAsString:show.status];
-	if (show.status == ShowStatusContinuing) {
+	self.detailsHeaderView.statusLabel.text = [SBShow showStatusAsString:self.show.status];
+	if (self.show.status == ShowStatusContinuing) {
 		self.detailsHeaderView.statusLabel.textColor = RGBCOLOR(21, 93, 45);
 	}
-	else if (show.status == ShowStatusEnded) {
+	else if (self.show.status == ShowStatusEnded) {
 		self.detailsHeaderView.statusLabel.textColor = RGBCOLOR(202, 50, 56);
 	}
 	else {
@@ -110,13 +107,22 @@
 	[self setupToolbarItems];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 - (BOOL)canBecomeFirstResponder {
 	return YES;
+}
+
+#pragma mark - Accessors
+- (NSOperationQueue *)batchQueue {
+	if (!_batchQueue) {
+		_batchQueue = [[NSOperationQueue alloc] init];
+		_batchQueue.maxConcurrentOperationCount = 5;
+	}
+	
+	return _batchQueue;
 }
 
 #pragma mark - Setup
@@ -140,22 +146,14 @@
 }
 
 - (void)setupToolbarItems {
-	UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	[searchButton setBackgroundImage:[[UIImage imageNamed:@"toolbar-button-mask"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4, 0, 4)] forState:UIControlStateNormal];
+	UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeSystem];
 	[searchButton setTitle:@"Search" forState:UIControlStateNormal];
-	searchButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-	searchButton.titleEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 15);
 	[searchButton sizeToFit];
-	searchButton.width = 100;
 	[searchButton addTarget:self action:@selector(searchForMultipleEpisodes:) forControlEvents:UIControlEventTouchUpInside];
 	
-	UIButton *setStatusButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	[setStatusButton setBackgroundImage:[[UIImage imageNamed:@"toolbar-button-mask"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4, 0, 4)] forState:UIControlStateNormal];
+	UIButton *setStatusButton = [UIButton buttonWithType:UIButtonTypeSystem];
 	[setStatusButton setTitle:@"Set Status" forState:UIControlStateNormal];
-	setStatusButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-	setStatusButton.titleEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 15);
 	[setStatusButton sizeToFit];
-	setStatusButton.width = 100;
 	[setStatusButton addTarget:self action:@selector(setStatusForMultipleEpisodes:) forControlEvents:UIControlEventTouchUpInside];
 	
 	UIBarButtonItem *searchBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
@@ -192,7 +190,7 @@
 	}
 	
 	[self.apiClient runCommand:SickBeardCommandSeasons
-									   parameters:@{@"tvdbid": show.tvdbID}
+									   parameters:@{@"tvdbid": self.show.tvdbID}
 										  success:^(NSURLSessionDataTask *task, id JSON) {
 											  NSString *result = JSON[@"result"];
 											  
@@ -222,7 +220,7 @@
 													  for (NSString *episodeNumber in [seasonDict allKeys]) {
 														  SBEpisode *episode = [SBEpisode itemWithDictionary:seasonDict[episodeNumber]];
 														  
-														  episode.show = show;
+														  episode.show = self.show;
 														  episode.season = [seasonNumber intValue];
 														  episode.number = [episodeNumber intValue];
 														  [episodes addObject:episode];
@@ -294,7 +292,7 @@
 		
 		SBEpisode *episode = episodes[indexPath.row];
 
-		NSDictionary *params = @{@"tvdbid": show.tvdbID,
+		NSDictionary *params = @{@"tvdbid": self.show.tvdbID,
 								@"season": @(episode.season),
 								@"episode": @(episode.number)};
 		
@@ -304,30 +302,23 @@
 
 		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlPath]];
 		[operations addObject:[[AFHTTPRequestOperation alloc] initWithRequest:request]];
-//		[requests addObject:[NSURLRequest requestWithURL:[NSURL URLWithString:urlPath]]];
 	}
 	
 	[self setEditing:NO animated:YES];
 
-	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:@"Searching for %d episodes", operations.count]
-																type:SBNotificationTypeInfo];
+	[TSMessage showNotificationWithTitle:[NSString stringWithFormat:@"Searching for %d episodes", operations.count]
+									type:TSMessageNotificationTypeMessage];
 	
 	
-	[AFHTTPRequestOperation batchOfRequestOperations:operations
-									   progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
+	NSArray *batch = [AFHTTPRequestOperation batchOfRequestOperations:operations
+														progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
 										   
-									   } completionBlock:^(NSArray *operations) {
-										   [[SBNotificationManager sharedManager] queueNotificationWithText:@"Finished searching for episodes."
-																									   type:SBNotificationTypeInfo];
-									   }];
-//	[self.apiClient enqueueBatchOfHTTPRequestOperationsWithRequests:requests
-//											  progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
-//												  
-//											  }
-//											completionBlock:^(NSArray *operations) {
-//												[[SBNotificationManager sharedManager] queueNotificationWithText:@"Finished searching for episodes."
-//																											type:SBNotificationTypeInfo];
-//											}];
+														} completionBlock:^(NSArray *operations) {
+															[TSMessage showNotificationWithTitle:@"Finished searching for episodes."
+																							type:TSMessageNotificationTypeMessage];
+														}];
+	
+	[self.batchQueue addOperations:batch waitUntilFinished:NO];
 }
 
 - (void)setStatusForMultipleEpisodes:(UIButton *)sender {
@@ -390,30 +381,22 @@
 		
 		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlPath]];
 		[operations addObject:[[AFHTTPRequestOperation alloc] initWithRequest:request]];
-//		[requests addObject:[NSURLRequest requestWithURL:[NSURL URLWithString:urlPath]]];
 	}
 	
-	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:@"Attempting to set %d episodes to %@", operations.count, statusString]
-																type:SBNotificationTypeInfo];
+	[TSMessage showNotificationWithTitle:[NSString stringWithFormat:@"Attempting to set %d episodes to %@", operations.count, statusString]
+									type:TSMessageNotificationTypeMessage];
 
 	[self setEditing:NO animated:YES];
 
-	[AFHTTPRequestOperation batchOfRequestOperations:operations
+    NSArray *batch = [AFHTTPRequestOperation batchOfRequestOperations:operations
 									   progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
 										   
 									   } completionBlock:^(NSArray *operations) {
-										   [[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:@"Episode statuses set to %@.", statusString]
-																									   type:SBNotificationTypeInfo];
+										   [TSMessage showNotificationWithTitle:[NSString stringWithFormat:@"Episode statuses set to %@.", statusString]
+																		   type:TSMessageNotificationTypeMessage];
 									   }];
-//	[self.apiClient enqueueBatchOfHTTPRequestOperationsWithRequests:requests
-//													  progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
-//												  
-//													  }
-//													completionBlock:^(NSArray *operations) {
-//														[self loadData];
-//														[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:@"Episode statuses set to %@.", statusString]
-//																													type:SBNotificationTypeInfo];
-//													}];
+	
+	[self.batchQueue addOperations:batch waitUntilFinished:NO];
 }
 
 #pragma mark - SBEpisodeDetailsDataSource
@@ -584,8 +567,10 @@
 	}
 	
 	cell.badgeView.badgeColor = badgeColor;
+	cell.badgeView.highlightedBadgeColor = badgeColor;
 	
 	UILongPressGestureRecognizer *gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showMenu:)];
+	gesture.delegate = self;
 	[cell addGestureRecognizer:gesture];
 	
 	return cell;
@@ -608,6 +593,11 @@
 	if (!self.tableView.editing) {
 		[self performSegueWithIdentifier:@"EpisodeDetailsSegue" sender:nil];
 	}
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+	return self.editing == NO;
 }
 
 #pragma mark - Menu Actions
@@ -645,12 +635,12 @@
 	NSArray *episodes = _seasons[sectionKey];
 	SBEpisode *episode = episodes[_menuIndexPath.row];
 	
-	NSDictionary *params = @{@"tvdbid": show.tvdbID, 
+	NSDictionary *params = @{@"tvdbid": self.show.tvdbID,
 							@"season": @(episode.season),
 							@"episode": @(episode.number)};
 	
-	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Searching for episode", @"Searching for episode")
-																type:SBNotificationTypeInfo];
+	[TSMessage showNotificationWithTitle:NSLocalizedString(@"Searching for episode", @"Searching for episode")
+									type:TSMessageNotificationTypeMessage];
 	
 	[self.apiClient runCommand:SickBeardCommandEpisodeSearch
 									   parameters:params 
@@ -658,13 +648,13 @@
 											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading")
-																											  type:SBNotificationTypeSuccess];
+												  [TSMessage showNotificationWithTitle:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading")
+																				  type:TSMessageNotificationTypeSuccess];
 												  [self loadData:NO];
 											  }
 											  else {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"mesage"]
-																											  type:SBNotificationTypeError];
+												  [TSMessage showNotificationWithTitle:JSON[@"mesage"]
+																				  type:TSMessageNotificationTypeError];
 											  }
 										  }
 										  failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -717,8 +707,8 @@
 							@"episode": @(episode.number),
 							@"status": statusString};
 	
-	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
-																type:SBNotificationTypeInfo];
+	[TSMessage showNotificationWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
+																type:TSMessageNotificationTypeMessage];
 	
 	[self.apiClient runCommand:SickBeardCommandEpisodeSetStatus
 									   parameters:params 
@@ -726,13 +716,13 @@
 											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Status successfully set!", @"Status successfully set!")
-																											  type:SBNotificationTypeSuccess];
+												  [TSMessage showNotificationWithTitle:NSLocalizedString(@"Status successfully set!", @"Status successfully set!")
+																											  type:TSMessageNotificationTypeSuccess];
 												  [self loadData:NO];
 											  }
 											  else {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeError];
+												  [TSMessage showNotificationWithTitle:JSON[@"message"]
+																											  type:TSMessageNotificationTypeError];
 											  }
 										  }
 										  failure:^(NSURLSessionDataTask *task, NSError *error) {

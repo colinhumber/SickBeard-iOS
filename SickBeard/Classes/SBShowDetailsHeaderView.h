@@ -9,11 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "TDHUDProgressBar.h"
 
-@class SBCellBackground;
 
 @interface SBShowDetailsHeaderView : UIView
 
-@property (nonatomic, strong) IBOutlet SBCellBackground *backgroundView;
 @property (nonatomic, strong) IBOutlet UIImageView *showImageView;
 @property (nonatomic, strong) IBOutlet UILabel *showNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *networkLabel;

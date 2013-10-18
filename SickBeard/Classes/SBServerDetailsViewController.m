@@ -11,7 +11,6 @@
 #import "SBServer.h"
 #import "PRPAlertView.h"
 #import "NSUserDefaults+SickBeard.h"
-#import "SBStaticTableViewCell.h"
 #import "SBCreditsViewController.h"
 #import "SVProgressHUD.h"
 
@@ -43,7 +42,6 @@
     [super viewDidLoad];
 
 	self.title = NSLocalizedString(@"Server", @"Server");
-//	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
 	
 	if (_flags.initialSetup) {
 		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"Done")
@@ -61,20 +59,11 @@
 	if (self.server) {
 		[self setInitialServerValues];
 	}
-	
-//	for (int section = 0; section < [self numberOfSectionsInTableView:self.tableView]; section++) {
-//		int numberOfRows = [self tableView:self.tableView numberOfRowsInSection:section];
-//		
-//		NSIndexPath *indexPath = [NSIndexPath indexPathForRow:numberOfRows - 1 inSection:section];
-//		SBStaticTableViewCell *cell = (SBStaticTableViewCell*)[self tableView:self.tableView cellForRowAtIndexPath:indexPath];
-//		cell.lastCell = YES;
-//	}
 }
 
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 #pragma mark - Actions
@@ -180,8 +169,8 @@
 									[NSUserDefaults standardUserDefaults].server = self.server;
 									[NSUserDefaults standardUserDefaults].shouldUpdateShowList = YES;
 									
-									[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Server saved", @"Server saved")
-																								type:SBNotificationTypeSuccess];
+									[TSMessage showNotificationWithTitle:NSLocalizedString(@"Server saved", @"Server saved")
+																								type:TSMessageNotificationTypeSuccess];
 									
 									if (_flags.initialSetup) {
 										RunAfterDelay(1.5, ^{
@@ -191,13 +180,13 @@
 								});
 							}
 							else {
-								[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Server validated", @"Server validated")
-																							type:SBNotificationTypeSuccess];
+								[TSMessage showNotificationWithTitle:NSLocalizedString(@"Server validated", @"Server validated")
+																							type:TSMessageNotificationTypeSuccess];
 							}
 						}
 						else if ([result isEqualToString:RESULT_DENIED]) {
-							[[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																						type:SBNotificationTypeError];
+							[TSMessage showNotificationWithTitle:JSON[@"message"]
+																						type:TSMessageNotificationTypeError];
 						}
 						
 						[SVProgressHUD dismiss];
@@ -205,8 +194,8 @@
 					failure:^(NSURLSessionDataTask *task, NSError *error) {
 						[SVProgressHUD dismiss];
 
-						[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Unable to connect to Sick Beard (%@)", @"Unable to connect to Sick Beard (%@)"), self.server.serviceEndpointPath]
-																					type:SBNotificationTypeError];
+						[TSMessage showNotificationWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Unable to connect to Sick Beard (%@)", @"Unable to connect to Sick Beard (%@)"), self.server.serviceEndpointPath]
+																					type:TSMessageNotificationTypeError];
 					}];
 	 });
 }

@@ -425,7 +425,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J3R-98-N0V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="388" y="-825"/>
+            <point key="canvasLocation" x="228" y="-1124"/>
         </scene>
         <!--Show Details View Controller-->
         <scene sceneID="DWF-Vk-0r2">
@@ -440,7 +440,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EpisodeCell" rowHeight="59" id="uZt-E2-RsF" customClass="EpisodeCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EpisodeCell" editingAccessoryType="checkmark" rowHeight="59" id="uZt-E2-RsF" customClass="EpisodeCell">
                                         <rect key="frame" x="0.0" y="119" width="320" height="59"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uZt-E2-RsF" id="XhM-11-PhQ">
@@ -495,7 +495,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ajY-gn-H1J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="964" y="-317"/>
+            <point key="canvasLocation" x="797" y="-218"/>
         </scene>
         <!--Episode Details View Controller-->
         <scene sceneID="p5B-d2-4In">
@@ -682,7 +682,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C2e-EG-tIF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1" y="-709"/>
+            <point key="canvasLocation" x="228" y="-660"/>
         </scene>
         <!--Settings View Controller - Settings-->
         <scene sceneID="aY0-he-up5">
@@ -788,7 +788,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Season Folders" lineBreakMode="tailTruncation" minimumFontSize="10" id="Jk5-bx-uSQ">
-                                                    <rect key="frame" x="10" y="11" width="173" height="21"/>
+                                                    <rect key="frame" x="15" y="11" width="173" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -796,7 +796,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="bap-VF-eZb">
-                                                    <rect key="frame" x="214" y="8" width="51" height="31"/>
+                                                    <rect key="frame" x="251" y="8" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <connections>
                                                         <action selector="seasonFolderSwitched:" destination="5RA-bj-G0o" eventType="valueChanged" id="0as-n9-aJ1"/>
@@ -919,11 +919,11 @@
                                         <rect key="frame" x="0.0" y="539" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nJw-fB-5GD" id="qKo-gY-WeP">
-                                            <rect key="frame" x="10" y="1" width="280" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Credits" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KQq-Dy-l0V">
-                                                    <rect key="frame" x="10" y="0.0" width="260" height="43"/>
+                                                    <rect key="frame" x="15" y="0.0" width="270" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -946,7 +946,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="oHH-rP-Ki2">
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="NfC-HA-esQ">
+                        <barButtonItem key="leftBarButtonItem" title="Done" id="NfC-HA-esQ">
                             <connections>
                                 <action selector="done:" destination="5RA-bj-G0o" id="gm0-nt-he2"/>
                             </connections>
@@ -1743,7 +1743,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="backlog.png" width="24" height="22"/>
+        <image name="backlog.png" width="20" height="20"/>
         <image name="calendar-icon.png" width="23" height="23"/>
         <image name="chevron.png" width="9" height="15"/>
         <image name="clock.png" width="20" height="20"/>
@@ -1756,8 +1756,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="xoM-hp-y8x"/>
-        <segue reference="f0c-09-hnO"/>
-        <segue reference="7BU-Bx-eWw"/>
+        <segue reference="WEB-uB-B40"/>
+        <segue reference="uye-n8-luE"/>
+        <segue reference="cuN-Ad-691"/>
     </inferredMetricsTieBreakers>
 </document>

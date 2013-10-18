@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-static NSComparisonResult sortUsingBlock(id arg1, id arg2, NSComparisonResult (^block)(id, id));
-
 @interface NSArray (Blocks)
 
 - (BOOL) all:(BOOL (^)(id obj))block;

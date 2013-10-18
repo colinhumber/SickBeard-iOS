@@ -59,12 +59,8 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-	self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 	self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 	
-//	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
 	self.tableView.tableFooterView = [[UIView alloc] init];
 
 	if (self.enableRefreshHeader) {
@@ -89,6 +85,11 @@
 		self.emptyView = [[SBEmptyView alloc] initWithFrame:CGRectMake(0, 0, 320, emptyViewHeight)];
 		[self.view addSubview:self.emptyView];
 	}
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	[TSMessage setDefaultViewController:self.navigationController];
 }
 
 - (void)refresh:(id)sender {

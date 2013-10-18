@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SBDataLoader.h"
 #import "SBEmptyView.h"
-#import "SBNotificationManager.h"
 #import "SickbeardAPIClient.h"
+#import <TSMessages/TSMessage.h>
 
 @interface SBBaseTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SBDataLoader>
 

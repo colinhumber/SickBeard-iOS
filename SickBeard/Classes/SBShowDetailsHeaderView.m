@@ -7,7 +7,6 @@
 //
 
 #import "SBShowDetailsHeaderView.h"
-#import "SBCellBackground.h"
 
 @implementation SBShowDetailsHeaderView
 

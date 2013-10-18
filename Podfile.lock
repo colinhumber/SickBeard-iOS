@@ -19,17 +19,29 @@ PODS:
   - AFNetworking/Serialization (2.0.1)
   - AFNetworking/UIKit (2.0.1):
     - AFNetworking/NSURLConnection
+  - HexColors (2.2.1)
   - SAMBadgeView (0.1.0)
+  - SAMWebView (0.2.1)
   - SVProgressHUD (0.9)
+  - SVSegmentedControl (0.2)
+  - TSMessages (0.9.4):
+    - HexColors
 
 DEPENDENCIES:
   - AFNetworking
   - SAMBadgeView
+  - SAMWebView
   - SVProgressHUD
+  - SVSegmentedControl
+  - TSMessages
 
 SPEC CHECKSUMS:
   AFNetworking: a6f11ac4ac087303e6ff87adc1ba57b0dac20ef8
+  HexColors: 3a68db077cd6572a8f7d4aa1add284dd2436a934
   SAMBadgeView: 7eba9d24f817ed27c0a22ae0ae71e9e4577a7522
+  SAMWebView: ea897a645ac8ce086e67c63a926b5c3b8cf48acc
   SVProgressHUD: 03d4845ec8e64591726428a08236c6a5489d45f8
+  SVSegmentedControl: e874fc56c2a1efb9f597ddf0908101393f53fe96
+  TSMessages: 5ab92604b02e49a755d2cc2baf114d2248a90977
 
 COCOAPODS: 0.26.2

@@ -76,7 +76,7 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[TestFlight passCheckpoint:@"Viewed show list"];
 	
-	[super viewWillAppear:animated];
+	[super viewDidAppear:animated];
 	
 	if ([self tableView:self.tableView numberOfRowsInSection:0] > 0) {
 		[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
@@ -97,8 +97,8 @@
 	self.editing = NO;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 
