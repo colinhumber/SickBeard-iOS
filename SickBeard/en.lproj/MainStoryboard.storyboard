@@ -505,8 +505,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" id="f4x-Qe-Q8L" userLabel="Header Container View" customClass="SBCellBackground">
-                                <rect key="frame" x="0.0" y="5" width="320" height="142"/>
+                            <view contentMode="scaleToFill" id="f4x-Qe-Q8L" userLabel="Header Container View">
+                                <rect key="frame" x="0.0" y="65" width="320" height="142"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="4dg-M5-Cs1">
@@ -528,36 +528,29 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="white" id="Ija-Uo-irN">
-                                <rect key="frame" x="151" y="304" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
-                            <view contentMode="scaleToFill" id="Cyp-4T-Vy5" userLabel="Background" customClass="SBCellBackground">
-                                <rect key="frame" x="8" y="214" width="304" height="188"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" id="qag-wc-Vy3">
-                                        <rect key="frame" x="0.0" y="0.0" width="304" height="183"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="0yD-Yw-0cr" customClass="SBSectionHeaderView">
-                                <rect key="frame" x="0.0" y="170" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="215" width="320" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="white" id="Ija-Uo-irN">
+                                <rect key="frame" x="151" y="296" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" id="qag-wc-Vy3">
+                                <rect key="frame" x="8" y="241" width="304" height="247"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="avm-9Q-30M" appends="YES" id="fje-91-klE"/>
@@ -575,8 +568,6 @@
                         <outlet property="containerView" destination="tj2-BQ-9PY" id="oJ2-jp-5w3"/>
                         <outlet property="currentHeaderView" destination="nj4-E1-fY7" id="goi-7E-HkT"/>
                         <outlet property="descriptionTextView" destination="qag-wc-Vy3" id="Zv6-Hv-bN4"/>
-                        <outlet property="episodeDescriptionBackground" destination="Cyp-4T-Vy5" id="CPp-Tg-v4I"/>
-                        <outlet property="headerContainerView" destination="f4x-Qe-Q8L" id="AEu-HC-K0A"/>
                         <outlet property="headerView" destination="0yD-Yw-0cr" id="uan-gC-mUJ"/>
                         <outlet property="nextHeaderView" destination="0zs-9k-vWO" id="hAJ-ke-Vcv"/>
                         <outlet property="showPosterImageView" destination="4dg-M5-Cs1" id="jxk-R1-m5h"/>

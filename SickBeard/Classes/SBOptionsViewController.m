@@ -13,7 +13,6 @@
 #import "PRPAlertView.h"
 #import "SBSectionHeaderView.h"
 #import <SVProgressHUD/SVProgressHUD.h>
-#import "SBNotificationManager.h"
 
 #define kInitialQualityIndex 0
 #define kArchiveQualityIndex 1
