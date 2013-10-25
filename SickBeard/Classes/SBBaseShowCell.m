@@ -7,24 +7,15 @@
 //
 
 #import "SBBaseShowCell.h"
-#import "SBCellBackground.h"
 
 @implementation SBBaseShowCell
 
-@synthesize showImageView;
-@synthesize containerView;
-
 - (void)awakeFromNib {
-	self.showImageView.initialImage = [UIImage imageNamed:@"placeholder"];
+	self.showImageView.image = [UIImage imageNamed:@"placeholder"];
 }
 
 - (void)commonInit {
-	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
-	self.backgroundView = backgroundView;
-	
-	SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
-	selectedBackgroundView.selected = YES;
-	self.selectedBackgroundView = selectedBackgroundView;	
+	self.backgroundColor = [UIColor whiteColor];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -54,7 +45,6 @@
 }
 
 - (void)prepareForReuse {
-	[self.showImageView prepareForReuse];
 	[super prepareForReuse];
 }
 

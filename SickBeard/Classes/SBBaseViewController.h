@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "SBDataLoader.h"
-#import "SBNotificationManager.h"
 #import "SVProgressHUD.h"
 #import "SickbeardAPIClient.h"
+#import <TSMessages/TSMessage.h>
 
 @interface SBBaseViewController : UIViewController <SBDataLoader>
 

@@ -1,30 +1,6 @@
-[submodule "Vendor/JSONKit"]
-	path = Vendor/JSONKit
-	url = https://github.com/johnezang/JSONKit.git
-[submodule "Vendor/AFNetworking"]
-	path = Vendor/AFNetworking
-	url = https://github.com/AFNetworking/AFNetworking.git
-[submodule "Vendor/EGOTableViewPullRefresh"]
-	path = Vendor/EGOTableViewPullRefresh
-	url = https://github.com/typeoneerror/EGOTableViewPullRefresh.git
-[submodule "Vendor/SVProgressHUD"]
-	path = Vendor/SVProgressHUD
-	url = https://github.com/samvermette/SVProgressHUD.git
-[submodule "Vendor/SVSegmentedControl"]
-	path = Vendor/SVSegmentedControl
-	url = https://github.com/samvermette/SVSegmentedControl.git
-[submodule "Vendor/SVWebViewController"]
-	path = Vendor/SVWebViewController
-	url = https://github.com/samvermette/SVWebViewController.git
-[submodule "Vendor/Nimbus"]
-	path = Vendor/Nimbus
-	url = https://github.com/jverkoey/nimbus.git
-[submodule "Vendor/LKBadgeView"]
-	path = Vendor/LKBadgeView
-	url = https://github.com/colinhumber/LKbadgeView.git
 [submodule "Vendor/TDHUDProgressBar"]
 	path = Vendor/TDHUDProgressBar
 	url = https://github.com/colinhumber/TDHUDProgressBar.git
-[submodule "Vendor/MTInfoPanel"]
-	path = Vendor/MTInfoPanel
-	url = git@github.com:myell0w/MTInfoPanel.git
+[submodule "Vendor/CRNavigationController"]
+	path = Vendor/CRNavigationController
+	url = git@github.com:croberts22/CRNavigationController.git

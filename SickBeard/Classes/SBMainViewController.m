@@ -12,9 +12,11 @@
 #import "SVSegmentedControl.h"
 #import "SBBaseViewController.h"
 
-@implementation SBMainViewController
+@interface SBMainViewController ()
+@property (nonatomic, strong) UIBarButtonItem *addItem;
+@end
 
-@synthesize currentController;
+@implementation SBMainViewController
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	[self.currentController prepareForSegue:segue sender:sender];
@@ -32,20 +34,21 @@
 	[self addChildViewController:episodesVc];
 	[episodesVc didMoveToParentViewController:self];
 		
-	self.currentController = [self.childViewControllers objectAtIndex:0];
-	addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd 
-															target:[self.childViewControllers objectAtIndex:0]
-															action:@selector(addShow)];
+	self.currentController = (self.childViewControllers)[0];
+	self.addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+																 target:showVc
+																 action:@selector(addShow)];
 
 	[self.view addSubview:self.currentController.view];
-	self.navigationItem.rightBarButtonItem = addItem;
+	self.navigationItem.rightBarButtonItem = self.addItem;
 	self.navigationItem.leftBarButtonItem = self.currentController.editButtonItem;
 	
 	self.title = self.currentController.title;
 	
 	SVSegmentedControl *navControl = [[SVSegmentedControl alloc] initWithSectionTitles:
-									  [NSArray arrayWithObjects:NSLocalizedString(@"Shows", @"Shows"), NSLocalizedString(@"Episodes", @"Episodes"), nil]];
+									  @[NSLocalizedString(@"Shows", @"Shows"), NSLocalizedString(@"Episodes", @"Episodes")]];
 	navControl.thumb.tintColor = RGBCOLOR(127, 92, 59);
+	navControl.thumb.gradientIntensity = 0.0f;
 	[navControl addTarget:self action:@selector(viewModeChanged:) forControlEvents:UIControlEventValueChanged];
 	self.navigationItem.titleView = navControl;
 }
@@ -62,8 +65,8 @@
 - (IBAction)viewModeChanged:(id)sender {
 	SVSegmentedControl *segment = sender;
 	
-	SBBaseViewController *destinationController = [self.childViewControllers objectAtIndex:segment.selectedIndex];
-	if (self.currentController == destinationController){
+	SBBaseViewController *destinationController = (self.childViewControllers)[segment.selectedSegmentIndex];
+	if (self.currentController == destinationController) {
 		return;
 	}
 	
@@ -72,17 +75,17 @@
 	[self transitionFromViewController:self.currentController 
 					  toViewController:destinationController 
 							  duration:0
-							   options:UIViewAnimationOptionLayoutSubviews | UIViewAnimationOptionTransitionNone
+							   options:UIViewAnimationOptionTransitionNone
 							animations:nil 
 							completion:nil];
 
 	self.currentController = destinationController;
 	self.title = self.currentController.title;
 
-	switch (segment.selectedIndex) {
+	switch (segment.selectedSegmentIndex) {
 		case 0:
 			[self.navigationItem setLeftBarButtonItem:self.currentController.editButtonItem animated:YES];
-			[self.navigationItem setRightBarButtonItem:addItem animated:YES];
+			[self.navigationItem setRightBarButtonItem:self.addItem animated:YES];
 			break;
 			
 		case 1:

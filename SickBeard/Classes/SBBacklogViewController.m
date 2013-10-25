@@ -19,10 +19,9 @@
 #import "SVProgressHUD.h"
 #import "SBSectionHeaderView.h"
 
-#import "AFHTTPClient.h"
 #import "SBServer.h"
 #import "SBCommandBuilder.h"
-#import "AFJSONRequestOperation.h"
+#import <AFNetworking/AFHTTPRequestOperation.h>
 
 @interface SBBacklogViewController () <SBSectionHeaderViewDelegate>
 @property (nonatomic, strong) NSMutableArray *sectionHeaders;
@@ -39,7 +38,7 @@
 		SBEpisodeDetailsViewController *vc = segue.destinationViewController;
 		
 		NSArray *seasonKeys = [_backlog allKeys];
-		SBEpisode *episode = [[_backlog objectForKey:[seasonKeys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+		SBEpisode *episode = _backlog[seasonKeys[indexPath.section]][indexPath.row];
 		vc.episode = episode;
 	}
 }
@@ -65,10 +64,8 @@
 }
 
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 #pragma mark - Loading
@@ -87,76 +84,142 @@
 													 server:currentServer
 													 params:params];
 
-		AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlPath]]
-																							success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-																								NSString *result = [JSON objectForKey:@"result"];
-																								
-																								if ([result isEqualToString:RESULT_SUCCESS]) {
-																									NSDictionary *dataDict = [JSON objectForKey:@"data"];
-																									
-																									NSArray *seasonNumbers = [[dataDict allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString *s1, NSString *s2) {
-																										if ([s1 intValue] < [s2 intValue]) {
-																											return NSOrderedDescending;
-																										}
-																										else if ([s1 intValue] > [s2 intValue]) {
-																											return NSOrderedAscending;
-																										}
-																										else {
-																											return NSOrderedSame;
-																										}
-																									}];
-
-																									NSMutableArray *episodes = [NSMutableArray array];
-																									
-																									for (NSString *seasonNumber in seasonNumbers) {
-																										NSDictionary *seasonDict = [dataDict objectForKey:seasonNumber];
-																										
-																										for (NSString *episodeNumber in [seasonDict allKeys]) {
-																											SBEpisode *episode = [SBEpisode itemWithDictionary:[seasonDict objectForKey:episodeNumber]];
-																											
-																											if (episode.status == EpisodeStatusWanted) {
-																												episode.show = show;
-																												episode.season = [seasonNumber intValue];
-																												episode.number = [episodeNumber intValue];
-																												[episodes addObject:episode];
-																											}
-																										}
-																									}
-																									
-																									if (episodes.count) {
-																										[episodes sortUsingComparator:^NSComparisonResult(SBEpisode *ep1, SBEpisode *ep2) {
-																											NSComparisonResult result = [ep1.airDate compare:ep2.airDate];
-																											
-																											if (result == NSOrderedAscending) {
-																												return NSOrderedDescending;
-																											}
-																											else if (result == NSOrderedDescending) {
-																												return NSOrderedAscending;
-																											}
-																											else {
-																												return NSOrderedSame;
-																											}
-																										}];
-																										
-																										[_backlog setObject:episodes forKey:show.showName];
-																										[_sectionHeaders addObject:[NSNull null]];
-																									}
-																								}
-																							}
-																							failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-																								NSLog(@"FAILURE!!! %@", request);
-																							}];
+		AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlPath]]];
+		operation.responseSerializer = [AFJSONResponseSerializer serializer];
+		[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id JSON) {
+			NSString *result = JSON[@"result"];
+			
+			if ([result isEqualToString:RESULT_SUCCESS]) {
+				NSDictionary *dataDict = JSON[@"data"];
+				
+				NSArray *seasonNumbers = [[dataDict allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString *s1, NSString *s2) {
+					if ([s1 intValue] < [s2 intValue]) {
+						return NSOrderedDescending;
+					}
+					else if ([s1 intValue] > [s2 intValue]) {
+						return NSOrderedAscending;
+					}
+					else {
+						return NSOrderedSame;
+					}
+				}];
+				
+				NSMutableArray *episodes = [NSMutableArray array];
+				
+				for (NSString *seasonNumber in seasonNumbers) {
+					NSDictionary *seasonDict = dataDict[seasonNumber];
+					
+					for (NSString *episodeNumber in [seasonDict allKeys]) {
+						SBEpisode *episode = [SBEpisode itemWithDictionary:seasonDict[episodeNumber]];
+						
+						if (episode.status == EpisodeStatusWanted) {
+							episode.show = show;
+							episode.season = [seasonNumber intValue];
+							episode.number = [episodeNumber intValue];
+							[episodes addObject:episode];
+						}
+					}
+				}
+				
+				if (episodes.count) {
+					[episodes sortUsingComparator:^NSComparisonResult(SBEpisode *ep1, SBEpisode *ep2) {
+						NSComparisonResult result = [ep1.airDate compare:ep2.airDate];
+						
+						if (result == NSOrderedAscending) {
+							return NSOrderedDescending;
+						}
+						else if (result == NSOrderedDescending) {
+							return NSOrderedAscending;
+						}
+						else {
+							return NSOrderedSame;
+						}
+					}];
+					
+					_backlog[show.showName] = episodes;
+					[_sectionHeaders addObject:[NSNull null]];
+				}
+			}
+		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+			NSLog(@"FAILURE!!! %@", operation);
+		}];
+//		AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlPath]]
+//																							success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+//																								NSString *result = [JSON objectForKey:@"result"];
+//																								
+//																								if ([result isEqualToString:RESULT_SUCCESS]) {
+//																									NSDictionary *dataDict = [JSON objectForKey:@"data"];
+//																									
+//																									NSArray *seasonNumbers = [[dataDict allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString *s1, NSString *s2) {
+//																										if ([s1 intValue] < [s2 intValue]) {
+//																											return NSOrderedDescending;
+//																										}
+//																										else if ([s1 intValue] > [s2 intValue]) {
+//																											return NSOrderedAscending;
+//																										}
+//																										else {
+//																											return NSOrderedSame;
+//																										}
+//																									}];
+//
+//																									NSMutableArray *episodes = [NSMutableArray array];
+//																									
+//																									for (NSString *seasonNumber in seasonNumbers) {
+//																										NSDictionary *seasonDict = [dataDict objectForKey:seasonNumber];
+//																										
+//																										for (NSString *episodeNumber in [seasonDict allKeys]) {
+//																											SBEpisode *episode = [SBEpisode itemWithDictionary:[seasonDict objectForKey:episodeNumber]];
+//																											
+//																											if (episode.status == EpisodeStatusWanted) {
+//																												episode.show = show;
+//																												episode.season = [seasonNumber intValue];
+//																												episode.number = [episodeNumber intValue];
+//																												[episodes addObject:episode];
+//																											}
+//																										}
+//																									}
+//																									
+//																									if (episodes.count) {
+//																										[episodes sortUsingComparator:^NSComparisonResult(SBEpisode *ep1, SBEpisode *ep2) {
+//																											NSComparisonResult result = [ep1.airDate compare:ep2.airDate];
+//																											
+//																											if (result == NSOrderedAscending) {
+//																												return NSOrderedDescending;
+//																											}
+//																											else if (result == NSOrderedDescending) {
+//																												return NSOrderedAscending;
+//																											}
+//																											else {
+//																												return NSOrderedSame;
+//																											}
+//																										}];
+//																										
+//																										[_backlog setObject:episodes forKey:show.showName];
+//																										[_sectionHeaders addObject:[NSNull null]];
+//																									}
+//																								}
+//																							}
+//																							failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+//																								NSLog(@"FAILURE!!! %@", request);
+//																							}];
 		
 		[operations addObject:operation];
 	}
 	
-	[self.apiClient enqueueBatchOfHTTPRequestOperations:operations
-								  progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
-								  }
-								completionBlock:^(NSArray *operations) {
-									[SVProgressHUD dismiss];
-									[self.tableView reloadData];
-								}];
+	[AFHTTPRequestOperation batchOfRequestOperations:operations
+									   progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
+										   
+									   } completionBlock:^(NSArray *operations) {
+										   [SVProgressHUD dismiss];
+										   [self.tableView reloadData];
+									   }];
+//	[self.apiClient enqueueBatchOfHTTPRequestOperations:operations
+//								  progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
+//								  }
+//								completionBlock:^(NSArray *operations) {
+//									[SVProgressHUD dismiss];
+//									[self.tableView reloadData];
+//								}];
 }
 
 #pragma mark - Actions
@@ -193,7 +256,7 @@
 		sectionHeader.delegate = self;
 		sectionHeader.sectionLabel.text = title;
 		
-		[_sectionHeaders replaceObjectAtIndex:section withObject:sectionHeader];
+		_sectionHeaders[section] = sectionHeader;
 		header = sectionHeader;
 	}
 	return header;
@@ -207,33 +270,33 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	NSArray *keys = [_backlog allKeys];
-	NSString *sectionKey = [keys objectAtIndex:section];
+	NSString *sectionKey = keys[section];
 	
 	SBSectionHeaderView *headerView = (SBSectionHeaderView *)[self tableView:tableView viewForHeaderInSection:section];
 	
-	return headerView.state == SBSectionHeaderStateOpen ? [[_backlog objectForKey:sectionKey] count] : 0;
+	return headerView.state == SBSectionHeaderStateOpen ? [_backlog[sectionKey] count] : 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	EpisodeCell *cell = (EpisodeCell *)[tv dequeueReusableCellWithIdentifier:@"EpisodeCell"];
 	
 	NSArray *keys = [_backlog allKeys];
-	NSString *sectionKey = [keys objectAtIndex:indexPath.section];
-	NSArray *episodes = [_backlog objectForKey:sectionKey];
+	NSString *sectionKey = keys[indexPath.section];
+	NSArray *episodes = _backlog[sectionKey];
 	
-	SBEpisode *episode = [episodes objectAtIndex:indexPath.row];
+	SBEpisode *episode = episodes[indexPath.row];
 	
 	cell.episodeNameLabel.text = episode.name;
 	cell.airdateLabel.text = episode.airDate ? [episode.airDate displayString] : NSLocalizedString(@"Unknown Air Date", @"Unknown Air Date");
-	cell.badgeView.text = [SBEpisode episodeStatusAsString:episode.status];
+	cell.badgeView.textLabel.text = [SBEpisode episodeStatusAsString:episode.status];
 	cell.badgeView.badgeColor = RGBCOLOR(231, 147, 0);
 	
-	if (indexPath.row == episodes.count - 1) {
-		cell.lastCell = YES;
-	}
-	else {
-		cell.lastCell = NO;
-	}
+//	if (indexPath.row == episodes.count - 1) {
+//		cell.lastCell = YES;
+//	}
+//	else {
+//		cell.lastCell = NO;
+//	}
 	
 	return cell;
 }
@@ -245,9 +308,9 @@
      Create an array containing the index paths of the rows to insert: These correspond to the rows for each quotation in the current section.
      */
 	NSArray *keys = [_backlog allKeys];
-	NSString *sectionKey = [keys objectAtIndex:sectionOpened];
+	NSString *sectionKey = keys[sectionOpened];
 	
-    NSInteger countOfRowsToInsert = [[_backlog objectForKey:sectionKey] count];
+    NSInteger countOfRowsToInsert = [_backlog[sectionKey] count];
     NSMutableArray *indexPathsToInsert = [[NSMutableArray alloc] init];
     for (NSInteger i = 0; i < countOfRowsToInsert; i++) {
         [indexPathsToInsert addObject:[NSIndexPath indexPathForRow:i inSection:sectionOpened]];

@@ -106,7 +106,7 @@ NSString *const SBStatusKey = @"SBStatusKey";
 	NSArray *iq = [self objectForKey:SBInitialQualitiesKey];
 	
 	if (!iq) {
-		iq = [NSArray array];
+		iq = @[];
 	}
 	
 	return [iq mutableCopy];
@@ -121,7 +121,7 @@ NSString *const SBStatusKey = @"SBStatusKey";
 	NSArray *aq = [self objectForKey:SBArchiveQualitiesKey];
 	
 	if (!aq) {
-		aq = [NSArray array];
+		aq = @[];
 	}
 	
 	return [aq mutableCopy];

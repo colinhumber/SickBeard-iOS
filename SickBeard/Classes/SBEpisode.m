@@ -25,12 +25,12 @@
 	self = [super init];
 	
 	if (self) {
-		self.airDate = [NSDate dateWithString:[dict objectForKey:@"airdate"]];
-		self.episodeDescription = [dict objectForKey:@"description"];
-		self.location = [dict objectForKey:@"location"];
-		self.name = [dict objectForKey:@"name"];
+		self.airDate = [NSDate dateWithString:dict[@"airdate"]];
+		self.episodeDescription = dict[@"description"];
+		self.location = dict[@"location"];
+		self.name = dict[@"name"];
 		
-		NSString *statusString = [[dict objectForKey:@"status"] lowercaseString];
+		NSString *statusString = [dict[@"status"] lowercaseString];
 		if ([statusString isEqualToString:@"ignored"]) {
 			self.status = EpisodeStatusIgnored;
 		}

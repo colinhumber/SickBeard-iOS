@@ -21,7 +21,7 @@
 	self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
 	self.titleLabel.textColor = RGBCOLOR(107, 73, 20);
-	self.titleLabel.textAlignment = UITextAlignmentCenter;
+	self.titleLabel.textAlignment = NSTextAlignmentCenter;
 	self.titleLabel.backgroundColor = self.backgroundColor;
 	self.titleLabel.shadowColor = RGBACOLOR(255, 255, 255, 0.5);
 	self.titleLabel.shadowOffset = CGSizeMake(0, -1);
@@ -31,7 +31,7 @@
 	self.airDateLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	self.airDateLabel.font = [UIFont systemFontOfSize:13];
 	self.airDateLabel.textColor = [UIColor blackColor];
-	self.airDateLabel.textAlignment = UITextAlignmentCenter;
+	self.airDateLabel.textAlignment = NSTextAlignmentCenter;
 	self.airDateLabel.backgroundColor = self.backgroundColor;
 	self.airDateLabel.opaque = NO;
 	[self addSubview:self.airDateLabel];
@@ -39,7 +39,7 @@
 	self.seasonLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	self.seasonLabel.font = [UIFont systemFontOfSize:13];
 	self.seasonLabel.textColor = [UIColor blackColor];
-	self.seasonLabel.textAlignment = UITextAlignmentCenter;
+	self.seasonLabel.textAlignment = NSTextAlignmentCenter;
 	self.seasonLabel.backgroundColor = self.backgroundColor;
 	self.seasonLabel.opaque = NO;
 	[self addSubview:self.seasonLabel];
@@ -69,14 +69,5 @@
 	self.airDateLabel.frame = CGRectMake(20, 23, 280, 21);
 	self.seasonLabel.frame = CGRectMake(20, 44, 280, 21);
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

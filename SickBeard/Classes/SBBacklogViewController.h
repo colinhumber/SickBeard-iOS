@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "SBBaseTableViewController.h"
-#import "EGORefreshTableHeaderView.h"
 
 @interface SBBacklogViewController : SBBaseTableViewController
 

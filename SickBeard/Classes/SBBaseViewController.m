@@ -30,6 +30,7 @@
 	
 	if (self) {
 		[self commonInit];
+		
 	}
 	
 	return self;
@@ -40,6 +41,7 @@
 	
 	if (self) {
 		[self commonInit];
+		
 	}
 	
 	return self;
@@ -47,6 +49,11 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	[TSMessage setDefaultViewController:self.navigationController];
 }
 
 - (void)dealloc {

@@ -29,13 +29,13 @@
 	self = [super init];
 	
 	if (self) {
-		self.airByDate = [[dict objectForKey:@"airs_by_date"] boolValue];
-		self.hasBannerCached = [[[dict objectForKey:@"cache"] objectForKey:@"banner"] boolValue];
-		self.hasPosterCached = [[[dict objectForKey:@"cache"] objectForKey:@"poster"] boolValue];
-		self.languageCode = [dict objectForKey:@"language"];
-		self.isPaused = [[dict objectForKey:@"paused"] boolValue];
+		self.airByDate = [dict[@"airs_by_date"] boolValue];
+		self.hasBannerCached = [dict[@"cache"][@"banner"] boolValue];
+		self.hasPosterCached = [dict[@"cache"][@"poster"] boolValue];
+		self.languageCode = dict[@"language"];
+		self.isPaused = [dict[@"paused"] boolValue];
 		
-		NSString *qualityString = [dict objectForKey:@"quality"];
+		NSString *qualityString = dict[@"quality"];
 		if ([qualityString rangeOfString:@"HD"].location != NSNotFound) {
 			self.quality = ShowQualityHD;
 		}
@@ -49,7 +49,7 @@
 			self.quality = ShowQualityUnknown;
 		}
 		
-		NSString *stat = [[dict objectForKey:@"status"] lowercaseString];
+		NSString *stat = [dict[@"status"] lowercaseString];
 		
 		if ([stat isEqualToString:@"continuing"]) {
 			self.status = ShowStatusContinuing;
@@ -61,11 +61,11 @@
 			self.status = ShowStatusUnknown;
 		}
 		
-		self.tvdbID = [NSString stringWithFormat:@"%@", [dict objectForKey:@"tvdbid"]];
-		self.tvRageID = [NSString stringWithFormat:@"%@", [dict objectForKey:@"tvrage_id"]];
-		self.showName = [dict objectForKey:@"tvrage_name"];
-		self.network = [dict objectForKey:@"network"];
-		self.nextEpisodeDate = [NSDate dateWithString:[dict objectForKey:@"next_ep_airdate"]];
+		self.tvdbID = [NSString stringWithFormat:@"%@", dict[@"tvdbid"]];
+		self.tvRageID = [NSString stringWithFormat:@"%@", dict[@"tvrage_id"]];
+		self.showName = dict[@"tvrage_name"];
+		self.network = dict[@"network"];
+		self.nextEpisodeDate = [NSDate dateWithString:dict[@"next_ep_airdate"]];
 	}
 	
 	return self;

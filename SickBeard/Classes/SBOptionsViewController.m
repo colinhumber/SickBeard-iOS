@@ -11,10 +11,8 @@
 #import "SBRootDirectory.h"
 #import "SickbeardAPIClient.h"
 #import "PRPAlertView.h"
-#import "SBCellBackground.h"
 #import "SBSectionHeaderView.h"
-#import "SVProgressHUD.h"
-#import "SBNotificationManager.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 #define kInitialQualityIndex 0
 #define kArchiveQualityIndex 1
@@ -26,15 +24,17 @@
 #define kStatusSegue @"StatusSegue"
 
 @interface SBOptionsViewController()
+@property (nonatomic, strong) NSMutableArray *initialQualities;
+@property (nonatomic, strong) NSMutableArray *archiveQualities;
+@property (nonatomic, strong) NSMutableArray *defaultDirectories;
+@property (nonatomic, strong) NSString *status;
+@property (nonatomic, strong) SBRootDirectory *parentFolder;
+@property (nonatomic, assign) BOOL useSeasonFolders;
 @property (nonatomic, strong) NSIndexPath *parentFolderIndexPath;
 @end
 
 
 @implementation SBOptionsViewController
-
-@synthesize show;
-@synthesize delegate;
-@synthesize parentFolderIndexPath;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([segue.identifier isEqualToString:kInitialQualitySegue]) {
@@ -42,19 +42,19 @@
 		vc.title = @"Initial Quality";
 		vc.qualityType = QualityTypeInitial;
 		vc.delegate = self;
-		vc.currentQuality = initialQualities;
+		vc.currentQuality = self.initialQualities;
 	}
 	else if ([segue.identifier isEqualToString:kArchiveQualitySegue]) {
 		SBQualityViewController *vc = segue.destinationViewController;
 		vc.title = @"Archive Quality";
 		vc.qualityType = QualityTypeArchive;
 		vc.delegate = self;
-		vc.currentQuality = archiveQualities;
+		vc.currentQuality = self.archiveQualities;
 	}
 	else if ([segue.identifier isEqualToString:kStatusSegue]) {
 		SBStatusViewController *vc = segue.destinationViewController;
 		vc.delegate = self;
-		vc.currentStatus = status;
+		vc.currentStatus = self.status;
 	}
 }
 
@@ -67,12 +67,12 @@
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
-	defaultDirectories = defaults.defaultDirectories;
-	initialQualities = defaults.initialQualities;
-	archiveQualities = defaults.archiveQualities;
-	status = defaults.status;
-	useSeasonFolders = defaults.useSeasonFolders;
-	parentFolder = defaults.defaultDirectory;
+	self.defaultDirectories = defaults.defaultDirectories;
+	self.initialQualities = defaults.initialQualities;
+	self.archiveQualities = defaults.archiveQualities;
+	self.status = defaults.status;
+	self.useSeasonFolders = defaults.useSeasonFolders;
+	self.parentFolder = defaults.defaultDirectory;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -83,9 +83,8 @@
 	}
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -95,38 +94,36 @@
 
 #pragma mark - Actions
 - (IBAction)addShow {
-	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Adding show", @"Adding show")
-																type:SBNotificationTypeInfo];
+	[TSMessage showNotificationWithTitle:NSLocalizedString(@"Adding show", @"Adding show")
+									type:TSMessageNotificationTypeMessage];
 	
-	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-							show.tvdbID, @"tvdbid",
-							parentFolder.path, @"location",
-							show.languageCode, @"lang",
-							[NSString stringWithFormat:@"%d", useSeasonFolders], @"season_folder",
-							[[SBGlobal qualitiesAsCodes:initialQualities] componentsJoinedByString:@"|"], @"initial",
-							[[SBGlobal qualitiesAsCodes:archiveQualities] componentsJoinedByString:@"|"], @"archive",
-							[status lowercaseString], @"status",
-							nil];
+	NSDictionary *params = @{@"tvdbid": self.show.tvdbID,
+							@"location": self.parentFolder.path,
+							@"lang": self.show.languageCode,
+							@"season_folder": [NSString stringWithFormat:@"%d", self.useSeasonFolders],
+							@"initial": [[SBGlobal qualitiesAsCodes:self.initialQualities] componentsJoinedByString:@"|"],
+							@"archive": [[SBGlobal qualitiesAsCodes:self.archiveQualities] componentsJoinedByString:@"|"],
+							@"status": [self.status lowercaseString]};
 	
 	[self.apiClient runCommand:SickBeardCommandShowAddNew
 									   parameters:params 
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Show has been added", @"Show has been added")
-																											  type:SBNotificationTypeSuccess];
+												  [TSMessage showNotificationWithTitle:NSLocalizedString(@"Show has been added", @"Show has been added")
+																				  type:TSMessageNotificationTypeSuccess];
 												  
 												  RunAfterDelay(1.5, ^{
 													  [self.delegate didAddShow];
 												  });
 											  }
 											  else {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeError];
+												  [TSMessage showNotificationWithTitle:JSON[@"message"]
+																				  type:TSMessageNotificationTypeError];
 											  }
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
 																  message:error.localizedDescription
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  
@@ -136,38 +133,36 @@
 
 - (void)saveDefaults {
 	[TestFlight passCheckpoint:@"Saved server defaults"];
-	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Saving defaults", @"Saving defaults")
-																type:SBNotificationTypeInfo];
+	[TSMessage showNotificationWithTitle:NSLocalizedString(@"Saving defaults", @"Saving defaults")
+																type:TSMessageNotificationTypeMessage];
 	
-	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-							[NSString stringWithFormat:@"%d", useSeasonFolders], @"season_folder",
-							[[SBGlobal qualitiesAsCodes:initialQualities] componentsJoinedByString:@"|"], @"initial",
-							[[SBGlobal qualitiesAsCodes:archiveQualities] componentsJoinedByString:@"|"], @"archive",
-							[status lowercaseString], @"status",
-							nil];
+	NSDictionary *params = @{@"season_folder": [NSString stringWithFormat:@"%d", self.useSeasonFolders],
+							@"initial": [[SBGlobal qualitiesAsCodes:self.initialQualities] componentsJoinedByString:@"|"],
+							@"archive": [[SBGlobal qualitiesAsCodes:self.archiveQualities] componentsJoinedByString:@"|"],
+							@"status": [self.status lowercaseString]};
 	
 	[self.apiClient runCommand:SickBeardCommandSetDefaults
 									   parameters:params 
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {												  
 												  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-												  defaults.useSeasonFolders = useSeasonFolders;
-												  defaults.initialQualities = initialQualities;
-												  defaults.archiveQualities = archiveQualities;
-												  defaults.status = status;
+												  defaults.useSeasonFolders = self.useSeasonFolders;
+												  defaults.initialQualities = self.initialQualities;
+												  defaults.archiveQualities = self.archiveQualities;
+												  defaults.status = self.status;
 												  
 												  [defaults synchronize];
 												  
-												  if (![parentFolder isEqual:defaults.defaultDirectory]) {
+												  if (![self.parentFolder isEqual:defaults.defaultDirectory]) {
 													  [self.apiClient runCommand:SickBeardCommandAddRootDirectory
-																						 parameters:[NSDictionary dictionaryWithObjectsAndKeys:parentFolder.path, @"location", @"1", @"default", nil] 
-																							success:^(AFHTTPRequestOperation *operation, id JSON) {
-																								NSString *result = [JSON objectForKey:@"result"];
+																						 parameters:@{@"location": self.parentFolder.path, @"default": @"1"}
+																							success:^(NSURLSessionDataTask *task, id JSON) {
+																								NSString *result = JSON[@"result"];
 																								
 																								if ([result isEqualToString:RESULT_SUCCESS]) {
-																									NSArray *data = [JSON objectForKey:@"data"];
+																									NSArray *data = JSON[@"data"];
 																									
 																									NSMutableArray *directories = [NSMutableArray arrayWithCapacity:data.count];
 																									for (NSDictionary *dir in data) {
@@ -181,31 +176,31 @@
 																									
 																									[defaults synchronize];
 																									
-																									[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Defaults saved", @"Defaults saved")
-																																								type:SBNotificationTypeSuccess];
+																									[TSMessage showNotificationWithTitle:NSLocalizedString(@"Defaults saved", @"Defaults saved")
+																																								type:TSMessageNotificationTypeSuccess];
 																								}
 																								else {
-																									[[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																																								type:SBNotificationTypeError];
+																									[TSMessage showNotificationWithTitle:JSON[@"message"]
+																																								type:TSMessageNotificationTypeError];
 																								}
 																							}
-																							failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+																							failure:^(NSURLSessionDataTask *task, NSError *error) {
 																								[PRPAlertView showWithTitle:NSLocalizedString(@"Error saving defaults", @"Error saving defaults")
 																													message:error.localizedDescription 
 																												buttonTitle:NSLocalizedString(@"OK", @"OK")];
 																							}];
 												  }
 												  else {
-													  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Defaults saved", @"Defaults saved")
-																												  type:SBNotificationTypeSuccess];
+													  [TSMessage showNotificationWithTitle:NSLocalizedString(@"Defaults saved", @"Defaults saved")
+																												  type:TSMessageNotificationTypeSuccess];
 												  }
 											  }
 											  else {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeError];
+												  [TSMessage showNotificationWithTitle:JSON[@"message"]
+																											  type:TSMessageNotificationTypeError];
 											  }
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error saving defaults", @"Error saving defaults") 
 																  message:error.localizedDescription
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  
@@ -215,26 +210,26 @@
 
 #pragma mark - Quality, Status, and Season Folders
 - (void)statusViewController:(SBStatusViewController *)controller didSelectStatus:(NSString *)stat {
-	status = [[stat capitalizedString] copy];
-	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:kStatusIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+	self.status = [[stat capitalizedString] copy];
+	[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:kStatusIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)qualityViewController:(SBQualityViewController *)controller didSelectQualities:(NSMutableArray *)qualities {
 	[TestFlight passCheckpoint:@"Changed quality options"];
 	
 	if (controller.qualityType == QualityTypeInitial) {
-		initialQualities = qualities;
-		[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:kInitialQualityIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+		self.initialQualities = qualities;
+		[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:kInitialQualityIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
 	}
 	else if (controller.qualityType == QualityTypeArchive) {
-		archiveQualities = qualities;
-		[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:kArchiveQualityIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+		self.archiveQualities = qualities;
+		[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:kArchiveQualityIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
 	}
 }
 
 - (IBAction)useSeasonFoldersChanged:(id)sender {
 	UISwitch *switchy = sender;
-	useSeasonFolders = switchy.on;
+	self.useSeasonFolders = switchy.on;
 }
 
 #pragma mark - UITableViewDataSource
@@ -247,7 +242,7 @@
 	
 	switch (section) {
 		case 0:
-			numberOfRows = defaultDirectories.count;
+			numberOfRows = self.defaultDirectories.count;
 			break;
 			
 		case 1:
@@ -301,14 +296,14 @@
 		return 0;
 	}
 	
-	return 50;
+	return 25;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = nil;
 	
 	if (indexPath.section == 0) {
-		SBRootDirectory *directory = [defaultDirectories objectAtIndex:indexPath.row];
+		SBRootDirectory *directory = self.defaultDirectories[indexPath.row];
 		cell = [tableView dequeueReusableCellWithIdentifier:@"FolderCell"];
 		cell.textLabel.text = directory.path;
 		
@@ -325,13 +320,13 @@
 			case 0:
 				cell = [tableView dequeueReusableCellWithIdentifier:@"TextOptionCell"];
 				cell.textLabel.text = NSLocalizedString(@"Initial Quality", @"Initial Quality");
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", initialQualities.count];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", self.initialQualities.count];
 				break;
 			
 			case 1:
 				cell = [tableView dequeueReusableCellWithIdentifier:@"TextOptionCell"];
 				cell.textLabel.text = NSLocalizedString(@"Archive Quality", @"Archive Quality");
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", archiveQualities.count];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", self.archiveQualities.count];
 				break;
 				
 			case 2:
@@ -345,7 +340,7 @@
 			case 3:
 				cell = [tableView dequeueReusableCellWithIdentifier:@"TextOptionCell"];
 				cell.textLabel.text = NSLocalizedString(@"Status", @"Status");
-				cell.detailTextLabel.text = status;
+				cell.detailTextLabel.text = self.status;
 				break;
 			default:
 				break;
@@ -355,32 +350,11 @@
 		cell = [tableView dequeueReusableCellWithIdentifier:@"SaveDefaultsCell"];
 	}
 	
-	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
-	backgroundView.grouped = YES;
-	backgroundView.applyShadow = NO;
-	
-	SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
-	selectedBackgroundView.grouped = YES;
-	selectedBackgroundView.applyShadow = NO;
-	selectedBackgroundView.selected = YES;
-	
-	if (indexPath.row == [self tableView:tableView numberOfRowsInSection:indexPath.section] - 1) {
-		backgroundView.lastCell = YES;
-		backgroundView.applyShadow = YES;
-		selectedBackgroundView.lastCell = YES;
-		selectedBackgroundView.applyShadow = YES;
-	}
-	
-	cell.backgroundView = backgroundView;
-	cell.selectedBackgroundView = selectedBackgroundView;
-	
 	return cell;
 }
 
 #pragma mark - UITableViewDelegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-	
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {	
 	if (indexPath.section == 0) {
 		if ([indexPath compare:self.parentFolderIndexPath] == NSOrderedSame) {
 			return;
@@ -389,7 +363,7 @@
 		UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
 		if (newCell.accessoryType == UITableViewCellAccessoryNone) {
 			newCell.accessoryType = UITableViewCellAccessoryCheckmark;
-			parentFolder = [defaultDirectories objectAtIndex:indexPath.row];
+			self.parentFolder = self.defaultDirectories[indexPath.row];
 		}
 		
 		UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:self.parentFolderIndexPath];

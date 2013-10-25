@@ -14,12 +14,12 @@
 #import "SVSegmentedControl.h"
 #import "SVProgressHUD.h"
 
-typedef enum {
-	SBLogTypeDebug,
+typedef NS_ENUM(NSUInteger, SBLogType) {
+	SBLogTypeDebug = 0,
 	SBLogTypeInfo,
 	SBLogTypeWarning,
 	SBLogTypeError
-} SBLogType;
+};
 
 @interface SBLogsViewController ()
 @property (nonatomic, strong) NSMutableArray *logs;
@@ -38,26 +38,22 @@ typedef enum {
 		
 	[super viewDidLoad];
 
-	SVSegmentedControl *logControl = [[SVSegmentedControl alloc] initWithSectionTitles:@[
-										  NSLocalizedString(@"Debug", @"Debug"),
-										  NSLocalizedString(@"Info", @"Info"),
-										  NSLocalizedString(@"Warning", @"Warning"),
-										  NSLocalizedString(@"Error", @"Error")]];
+	UISegmentedControl *logControl = [[UISegmentedControl alloc] initWithItems:@[
+																				 NSLocalizedString(@"Debug", @"Debug"),
+																				 NSLocalizedString(@"Info", @"Info"),
+																				 NSLocalizedString(@"Warning", @"Warning"),
+																				 NSLocalizedString(@"Error", @"Error")]];
 	
-	logControl.font = [UIFont boldSystemFontOfSize:12];
+	logControl.tintColor = RGBCOLOR(97, 77, 52);
+	logControl.selectedSegmentIndex = self.logType;
 
-	logControl.thumb.tintColor = RGBCOLOR(127, 92, 59);
-	logControl.changeHandler = ^(NSUInteger newIndex) {
-		[TestFlight passCheckpoint:@"Changed history type"];
-		
-		self.logType = newIndex;
-		[self loadData];
-	};
+	[logControl addTarget:self action:@selector(logTypeChanged:) forControlEvents:UIControlEventValueChanged];
 	
+	UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 	UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:logControl];
 	NSMutableArray *items = [self.toolbarItems mutableCopy];
 	[items insertObject:barItem atIndex:0];
-	self.toolbarItems = @[barItem];
+	self.toolbarItems = @[flex, barItem, flex];
 		
 	self.emptyView.emptyLabel.text = NSLocalizedString(@"No logs found", @"No logs found");
 	
@@ -72,10 +68,8 @@ typedef enum {
 	}
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 #pragma mark - Loading
@@ -107,8 +101,8 @@ typedef enum {
 	
 	[self.apiClient runCommand:SickBeardCommandViewLogs
 									   parameters:@{ @"min_level" : logType }
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {												  
 												  _logs = JSON[@"data"];
@@ -120,25 +114,30 @@ typedef enum {
 											  }
 											  else {
 												  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving logs", @"Error retrieving logs")
-																	  message:[JSON objectForKey:@"message"] 
+																	  message:JSON[@"message"] 
 																  buttonTitle:NSLocalizedString(@"OK", @"OK")];
 											  }
 											  
 											  [self finishDataLoad:nil];
 											  [self.tableView reloadData];
-											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving logs", @"Error retrieving logs") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
 											  
 											  [self finishDataLoad:error];
-											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }];
 }
 
 #pragma mark - Actions
+- (void)logTypeChanged:(UISegmentedControl *)sender {
+	[TestFlight passCheckpoint:@"Changed log type"];
+	
+	self.logType = sender.selectedSegmentIndex;
+	[self loadData];
+}
+
 - (IBAction)done:(id)sender {
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -163,9 +162,13 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSString *log = self.logs[indexPath.row];
-	CGSize logSize = [log sizeWithFont:[UIFont systemFontOfSize:12]
-					 constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)];
-    return logSize.height + 25;
+	CGRect logSize = [log boundingRectWithSize:CGSizeMake(280, CGFLOAT_MAX)
+									   options:NSStringDrawingUsesLineFragmentOrigin
+									attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12]}
+									   context:nil];
+//	CGSize logSize = [log sizeWithFont:[UIFont systemFontOfSize:12]
+//					 constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)];
+    return logSize.size.height + 25;
 }
 
 @end

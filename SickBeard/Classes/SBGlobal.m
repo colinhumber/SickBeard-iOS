@@ -18,29 +18,29 @@ NSString *const SBServerURLDidChangeNotification = @"SBServerURLDidChangeNotific
 	
 	if (!langs) {
 		langs = [[OrderedDictionary alloc] init];
-		[langs setObject:@"zh" forKey:@"Chinese"];
-		[langs setObject:@"hr" forKey:@"Croatian"];
-		[langs setObject:@"cs" forKey:@"Czech"];
-		[langs setObject:@"da" forKey:@"Danish"]; 
-		[langs setObject:@"nl" forKey:@"Dutch"]; 
-		[langs setObject:@"en" forKey:@"English"]; 
-		[langs setObject:@"fi" forKey:@"Finnish"]; 
-		[langs setObject:@"fr" forKey:@"French"]; 
-		[langs setObject:@"de" forKey:@"German"]; 
-		[langs setObject:@"el" forKey:@"Greek"]; 
-		[langs setObject:@"he" forKey:@"Hebrew"]; 
-		[langs setObject:@"hu" forKey:@"Hungarian"]; 
-		[langs setObject:@"it" forKey:@"Italian"]; 
-		[langs setObject:@"ja" forKey:@"Japanese"]; 
-		[langs setObject:@"ko" forKey:@"Korean"]; 
-		[langs setObject:@"no" forKey:@"Norweigan"]; 
-		[langs setObject:@"pl" forKey:@"Polish"]; 
-		[langs setObject:@"pt" forKey:@"Portuguese"]; 
-		[langs setObject:@"ru" forKey:@"Russian"];
-		[langs setObject:@"sl" forKey:@"Slovenian"];
-		[langs setObject:@"es" forKey:@"Spanish"];
-		[langs setObject:@"sv" forKey:@"Swedish"];
-		[langs setObject:@"tr" forKey:@"Turkish"];
+		langs[@"Chinese"] = @"zh";
+		langs[@"Croatian"] = @"hr";
+		langs[@"Czech"] = @"cs";
+		langs[@"Danish"] = @"da"; 
+		langs[@"Dutch"] = @"nl"; 
+		langs[@"English"] = @"en"; 
+		langs[@"Finnish"] = @"fi"; 
+		langs[@"French"] = @"fr"; 
+		langs[@"German"] = @"de"; 
+		langs[@"Greek"] = @"el"; 
+		langs[@"Hebrew"] = @"he"; 
+		langs[@"Hungarian"] = @"hu"; 
+		langs[@"Italian"] = @"it"; 
+		langs[@"Japanese"] = @"ja"; 
+		langs[@"Korean"] = @"ko"; 
+		langs[@"Norweigan"] = @"no"; 
+		langs[@"Polish"] = @"pl"; 
+		langs[@"Portuguese"] = @"pt"; 
+		langs[@"Russian"] = @"ru";
+		langs[@"Slovenian"] = @"sl";
+		langs[@"Spanish"] = @"es";
+		langs[@"Swedish"] = @"sv";
+		langs[@"Turkish"] = @"tr";
 	}
 	
 	return langs;
@@ -51,14 +51,14 @@ NSString *const SBServerURLDidChangeNotification = @"SBServerURLDidChangeNotific
 	
 	if (!qualities) {
 		qualities = [[OrderedDictionary alloc] init];
-		[qualities setObject:@"sdtv" forKey:@"SD TV"];
-		[qualities setObject:@"sddvd" forKey:@"SD DVD"];
-		[qualities setObject:@"hdtv" forKey:@"HD TV"];
-		[qualities setObject:@"hdwebdl" forKey:@"720p WEB-DL"];
-		[qualities setObject:@"hdbluray" forKey:@"720p BluRay"];
-		[qualities setObject:@"fullhdbluray" forKey:@"1080p BluRay"];
-		[qualities setObject:@"unknown" forKey:@"Unknown"];
-		[qualities setObject:@"any" forKey:@"Any"];
+		qualities[@"SD TV"] = @"sdtv";
+		qualities[@"SD DVD"] = @"sddvd";
+		qualities[@"HD TV"] = @"hdtv";
+		qualities[@"720p WEB-DL"] = @"hdwebdl";
+		qualities[@"720p BluRay"] = @"hdbluray";
+		qualities[@"1080p BluRay"] = @"fullhdbluray";
+		qualities[@"Unknown"] = @"unknown";
+		qualities[@"Any"] = @"any";
 	}
 	
 	return qualities;
@@ -69,13 +69,13 @@ NSString *const SBServerURLDidChangeNotification = @"SBServerURLDidChangeNotific
 	
 	if (!qualities) {
 		qualities = [[OrderedDictionary alloc] init];
-		[qualities setObject:@"sddvd" forKey:@"SD DVD"];
-		[qualities setObject:@"hdtv" forKey:@"HD TV"];
-		[qualities setObject:@"hdwebdl" forKey:@"720p WEB-DL"];
-		[qualities setObject:@"hdbluray" forKey:@"720p BluRay"];
-		[qualities setObject:@"fullhdbluray" forKey:@"1080p BluRay"];
-		[qualities setObject:@"unknown" forKey:@"Unknown"];
-		[qualities setObject:@"any" forKey:@"Any"];
+		qualities[@"SD DVD"] = @"sddvd";
+		qualities[@"HD TV"] = @"hdtv";
+		qualities[@"720p WEB-DL"] = @"hdwebdl";
+		qualities[@"720p BluRay"] = @"hdbluray";
+		qualities[@"1080p BluRay"] = @"fullhdbluray";
+		qualities[@"Unknown"] = @"unknown";
+		qualities[@"Any"] = @"any";
 	}
 	
 	return qualities;
@@ -86,10 +86,10 @@ NSString *const SBServerURLDidChangeNotification = @"SBServerURLDidChangeNotific
 	
 	if (!statuses) {
 		statuses = [[OrderedDictionary alloc] init];
-		[statuses setObject:@"skipped" forKey:@"Skipped"];
-		[statuses setObject:@"wanted" forKey:@"Wanted"];
-		[statuses setObject:@"archived" forKey:@"Archived"];
-		[statuses setObject:@"ignored" forKey:@"Ignored"];
+		statuses[@"Skipped"] = @"skipped";
+		statuses[@"Wanted"] = @"wanted";
+		statuses[@"Archived"] = @"archived";
+		statuses[@"Ignored"] = @"ignored";
 	}
 	
 	return statuses;
@@ -100,7 +100,7 @@ NSString *const SBServerURLDidChangeNotification = @"SBServerURLDidChangeNotific
 	NSMutableArray *list = [NSMutableArray array];
 	
 	for (NSString *quality in qualities) {
-		[list addObject:[dict objectForKey:quality]];
+		[list addObject:dict[quality]];
 	}
 	
 	return list;
@@ -113,7 +113,7 @@ NSString *const SBServerURLDidChangeNotification = @"SBServerURLDidChangeNotific
 	for (NSString *code in codes) {
 		NSArray *keys = [dict allKeysForObject:code];
 		if (keys.count > 0) {
-			[list addObject:[keys objectAtIndex:0]];
+			[list addObject:keys[0]];
 		}
 	}
 	
@@ -127,8 +127,8 @@ NSString *const SBServerURLDidChangeNotification = @"SBServerURLDidChangeNotific
 	NSMutableString *string = [NSMutableString string];
 	[string appendString:@"\n\n==================\n"];
 	[string appendString:@"Please leave the following information in the email as it will help us debug any issues.\n"];
-	[string appendFormat:@"App Name: %@\n", [info objectForKey:@"CFBundleDisplayName"]];
-	[string appendFormat:@"Version: %@ (%@)\n", [info	objectForKey:@"CFBundleShortVersionString"], [info objectForKey:@"CFBundleVersion"]];
+	[string appendFormat:@"App Name: %@\n", info[@"CFBundleDisplayName"]];
+	[string appendFormat:@"Version: %@ (%@)\n", info[@"CFBundleShortVersionString"], info[@"CFBundleVersion"]];
 	[string appendFormat:@"Model: %@\n", device.model];
 	[string appendFormat:@"OS Version: %@ %@\n", device.systemName, device.systemVersion];
 	
@@ -152,7 +152,7 @@ NSString *const SBServerURLDidChangeNotification = @"SBServerURLDidChangeNotific
 	// put each object into a section
 	for (id object in array) {
 		NSInteger index = [collation sectionForObject:object collationStringSelector:selector];
-		[(NSMutableArray*)[unsortedSections objectAtIndex:index] addObject:object];
+		[(NSMutableArray*)unsortedSections[index] addObject:object];
 	}
 	
 	NSMutableArray *sections = [NSMutableArray arrayWithCapacity:sectionCount];

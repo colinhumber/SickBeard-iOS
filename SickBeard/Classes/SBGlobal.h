@@ -14,6 +14,9 @@
 #define kDonateLink @"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2QFWVTWEMQRSN"
 #define XDELEGATE (SBAppDelegate*)[UIApplication sharedApplication].delegate
 
+#define RGBCOLOR(r, g, b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
+#define RGBACOLOR(r, g, b, a) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
+
 // posted when the user changes any information about the server. The notification.object sent will be the updates SBServer instance
 extern NSString *const SBServerURLDidChangeNotification;
 

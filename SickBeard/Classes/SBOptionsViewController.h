@@ -15,14 +15,7 @@
 @class SBShow;
 @class SBRootDirectory;
 
-@interface SBOptionsViewController : SBBaseTableViewController <SBQualityViewControllerDelegate, SBStatusViewControllerDelegate, UITextFieldDelegate> {
-	NSMutableArray *initialQualities;
-	NSMutableArray *archiveQualities;
-	NSMutableArray *defaultDirectories;
-	NSString *status;
-	SBRootDirectory *parentFolder;
-	BOOL useSeasonFolders;
-}
+@interface SBOptionsViewController : SBBaseTableViewController <SBQualityViewControllerDelegate, SBStatusViewControllerDelegate, UITextFieldDelegate>
 
 - (IBAction)useSeasonFoldersChanged:(id)sender;
 

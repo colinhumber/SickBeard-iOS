@@ -6,7 +6,7 @@
 //  Copyright 2011 TestFlight. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#define TESTFLIGHT_SDK_VERSION @"1.3.0-beta"
+#define TESTFLIGHT_SDK_VERSION @"2.1.1"
 #undef TFLog
 
 #if __cplusplus
@@ -16,8 +16,9 @@ extern "C" {
      * Remote Logging
      * Note: All Logging is synchronous, see the README for more information.
      */
-    void TFLog(NSString *format, ...);
+    void TFLog(NSString *format, ...) __attribute__((format(__NSString__, 1, 2)));
     void TFLogv(NSString *format, va_list arg_list);
+    void TFLogPreFormatted(NSString *message);
 #if __cplusplus
 }
 #endif
@@ -30,7 +31,8 @@ extern "C" {
 
 /**
  * Add custom environment information
- * If you want to track custom information such as a user name from your application you can add it here
+ * If you want to track custom information such as a user name from your application you can add it here.
+ * NB: This information must be added before the session starts, it is recorded only on session start.
  * 
  * @param information A string containing the environment you are storing
  * @param key The key to store the information with
@@ -63,12 +65,6 @@ extern "C" {
  * @param checkpointName The name of the checkpoint, this should be a static string
  */
 + (void)passCheckpoint:(NSString *)checkpointName;
-
-/**
- * Use to manually flush data to TestFlight.
- * TestFlight automatically flushes at the end of a session and every `TFOptionFlushSecondsInterval`.
- */
-+ (void)flush;
 
 /**
  * Submits custom feedback to the site. Sends the data in feedback to the site. This is to be used as the method to submit
@@ -110,10 +106,12 @@ extern "C" {
  * The values should be NSNumber BOOLs (`[NSNumber numberWithBool:YES]` or `@YES`)
  */
 extern NSString *const TFOptionDisableInAppUpdates; // Defaults to @NO. Setting to @YES, disables the in app update screen shown in BETA apps when there is a new version available on TestFlight.
-extern NSString *const TFOptionFlushSecondsInterval; // Defaults to @60. Set to a number. @0 turns off the flush timer.
+extern NSString *const TFOptionFlushSecondsInterval; // Defaults to @60. Set to a number. @0 turns off the flush timer. 30 seconds is the minimum flush interval.
 extern NSString *const TFOptionLogOnCheckpoint; // Defaults to @YES. Because logging is synchronous, if you have a high preformance app, you might want to turn this off.
 extern NSString *const TFOptionLogToConsole; // Defaults to @YES. Prints remote logs to Apple System Log.
 extern NSString *const TFOptionLogToSTDERR; // Defaults to @YES. Sends remote logs to STDERR when debugger is attached.
 extern NSString *const TFOptionReinstallCrashHandlers; // If set to @YES: Reinstalls crash handlers, to be used if a third party library installs crash handlers overtop of the TestFlight Crash Handlers.
+extern NSString *const TFOptionReportCrashes; // Defaults to @YES. If set to @NO, crash handlers are never installed. Must be set **before** calling `takeOff:`.
 extern NSString *const TFOptionSendLogOnlyOnCrash; // Defaults to @NO. Setting to @YES stops remote logs from being sent when sessions end. They would only be sent in the event of a crash.
+extern NSString *const TFOptionSessionKeepAliveTimeout; // Defaults to @30. This is the amount of time a user can leave the app for and still continue the same session when they come back. If they are away from the app for longer, a new session is created when they come back. Must be a number. Change to @0 to turn off.
 

@@ -7,24 +7,15 @@
 //
 
 #import "SBShowDetailsHeaderView.h"
-#import "SBCellBackground.h"
 
 @implementation SBShowDetailsHeaderView
 
-@synthesize backgroundView;
-@synthesize showImageView;
-@synthesize showNameLabel;
-@synthesize statusLabel;
-@synthesize networkLabel;
-@synthesize episodeCountLabel;
-@synthesize progressBar;
-
 - (void)awakeFromNib {
-	self.progressBar.borderColor = RGBCOLOR(72, 34, 13);
-	self.progressBar.barColor = RGBCOLOR(72, 34, 13);
+	self.progressBar.borderColor = RGBCOLOR(97, 77, 52);
+	self.progressBar.barColor = RGBCOLOR(97, 77, 52);
 	self.progressBar.backgroundColor = [UIColor clearColor];
 	
-	self.showImageView.initialImage = [UIImage imageNamed:@"placeholder"];
+	self.showImageView.image = [UIImage imageNamed:@"placeholder"];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -35,15 +26,5 @@
     }
     return self;
 }
-
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

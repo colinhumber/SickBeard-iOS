@@ -8,8 +8,8 @@
 
 #import "SBCreditsViewController.h"
 #import "SBSectionHeaderView.h"
-#import "SBCellBackground.h"
-#import "SVModalWebViewController.h"
+#import "CRNavigationController.h"
+#import "SBWebViewController.h"
 
 @interface SBCreditsViewController ()
 @property (nonatomic, strong) NSDictionary *credits;
@@ -33,17 +33,8 @@
 	self.credits = [NSDictionary dictionaryWithContentsOfFile:path];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 - (NSArray*)sortedKeys {
@@ -58,10 +49,10 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {	
-	NSString *sectionKey = [[self sortedKeys] objectAtIndex:section];
-	NSDictionary *creditDict = [self.credits objectForKey:sectionKey];
+	NSString *sectionKey = [self sortedKeys][section];
+	NSDictionary *creditDict = (self.credits)[sectionKey];
 
-	return [creditDict objectForKey:@"groupName"];
+	return creditDict[@"groupName"];
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -83,48 +74,29 @@
 		return 0;
 	}
 	
-	return 50;
+	return 25;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	NSString *sectionKey = [[self sortedKeys] objectAtIndex:section];
-	NSDictionary *creditDict = [self.credits objectForKey:sectionKey];
+	NSString *sectionKey = [self sortedKeys][section];
+	NSDictionary *creditDict = (self.credits)[sectionKey];
 	
-	return [[creditDict objectForKey:@"items"] count];
+	return [creditDict[@"items"] count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	NSString *sectionKey = [[self sortedKeys] objectAtIndex:indexPath.section];
-	NSDictionary *creditDict = [self.credits objectForKey:sectionKey];
-	NSArray *creds = [creditDict objectForKey:@"items"];
-	NSDictionary *credit = [creds objectAtIndex:indexPath.row];
+	NSString *sectionKey = [self sortedKeys][indexPath.section];
+	NSDictionary *creditDict = (self.credits)[sectionKey];
+	NSArray *creds = creditDict[@"items"];
+	NSDictionary *credit = creds[indexPath.row];
 	
 	UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"CreditCell"];
-	
-	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
-	backgroundView.grouped = YES;
-	backgroundView.applyShadow = NO;
-	
-	SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
-	selectedBackgroundView.grouped = YES;
-	selectedBackgroundView.applyShadow = NO;
-	selectedBackgroundView.selected = YES;
-	
-	if (indexPath.row == [self tableView:tv numberOfRowsInSection:indexPath.section] - 1) {
-		backgroundView.lastCell = YES;
-		backgroundView.applyShadow = YES;
-		selectedBackgroundView.lastCell = YES;
-		selectedBackgroundView.applyShadow = YES;
-	}
-	
-	cell.backgroundView = backgroundView;
-	cell.selectedBackgroundView = selectedBackgroundView;
 
-	cell.textLabel.text = [credit objectForKey:@"role"];
-	cell.detailTextLabel.text = [credit objectForKey:@"name"];
+	cell.textLabel.text = credit[@"role"];
+	cell.detailTextLabel.text = credit[@"name"];
 	
-	NSURL *url = [NSURL URLWithString:[credit objectForKey:@"url"]];
+	NSURL *url = [NSURL URLWithString:credit[@"url"]];
 	if ([[url scheme] isEqualToString:@"sbSegue"]) {
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
@@ -139,18 +111,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-	NSString *sectionKey = [[self sortedKeys] objectAtIndex:indexPath.section];
-	NSDictionary *creditDict = [self.credits objectForKey:sectionKey];
-	NSArray *creds = [creditDict objectForKey:@"items"];
-	NSDictionary *credit = [creds objectAtIndex:indexPath.row];
+	NSString *sectionKey = [self sortedKeys][indexPath.section];
+	NSDictionary *creditDict = (self.credits)[sectionKey];
+	NSArray *creds = creditDict[@"items"];
+	NSDictionary *credit = creds[indexPath.row];
 	
-	NSURL *url = [NSURL URLWithString:[credit objectForKey:@"url"]];
+	NSURL *url = [NSURL URLWithString:credit[@"url"]];
 	if (url) {
 		if ([[url scheme] rangeOfString:@"http"].location != NSNotFound) {
-			SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithURL:url];
-			webViewController.toolbar.tintColor = nil;
-			webViewController.toolbar.barStyle = UIBarStyleBlack;
-			webViewController.availableActions = SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink | SVWebViewControllerAvailableActionsOpenInSafari;		
+			SBWebViewController *webViewController = [[SBWebViewController alloc] initWithURL:url];
+			
 			[self presentViewController:webViewController animated:YES completion:nil];
 		}
 		else if ([[url scheme] isEqualToString:@"sbSegue"]) {

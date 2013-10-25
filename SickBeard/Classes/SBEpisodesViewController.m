@@ -17,6 +17,7 @@
 #import "ComingEpisodeCell.h"
 #import "SBSectionHeaderView.h"
 #import "SVProgressHUD.h"
+#import <AFNetworking/UIImageView+AFNetworking.h>
 
 @interface SBEpisodesViewController () {
 	OrderedDictionary *comingEpisodes;
@@ -48,9 +49,9 @@
 		SBEpisodeDetailsViewController *vc = segue.destinationViewController;
 		
 		NSArray *keys = [comingEpisodes allKeys];
-		NSString *sectionKey = [keys objectAtIndex:indexPath.section];
+		NSString *sectionKey = keys[indexPath.section];
 		
-		SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:indexPath.row];
+		SBComingEpisode *episode = comingEpisodes[sectionKey][indexPath.row];
 
 		vc.episode = episode;
 	}
@@ -61,6 +62,8 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	[super viewDidLoad];
+	
+	self.tableView.contentInset = UIEdgeInsetsMake(self.navigationController.navigationBar.height + [UIApplication sharedApplication].statusBarFrame.size.height, 0, self.navigationController.toolbar.height, 0);
 	
 	_menuFlags.menuIsShowing = NO;
 	_menuFlags.menuIsHiding = NO;
@@ -81,7 +84,6 @@
 											 selector:@selector(menuControllerDidShow:)
 												 name:UIMenuControllerDidShowMenuNotification
 											   object:nil];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -102,10 +104,8 @@
 	}
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 #pragma mark - Actions
@@ -121,17 +121,17 @@
 	
 	[self.apiClient runCommand:SickBeardCommandComingEpisodes
 									   parameters:nil 
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  comingEpisodes = [[OrderedDictionary alloc] init];
 												  
 												  NSMutableArray *episodes = [NSMutableArray array];
-												  NSDictionary *dataDict = [JSON objectForKey:@"data"];
+												  NSDictionary *dataDict = JSON[@"data"];
 												  
 												  for (NSString *key in [dataDict allKeys]) {
-													  for (NSDictionary *epDict in [dataDict objectForKey:key]) {
+													  for (NSDictionary *epDict in dataDict[key]) {
 														  SBComingEpisode *ep = [SBComingEpisode itemWithDictionary:epDict];
 														  [episodes addObject:ep];
 													  }
@@ -161,25 +161,22 @@
 													  }
 												  }
 												  
-												  if (past.count) [comingEpisodes setObject:past forKey:@"Past"];
-												  if (today.count) [comingEpisodes setObject:today forKey:@"Today"];
-												  if (thisWeek.count) [comingEpisodes setObject:thisWeek forKey:@"This Week"];
-												  if (nextWeek.count) [comingEpisodes setObject:nextWeek forKey:@"Next Week"];
-												  if (future.count) [comingEpisodes setObject:future forKey:@"Future"];												  
+												  if (past.count) comingEpisodes[@"Past"] = past;
+												  if (today.count) comingEpisodes[@"Today"] = today;
+												  if (thisWeek.count) comingEpisodes[@"This Week"] = thisWeek;
+												  if (nextWeek.count) comingEpisodes[@"Next Week"] = nextWeek;
+												  if (future.count) comingEpisodes[@"Future"] = future;												  
 												  
 												  [self.tableView reloadData];
 												  
 												  [self finishDataLoad:nil];
-												  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
-
 											  }
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving episodes", @"Error retrieving episodes")
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];			
 											  [self finishDataLoad:error];
-											  [self.refreshHeader egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 										  }];
 }
 
@@ -190,7 +187,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	return [[comingEpisodes allKeys] objectAtIndex:section];
+	return [comingEpisodes allKeys][section];
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -202,14 +199,14 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return 50;
+	return 25;
 }
 	
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	NSArray *keys = [comingEpisodes allKeys];
-	NSString *sectionKey = [keys objectAtIndex:section];
+	NSString *sectionKey = keys[section];
 	
-	return [[comingEpisodes objectForKey:sectionKey] count];
+	return [comingEpisodes[sectionKey] count];
 }
 
 
@@ -217,23 +214,17 @@
 	ComingEpisodeCell *cell = (ComingEpisodeCell*)[tv dequeueReusableCellWithIdentifier:@"ComingEpisodeCell"];
 	
 	NSArray *keys = [comingEpisodes allKeys];
-	NSString *sectionKey = [keys objectAtIndex:indexPath.section];
-	SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:indexPath.row];
+	NSString *sectionKey = keys[indexPath.section];
+	SBComingEpisode *episode = comingEpisodes[sectionKey][indexPath.row];
 
 	cell.showNameLabel.text = episode.show.showName;
 	cell.networkLabel.text = episode.show.network;
 	cell.episodeNameLabel.text = episode.name;
 	cell.airDateLabel.text = [NSString stringWithFormat:@"%@ (%@)", [episode.airDate displayString], [SBShow showQualityAsString:episode.show.quality]];
 	
-	[cell.showImageView setPathToNetworkImage:[[self.apiClient posterURLForTVDBID:episode.show.tvdbID] absoluteString]];
+	[cell.showImageView setImageWithURL:[self.apiClient posterURLForTVDBID:episode.show.tvdbID]
+					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
 
-	if (indexPath.row == [self tableView:tv numberOfRowsInSection:indexPath.section] - 1) {
-		cell.lastCell = YES;
-	}
-	else {
-		cell.lastCell = NO;
-	}
-	
 	UILongPressGestureRecognizer *gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showMenu:)];
 	[cell addGestureRecognizer:gesture];
 	
@@ -293,9 +284,9 @@
 		[menuItems addObject:item1];
 		
 		NSArray *keys = [comingEpisodes allKeys];
-		NSString *sectionKey = [keys objectAtIndex:menuIndexPath.section];
-		SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:menuIndexPath.row];
-		if ([[comingEpisodes objectForKey:@"Past"] containsObject:episode]) {
+		NSString *sectionKey = keys[menuIndexPath.section];
+		SBComingEpisode *episode = comingEpisodes[sectionKey][menuIndexPath.row];
+		if ([comingEpisodes[@"Past"] containsObject:episode]) {
 			[menuItems addObject:[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Set Status", @"Set Status") action:@selector(setEpisodeStatus)]];
 		}
 		
@@ -310,33 +301,32 @@
 
 - (void)searchForEpisode {
 	NSArray *keys = [comingEpisodes allKeys];
-	NSString *sectionKey = [keys objectAtIndex:menuIndexPath.section];
-	SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:menuIndexPath.row];
+	NSString *sectionKey = keys[menuIndexPath.section];
+	SBComingEpisode *episode = comingEpisodes[sectionKey][menuIndexPath.row];
 
-	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-							episode.show.tvdbID, @"tvdbid", 
-							[NSNumber numberWithInt:episode.season], @"season",
-							[NSNumber numberWithInt:episode.number], @"episode", nil];
+	NSDictionary *params = @{@"tvdbid": episode.show.tvdbID, 
+							@"season": @(episode.season),
+							@"episode": @(episode.number)};
 	
-	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Searching for episode", @"Searching for episode")
-																type:SBNotificationTypeInfo];
+	[TSMessage showNotificationWithTitle:NSLocalizedString(@"Searching for episode", @"Searching for episode")
+									type:TSMessageNotificationTypeMessage];
 	
 	[self.apiClient runCommand:SickBeardCommandEpisodeSearch
 									   parameters:params 
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading")
-																											  type:SBNotificationTypeInfo];
+												  [TSMessage showNotificationWithTitle:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading")
+																				  type:TSMessageNotificationTypeMessage];
 												  [self loadData];
 											  }
 											  else {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeError];
+												  [TSMessage showNotificationWithTitle:JSON[@"message"]
+																				  type:TSMessageNotificationTypeError];
 											  }
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	
@@ -350,7 +340,7 @@
 	UIMenuItem *item3 = [[UIMenuItem alloc] initWithTitle:[SBComingEpisode episodeStatusAsString:EpisodeStatusArchived] action:@selector(setEpisodeStatusToArchived)];
 	UIMenuItem *item4 = [[UIMenuItem alloc] initWithTitle:[SBComingEpisode episodeStatusAsString:EpisodeStatusIgnored] action:@selector(setEpisodeStatusToIgnored)];
 	
-	menu.menuItems = [NSArray arrayWithObjects:item1, item2, item3, item4, nil];
+	menu.menuItems = @[item1, item2, item3, item4];
 	
 	RunAfterDelay(0.3, ^{
 		[menu setMenuVisible:YES animated:YES];
@@ -375,36 +365,35 @@
 
 - (void)changeEpisodeStatus:(EpisodeStatus)status {
 	NSArray *keys = [comingEpisodes allKeys];
-	NSString *sectionKey = [keys objectAtIndex:menuIndexPath.section];
-	SBComingEpisode *episode = [[comingEpisodes objectForKey:sectionKey] objectAtIndex:menuIndexPath.row];
+	NSString *sectionKey = keys[menuIndexPath.section];
+	SBComingEpisode *episode = comingEpisodes[sectionKey][menuIndexPath.row];
 	
 	NSString *statusString = [[SBComingEpisode episodeStatusAsString:status] lowercaseString];
 	
-	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-							episode.show.tvdbID, @"tvdbid", 
-							[NSNumber numberWithInt:episode.season], @"season",
-							[NSNumber numberWithInt:episode.number], @"episode",
-							statusString, @"status", nil];
+	NSDictionary *params = @{@"tvdbid": episode.show.tvdbID, 
+							@"season": @(episode.season),
+							@"episode": @(episode.number),
+							@"status": statusString};
 	
-	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
-																type:SBNotificationTypeInfo];
+	[TSMessage showNotificationWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
+									type:TSMessageNotificationTypeMessage];
 	
 	[self.apiClient runCommand:SickBeardCommandEpisodeSetStatus
 									   parameters:params 
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Status successfully set!", @"Status successfully set!")
-																											  type:SBNotificationTypeSuccess];
+												  [TSMessage showNotificationWithTitle:NSLocalizedString(@"Status successfully set!", @"Status successfully set!")
+																											  type:TSMessageNotificationTypeSuccess];
 												  [self loadData];
 											  }
 											  else {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeError];
+												  [TSMessage showNotificationWithTitle:JSON[@"message"]
+																											  type:TSMessageNotificationTypeError];
 											  }
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error setting status", @"Error setting status") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	

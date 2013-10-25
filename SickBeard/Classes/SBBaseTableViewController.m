@@ -12,13 +12,8 @@
 
 @implementation SBBaseTableViewController
 
-@synthesize enableRefreshHeader;
-@synthesize enableEmptyView;
-@synthesize emptyView;
-@synthesize tableView;
-@synthesize refreshHeader;
-@synthesize isDataLoading;
-@synthesize loadDate;
+@synthesize isDataLoading = _isDataLoading;
+@synthesize loadDate = _loadDate;
 
 - (void)commonInit {
 	self.enableRefreshHeader = YES;
@@ -64,23 +59,14 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-	self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 	
-	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
 	self.tableView.tableFooterView = [[UIView alloc] init];
 
 	if (self.enableRefreshHeader) {
-		self.refreshHeader = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height) 
-														  arrowImageName:@"blackArrow" 
-															   textColor:[UIColor blackColor] 
-														 backgroundColor:[UIColor clearColor] 
-														   activityStyle:UIActivityIndicatorViewStyleWhite];
-		self.refreshHeader.delegate = self;
-		self.refreshHeader.defaultInsets = self.tableView.contentInset;
-		[self.tableView addSubview:self.refreshHeader];
-		[self.refreshHeader refreshLastUpdatedDate];
+		self.refreshControl = [[UIRefreshControl alloc] init];
+		[self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+		[self.tableView addSubview:self.refreshControl];
 	}
 	
 	if (self.enableEmptyView) {
@@ -99,6 +85,11 @@
 		self.emptyView = [[SBEmptyView alloc] initWithFrame:CGRectMake(0, 0, 320, emptyViewHeight)];
 		[self.view addSubview:self.emptyView];
 	}
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	[TSMessage setDefaultViewController:self.navigationController];
 }
 
 - (void)refresh:(id)sender {
@@ -121,6 +112,8 @@
 	if (!error) {
 		self.loadDate = [NSDate date];
 	}
+	
+	[self.refreshControl endRefreshing];
 }
 
 - (void)showEmptyView:(BOOL)show animated:(BOOL)animated {
@@ -137,28 +130,28 @@
 	}
 }
 
-#pragma mark - UIScrollViewDelegate Methods
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {	
-	[refreshHeader egoRefreshScrollViewDidScroll:scrollView];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-	[refreshHeader egoRefreshScrollViewDidEndDragging:scrollView];	
-}
-
-
-#pragma mark - EGORefreshTableHeaderDelegate Methods
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view {	
-	[self loadData];
-}
-
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view {	
-	return self.isDataLoading; // should return if data source model is reloading
-}
-
-- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view {
-	return self.loadDate; // should return date data source was last changed
-}
+//#pragma mark - UIScrollViewDelegate Methods
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {	
+//	[refreshHeader egoRefreshScrollViewDidScroll:scrollView];
+//}
+//
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+//	[refreshHeader egoRefreshScrollViewDidEndDragging:scrollView];	
+//}
+//
+//
+//#pragma mark - EGORefreshTableHeaderDelegate Methods
+//- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view {	
+//	[self loadData];
+//}
+//
+//- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view {	
+//	return self.isDataLoading; // should return if data source model is reloading
+//}
+//
+//- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view {
+//	return self.loadDate; // should return date data source was last changed
+//}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

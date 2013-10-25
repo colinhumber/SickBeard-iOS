@@ -15,7 +15,7 @@
 #import "NSDate+Utilities.h"
 #import "SBEpisodeDetailsHeaderView.h"
 #import "SBSectionHeaderView.h"
-#import "SBCellBackground.h"
+#import <AFNetworking/UIImageView+AFNetworking.h>
 
 #define kDefaultDescriptionFontSize 13;
 #define kDefaultDescriptionFrame CGRectMake(20, 9, 280, 162)
@@ -30,14 +30,12 @@
 
 @property (nonatomic, strong) IBOutlet SBEpisodeDetailsHeaderView *currentHeaderView;
 @property (nonatomic, strong) IBOutlet SBEpisodeDetailsHeaderView *nextHeaderView;
-@property (nonatomic, strong) IBOutlet SBCellBackground *headerContainerView;
 @property (nonatomic, strong) IBOutlet UIView *containerView;
 
 @property (nonatomic, strong) IBOutlet UITextView *descriptionTextView;
-@property (nonatomic, strong) IBOutlet NINetworkImageView *showPosterImageView;
+@property (nonatomic, strong) IBOutlet UIImageView *showPosterImageView;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
 @property (nonatomic, strong) IBOutlet SBSectionHeaderView *headerView;
-@property (nonatomic, strong) IBOutlet SBCellBackground *episodeDescriptionBackground;
 
 @end
 
@@ -50,26 +48,49 @@
 	
 	self.title = NSLocalizedString(@"Details", @"Details");
 
-	[self.showPosterImageView setPathToNetworkImage:[[self.apiClient bannerURLForTVDBID:self.episode.show.tvdbID] absoluteString]];
+	__weak __typeof(&*self)weakSelf = self;
+	NSURLRequest *bannerRequest = [NSURLRequest requestWithURL:[self.apiClient bannerURLForTVDBID:self.episode.show.tvdbID]];
+	[self.showPosterImageView setImageWithURLRequest:bannerRequest
+									placeholderImage:nil
+											 success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+												 CGSize size = CGSizeMake(340.0f, 63.0f);
+												 UIGraphicsBeginImageContextWithOptions(size, YES, 0.0f);
+												 [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+												 UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+												 UIGraphicsEndImageContext();
+												 
+												 weakSelf.showPosterImageView.image = newImage;
+											 } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+												 
+											 }];
+	
+	UIInterpolatingMotionEffect *xMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+	xMotionEffect.minimumRelativeValue = @(-10);
+	xMotionEffect.maximumRelativeValue = @(10);
+	
+	UIInterpolatingMotionEffect *yMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+	yMotionEffect.minimumRelativeValue = @(-5);
+	yMotionEffect.maximumRelativeValue = @(5);
 
+	UIMotionEffectGroup *motionGroup = [UIMotionEffectGroup new];
+	motionGroup.motionEffects = @[xMotionEffect, yMotionEffect];
+	
+	[self.showPosterImageView addMotionEffect:motionGroup];
+	
 	self.headerView.sectionLabel.text = NSLocalizedString(@"Episode Summary", @"Episode Summary");
-	self.episodeDescriptionBackground.grouped = YES;
 	
 	[self updateHeaderView];
 	[self loadData];
 	
 	if ([UIScreen mainScreen].bounds.size.height == 568) {
-		self.episodeDescriptionBackground.height += 88;
 		self.descriptionTextView.height += 88;
 	}
 	
     [super viewDidLoad];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 #pragma mark - Loading
@@ -99,20 +120,19 @@
 						 self.descriptionTextView.alpha = 0;
 					 }];
 	
-	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-							self.episode.show.tvdbID, @"tvdbid",
-							[NSNumber numberWithInt:self.episode.season], @"season",
-							[NSNumber numberWithInt:self.episode.number], @"episode", nil];
+	NSDictionary *params = @{@"tvdbid": self.episode.show.tvdbID,
+							@"season": @(self.episode.season),
+							@"episode": @(self.episode.number)};
 
 	[self.spinner startAnimating];
 	
 	[self.apiClient runCommand:SickBeardCommandEpisode
 									   parameters:params
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  self.episode.episodeDescription = [[JSON objectForKey:@"data"] objectForKey:@"description"];												  
+												  self.episode.episodeDescription = JSON[@"data"][@"description"];												  
 											  }
 											  else {
 												  self.episode.episodeDescription = NSLocalizedString(@"Unable to retrieve episode description", @"Unable to retrieve episode description");
@@ -129,7 +149,7 @@
 											  
 											  [self.spinner stopAnimating];
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 											  [self.spinner stopAnimating];
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving episode", @"Error retrieving episode") 
 																  message:[NSString stringWithFormat:NSLocalizedString(@"Could not retrieve episode details \n%@", @"Could not retrieve episode details \n%@"), error.localizedDescription] 
@@ -199,29 +219,28 @@
 }
 
 - (void)searchForEpisode {
-	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-							self.episode.show.tvdbID, @"tvdbid", 
-							[NSNumber numberWithInt:self.episode.season], @"season",
-							[NSNumber numberWithInt:self.episode.number], @"episode", nil];
+	NSDictionary *params = @{@"tvdbid": self.episode.show.tvdbID, 
+							@"season": @(self.episode.season),
+							@"episode": @(self.episode.number)};
 
-	[[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Searching for episode", @"Searching for episode")
-																type:SBNotificationTypeInfo];
+	[TSMessage showNotificationWithTitle:NSLocalizedString(@"Searching for episode", @"Searching for episode")
+									type:TSMessageNotificationTypeMessage];
 
 	[self.apiClient runCommand:SickBeardCommandEpisodeSearch
 									   parameters:params 
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading")
-																											  type:SBNotificationTypeSuccess];
+												  [TSMessage showNotificationWithTitle:NSLocalizedString(@"Episode found and is downloading", @"Episode found and is downloading")
+																				  type:TSMessageNotificationTypeSuccess];
 											  }
 											  else {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeSuccess];
+												  [TSMessage showNotificationWithTitle:JSON[@"message"]
+																				  type:TSMessageNotificationTypeSuccess];
 											  }
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error retrieving shows", @"Error retrieving shows") 
 																  message:[NSString stringWithFormat:@"Could not retrieve shows \n%@", error.localizedDescription] 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];
@@ -245,30 +264,29 @@
 - (void)performSetEpisodeStatus:(EpisodeStatus)status {
 	NSString *statusString = [[SBEpisode episodeStatusAsString:status] lowercaseString];
 	
-	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-							self.episode.show.tvdbID, @"tvdbid", 
-							[NSNumber numberWithInt:self.episode.season], @"season",
-							[NSNumber numberWithInt:self.episode.number], @"episode",
-							statusString, @"status", nil];
+	NSDictionary *params = @{@"tvdbid": self.episode.show.tvdbID, 
+							@"season": @(self.episode.season),
+							@"episode": @(self.episode.number),
+							@"status": statusString};
 	
-	[[SBNotificationManager sharedManager] queueNotificationWithText:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
-																type:SBNotificationTypeInfo];
+	[TSMessage showNotificationWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Setting episode status to %@", @"Setting episode status to %@"), statusString]
+									type:TSMessageNotificationTypeMessage];
 	
 	[self.apiClient runCommand:SickBeardCommandEpisodeSetStatus
 									   parameters:params 
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:NSLocalizedString(@"Status successfully set!", @"Status successfully set!")
-																											  type:SBNotificationTypeSuccess];
+												  [TSMessage showNotificationWithTitle:NSLocalizedString(@"Status successfully set!", @"Status successfully set!")
+																				  type:TSMessageNotificationTypeSuccess];
 											  }
 											  else {
-												  [[SBNotificationManager sharedManager] queueNotificationWithText:JSON[@"message"]
-																											  type:SBNotificationTypeError];
+												  [TSMessage showNotificationWithTitle:JSON[@"message"]
+																				  type:TSMessageNotificationTypeError];
 											  }
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error setting status", @"Error setting status") 
 																  message:error.localizedDescription 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];	

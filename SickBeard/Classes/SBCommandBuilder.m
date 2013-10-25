@@ -42,7 +42,7 @@
 }
 
 + (NSString*)URLForCommand:(SickBeardCommand)command server:(SBServer*)server params:(NSMutableDictionary*)params {
-	NSArray *commandArray = [NSArray arrayWithObject:[NSNumber numberWithInteger:command]];
+	NSArray *commandArray = @[@(command)];
 	
 	return [self URLForCommands:commandArray server:server params:params];
 }

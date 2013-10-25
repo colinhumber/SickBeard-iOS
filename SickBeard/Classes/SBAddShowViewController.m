@@ -12,9 +12,8 @@
 #import "UIImageView+AFNetworking.h"
 #import "SBShow.h"
 #import "SBOptionsViewController.h"
-#import "SBCellBackground.h"
 #import "SBSectionHeaderView.h"
-#import "SVProgressHUD.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @implementation SBAddShowViewController
 
@@ -31,9 +30,9 @@
 		NSIndexPath *ip = [self.tableView indexPathForSelectedRow];
 		
 		SBShow *show = [[SBShow alloc] init];
-		show.tvdbID = [[results objectAtIndex:ip.row] objectForKey:@"tvdbid"];
-		show.showName = [[results objectAtIndex:ip.row] objectForKey:@"name"];
-		show.languageCode = [[SBGlobal validLanguages] objectForKey:currentLanguage];
+		show.tvdbID = results[ip.row][@"tvdbid"];
+		show.showName = results[ip.row][@"name"];
+		show.languageCode = [SBGlobal validLanguages][currentLanguage];
 		
 		vc.show = show;
 	}
@@ -44,8 +43,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	currentLanguage = @"English";
-	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
-
+	
 	self.languagePickerView.top = self.view.height - self.navigationController.navigationBar.height;
 	
     [super viewDidLoad];
@@ -63,10 +61,8 @@
 	[SVProgressHUD dismiss];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotate {
+	return NO;
 }
 
 #pragma mark - Actions
@@ -104,17 +100,15 @@
 	
 	[self hidePicker];
 
-	NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-							showNameTextField.text, @"name",
-							[[SBGlobal validLanguages] objectForKey:currentLanguage], @"lang",
-							nil];
+	NSDictionary *params = @{@"name": showNameTextField.text,
+							@"lang": [SBGlobal validLanguages][currentLanguage]};
 	
 	isSearching = YES;
 	
 	[self.apiClient runCommand:SickBeardCommandSearchTVDB
 									   parameters:params 
-										  success:^(AFHTTPRequestOperation *operation, id JSON) {
-											  NSString *result = [JSON objectForKey:@"result"];
+										  success:^(NSURLSessionDataTask *task, id JSON) {
+											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
 												  dispatch_async(dispatch_get_main_queue(), ^{
@@ -122,11 +116,11 @@
 													  //[self.hud hide]; 
 												  });
 												  
-												  results = [[JSON objectForKey:@"data"] objectForKey:@"results"];
+												  results = JSON[@"data"][@"results"];
 												  [self.tableView reloadData];
 											  }
 										  }
-										  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+										  failure:^(NSURLSessionDataTask *task, NSError *error) {
 											  [PRPAlertView showWithTitle:NSLocalizedString(@"Error searching for show", @"Error searching for show") 
 																  message:[NSString stringWithFormat:NSLocalizedString(@"Could not perform search \n%@", @"Could not perform search \n%@"), error.localizedDescription] 
 															  buttonTitle:NSLocalizedString(@"OK", @"OK")];											  
@@ -173,7 +167,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return 50;
+	return section == 0 ? 0 : 25;
 }
 
 
@@ -219,13 +213,13 @@
 			cell.accessoryType = UITableViewCellAccessoryNone;
 		}
 		else {
-			NSDictionary *result = [results objectAtIndex:indexPath.row];
+			NSDictionary *result = results[indexPath.row];
 			
-			cell.textLabel.text = [result objectForKey:@"name"];
+			cell.textLabel.text = result[@"name"];
 			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			
-			id airDate = [result objectForKey:@"first_aired"];
+			id airDate = result[@"first_aired"];
 			if (airDate == [NSNull null] || [airDate length] == 0) {
 				airDate = @"Unknown air date";
 			}
@@ -236,25 +230,6 @@
 			cell.detailTextLabel.text = airDate;
 		}
 	}
-	
-	SBCellBackground *backgroundView = [[SBCellBackground alloc] init];
-	backgroundView.grouped = YES;
-	backgroundView.applyShadow = NO;
-	
-	SBCellBackground *selectedBackgroundView = [[SBCellBackground alloc] init];
-	selectedBackgroundView.grouped = YES;
-	selectedBackgroundView.applyShadow = NO;
-	selectedBackgroundView.selected = YES;
-	
-	if (indexPath.row == [self tableView:tableView numberOfRowsInSection:indexPath.section] - 1) {
-		backgroundView.lastCell = YES;
-		backgroundView.applyShadow = YES;
-		selectedBackgroundView.lastCell = YES;
-		selectedBackgroundView.applyShadow = YES;
-	}
-	
-	cell.backgroundView = backgroundView;
-	cell.selectedBackgroundView = selectedBackgroundView;
 	
 	return cell;
 }
@@ -284,12 +259,12 @@
 
 #pragma mark - UIPickerViewDelegate
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-	return [[[SBGlobal validLanguages] allKeys] objectAtIndex:row];
+	return [[SBGlobal validLanguages] allKeys][row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-	currentLanguage = [[[SBGlobal validLanguages] allKeys] objectAtIndex:row];
-	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+	currentLanguage = [[SBGlobal validLanguages] allKeys][row];
+	[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 
 	[self hidePicker];
 }

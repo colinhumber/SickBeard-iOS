@@ -20,7 +20,7 @@
 		
 		self.emptyLabel = [[UILabel alloc] init];
 		emptyLabel.font = [UIFont systemFontOfSize:28];
-		emptyLabel.textAlignment = UITextAlignmentCenter;
+		emptyLabel.textAlignment = NSTextAlignmentCenter;
 		emptyLabel.numberOfLines = 0;
 		emptyLabel.textColor = RGBCOLOR(76, 54, 40);
 		emptyLabel.shadowColor = [UIColor whiteColor];

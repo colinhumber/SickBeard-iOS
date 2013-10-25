@@ -11,7 +11,6 @@
 
 @class SBBaseEpisode;
 @class SBSectionHeaderView;
-@class SBCellBackground;
 @class SBEpisodeDetailsHeaderView;
 @protocol SBEpisodeDetailsDataSource;
 

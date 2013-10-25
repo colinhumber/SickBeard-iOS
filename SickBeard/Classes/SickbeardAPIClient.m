@@ -9,7 +9,6 @@
 #import "SickbeardAPIClient.h"
 #import "SBCommandBuilder.h"
 #import "SBServer.h"
-#import "AFJSONRequestOperation.h"
 #import "NSUserDefaults+SickBeard.h"
 #import "SBRootDirectory.h"
 
@@ -22,22 +21,11 @@ NSString *const RESULT_DENIED = @"denied";
 
 @implementation SickbeardAPIClient
 
-- (id)initWithBaseURL:(NSURL *)url {
-	self = [super initWithBaseURL:url];
-	
-	if (self) {
-		[self registerHTTPOperationClass:[AFJSONRequestOperation class]];		
-		[self setDefaultHeader:@"Accept" value:@"application/json"];
-	}
-	
-	return self;
-}
-
 - (NSURL*)posterURLForTVDBID:(NSString*)tvdbID {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	SBServer *currentServer = defaults.server;
 	
-	NSDictionary *parameters = [NSDictionary dictionaryWithObject:tvdbID forKey:@"tvdbid"];
+	NSDictionary *parameters = @{@"tvdbid": tvdbID};
 	NSString *url = [SBCommandBuilder URLForCommand:SickBeardCommandShowGetPoster server:currentServer params:parameters];
 	return [NSURL URLWithString:url];
 }
@@ -46,40 +34,38 @@ NSString *const RESULT_DENIED = @"denied";
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	SBServer *currentServer = defaults.server;
 
-	NSDictionary *parameters = [NSDictionary dictionaryWithObject:tvdbID forKey:@"tvdbid"];
+	NSDictionary *parameters = @{@"tvdbid": tvdbID};
 	NSString *url = [SBCommandBuilder URLForCommand:SickBeardCommandShowGetBanner server:currentServer params:parameters];
 	return [NSURL URLWithString:url];
 }
 
 - (void)loadDefaults {
-	NSArray *commands = [NSArray arrayWithObjects:
-						 [NSNumber numberWithInteger:SickBeardCommandGetDefaults],
-						 [NSNumber numberWithInteger:SickBeardCommandGetRootDirectories], 
-						 nil];
+	NSArray *commands = @[@(SickBeardCommandGetDefaults),
+						 @(SickBeardCommandGetRootDirectories)];
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	SBServer *currentServer = defaults.server;
 	
 	if (currentServer.proxyUsername.length > 0 && currentServer.proxyPassword.length > 0) {
-		[self setAuthorizationHeaderWithUsername:currentServer.proxyUsername password:currentServer.proxyPassword];
+		[self.requestSerializer setAuthorizationHeaderFieldWithUsername:currentServer.proxyUsername password:currentServer.proxyPassword];
 	}
 	
-	[self getPath:nil
+	[self GET:@""
 	   parameters:@{ @"cmd" : [SBCommandBuilder commandStringForCommands:commands] }
-		  success:^(AFHTTPRequestOperation *operation, id JSON) {
-			  NSString *result = [JSON objectForKey:@"result"];
+		  success:^(NSURLSessionDataTask *task, id JSON) {
+			  NSString *result = JSON[@"result"];
 			  
 			  if ([result isEqualToString:RESULT_SUCCESS]) {
-				  NSDictionary *data = [JSON objectForKey:@"data"];
+				  NSDictionary *data = JSON[@"data"];
 				  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 				  
 				  // DEFAULTS
-				  NSDictionary *defaultsDict = [data objectForKey:@"sb.getdefaults"];
-				  NSDictionary *defaultsData = [defaultsDict objectForKey:@"data"];
-				  NSArray *archives = [SBGlobal qualitiesFromCodes:[defaultsData objectForKey:@"archive"]];
-				  NSArray *initial = [SBGlobal qualitiesFromCodes:[defaultsData objectForKey:@"initial"] ];
-				  BOOL useSeasonFolders = [[defaultsData objectForKey:@"season_folders"] boolValue];
-				  NSString *status = [defaultsData objectForKey:@"status"];
+				  NSDictionary *defaultsDict = data[@"sb.getdefaults"];
+				  NSDictionary *defaultsData = defaultsDict[@"data"];
+				  NSArray *archives = [SBGlobal qualitiesFromCodes:defaultsData[@"archive"]];
+				  NSArray *initial = [SBGlobal qualitiesFromCodes:defaultsData[@"initial"] ];
+				  BOOL useSeasonFolders = [defaultsData[@"season_folders"] boolValue];
+				  NSString *status = defaultsData[@"status"];
 				  
 				  defaults.archiveQualities = [NSMutableArray arrayWithArray:archives];
 				  defaults.initialQualities = [NSMutableArray arrayWithArray:initial];
@@ -87,8 +73,8 @@ NSString *const RESULT_DENIED = @"denied";
 				  defaults.status = status;
 				  
 				  // ROOT DIRECTORIES
-				  NSDictionary *dirsDict = [data objectForKey:@"sb.getrootdirs"];
-				  NSArray *dirsData = [dirsDict objectForKey:@"data"];
+				  NSDictionary *dirsDict = data[@"sb.getrootdirs"];
+				  NSArray *dirsData = dirsDict[@"data"];
 				  
 				  NSMutableArray *directories = [NSMutableArray arrayWithCapacity:dirsData.count];
 				  for (NSDictionary *dir in dirsData) {
@@ -103,7 +89,7 @@ NSString *const RESULT_DENIED = @"denied";
 				  [defaults synchronize];
 			  }
 		  }
-		  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		  failure:^(NSURLSessionDataTask *task, NSError *error) {
 			  NSLog(@"Error getting defaults: %@", error);
 		  }];
 }
@@ -124,13 +110,10 @@ NSString *const RESULT_DENIED = @"denied";
 	SBServer *currentServer = defaults.server;
 	
 	if (currentServer.proxyUsername.length > 0 && currentServer.proxyPassword.length > 0) {
-		[self setAuthorizationHeaderWithUsername:currentServer.proxyUsername password:currentServer.proxyPassword];
+		[self.requestSerializer setAuthorizationHeaderFieldWithUsername:currentServer.proxyUsername password:currentServer.proxyPassword];
 	}
 	
-	[self getPath:nil
-	   parameters:parametersCopy
-		  success:success
-		  failure:failure];
+	[self GET:@"" parameters:parametersCopy success:success failure:failure];
 }
 
 @end

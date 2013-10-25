@@ -8,12 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "SBDataLoader.h"
-#import "EGORefreshTableHeaderView.h"
 #import "SBEmptyView.h"
-#import "SBNotificationManager.h"
 #import "SickbeardAPIClient.h"
+#import <TSMessages/TSMessage.h>
 
-@interface SBBaseTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, SBDataLoader>
+@interface SBBaseTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SBDataLoader>
 
 - (void)loadData;
 - (void)loadData:(BOOL)showHUD;
@@ -22,8 +21,8 @@
 @property (nonatomic) BOOL enableRefreshHeader;
 @property (nonatomic) BOOL enableEmptyView;
 @property (nonatomic, strong) SBEmptyView *emptyView;
-@property (nonatomic, strong) EGORefreshTableHeaderView *refreshHeader;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) SickbeardAPIClient *apiClient;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
