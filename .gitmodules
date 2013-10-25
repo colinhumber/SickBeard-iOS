@@ -1,6 +1,3 @@
 [submodule "Vendor/TDHUDProgressBar"]
 	path = Vendor/TDHUDProgressBar
 	url = https://github.com/colinhumber/TDHUDProgressBar.git
-[submodule "Vendor/CRNavigationController"]
-	path = Vendor/CRNavigationController
-	url = git@github.com:croberts22/CRNavigationController.git
