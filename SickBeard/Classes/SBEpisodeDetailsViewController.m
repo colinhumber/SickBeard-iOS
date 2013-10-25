@@ -48,9 +48,35 @@
 	
 	self.title = NSLocalizedString(@"Details", @"Details");
 
-	[self.showPosterImageView setImageWithURL:[self.apiClient bannerURLForTVDBID:self.episode.show.tvdbID]
-							 placeholderImage:nil];
+	__weak __typeof(&*self)weakSelf = self;
+	NSURLRequest *bannerRequest = [NSURLRequest requestWithURL:[self.apiClient bannerURLForTVDBID:self.episode.show.tvdbID]];
+	[self.showPosterImageView setImageWithURLRequest:bannerRequest
+									placeholderImage:nil
+											 success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+												 CGSize size = CGSizeMake(340.0f, 63.0f);
+												 UIGraphicsBeginImageContextWithOptions(size, YES, 0.0f);
+												 [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+												 UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+												 UIGraphicsEndImageContext();
+												 
+												 weakSelf.showPosterImageView.image = newImage;
+											 } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+												 
+											 }];
+	
+	UIInterpolatingMotionEffect *xMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+	xMotionEffect.minimumRelativeValue = @(-10);
+	xMotionEffect.maximumRelativeValue = @(10);
+	
+	UIInterpolatingMotionEffect *yMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+	yMotionEffect.minimumRelativeValue = @(-5);
+	yMotionEffect.maximumRelativeValue = @(5);
 
+	UIMotionEffectGroup *motionGroup = [UIMotionEffectGroup new];
+	motionGroup.motionEffects = @[xMotionEffect, yMotionEffect];
+	
+	[self.showPosterImageView addMotionEffect:motionGroup];
+	
 	self.headerView.sectionLabel.text = NSLocalizedString(@"Episode Summary", @"Episode Summary");
 	
 	[self updateHeaderView];

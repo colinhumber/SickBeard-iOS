@@ -25,7 +25,7 @@
 	
 	NSDictionary *titleAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
 
-	[UINavigationBar appearance].barTintColor = [UIColor colorWithHue:35.0f / 360.0f saturation:1.0f brightness:0.37f alpha:1.0f];
+	[UINavigationBar appearance].barTintColor = [UIColor colorWithHue:34.0f / 360.0f saturation:1.0f brightness:0.5f alpha:1.0f];
 	[UINavigationBar appearance].titleTextAttributes = titleAttributes;
 	[UINavigationBar appearance].tintColor = [UIColor whiteColor];
 		
