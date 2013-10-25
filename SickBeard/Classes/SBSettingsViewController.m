@@ -9,7 +9,6 @@
 #import "SBSettingsViewController.h"
 #import "PRPAlertView.h"
 #import "SBSectionHeaderView.h"
-#import "CRNavigationController.h"
 #import "SBWebViewController.h"
 
 @implementation SBSettingsViewController

@@ -6,9 +6,7 @@
 //
 //
 
-#import "CRNavigationController.h"
-
-@interface SBWebViewController : CRNavigationController
+@interface SBWebViewController : UINavigationController
 
 - (id)initWithAddress:(NSString*)urlString;
 - (id)initWithURL:(NSURL *)URL;

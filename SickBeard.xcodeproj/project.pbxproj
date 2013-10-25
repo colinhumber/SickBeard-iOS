@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0C0739BD09B8474E8246F73C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35FDBDAA2B8F4D6FA6F8596B /* libPods.a */; };
-		3B04D62E1811903D001A7843 /* CRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04D62B1811903D001A7843 /* CRNavigationBar.m */; };
-		3B04D62F1811903D001A7843 /* CRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04D62B1811903D001A7843 /* CRNavigationBar.m */; };
-		3B04D6301811903D001A7843 /* CRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04D62D1811903D001A7843 /* CRNavigationController.m */; };
-		3B04D6311811903D001A7843 /* CRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04D62D1811903D001A7843 /* CRNavigationController.m */; };
 		3B04D63C18119931001A7843 /* SBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04D63B18119931001A7843 /* SBWebViewController.m */; };
 		3B04D63D18119931001A7843 /* SBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04D63B18119931001A7843 /* SBWebViewController.m */; };
 		3B3CB520161A2E970039830C /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3CB51F161A2E960039830C /* UIView+Layout.m */; };
@@ -185,10 +181,6 @@
 /* Begin PBXFileReference section */
 		0BF343EBC1D84F55B58AAC08 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		35FDBDAA2B8F4D6FA6F8596B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B04D62A1811903D001A7843 /* CRNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRNavigationBar.h; sourceTree = "<group>"; };
-		3B04D62B1811903D001A7843 /* CRNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRNavigationBar.m; sourceTree = "<group>"; };
-		3B04D62C1811903D001A7843 /* CRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRNavigationController.h; sourceTree = "<group>"; };
-		3B04D62D1811903D001A7843 /* CRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRNavigationController.m; sourceTree = "<group>"; };
 		3B04D63A18119931001A7843 /* SBWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBWebViewController.h; path = Classes/SBWebViewController.h; sourceTree = "<group>"; };
 		3B04D63B18119931001A7843 /* SBWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBWebViewController.m; path = Classes/SBWebViewController.m; sourceTree = "<group>"; };
 		3B3CB51E161A2E960039830C /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
@@ -401,18 +393,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3B04D6291811903D001A7843 /* CRNavigationController */ = {
-			isa = PBXGroup;
-			children = (
-				3B04D62A1811903D001A7843 /* CRNavigationBar.h */,
-				3B04D62B1811903D001A7843 /* CRNavigationBar.m */,
-				3B04D62C1811903D001A7843 /* CRNavigationController.h */,
-				3B04D62D1811903D001A7843 /* CRNavigationController.m */,
-			);
-			name = CRNavigationController;
-			path = Vendor/CRNavigationController/CRNavigationController;
-			sourceTree = SOURCE_ROOT;
-		};
 		95068BD11411643000847FC4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -803,7 +783,6 @@
 		95F7F61E1408492700E17F3E /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				3B04D6291811903D001A7843 /* CRNavigationController */,
 				956BC25216D82C4F003716B3 /* TDHUDProgressBar */,
 				956BB97216D82B46003716B3 /* Google */,
 				956BBC0A16D82B49003716B3 /* PRP */,
@@ -1023,7 +1002,6 @@
 				9519D0B0156C38780077BF8C /* SBShowDetailsHeaderView.m in Sources */,
 				9519D0B1156C38780077BF8C /* SBEpisodeDetailsHeaderView.m in Sources */,
 				9519D0B2156C38780077BF8C /* SBDrawingHelpers.m in Sources */,
-				3B04D6311811903D001A7843 /* CRNavigationController.m in Sources */,
 				9519D0B3156C38780077BF8C /* SBCellBackground.m in Sources */,
 				9519D0B8156C38780077BF8C /* SBSectionHeaderView.m in Sources */,
 				9519D0B9156C38780077BF8C /* SBEmptyView.m in Sources */,
@@ -1041,7 +1019,6 @@
 				956BC26816D82C4F003716B3 /* TDHUDProgressBar.m in Sources */,
 				95BA625F16DD634D00D0A0C3 /* SBLogsViewController.m in Sources */,
 				95BA626516DD677400D0A0C3 /* SBLogCell.m in Sources */,
-				3B04D62F1811903D001A7843 /* CRNavigationBar.m in Sources */,
 				95EBD33C16E0386B00D7A86D /* SBBacklogViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1094,7 +1071,6 @@
 				95C54BC814969E3C00111B96 /* SBShowDetailsHeaderView.m in Sources */,
 				95C54CDC1497CDDF00111B96 /* SBEpisodeDetailsHeaderView.m in Sources */,
 				9529C8FC14981253007614A5 /* SBDrawingHelpers.m in Sources */,
-				3B04D6301811903D001A7843 /* CRNavigationController.m in Sources */,
 				9529C8FF1498131C007614A5 /* SBCellBackground.m in Sources */,
 				3BCA9A6A149954CB000E0290 /* SBSectionHeaderView.m in Sources */,
 				95934710149BB55000C21971 /* SBEmptyView.m in Sources */,
@@ -1112,7 +1088,6 @@
 				956BC26716D82C4F003716B3 /* TDHUDProgressBar.m in Sources */,
 				95BA625E16DD634D00D0A0C3 /* SBLogsViewController.m in Sources */,
 				95BA626416DD677400D0A0C3 /* SBLogCell.m in Sources */,
-				3B04D62E1811903D001A7843 /* CRNavigationBar.m in Sources */,
 				95EBD33B16E0386B00D7A86D /* SBBacklogViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

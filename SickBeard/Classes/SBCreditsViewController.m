@@ -8,7 +8,6 @@
 
 #import "SBCreditsViewController.h"
 #import "SBSectionHeaderView.h"
-#import "CRNavigationController.h"
 #import "SBWebViewController.h"
 
 @interface SBCreditsViewController ()
