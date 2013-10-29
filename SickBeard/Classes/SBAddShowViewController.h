@@ -10,16 +10,8 @@
 #import "SBAddShowDelegate.h"
 #import "SBBaseViewController.h"
 
-@interface SBAddShowViewController : SBBaseViewController <UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate> {
-	NSArray *results;
-	NSString *currentLanguage;
-	BOOL isSearching;
-}
+@interface SBAddShowViewController : SBBaseViewController
 
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) IBOutlet UIPickerView *languagePickerView;
-@property (nonatomic, strong) IBOutlet UITextField *showNameTextField;
 @property (nonatomic, weak) id<SBAddShowDelegate> delegate;
-
 
 @end

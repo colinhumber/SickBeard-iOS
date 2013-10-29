@@ -71,14 +71,32 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ResultCell" textLabel="96d-I6-cBU" detailTextLabel="RWq-1r-ZEm" style="IBUITableViewCellStyleSubtitle" id="94X-A5-dM7">
-                                        <rect key="frame" x="0.0" y="207" width="320" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PickerCell" rowHeight="163" id="94X-A5-dM7">
+                                        <rect key="frame" x="0.0" y="207" width="320" height="163"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="94X-A5-dM7" id="9Ei-L6-3Mb">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="162"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <pickerView tag="901" contentMode="scaleToFill" id="IL5-70-CsG">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="162"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="ulA-9L-L90" id="0iR-SJ-6Ga"/>
+                                                        <outlet property="delegate" destination="ulA-9L-L90" id="s7o-dt-w3I"/>
+                                                    </connections>
+                                                </pickerView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ResultCell" textLabel="1KC-EZ-ITX" detailTextLabel="amC-31-voA" style="IBUITableViewCellStyleSubtitle" id="u5a-d3-ZBG">
+                                        <rect key="frame" x="0.0" y="370" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u5a-d3-ZBG" id="PPO-sU-iyM">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="96d-I6-cBU">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1KC-EZ-ITX">
                                                     <rect key="frame" x="15" y="2" width="36" height="22"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -86,7 +104,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RWq-1r-ZEm">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="amC-31-voA">
                                                     <rect key="frame" x="15" y="24" width="50" height="17"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -103,14 +121,6 @@
                                     <outlet property="delegate" destination="ulA-9L-L90" id="Olh-nm-pPY"/>
                                 </connections>
                             </tableView>
-                            <pickerView contentMode="scaleToFill" id="JRe-J2-V5a">
-                                <rect key="frame" x="0.0" y="416" width="320" height="216"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="ulA-9L-L90" id="HvM-lY-iMp"/>
-                                    <outlet property="delegate" destination="ulA-9L-L90" id="NBi-pI-WMU"/>
-                                </connections>
-                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -127,7 +137,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="languagePickerView" destination="JRe-J2-V5a" id="IK1-c0-JqY"/>
                         <outlet property="tableView" destination="bpW-BE-CNi" id="iPp-rg-06X"/>
                         <segue destination="8CS-fZ-XoI" kind="push" identifier="AddNewShowSegue" id="ZYZ-dy-FkD"/>
                     </connections>
