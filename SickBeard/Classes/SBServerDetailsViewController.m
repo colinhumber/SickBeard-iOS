@@ -37,7 +37,6 @@
 
 
 #pragma mark - View lifecycle
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -61,6 +60,10 @@
 	}
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	[TSMessage setDefaultViewController:self.navigationController];
+}
 
 - (BOOL)shouldAutorotate {
 	return NO;
@@ -145,9 +148,9 @@
 }
 
 - (void)_validateServer:(BOOL)saveOnSuccess {
-	 [SVProgressHUD showWithStatus:NSLocalizedString(@"Validating API key", @"Validating API key") 
-						  maskType:SVProgressHUDMaskTypeGradient];
-	 
+	[SVProgressHUD showWithStatus:NSLocalizedString(@"Validating API key", @"Validating API key")
+						 maskType:SVProgressHUDMaskTypeGradient];
+	
 	 RunAfterDelay(0.5, ^{
 		 SickbeardAPIClient *client = [[SickbeardAPIClient alloc] initWithBaseURL:[NSURL URLWithString:self.server.serviceEndpointPath]];
 		 [client runCommand:SickBeardCommandPing
@@ -170,7 +173,7 @@
 									[NSUserDefaults standardUserDefaults].shouldUpdateShowList = YES;
 									
 									[TSMessage showNotificationWithTitle:NSLocalizedString(@"Server saved", @"Server saved")
-																								type:TSMessageNotificationTypeSuccess];
+																	type:TSMessageNotificationTypeSuccess];
 									
 									if (_flags.initialSetup) {
 										RunAfterDelay(1.5, ^{
@@ -181,12 +184,12 @@
 							}
 							else {
 								[TSMessage showNotificationWithTitle:NSLocalizedString(@"Server validated", @"Server validated")
-																							type:TSMessageNotificationTypeSuccess];
+																type:TSMessageNotificationTypeSuccess];
 							}
 						}
 						else if ([result isEqualToString:RESULT_DENIED]) {
 							[TSMessage showNotificationWithTitle:JSON[@"message"]
-																						type:TSMessageNotificationTypeError];
+															type:TSMessageNotificationTypeError];
 						}
 						
 						[SVProgressHUD dismiss];
@@ -195,7 +198,7 @@
 						[SVProgressHUD dismiss];
 
 						[TSMessage showNotificationWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Unable to connect to Sick Beard (%@)", @"Unable to connect to Sick Beard (%@)"), self.server.serviceEndpointPath]
-																					type:TSMessageNotificationTypeError];
+														type:TSMessageNotificationTypeError];
 					}];
 	 });
 }
