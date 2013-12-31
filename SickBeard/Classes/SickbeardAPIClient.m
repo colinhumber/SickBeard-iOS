@@ -21,6 +21,16 @@ NSString *const RESULT_DENIED = @"denied";
 
 @implementation SickbeardAPIClient
 
+- (instancetype)initWithBaseURL:(NSURL *)url {
+	self = [super initWithBaseURL:url];
+	
+	if (self) {
+		self.securityPolicy.allowInvalidCertificates = YES;
+	}
+	
+	return self;
+}
+
 - (NSURL*)posterURLForTVDBID:(NSString*)tvdbID {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	SBServer *currentServer = defaults.server;
