@@ -54,9 +54,12 @@ NSString *const SBServerURLDidChangeNotification = @"SBServerURLDidChangeNotific
 		qualities[@"SD TV"] = @"sdtv";
 		qualities[@"SD DVD"] = @"sddvd";
 		qualities[@"HD TV"] = @"hdtv";
+		qualities[@"Raw HD TV"] = @"rawhdtv";
 		qualities[@"720p WEB-DL"] = @"hdwebdl";
 		qualities[@"720p BluRay"] = @"hdbluray";
 		qualities[@"1080p BluRay"] = @"fullhdbluray";
+		qualities[@"1080p WEB-DL"] = @"fullhdwebdl";
+		qualities[@"1080p HD TV"] = @"fullhdtv";
 		qualities[@"Unknown"] = @"unknown";
 		qualities[@"Any"] = @"any";
 	}
@@ -71,9 +74,12 @@ NSString *const SBServerURLDidChangeNotification = @"SBServerURLDidChangeNotific
 		qualities = [[OrderedDictionary alloc] init];
 		qualities[@"SD DVD"] = @"sddvd";
 		qualities[@"HD TV"] = @"hdtv";
+		qualities[@"Raw HD TV"] = @"rawhdtv";
 		qualities[@"720p WEB-DL"] = @"hdwebdl";
 		qualities[@"720p BluRay"] = @"hdbluray";
 		qualities[@"1080p BluRay"] = @"fullhdbluray";
+		qualities[@"1080p WEB-DL"] = @"fullhdwebdl";
+		qualities[@"1080p HD TV"] = @"fullhdtv";
 		qualities[@"Unknown"] = @"unknown";
 		qualities[@"Any"] = @"any";
 	}
