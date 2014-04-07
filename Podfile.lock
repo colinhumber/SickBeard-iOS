@@ -1,28 +1,29 @@
 PODS:
-  - AFNetworking (2.0.1):
+  - AFNetworking (2.2.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
     - AFNetworking/UIKit
-  - AFNetworking/NSURLConnection (2.0.1):
+  - AFNetworking/NSURLConnection (2.2.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.0.1):
+  - AFNetworking/NSURLSession (2.2.1):
     - AFNetworking/NSURLConnection
-  - AFNetworking/Reachability (2.0.1)
-  - AFNetworking/Security (2.0.1)
-  - AFNetworking/Serialization (2.0.1)
-  - AFNetworking/UIKit (2.0.1):
+  - AFNetworking/Reachability (2.2.1)
+  - AFNetworking/Security (2.2.1)
+  - AFNetworking/Serialization (2.2.1)
+  - AFNetworking/UIKit (2.2.1):
     - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
   - HexColors (2.2.1)
   - SAMBadgeView (0.1.0)
   - SAMWebView (0.2.1)
-  - SVProgressHUD (0.9)
+  - SVProgressHUD (1.0)
   - SVSegmentedControl (0.2)
-  - TSMessages (0.9.4):
+  - TSMessages (0.9.6):
     - HexColors
 
 DEPENDENCIES:
@@ -34,12 +35,12 @@ DEPENDENCIES:
   - TSMessages
 
 SPEC CHECKSUMS:
-  AFNetworking: 867cd74266eeab923f249aa8b3d56899a67cc50e
+  AFNetworking: 0121f4b69be3fa58d1ab317866e036e12ac9651d
   HexColors: 3a68db077cd6572a8f7d4aa1add284dd2436a934
   SAMBadgeView: 7eba9d24f817ed27c0a22ae0ae71e9e4577a7522
   SAMWebView: ea897a645ac8ce086e67c63a926b5c3b8cf48acc
-  SVProgressHUD: 03d4845ec8e64591726428a08236c6a5489d45f8
+  SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
   SVSegmentedControl: e874fc56c2a1efb9f597ddf0908101393f53fe96
-  TSMessages: 5ab92604b02e49a755d2cc2baf114d2248a90977
+  TSMessages: 839edc3164b99ced48c30af9dde9710cd67bea4d
 
-COCOAPODS: 0.27.1
+COCOAPODS: 0.31.0
