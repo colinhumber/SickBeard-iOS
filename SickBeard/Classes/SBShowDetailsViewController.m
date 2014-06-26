@@ -16,11 +16,11 @@
 #import "EpisodeCell.h"
 #import "SBShowDetailsHeaderView.h"
 #import "SBSectionHeaderView.h"
-
-#import <AFNetworking/UIImageView+AFNetworking.h>
-#import <AFNetworking/AFHTTPRequestOperation.h>
 #import "SBServer.h"
 #import "SBCommandBuilder.h"
+
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <AFNetworking/AFHTTPRequestOperation.h>
 
 @interface SBShowDetailsViewController () <SBSectionHeaderViewDelegate, UIGestureRecognizerDelegate> {
 	struct {
@@ -64,9 +64,7 @@
 	
 	_menuFlags.menuIsShowing = NO;
 	_menuFlags.menuIsHiding = NO;
-	
-	[TestFlight passCheckpoint:@"Viewed show details"];
-	
+		
 	_seasons = [[OrderedDictionary alloc] init];
 	_sectionHeaders = [[NSMutableArray alloc] init];
 	self.title = self.show.showName;
@@ -247,13 +245,7 @@
 													  [_sectionHeaders addObject:[NSNull null]];
 												  }
 
-												  self.detailsHeaderView.episodeCountLabel.text = [NSString stringWithFormat:@"%d/%d", totalDownloadedEpisodes, totalEpisodes];
-												  
-												  float progress = 0;
-												  if (totalEpisodes > 0) {
-													  progress = (float)totalDownloadedEpisodes/totalEpisodes;
-												  }
-												  [self.detailsHeaderView.progressBar setProgress:progress];
+												  self.detailsHeaderView.episodeCountLabel.text = [NSString stringWithFormat:@"Downloaded %d of %d episodes", totalDownloadedEpisodes, totalEpisodes];
 
 												  [self finishDataLoad:nil];
 												  [self.tableView reloadData];
@@ -306,7 +298,7 @@
 	
 	[self setEditing:NO animated:YES];
 
-	[TSMessage showNotificationWithTitle:[NSString stringWithFormat:@"Searching for %d episodes", operations.count]
+	[TSMessage showNotificationWithTitle:[NSString stringWithFormat:@"Searching for %lu episodes", (unsigned long)operations.count]
 									type:TSMessageNotificationTypeMessage];
 	
 	
@@ -383,7 +375,7 @@
 		[operations addObject:[[AFHTTPRequestOperation alloc] initWithRequest:request]];
 	}
 	
-	[TSMessage showNotificationWithTitle:[NSString stringWithFormat:@"Attempting to set %d episodes to %@", operations.count, statusString]
+	[TSMessage showNotificationWithTitle:[NSString stringWithFormat:@"Attempting to set %lu episodes to %@", (unsigned long)operations.count, statusString]
 									type:TSMessageNotificationTypeMessage];
 
 	[self setEditing:NO animated:YES];

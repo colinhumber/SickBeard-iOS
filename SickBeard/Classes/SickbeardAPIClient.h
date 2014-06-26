@@ -18,10 +18,10 @@ extern NSString *const RESULT_ERROR;
 extern NSString *const RESULT_FATAL;
 extern NSString *const RESULT_DENIED;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, SBHTTPMethod) {
 	HTTPMethodGET,
 	HTTPMethodPOST
-} SBHTTPMethod;
+};
 
 typedef void (^APISuccessBlock)(NSURLSessionDataTask *task, id JSON);
 typedef void (^APIErrorBlock)(NSURLSessionDataTask *task, NSError *error);
@@ -36,6 +36,5 @@ typedef void (^APIErrorBlock)(NSURLSessionDataTask *task, NSError *error);
 
 // runs API commands against a pre-defined server
 - (void)runCommand:(SickBeardCommand)command parameters:(NSDictionary *)params success:(APISuccessBlock)success failure:(APIErrorBlock)failure;
-
 
 @end

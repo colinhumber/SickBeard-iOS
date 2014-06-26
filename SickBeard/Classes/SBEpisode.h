@@ -10,19 +10,7 @@
 #import "DictionaryCreation.h"
 #import "SBBaseEpisode.h"
 
-@class SBShow;
-
 @interface SBEpisode : SBBaseEpisode <DictionaryCreation>
-
-//@property (nonatomic, strong) NSDate *airDate;
-//@property (nonatomic, strong) NSString *episodeDescription;
 @property (nonatomic, strong) NSString *location;
-//@property (nonatomic, strong) NSString *name;
 @property (nonatomic) EpisodeStatus status;
-//@property (nonatomic) int season;
-//@property (nonatomic) int number;
-//@property (nonatomic, strong) SBShow *show;
-
-
-
 @end

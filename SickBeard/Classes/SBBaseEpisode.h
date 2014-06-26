@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SBShow.h"
 
-typedef enum {
+typedef NS_ENUM(NSInteger, EpisodeStatus) {
 	EpisodeStatusUnknown = -1,
 	EpisodeStatusWanted = 0,
 	EpisodeStatusSkipped = 1,
@@ -18,23 +18,17 @@ typedef enum {
 	EpisodeStatusUnaired = 4,
 	EpisodeStatusDownloaded = 5,
 	EpisodeStatusSnatched = 6
-} EpisodeStatus;
+};
 
 
 @interface SBBaseEpisode : NSObject
 
 @property (nonatomic, strong) NSDate *airDate;
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, assign) int season;
-@property (nonatomic, assign) int number;
+@property (nonatomic, assign) NSUInteger season;
+@property (nonatomic, assign) NSUInteger number;
 @property (nonatomic, strong) NSString *episodeDescription;
-
 @property (nonatomic, strong) SBShow *show;
-//@property (nonatomic, strong) NSString *showName;
-//@property (nonatomic, strong) NSString *showStatus;
-//@property (nonatomic, strong) NSString *tvdbID;
-//@property (nonatomic, strong) NSString *network;
-//@property (nonatomic, strong) NSString *quality;
 
 + (NSString*)episodeStatusAsString:(EpisodeStatus)status;
 

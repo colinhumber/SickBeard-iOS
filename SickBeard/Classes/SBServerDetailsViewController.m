@@ -122,9 +122,7 @@
 	if (!self.server) {
 		self.server = [[SBServer alloc] init];
 	}
-	
-	[TestFlight passCheckpoint:saveOnSuccess ? @"Saving server" : @"Testing server"];
-	
+		
 	[self updateServerValues];
 	
 	if (![self.server isValid]) {

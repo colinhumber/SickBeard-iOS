@@ -29,7 +29,10 @@
 	[self.webViewController.webView loadURL:URL];
 	
     if (self = [super initWithRootViewController:self.webViewController]) {
-        self.webViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarStyleDefault target:self.webViewController action:@selector(close:)];
+        self.webViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Close"
+                                                                                                   style:UIBarButtonItemStylePlain
+                                                                                                  target:self.webViewController
+                                                                                                  action:@selector(close:)];
 	}
 	
     return self;

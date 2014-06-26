@@ -15,11 +15,24 @@
 #import "NSDate+Utilities.h"
 #import "SVSegmentedControl.h"
 #import "SVProgressHUD.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
+
+#import <SDWebImage/UIImageView+WebCache.h>
+
+typedef NS_ENUM(NSInteger, SBHistoryType) {
+	SBHistoryTypeSnatched,
+	SBHistoryTypeDownloaded
+};
+
+@interface SBHistoryViewController () <UIActionSheetDelegate> 
+@property (nonatomic, strong) NSMutableArray *history;
+@property (nonatomic, assign) SBHistoryType historyType;
+
+- (IBAction)showHistoryActions:(id)sender;
+- (IBAction)done:(id)sender;
+@end
+
 
 @implementation SBHistoryViewController
-
-@synthesize tableView;
 
 #pragma mark - View lifecycle
 
@@ -70,7 +83,7 @@
 	[SVProgressHUD showWithStatus:NSLocalizedString(@"Loading history", @"Loading history")];
 	
 	NSString *filter = @"";
-	if (historyType == SBHistoryTypeSnatched) {
+	if (self.historyType == SBHistoryTypeSnatched) {
 		filter = @"snatched";
 	}
 	else {
@@ -85,18 +98,18 @@
 											  NSString *result = JSON[@"result"];
 											  
 											  if ([result isEqualToString:RESULT_SUCCESS]) {
-												  history = [[NSMutableArray alloc] init];
+												  self.history = [[NSMutableArray alloc] init];
 												  
 												  NSArray *data = JSON[@"data"];
 												  
 												  if (data.count > 0) {
 													  for (NSDictionary *entry in data) {
 														  SBHistory *item = [SBHistory itemWithDictionary:entry];
-														  [history addObject:item];
+														  [self.history addObject:item];
 													  }
 													  
 													  NSSortDescriptor *sorter = [NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:NO];
-													  [history sortUsingDescriptors:@[sorter]];
+													  [self.history sortUsingDescriptors:@[sorter]];
 												  }
 												  else {
 													  [self showEmptyView:YES animated:YES];
@@ -123,9 +136,7 @@
 
 #pragma mark - Actions
 - (void)historyTypeChanged:(UISegmentedControl *)sender {
-	[TestFlight passCheckpoint:@"Changed history type"];
-	
-	historyType = sender.selectedSegmentIndex;
+	self.historyType = sender.selectedSegmentIndex;
 	[self loadData];
 }
 
@@ -144,15 +155,11 @@
 
 
 - (IBAction)refresh:(id)sender {
-	[TestFlight passCheckpoint:@"Refreshed history"];
-	
 	[self loadData];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	if (buttonIndex == actionSheet.destructiveButtonIndex) {
-		[TestFlight passCheckpoint:@"Cleared history"];
-		
 		[SVProgressHUD showWithStatus:NSLocalizedString(@"Clearing history", @"Clearing history")];
 		[self.apiClient runCommand:SickBeardCommandHistoryClear
 										   parameters:nil 
@@ -167,8 +174,6 @@
 											  }];
 	}
 	else if (buttonIndex == 1) {
-		[TestFlight passCheckpoint:@"Trimmed history"];
-		
 		[SVProgressHUD showWithStatus:NSLocalizedString(@"Trimming history", @"Trimming history")];
 		[self.apiClient runCommand:SickBeardCommandHistoryTrim
 										   parameters:nil 
@@ -187,7 +192,7 @@
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return history.count;
+	return self.history.count;
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -196,12 +201,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	SBHistoryCell *cell = (SBHistoryCell*)[tv dequeueReusableCellWithIdentifier:@"SBHistoryCell"];
 	
-	SBHistory *entry = history[indexPath.row];
+	SBHistory *entry = self.history[indexPath.row];
 	cell.showNameLabel.text = entry.showName;	
 	cell.createdDateLabel.text = [entry.createdDate displayDateTimeString];
 	cell.seasonEpisodeLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Season %d, episode %d", @"Season %d, episode %d"), entry.season, entry.episode];
 
-//	[cell.showImageView setPathToNetworkImage:[[self.apiClient posterURLForTVDBID:entry.tvdbID] absoluteString]];
 	[cell.showImageView setImageWithURL:[self.apiClient posterURLForTVDBID:entry.tvdbID]
 					   placeholderImage:[UIImage imageNamed:@"placeholder"]];
 	

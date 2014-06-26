@@ -143,65 +143,6 @@
 		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 			NSLog(@"FAILURE!!! %@", operation);
 		}];
-//		AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlPath]]
-//																							success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-//																								NSString *result = [JSON objectForKey:@"result"];
-//																								
-//																								if ([result isEqualToString:RESULT_SUCCESS]) {
-//																									NSDictionary *dataDict = [JSON objectForKey:@"data"];
-//																									
-//																									NSArray *seasonNumbers = [[dataDict allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString *s1, NSString *s2) {
-//																										if ([s1 intValue] < [s2 intValue]) {
-//																											return NSOrderedDescending;
-//																										}
-//																										else if ([s1 intValue] > [s2 intValue]) {
-//																											return NSOrderedAscending;
-//																										}
-//																										else {
-//																											return NSOrderedSame;
-//																										}
-//																									}];
-//
-//																									NSMutableArray *episodes = [NSMutableArray array];
-//																									
-//																									for (NSString *seasonNumber in seasonNumbers) {
-//																										NSDictionary *seasonDict = [dataDict objectForKey:seasonNumber];
-//																										
-//																										for (NSString *episodeNumber in [seasonDict allKeys]) {
-//																											SBEpisode *episode = [SBEpisode itemWithDictionary:[seasonDict objectForKey:episodeNumber]];
-//																											
-//																											if (episode.status == EpisodeStatusWanted) {
-//																												episode.show = show;
-//																												episode.season = [seasonNumber intValue];
-//																												episode.number = [episodeNumber intValue];
-//																												[episodes addObject:episode];
-//																											}
-//																										}
-//																									}
-//																									
-//																									if (episodes.count) {
-//																										[episodes sortUsingComparator:^NSComparisonResult(SBEpisode *ep1, SBEpisode *ep2) {
-//																											NSComparisonResult result = [ep1.airDate compare:ep2.airDate];
-//																											
-//																											if (result == NSOrderedAscending) {
-//																												return NSOrderedDescending;
-//																											}
-//																											else if (result == NSOrderedDescending) {
-//																												return NSOrderedAscending;
-//																											}
-//																											else {
-//																												return NSOrderedSame;
-//																											}
-//																										}];
-//																										
-//																										[_backlog setObject:episodes forKey:show.showName];
-//																										[_sectionHeaders addObject:[NSNull null]];
-//																									}
-//																								}
-//																							}
-//																							failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-//																								NSLog(@"FAILURE!!! %@", request);
-//																							}];
 		
 		[operations addObject:operation];
 	}
@@ -213,13 +154,6 @@
 										   [SVProgressHUD dismiss];
 										   [self.tableView reloadData];
 									   }];
-//	[self.apiClient enqueueBatchOfHTTPRequestOperations:operations
-//								  progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
-//								  }
-//								completionBlock:^(NSArray *operations) {
-//									[SVProgressHUD dismiss];
-//									[self.tableView reloadData];
-//								}];
 }
 
 #pragma mark - Actions
@@ -229,8 +163,6 @@
 
 
 - (IBAction)refresh:(id)sender {
-	[TestFlight passCheckpoint:@"Refreshed backlog"];
-	
 	[self loadData];
 }
 

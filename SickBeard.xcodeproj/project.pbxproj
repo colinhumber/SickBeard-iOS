@@ -123,10 +123,6 @@
 		956BBD2F16D82B4A003716B3 /* GTMNSString+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 956BB97916D82B46003716B3 /* GTMNSString+URLArguments.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		956BBFFE16D82B4A003716B3 /* PRPAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 956BBC0C16D82B49003716B3 /* PRPAlertView.m */; };
 		956BBFFF16D82B4A003716B3 /* PRPAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 956BBC0C16D82B49003716B3 /* PRPAlertView.m */; };
-		956BC26716D82C4F003716B3 /* TDHUDProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 956BC25A16D82C4F003716B3 /* TDHUDProgressBar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		956BC26816D82C4F003716B3 /* TDHUDProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 956BC25A16D82C4F003716B3 /* TDHUDProgressBar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		956BC26E16D83405003716B3 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 956BC26C16D83405003716B3 /* libTestFlight.a */; };
-		956BC26F16D83405003716B3 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 956BC26C16D83405003716B3 /* libTestFlight.a */; };
 		9575EC2214632DF900D600E9 /* SBMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9575EC2114632DF900D600E9 /* SBMainViewController.m */; };
 		9575EC2E14632EF000D600E9 /* SBBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9575EC2D14632EEF00D600E9 /* SBBaseViewController.m */; };
 		9575EC3114632F2C00D600E9 /* SBBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9575EC3014632F2B00D600E9 /* SBBaseTableViewController.m */; };
@@ -187,8 +183,6 @@
 		3B3CB51F161A2E960039830C /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
 		3BA5BBE216D580C000BB3A68 /* AFURLConnectionOperation+Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFURLConnectionOperation+Credentials.h"; sourceTree = "<group>"; };
 		3BA5BBE316D580C000BB3A68 /* AFURLConnectionOperation+Credentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFURLConnectionOperation+Credentials.m"; sourceTree = "<group>"; };
-		3BA671E118159B8D00DE1EC8 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
-		3BA671E218159B8D00DE1EC8 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		3BA671E31815A0E000DE1EC8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Resources/Images.xcassets; sourceTree = "<group>"; };
 		3BCA9A68149954CB000E0290 /* SBSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSectionHeaderView.h; path = Classes/SBSectionHeaderView.h; sourceTree = "<group>"; };
 		3BCA9A69149954CB000E0290 /* SBSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSectionHeaderView.m; path = Classes/SBSectionHeaderView.m; sourceTree = "<group>"; };
@@ -249,10 +243,6 @@
 		956BB97916D82B46003716B3 /* GTMNSString+URLArguments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+URLArguments.m"; sourceTree = "<group>"; };
 		956BBC0B16D82B49003716B3 /* PRPAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRPAlertView.h; sourceTree = "<group>"; };
 		956BBC0C16D82B49003716B3 /* PRPAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRPAlertView.m; sourceTree = "<group>"; };
-		956BC25916D82C4F003716B3 /* TDHUDProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDHUDProgressBar.h; sourceTree = "<group>"; };
-		956BC25A16D82C4F003716B3 /* TDHUDProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDHUDProgressBar.m; sourceTree = "<group>"; };
-		956BC26C16D83405003716B3 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		956BC26D16D83405003716B3 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		9575EC2014632DF900D600E9 /* SBMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBMainViewController.h; path = Classes/SBMainViewController.h; sourceTree = "<group>"; };
 		9575EC2114632DF900D600E9 /* SBMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBMainViewController.m; path = Classes/SBMainViewController.m; sourceTree = "<group>"; };
 		9575EC2C14632EEF00D600E9 /* SBBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBaseViewController.h; path = Classes/SBBaseViewController.h; sourceTree = "<group>"; };
@@ -363,7 +353,6 @@
 				9519D0E1156C38780077BF8C /* QuartzCore.framework in Frameworks */,
 				9519D0E2156C38780077BF8C /* CoreGraphics.framework in Frameworks */,
 				9519D0E3156C38780077BF8C /* Foundation.framework in Frameworks */,
-				956BC26F16D83405003716B3 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,7 +374,6 @@
 				9577B0CD140C0943007F48FE /* QuartzCore.framework in Frameworks */,
 				9577B0CB140C08F4007F48FE /* CoreGraphics.framework in Frameworks */,
 				95DD4201140837B8001FE32F /* Foundation.framework in Frameworks */,
-				956BC26E16D83405003716B3 /* libTestFlight.a in Frameworks */,
 				0C0739BD09B8474E8246F73C /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -493,28 +481,6 @@
 			);
 			name = PRP;
 			path = Vendor/PRP;
-			sourceTree = SOURCE_ROOT;
-		};
-		956BBC7116D82B4A003716B3 /* TestFlight */ = {
-			isa = PBXGroup;
-			children = (
-				956BC26C16D83405003716B3 /* libTestFlight.a */,
-				956BC26D16D83405003716B3 /* TestFlight.h */,
-				3BA671E118159B8D00DE1EC8 /* TestFlight+AsyncLogging.h */,
-				3BA671E218159B8D00DE1EC8 /* TestFlight+ManualSessions.h */,
-			);
-			name = TestFlight;
-			path = Vendor/TestFlight;
-			sourceTree = SOURCE_ROOT;
-		};
-		956BC25216D82C4F003716B3 /* TDHUDProgressBar */ = {
-			isa = PBXGroup;
-			children = (
-				956BC25916D82C4F003716B3 /* TDHUDProgressBar.h */,
-				956BC25A16D82C4F003716B3 /* TDHUDProgressBar.m */,
-			);
-			name = TDHUDProgressBar;
-			path = Vendor/TDHUDProgressBar/TDHUDProgressBar;
 			sourceTree = SOURCE_ROOT;
 		};
 		9575EC2714632E9700D600E9 /* Protocols */ = {
@@ -783,10 +749,8 @@
 		95F7F61E1408492700E17F3E /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				956BC25216D82C4F003716B3 /* TDHUDProgressBar */,
 				956BB97216D82B46003716B3 /* Google */,
 				956BBC0A16D82B49003716B3 /* PRP */,
-				956BBC7116D82B4A003716B3 /* TestFlight */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1016,7 +980,6 @@
 				956BBD2D16D82B4A003716B3 /* GTMNSString+HTML.m in Sources */,
 				956BBD2F16D82B4A003716B3 /* GTMNSString+URLArguments.m in Sources */,
 				956BBFFF16D82B4A003716B3 /* PRPAlertView.m in Sources */,
-				956BC26816D82C4F003716B3 /* TDHUDProgressBar.m in Sources */,
 				95BA625F16DD634D00D0A0C3 /* SBLogsViewController.m in Sources */,
 				95BA626516DD677400D0A0C3 /* SBLogCell.m in Sources */,
 				95EBD33C16E0386B00D7A86D /* SBBacklogViewController.m in Sources */,
@@ -1085,7 +1048,6 @@
 				956BBD2C16D82B4A003716B3 /* GTMNSString+HTML.m in Sources */,
 				956BBD2E16D82B4A003716B3 /* GTMNSString+URLArguments.m in Sources */,
 				956BBFFE16D82B4A003716B3 /* PRPAlertView.m in Sources */,
-				956BC26716D82C4F003716B3 /* TDHUDProgressBar.m in Sources */,
 				95BA625E16DD634D00D0A0C3 /* SBLogsViewController.m in Sources */,
 				95BA626416DD677400D0A0C3 /* SBLogCell.m in Sources */,
 				95EBD33B16E0386B00D7A86D /* SBBacklogViewController.m in Sources */,
@@ -1241,10 +1203,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SickBeard/SickBeard-Prefix.pch";
 				INFOPLIST_FILE = "SickBeard/SickBeard-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Vendor/TestFlight\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1267,10 +1226,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SickBeard/SickBeard-Prefix.pch";
 				INFOPLIST_FILE = "SickBeard/SickBeard-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Vendor/TestFlight\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

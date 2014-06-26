@@ -21,6 +21,9 @@ PODS:
   - HexColors (2.2.1)
   - SAMBadgeView (0.1.0)
   - SAMWebView (0.2.1)
+  - SDWebImage (3.6):
+    - SDWebImage/Core
+  - SDWebImage/Core (3.6)
   - SVProgressHUD (1.0)
   - SVSegmentedControl (0.2)
   - TSMessages (0.9.6):
@@ -30,17 +33,19 @@ DEPENDENCIES:
   - AFNetworking
   - SAMBadgeView
   - SAMWebView
+  - SDWebImage
   - SVProgressHUD
   - SVSegmentedControl
   - TSMessages
 
 SPEC CHECKSUMS:
-  AFNetworking: 0121f4b69be3fa58d1ab317866e036e12ac9651d
-  HexColors: 3a68db077cd6572a8f7d4aa1add284dd2436a934
-  SAMBadgeView: 7eba9d24f817ed27c0a22ae0ae71e9e4577a7522
-  SAMWebView: ea897a645ac8ce086e67c63a926b5c3b8cf48acc
-  SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
-  SVSegmentedControl: e874fc56c2a1efb9f597ddf0908101393f53fe96
-  TSMessages: 839edc3164b99ced48c30af9dde9710cd67bea4d
+  AFNetworking: 8dde8c8a6597ad95dac332a593c27e541bc87371
+  HexColors: 01384d2bbe8dc4ffa43c3b4135db6e976952d153
+  SAMBadgeView: 6f29c18e5dc4ddf6d843c3c5e9c9207028c2e8a8
+  SAMWebView: e615d50d3683b9b4fd3e10da9d079ed03230ee24
+  SDWebImage: c6989652c1cdf27cbdf3f56957e2030f825af5bc
+  SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
+  SVSegmentedControl: 755a9721054734a77841147de3cc8babf09ba7f1
+  TSMessages: 8337e6b14b369db136ca9a07a32193fc2a7feb19
 
-COCOAPODS: 0.31.0
+COCOAPODS: 0.33.1

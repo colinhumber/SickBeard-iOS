@@ -132,8 +132,6 @@ typedef NS_ENUM(NSUInteger, SBLogType) {
 
 #pragma mark - Actions
 - (void)logTypeChanged:(UISegmentedControl *)sender {
-	[TestFlight passCheckpoint:@"Changed log type"];
-	
 	self.logType = sender.selectedSegmentIndex;
 	[self loadData];
 }
@@ -142,9 +140,7 @@ typedef NS_ENUM(NSUInteger, SBLogType) {
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)refresh:(id)sender {
-	[TestFlight passCheckpoint:@"Refreshed logs"];
-	
+- (IBAction)refresh:(id)sender {	
 	[self loadData];
 }
 

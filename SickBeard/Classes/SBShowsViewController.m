@@ -16,7 +16,8 @@
 #import "ShowCell.h"
 #import "NSUserDefaults+SickBeard.h"
 #import "NSDate+Utilities.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
+
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface SBShowsViewController () <SBAddShowDelegate>
 @property (nonatomic, retain) NSMutableArray *tableData;
@@ -74,8 +75,6 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-	[TestFlight passCheckpoint:@"Viewed show list"];
-	
 	[super viewDidAppear:animated];
 	
 	if ([self tableView:self.tableView numberOfRowsInSection:0] > 0) {
@@ -158,26 +157,22 @@
 
 #pragma mark - SBAddShowDelegate
 - (void)didAddShow {
-	[TestFlight passCheckpoint:@"Did add show"];
 	[self dismissViewControllerAnimated:YES completion:^{
 		[self loadData];
 	}];
 }
 
 - (void)didCancelAddShow {
-	[TestFlight passCheckpoint:@"Cancel add show"];
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Actions
 - (void)addShow {
 	[self performSegueWithIdentifier:@"AddShowSegue" sender:nil];
-	[TestFlight passCheckpoint:@"Adding show"];
 }
 
 - (IBAction)refresh:(id)sender {
 	[self loadData];
-	[TestFlight passCheckpoint:@"Refreshed shows list"];
 }
 
 #pragma mark - UITableViewDelegate

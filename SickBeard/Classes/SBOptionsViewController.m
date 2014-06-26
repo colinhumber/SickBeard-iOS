@@ -131,9 +131,7 @@
 										  }];
 }
 
-- (void)saveDefaults {
-	[TestFlight passCheckpoint:@"Saved server defaults"];
-	[TSMessage showNotificationWithTitle:NSLocalizedString(@"Saving defaults", @"Saving defaults")
+- (void)saveDefaults {	[TSMessage showNotificationWithTitle:NSLocalizedString(@"Saving defaults", @"Saving defaults")
 																type:TSMessageNotificationTypeMessage];
 	
 	NSDictionary *params = @{@"season_folder": [NSString stringWithFormat:@"%d", self.useSeasonFolders],
@@ -214,9 +212,7 @@
 	[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:kStatusIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
-- (void)qualityViewController:(SBQualityViewController *)controller didSelectQualities:(NSMutableArray *)qualities {
-	[TestFlight passCheckpoint:@"Changed quality options"];
-	
+- (void)qualityViewController:(SBQualityViewController *)controller didSelectQualities:(NSMutableArray *)qualities {	
 	if (controller.qualityType == QualityTypeInitial) {
 		self.initialQualities = qualities;
 		[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:kInitialQualityIndex inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
@@ -233,12 +229,12 @@
 }
 
 #pragma mark - UITableViewDataSource
-- (int)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	return 3;
 }
 
-- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	int numberOfRows = 0;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	NSInteger numberOfRows = 0;
 	
 	switch (section) {
 		case 0:
@@ -320,13 +316,13 @@
 			case 0:
 				cell = [tableView dequeueReusableCellWithIdentifier:@"TextOptionCell"];
 				cell.textLabel.text = NSLocalizedString(@"Initial Quality", @"Initial Quality");
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", self.initialQualities.count];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.initialQualities.count];
 				break;
 			
 			case 1:
 				cell = [tableView dequeueReusableCellWithIdentifier:@"TextOptionCell"];
 				cell.textLabel.text = NSLocalizedString(@"Archive Quality", @"Archive Quality");
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", self.archiveQualities.count];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.archiveQualities.count];
 				break;
 				
 			case 2:

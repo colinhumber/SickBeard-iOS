@@ -20,7 +20,7 @@
 // posted when the user changes any information about the server. The notification.object sent will be the updates SBServer instance
 extern NSString *const SBServerURLDidChangeNotification;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, SickBeardCommand) {
 	// system commands
 	SickBeardCommandCheckScheduler = 0,
 	SickBeardCommandGetDefaults,
@@ -66,7 +66,7 @@ typedef enum {
 	SickBeardCommandShowGetBanner,
 	SickBeardCommandShows,
 	SickBeardCommandShowsStats,
-} SickBeardCommand;
+};
 
 
 @interface SBGlobal : NSObject

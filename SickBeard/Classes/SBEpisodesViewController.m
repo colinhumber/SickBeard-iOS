@@ -17,7 +17,8 @@
 #import "ComingEpisodeCell.h"
 #import "SBSectionHeaderView.h"
 #import "SVProgressHUD.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
+
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface SBEpisodesViewController () {
 	OrderedDictionary *comingEpisodes;
@@ -86,9 +87,7 @@
 											   object:nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-	[TestFlight passCheckpoint:@"Viewed coming episodes"];
-	
+- (void)viewWillAppear:(BOOL)animated {	
 	[super viewWillAppear:animated];
 	
 	if ([self.tableView.dataSource numberOfSectionsInTableView:self.tableView] > 0) {

@@ -35,9 +35,7 @@
 }
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	[TestFlight takeOff:@"ba7e0bec-92a4-4478-b663-660225c13db1"];
-		
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {		
 	NSURLCache *urlCache = [[NSURLCache alloc] initWithMemoryCapacity:1024*1024   // 1MB mem cache
 														 diskCapacity:1024*1024*5 // 5MB disk cache
 															 diskPath:nil];

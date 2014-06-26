@@ -82,7 +82,7 @@
 - (NSString*)sanitizedShowName {
 	if ([self.showName rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"()"]].location != NSNotFound) {
 		NSString *foundData = @"";
-		int left, right;
+		NSUInteger left, right;
 
 		NSScanner *scanner = [NSScanner scannerWithString:self.showName];
 		[scanner scanUpToString:@"(" intoString:nil];

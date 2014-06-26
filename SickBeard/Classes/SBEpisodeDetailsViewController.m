@@ -15,7 +15,8 @@
 #import "NSDate+Utilities.h"
 #import "SBEpisodeDetailsHeaderView.h"
 #import "SBSectionHeaderView.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
+
+#import <SDWebImage/UIImageView+WebCache.h>
 
 #define kDefaultDescriptionFontSize 13;
 #define kDefaultDescriptionFrame CGRectMake(20, 9, 280, 162)
@@ -43,26 +44,23 @@
 
 #pragma mark - View lifecycle
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-	[TestFlight passCheckpoint:@"Viewed episode details"];
-	
+- (void)viewDidLoad {	
 	self.title = NSLocalizedString(@"Details", @"Details");
 
 	__weak __typeof(&*self)weakSelf = self;
-	NSURLRequest *bannerRequest = [NSURLRequest requestWithURL:[self.apiClient bannerURLForTVDBID:self.episode.show.tvdbID]];
-	[self.showPosterImageView setImageWithURLRequest:bannerRequest
-									placeholderImage:nil
-											 success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-												 CGSize size = CGSizeMake(340.0f, 63.0f);
-												 UIGraphicsBeginImageContextWithOptions(size, YES, 0.0f);
-												 [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
-												 UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-												 UIGraphicsEndImageContext();
-												 
-												 weakSelf.showPosterImageView.image = newImage;
-											 } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-												 
-											 }];
+	[self.showPosterImageView setImageWithURL:[self.apiClient bannerURLForTVDBID:self.episode.show.tvdbID]
+                             placeholderImage:nil
+                                    completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                                        if (image) {
+                                            CGSize size = CGSizeMake(340.0f, 63.0f);
+                                            UIGraphicsBeginImageContextWithOptions(size, YES, 0.0f);
+                                            [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+                                            UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+                                            UIGraphicsEndImageContext();
+                                                    
+                                            weakSelf.showPosterImageView.image = newImage;
+                                        }
+                                    }];
 	
 	UIInterpolatingMotionEffect *xMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
 	xMotionEffect.minimumRelativeValue = @(-10);
@@ -296,7 +294,6 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	if (actionSheet.tag == 998) {
 		if (buttonIndex == 0) {
-			[TestFlight passCheckpoint:@"Searched for episode"];
 			[self searchForEpisode];
 		}
 		else if (buttonIndex == 1) {
@@ -305,7 +302,6 @@
 	}
 	else {
 		if (buttonIndex < 4) {
-			[TestFlight passCheckpoint:@"Set episode status"];
 			[self performSetEpisodeStatus:buttonIndex];
 		}
 	}

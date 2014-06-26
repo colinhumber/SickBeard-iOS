@@ -5,84 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>A8AD64C5-7086-43F6-B6F4-F41C83897E7B</string>
+	<string>9EDAB592-4999-450E-8828-929FDA160F63</string>
 	<key>IDESourceControlProjectName</key>
 	<string>SickBeard</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>2366B319-A20A-460B-ABD4-1465529C514B</key>
-		<string>https://github.com/colinhumber/TDHUDProgressBar.git</string>
-		<key>3482F279-4007-4510-8C71-06DAFE39387F</key>
-		<string>https://github.com/colinhumber/SickBeard-iOS.git</string>
-		<key>4240B912-CE6F-469B-B690-100EB97B9C04</key>
-		<string>ssh://github.com/myell0w/MTInfoPanel.git</string>
-		<key>75941C14-9B59-4FA2-A659-580E9A99245F</key>
-		<string>https://github.com/samvermette/SVWebViewController.git</string>
-		<key>CC0FEB28-36E9-4F39-AE9C-E27319585754</key>
-		<string>https://github.com/samvermette/SVSegmentedControl.git</string>
+		<key>6FBC915B-4381-4CCA-B2E2-1A681BC875F2</key>
+		<string>https://github.com/colinhumber/SickBeard-iOS</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>SickBeard.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>2366B319-A20A-460B-ABD4-1465529C514B</key>
-		<string>../Vendor/TDHUDProgressBar</string>
-		<key>3482F279-4007-4510-8C71-06DAFE39387F</key>
+		<key>6FBC915B-4381-4CCA-B2E2-1A681BC875F2</key>
 		<string>..</string>
-		<key>4240B912-CE6F-469B-B690-100EB97B9C04</key>
-		<string>../Vendor/MTInfoPanel</string>
-		<key>75941C14-9B59-4FA2-A659-580E9A99245F</key>
-		<string>../Vendor/SVWebViewController</string>
-		<key>CC0FEB28-36E9-4F39-AE9C-E27319585754</key>
-		<string>../Vendor/SVSegmentedControl</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/colinhumber/SickBeard-iOS.git</string>
+	<string>https://github.com/colinhumber/SickBeard-iOS</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>3482F279-4007-4510-8C71-06DAFE39387F</string>
+	<string>6FBC915B-4381-4CCA-B2E2-1A681BC875F2</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>4240B912-CE6F-469B-B690-100EB97B9C04</string>
-			<key>IDESourceControlWCCName</key>
-			<string>MTInfoPanel</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>3482F279-4007-4510-8C71-06DAFE39387F</string>
+			<string>6FBC915B-4381-4CCA-B2E2-1A681BC875F2</string>
 			<key>IDESourceControlWCCName</key>
 			<string>SickBeard-iOS</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>CC0FEB28-36E9-4F39-AE9C-E27319585754</string>
-			<key>IDESourceControlWCCName</key>
-			<string>SVSegmentedControl</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>75941C14-9B59-4FA2-A659-580E9A99245F</string>
-			<key>IDESourceControlWCCName</key>
-			<string>SVWebViewController</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>2366B319-A20A-460B-ABD4-1465529C514B</string>
-			<key>IDESourceControlWCCName</key>
-			<string>TDHUDProgressBar</string>
 		</dict>
 	</array>
 </dict>

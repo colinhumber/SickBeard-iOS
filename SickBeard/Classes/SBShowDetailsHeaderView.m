@@ -8,13 +8,18 @@
 
 #import "SBShowDetailsHeaderView.h"
 
+@interface SBShowDetailsHeaderView ()
+@property (nonatomic, weak, readwrite) IBOutlet UIImageView *showImageView;
+@property (nonatomic, weak, readwrite) IBOutlet UILabel *showNameLabel;
+@property (nonatomic, weak, readwrite) IBOutlet UILabel *networkLabel;
+@property (nonatomic, weak, readwrite) IBOutlet UILabel *statusLabel;
+@property (nonatomic, weak, readwrite) IBOutlet UILabel *episodeCountLabel;
+@end
+
+
 @implementation SBShowDetailsHeaderView
 
 - (void)awakeFromNib {
-	self.progressBar.borderColor = RGBCOLOR(97, 77, 52);
-	self.progressBar.barColor = RGBCOLOR(97, 77, 52);
-	self.progressBar.backgroundColor = [UIColor clearColor];
-	
 	self.showImageView.image = [UIImage imageNamed:@"placeholder"];
 }
 

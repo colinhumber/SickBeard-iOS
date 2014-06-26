@@ -77,7 +77,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-	int statusIndex = [[[SBGlobal statuses] allKeys] indexOfObject:[self.currentStatus capitalizedString]];
+	NSInteger statusIndex = [[[SBGlobal statuses] allKeys] indexOfObject:[self.currentStatus capitalizedString]];
 	if (statusIndex == indexPath.row) {
 		return;
 	}

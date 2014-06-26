@@ -12,15 +12,6 @@
 
 @implementation SBEpisode
 
-//@synthesize airDate;
-//@synthesize episodeDescription;
-@synthesize location;
-@synthesize name;
-@synthesize status;
-//@synthesize season;
-//@synthesize number;
-//@synthesize show;
-
 - (id)initWithDictionary:(NSDictionary*)dict {
 	self = [super init];
 	
@@ -65,7 +56,7 @@
 }
 
 - (NSString*)description {
-	return [NSString stringWithFormat:@"<%@ = %8@ | name = %@ | episode = S%dE%d>", [self class], self, name, self.season, self.number];
+	return [NSString stringWithFormat:@"<%@ = %8@ | name = %@ | episode = S%luE%lu>", [self class], self, self.name, self.season, self.number];
 }
 
 

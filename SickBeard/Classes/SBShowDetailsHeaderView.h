@@ -7,16 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TDHUDProgressBar.h"
-
 
 @interface SBShowDetailsHeaderView : UIView
 
-@property (nonatomic, strong) IBOutlet UIImageView *showImageView;
-@property (nonatomic, strong) IBOutlet UILabel *showNameLabel;
-@property (nonatomic, strong) IBOutlet UILabel *networkLabel;
-@property (nonatomic, strong) IBOutlet UILabel *statusLabel;
-@property (nonatomic, strong) IBOutlet UILabel *episodeCountLabel;
-@property (nonatomic, strong) IBOutlet TDHUDProgressBar *progressBar;
+@property (nonatomic, weak, readonly) UIImageView *showImageView;
+@property (nonatomic, weak, readonly) UILabel *showNameLabel;
+@property (nonatomic, weak, readonly) UILabel *networkLabel;
+@property (nonatomic, weak, readonly) UILabel *statusLabel;
+@property (nonatomic, weak, readonly) UILabel *episodeCountLabel;
 
 @end

@@ -57,13 +57,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	[TestFlight passCheckpoint:@"Viewed settings"];
-	
+		
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		
-	self.initialQualityLabel.text = [NSString stringWithFormat:@"%d", defaults.initialQualities.count];
-	self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", defaults.archiveQualities.count];
+	self.initialQualityLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)defaults.initialQualities.count];
+	self.archiveQualityLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)defaults.archiveQualities.count];
 	self.statusLabel.text = [defaults.status capitalizedString];
 	self.seasonFolderSwitch.on = defaults.useSeasonFolders;
 }
@@ -96,15 +94,13 @@
 }
 
 - (void)qualityViewController:(SBQualityViewController *)controller didSelectQualities:(NSMutableArray *)qualities {
-	[TestFlight passCheckpoint:@"Changed quality settings"];
-	
 	if (controller.qualityType == QualityTypeInitial) {
 		[NSUserDefaults standardUserDefaults].initialQualities = qualities;
-		self.initialQualityLabel.text = [NSString stringWithFormat:@"%d", qualities.count];
+		self.initialQualityLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)qualities.count];
 	}
 	else if (controller.qualityType == QualityTypeArchive) {
 		[NSUserDefaults standardUserDefaults].archiveQualities = qualities;
-		self.archiveQualityLabel.text = [NSString stringWithFormat:@"%d", qualities.count];
+		self.archiveQualityLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)qualities.count];
 	}
 }
 
@@ -126,20 +122,15 @@
 			[mailer setSubject:@"Sick Beard for iOS Feedback"];
 			[mailer setMessageBody:[SBGlobal feedbackBody] isHTML:NO];
 			[mailer setToRecipients:@[@"sickbeardios@gmail.com"]];
-			[self presentViewController:mailer animated:YES completion:^{
-				[TestFlight passCheckpoint:@"Send feedback"];
-			}];
+            
+			[self presentViewController:mailer animated:YES completion:nil];
 		}
 		else if (indexPath.row == 1) {
-			[TestFlight passCheckpoint:@"Clicked Twitter"];
-			
 			SBWebViewController *webViewController = [[SBWebViewController alloc] initWithAddress:@"http://twitter.com/sickbeardios"];
 			
 			[self presentViewController:webViewController animated:YES completion:nil];
 		}
 		else if (indexPath.row == 2) {
-			[TestFlight passCheckpoint:@"Clicked Donate"];
-
 			SBWebViewController *webViewController = [[SBWebViewController alloc] initWithAddress:kDonateLink];
 			
 			[self presentViewController:webViewController animated:YES completion:nil];
