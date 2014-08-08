@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>9EDAB592-4999-450E-8828-929FDA160F63</string>
+	<string>DD286151-9A30-46DF-8365-E619A83253AD</string>
 	<key>IDESourceControlProjectName</key>
 	<string>SickBeard</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>6FBC915B-4381-4CCA-B2E2-1A681BC875F2</key>
-		<string>https://github.com/colinhumber/SickBeard-iOS</string>
+		<key>3B6D284F-010B-4602-93AD-7F1006A025FF</key>
+		<string>ssh://github.com/colinhumber/SickBeard-iOS.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>SickBeard.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>6FBC915B-4381-4CCA-B2E2-1A681BC875F2</key>
+		<key>3B6D284F-010B-4602-93AD-7F1006A025FF</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/colinhumber/SickBeard-iOS</string>
+	<string>ssh://github.com/colinhumber/SickBeard-iOS.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>6FBC915B-4381-4CCA-B2E2-1A681BC875F2</string>
+	<string>3B6D284F-010B-4602-93AD-7F1006A025FF</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>6FBC915B-4381-4CCA-B2E2-1A681BC875F2</string>
+			<string>3B6D284F-010B-4602-93AD-7F1006A025FF</string>
 			<key>IDESourceControlWCCName</key>
 			<string>SickBeard-iOS</string>
 		</dict>
