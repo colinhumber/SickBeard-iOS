@@ -1,51 +1,53 @@
 PODS:
-  - AFNetworking (2.2.1):
+  - AFNetworking (2.4.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
     - AFNetworking/UIKit
-  - AFNetworking/NSURLConnection (2.2.1):
+  - AFNetworking/NSURLConnection (2.4.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.2.1):
-    - AFNetworking/NSURLConnection
-  - AFNetworking/Reachability (2.2.1)
-  - AFNetworking/Security (2.2.1)
-  - AFNetworking/Serialization (2.2.1)
-  - AFNetworking/UIKit (2.2.1):
+  - AFNetworking/NSURLSession (2.4.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.4.1)
+  - AFNetworking/Security (2.4.1)
+  - AFNetworking/Serialization (2.4.1)
+  - AFNetworking/UIKit (2.4.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - HexColors (2.2.1)
   - SAMBadgeView (0.1.0)
   - SAMWebView (0.2.1)
-  - SDWebImage (3.6):
+  - SDWebImage (3.7.1):
     - SDWebImage/Core
-  - SDWebImage/Core (3.6)
+  - SDWebImage/Core (3.7.1)
   - SVProgressHUD (1.0)
   - SVSegmentedControl (0.2)
-  - TSMessages (0.9.6):
+  - TSMessages (0.9.10):
     - HexColors
 
 DEPENDENCIES:
   - AFNetworking
   - SAMBadgeView
   - SAMWebView
-  - SDWebImage
+  - SDWebImage (~> 3.7.1)
   - SVProgressHUD
   - SVSegmentedControl
   - TSMessages
 
 SPEC CHECKSUMS:
-  AFNetworking: 8dde8c8a6597ad95dac332a593c27e541bc87371
+  AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
   HexColors: 01384d2bbe8dc4ffa43c3b4135db6e976952d153
   SAMBadgeView: 6f29c18e5dc4ddf6d843c3c5e9c9207028c2e8a8
   SAMWebView: e615d50d3683b9b4fd3e10da9d079ed03230ee24
-  SDWebImage: c6989652c1cdf27cbdf3f56957e2030f825af5bc
+  SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d
   SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
   SVSegmentedControl: 755a9721054734a77841147de3cc8babf09ba7f1
-  TSMessages: 8337e6b14b369db136ca9a07a32193fc2a7feb19
+  TSMessages: 8598a0645e9d54847f6e5f3b070bef39c493bbf8
 
-COCOAPODS: 0.33.1
+COCOAPODS: 0.34.1
