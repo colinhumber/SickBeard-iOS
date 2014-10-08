@@ -1,7 +1,7 @@
 SickBeard-iOS
 =============
 
-Install the CocoaPods gem by running `sudo gem install cocoapods`.  
+Install the CocoaPods gem by running `[sudo] gem install cocoapods`. If you're not running CocoaPods 0.34, run `[sudo] gem update cocoapods`
 
 Clone the repository by running `git clone git@github.com:colinhumber/SickBeard-iOS.git`.
 
